@@ -58,7 +58,56 @@
 
     $_SESSION['CatConstante'] = EjecutarConstante();
 
+    function ObtenerNombre(){
+        $serverName = "192.168.100.39, 1433";
+        $connectionInfo = array("Database" => "BDSistemaIntegral_PRETEST",
+            "UID" => "Development",
+            "PWD" => "Development123*",
+            'CharacterSet' => 'UTF-8');
 
+        $conn = sqlsrv_connect($serverName, $connectionInfo);
+
+        if ($conn === false) {
+            die( print_r( sqlsrv_errors(), true));
+        }
+
+        $datosPersona = array (
+            'iIdPersona' => 0 ,
+            'vchCadena' => ''
+        );
+
+        $procedureName = "EXEC prcConsultaPersona    @iIdPersona = ?,
+                                                     @vchCadena = ?
+                                                    ";
+
+        $params = array(
+            $datosPersona['iIdPersona'],
+            $datosPersona['vchCadena']
+        );
+
+        $DatosPersona = array();
+        $result = sqlsrv_query($conn, $procedureName, $params);
+
+
+        if ($result === false){
+            die(print_r(sqlsrv_errors(), true));
+
+        } else{
+            do{
+                while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+                    $DatosPersona[] = $row;
+                }
+            }while (sqlsrv_next_result($result));
+        }
+
+        if ($DatosPersona[0]['bResultado' == 1]){
+            return true;
+        }
+        return false;
+
+        sqlsrv_close($conn);
+
+    }
     function EjecutarRegimenUso()
     {
         $serverName = "192.168.100.39, 1433";
