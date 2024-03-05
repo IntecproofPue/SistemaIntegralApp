@@ -80,8 +80,26 @@ function ObtenerNombre($nombreaBuscar)
         'iIdPersona' => 0,
         'vchCadena' => ''
     );
-
     $procedureName = "EXEC prcConsultaPersona    @iIdPersona = ?,
+    function ObtenerNombre($nombreaBuscar){
+        $serverName = "192.168.100.39, 1433";
+        $connectionInfo = array("Database" => "BDSistemaIntegral_PRETEST",
+            "UID" => "Development",
+            "PWD" => "Development123*",
+            'CharacterSet' => 'UTF-8');
+
+        $conn = sqlsrv_connect($serverName, $connectionInfo);
+
+        if ($conn === false) {
+            die( print_r( sqlsrv_errors(), true));
+        }
+
+        $datosPersona = array (
+            'iIdPersona' => 0 ,
+            'vchCadena' => ''
+        );
+
+        $procedureName = "EXEC prcConsultaPersona    @iIdPersona = ?,
                                                      @vchCadena = ?
                                                     ";
 
@@ -158,8 +176,10 @@ function EjecutarRegimenUso()
         } while (sqlsrv_next_result($result));
     }
 
-    return $RegimenUso;
 
+    return $RegimenUso;
+=======
+    $_SESSION['RegimenUso'] = EjecutarRegimenUso();
     sqlsrv_close($conn);
 }
 $_SESSION['RegimenUso'] = EjecutarRegimenUso();
@@ -342,6 +362,15 @@ function ObtenerUsoFiscal($iIdRegimen)
         if ($valorUsoFiscal['iIdRegimenFiscal'] == $iIdRegimen) {
             $UsoFiscalEncontrado[] = $valorUsoFiscal;
         }
+=======
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['usoFiscal'])){
+        $regimenSeleccionado = $_POST['usoFiscal'];
+        $resultadoUsoFiscal = ObtenerUsoFiscal($regimenSeleccionado);
+
+    } else {
+        var_dump($_POST);
+        echo ("No hay información para mostrar");
+>>>>>>> origin/Dev
     }
     return $UsoFiscalEncontrado;
 }
@@ -593,7 +622,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['regimenFiscal'])) {
                 <div class="col">
                     <div class="dashboard-container">
                         <div class="dashboard-content-wrapper">
-
                             <?php
                             if (isset($_POST['submitBuscar'])) {
                                 $nombreaBuscar = $_POST['nombreaBuscar'];
@@ -606,10 +634,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['regimenFiscal'])) {
                                         <?php echo "<i><span style='color: #ededee' size='-2'> $busquedaEncontradaTxt</span></i><br />"; ?>
                                     </div>
                                     <br>Aquí la lista de coincidencias
+                        <?php
+                        if(isset($_POST['submitBuscar']))
+                        {
+                            $nombreaBuscar = $_POST['nombreaBuscar'];
+                            echo"<br>El nombre a buscar es <b>$nombreaBuscar</b>";
+                            //Mandar el prc de consulta de persona
+                            if($nombreaBuscar == 'Luis'){ ?>
+
+                                <div style="background-color: #11bdd9; text-align: center"><?php echo "<i><span style='color: #ededee' size='-2'> $busquedaEncontradaTxt</span></i><br />"; ?></div>
+                                <br>Aquí la lista de coincidencias
 
 
                                 <?php } else { ?>
-
                                     <div style="background-color: #c82333; text-align: center">
                                         <?php echo "<i><span style='color: #ededee' size='-2'> $busquedaNoEncontradaTxt</span></i><br />"; ?>
                                     </div>
@@ -627,6 +664,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['regimenFiscal'])) {
                                                         required>
 
                                                 </div>
+=======
+                                <div style="background-color: #c82333; text-align: center"><?php echo "<i><span style='color: #ededee' size='-2'> $busquedaNoEncontradaTxt</span></i><br />"; ?></div>
+
+                                <form action="altaPersona" method="post" class="dashboard-form">
+
+                                    <div class="dashboard-section basic-info-input">
+                                        <h4><i data-feather="user-check"></i>Basic Infos</h4>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Nombre (s)</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" id="nombre" class="form-control" placeholder="Nombre" min="2" maxlength="150" onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)" required>
+
+>>>>>>> origin/Dev
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">PRIMER APELLIDO:</label>
@@ -773,7 +823,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['regimenFiscal'])) {
                                                         oninput="validarCodigoPostal(this)"
                                                         onkeypress="return soloNumeros(event)">
                                                 </div>
+                                                    <?php endforeach; ?>
+                                                </select>
                                             </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">NACIONALIDAD</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control" name ="nacionalidad" >
+                                                    <option value="" selected>Selecciona una nacionalidad</option>
+                                                    <?php foreach ($resultadoNacionalidad as $nacionalidad): ?>
+                                                        <option value="<?= $nacionalidad['iIdConstante'] ?>">
+                                                            [<?= $nacionalidad['iClaveCatalogo'] ?>] - <?= $nacionalidad['vchDescripcion'] ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">REGIMEN FISCAL</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control" name = "regimenFiscal" id = "regimenFiscal">
+                                                    <option value="" selected class="form-control">Selecciona un regimen fiscal</option>
+                                                    <?php foreach ($resultadoRegimen as $regimen): ?>
+                                                        <option value="<?= $regimen['iIdRegimenFiscal'] ?>">
+                                                            [<?= $regimen['iRegimen'] ?>] - <?= $regimen['vchDescripcionRegimen'] ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">USO FISCAL</label>
+                                            <div class="col-sm-9">
+                                                <form method="post" action="" id="miFormulario">
+                                                    <select class="form-control" name="usoFiscal" onchange="ObtenerUsoFiscal(event)">
+                                                        <option value="" selected class="form-control">Selecciona un uso fiscal</option>
+                                                        <?php
+                                                        // Llenar la lista desplegable con los resultados obtenidos
+                                                        var_dump($resultadoUsoFiscal);
+                                                        foreach ($resultadoUsoFiscal as $usoFiscal) {
+                                                            echo '<option value="' . $usoFiscal['iIdCatUsoFiscal'] . '">' .
+                                                                '[' . $usoFiscal['vchClaveUso'] . '] - ' . $usoFiscal['vchDescripcionUso'] .
+                                                                '</option>';
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                    <script>
+                                                        document.getElementById('miFormulario').addEventListener('submit', function () {
+                                                            // Enviar el formulario cuando se cambie la selección
+                                                            this.submit();
+
+                                                        });
+                                                    </script>
+                                                </form>                                           </div>
                                         </div>
                                         <div class="dashboard-section basic-info-input">
 
