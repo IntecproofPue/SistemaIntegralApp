@@ -58,7 +58,7 @@
 
     $_SESSION['CatConstante'] = EjecutarConstante();
 
-    function ObtenerNombre(){
+    function ObtenerNombre($nombreaBuscar){
         $serverName = "192.168.100.39, 1433";
         $connectionInfo = array("Database" => "BDSistemaIntegral_PRETEST",
             "UID" => "Development",
@@ -156,6 +156,7 @@
         sqlsrv_close($conn);
     }
 
+    $_SESSION['RegimenUso'] = EjecutarRegimenUso();
 
     function validaDatosPersona(){
         $serverName = "192.168.100.39, 1433";
@@ -333,10 +334,13 @@
     }
 
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['regimenFiscal'])){
-        $regimenSeleccionado = $_POST['regimenFiscal'];
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['usoFiscal'])){
+        $regimenSeleccionado = $_POST['usoFiscal'];
         $resultadoUsoFiscal = ObtenerUsoFiscal($regimenSeleccionado);
 
+    } else {
+        var_dump($_POST);
+        echo ("No hay información para mostrar");
     }
 
 ?>
@@ -653,21 +657,17 @@
 
                         <?php
                         if(isset($_POST['submitBuscar']))
-
                         {
                             $nombreaBuscar = $_POST['nombreaBuscar'];
                             echo"<br>El nombre a buscar es <b>$nombreaBuscar</b>";
                             //Mandar el prc de consulta de persona
                             if($nombreaBuscar == 'Luis'){ ?>
 
-                                <div style="background-color: #117a8b; text-align: center"><?php echo "<i><span style='color: #ededee' size='-2'> $busquedaEncontradaTxt</span></i><br />"; ?></div>
+                                <div style="background-color: #11bdd9; text-align: center"><?php echo "<i><span style='color: #ededee' size='-2'> $busquedaEncontradaTxt</span></i><br />"; ?></div>
                                 <br>Aquí la lista de coincidencias
 
 
                             <?php	}else{ ?>
-
-
-
 
                                 <div style="background-color: #c82333; text-align: center"><?php echo "<i><span style='color: #ededee' size='-2'> $busquedaNoEncontradaTxt</span></i><br />"; ?></div>
 
@@ -739,7 +739,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">REGIMEN FISCAL</label>
                                             <div class="col-sm-9">
-                                                <select class="form-control" name = "regimenFiscal">
+                                                <select class="form-control" name = "regimenFiscal" id = "regimenFiscal">
                                                     <option value="" selected class="form-control">Selecciona un regimen fiscal</option>
                                                     <?php foreach ($resultadoRegimen as $regimen): ?>
                                                         <option value="<?= $regimen['iIdRegimenFiscal'] ?>">
@@ -750,28 +750,30 @@
                                                 </select>
                                             </div>
                                         </div>
-
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">USO FISCAL</label>
                                             <div class="col-sm-9">
-                                                <select class="form-control" name = "usoFiscal" onclick="ObtenerUsoFiscal(event)">
-                                                    <option value="" selected class="form-control">Selecciona un uso fiscal</option>
-                                                        <script>
-                                                            window.onload = function ();{
-                                                                actualizarUsoFiscal ();
-                                                            }
-                                                            function actualizarUsoFiscal(){
-                                                                var selectUsoFiscal = document.getElementsByName('usoFiscal')[0];
+                                                <form method="post" action="" id="miFormulario">
+                                                    <select class="form-control" name="usoFiscal" onchange="ObtenerUsoFiscal(event)">
+                                                        <option value="" selected class="form-control">Selecciona un uso fiscal</option>
+                                                        <?php
+                                                        // Llenar la lista desplegable con los resultados obtenidos
+                                                        var_dump($resultadoUsoFiscal);
+                                                        foreach ($resultadoUsoFiscal as $usoFiscal) {
+                                                            echo '<option value="' . $usoFiscal['iIdCatUsoFiscal'] . '">' .
+                                                                '[' . $usoFiscal['vchClaveUso'] . '] - ' . $usoFiscal['vchDescripcionUso'] .
+                                                                '</option>';
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                    <script>
+                                                        document.getElementById('miFormulario').addEventListener('submit', function () {
+                                                            // Enviar el formulario cuando se cambie la selección
+                                                            this.submit();
 
-                                                                <?php foreach ($resultadoUsoFiscal as $usoFiscal): ?>
-                                                                    var option = document.createElement('option');
-                                                                    option.value = '<?= $usoFiscal['iIdCatUsoFiscal'] ?>';
-                                                                    option.text = '[<?=$usoFiscal['vchClaveUso']?>] - <?=$usoFiscal['vchDescripcionUso']?>';
-                                                                    selectUsoFiscal.add(option);
-                                                                <?php endforeach;?>
-                                                            }
-                                                        </script>
-                                                </select>
+                                                        });
+                                                    </script>
+                                                </form>
                                             </div>
                                         </div>
 
