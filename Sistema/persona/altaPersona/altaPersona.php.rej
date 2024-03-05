@@ -1,0 +1,386 @@
+diff a/Sistema/persona/altaPersona/altaPersona.php b/Sistema/persona/altaPersona/altaPersona.php	(rejected hunks)
+@@ -1,214 +1,225 @@
+ <?php
+-    require_once ('../../includes/pandora.php');
++require_once('../../includes/pandora.php');
+ 
+-    session_start();
++session_start();
+ 
+-    function EjecutarConstante()
+-    {
+-        $serverName = "192.168.100.39, 1433";
+-        $connectionInfo = array("Database" => "BDSistemaIntegral_PRETEST",
+-            "UID" => "Development",
+-            "PWD" => "Development123*",
+-            'CharacterSet' => 'UTF-8');
++function EjecutarConstante()
++{
++    $serverName = "192.168.100.39, 1433";
++    $connectionInfo = array(
++        "Database" => "BDSistemaIntegral_PRETEST",
++        "UID" => "Development",
++        "PWD" => "Development123*",
++        'CharacterSet' => 'UTF-8'
++    );
+ 
+-        $conn = sqlsrv_connect($serverName, $connectionInfo);
++    $conn = sqlsrv_connect($serverName, $connectionInfo);
+ 
+-        if ($conn === false) {
+-            die( print_r( sqlsrv_errors(), true));
+-        }
++    if ($conn === false) {
++        die(print_r(sqlsrv_errors(), true));
++    }
+ 
+-        $datosCatConstante = array (
+-            'iOpcion' => 4 ,
+-            'iAgrupador' => 0,
+-            'iClaveCatalogo' => 0,
+-            'iIdConstante' => 0
+-        );
++    $datosCatConstante = array(
++        'iOpcion' => 4,
++        'iAgrupador' => 0,
++        'iClaveCatalogo' => 0,
++        'iIdConstante' => 0
++    );
+ 
+-        $procedureName = "EXEC prcConsultaCatConstante  @iOpcion = ?,
++    $procedureName = "EXEC prcConsultaCatConstante  @iOpcion = ?,
+                                                         @iAgrupador = ?, 
+                                                         @iClave = ?, 
+                                                         @iIdConstante = ? 
+                                                     ";
+ 
+-        $params = array(
+-            $datosCatConstante['iOpcion'],
+-            $datosCatConstante['iAgrupador'],
+-            $datosCatConstante['iClaveCatalogo'],
+-            $datosCatConstante['iIdConstante']
+-        );
+-
+-        $result = sqlsrv_query($conn, $procedureName, $params);
++    $params = array(
++        $datosCatConstante['iOpcion'],
++        $datosCatConstante['iAgrupador'],
++        $datosCatConstante['iClaveCatalogo'],
++        $datosCatConstante['iIdConstante']
++    );
+ 
+-        $CatConstante = array();
++    $result = sqlsrv_query($conn, $procedureName, $params);
+ 
+-        if ($result === false){
+-            die(print_r(sqlsrv_errors(), true));
++    $CatConstante = array();
+ 
+-        } else{
+-            do{
+-                while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+-                    $CatConstante[] = $row;
+-                }
+-            }while (sqlsrv_next_result($result));
+-        }
+-        return $CatConstante;
++    if ($result === false) {
++        die(print_r(sqlsrv_errors(), true));
+ 
+-        sqlsrv_close($conn);
++    } else {
++        do {
++            while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
++                $CatConstante[] = $row;
++            }
++        } while (sqlsrv_next_result($result));
+     }
++    return $CatConstante;
+ 
+-    $_SESSION['CatConstante'] = EjecutarConstante();
++    sqlsrv_close($conn);
++}
+ 
+-    function ObtenerNombre(){
+-        $serverName = "192.168.100.39, 1433";
+-        $connectionInfo = array("Database" => "BDSistemaIntegral_PRETEST",
+-            "UID" => "Development",
+-            "PWD" => "Development123*",
+-            'CharacterSet' => 'UTF-8');
++$_SESSION['CatConstante'] = EjecutarConstante();
+ 
+-        $conn = sqlsrv_connect($serverName, $connectionInfo);
++function ObtenerNombre($nombreaBuscar)
++{
++    $serverName = "192.168.100.39, 1433";
++    $connectionInfo = array(
++        "Database" => "BDSistemaIntegral_PRETEST",
++        "UID" => "Development",
++        "PWD" => "Development123*",
++        'CharacterSet' => 'UTF-8'
++    );
+ 
+-        if ($conn === false) {
+-            die( print_r( sqlsrv_errors(), true));
+-        }
++    $conn = sqlsrv_connect($serverName, $connectionInfo);
+ 
+-        $datosPersona = array (
+-            'iIdPersona' => 0 ,
+-            'vchCadena' => ''
+-        );
++    if ($conn === false) {
++        die(print_r(sqlsrv_errors(), true));
++    }
++
++    $datosPersona = array(
++        'iIdPersona' => 0,
++        'vchCadena' => ''
++    );
+ 
+-        $procedureName = "EXEC prcConsultaPersona    @iIdPersona = ?,
++    $procedureName = "EXEC prcConsultaPersona    @iIdPersona = ?,
+                                                      @vchCadena = ?
+                                                     ";
+ 
+-        $params = array(
+-            $datosPersona['iIdPersona'],
+-            $datosPersona['vchCadena']
+-        );
++    $params = array(
++        $datosPersona['iIdPersona'],
++        $datosPersona['vchCadena']
++    );
+ 
+-        $DatosPersona = array();
+-        $result = sqlsrv_query($conn, $procedureName, $params);
++    $DatosPersona = array();
++    $result = sqlsrv_query($conn, $procedureName, $params);
+ 
+ 
+-        if ($result === false){
+-            die(print_r(sqlsrv_errors(), true));
++    if ($result === false) {
++        die(print_r(sqlsrv_errors(), true));
+ 
+-        } else{
+-            do{
+-                while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+-                    $DatosPersona[] = $row;
+-                }
+-            }while (sqlsrv_next_result($result));
+-        }
++    } else {
++        do {
++            while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
++                $DatosPersona[] = $row;
++            }
++        } while (sqlsrv_next_result($result));
++    }
+ 
+-        if ($DatosPersona[0]['bResultado' == 1]){
+-            return true;
+-        }
+-        return false;
++    if ($DatosPersona[0]['bResultado' == 1]) {
++        return true;
++    }
++    return false;
++
++    sqlsrv_close($conn);
+ 
+-        sqlsrv_close($conn);
++}
++function EjecutarRegimenUso()
++{
++    $serverName = "192.168.100.39, 1433";
++    $connectionInfo = array(
++        "Database" => "BDSistemaIntegral_PRETEST",
++        "UID" => "Development",
++        "PWD" => "Development123*",
++        'CharacterSet' => 'UTF-8'
++    );
+ 
++    $conn = sqlsrv_connect($serverName, $connectionInfo);
++
++    if ($conn === false) {
++        die(print_r(sqlsrv_errors(), true));
+     }
+-    function EjecutarRegimenUso()
+-    {
+-        $serverName = "192.168.100.39, 1433";
+-        $connectionInfo = array("Database" => "BDSistemaIntegral_PRETEST",
+-            "UID" => "Development",
+-            "PWD" => "Development123*",
+-            'CharacterSet' => 'UTF-8');
+-
+-        $conn = sqlsrv_connect($serverName, $connectionInfo);
+-
+-        if ($conn === false) {
+-            die( print_r( sqlsrv_errors(), true));
+-        }
+ 
+-        $datosRegimenUso = array (
+-            'iOpcion' => 1 ,
+-            'iIdTipoPersona' => 61
+-        );
++    $datosRegimenUso = array(
++        'iOpcion' => 1,
++        'iIdTipoPersona' => 61
++    );
+ 
+-        $procedureName = "EXEC prcConsultaRegimenUso    @iOpcion = ?,
+-                                                        @iIdTipoPersona = ?
++    $procedureName = "EXEC prcConsultaRegimenUso    @iOpcion = ?,
++                                                    @iIdTipoPersona = ?
+                                                     ";
+ 
+-        $params = array(
+-            $datosRegimenUso['iOpcion'],
+-            $datosRegimenUso['iIdTipoPersona']
+-        );
++    $params = array(
++        $datosRegimenUso['iOpcion'],
++        $datosRegimenUso['iIdTipoPersona']
++    );
+ 
+-        $result = sqlsrv_query($conn, $procedureName, $params);
++    $result = sqlsrv_query($conn, $procedureName, $params);
+ 
+-        $RegimenUso = array();
++    $RegimenUso = array();
+ 
+-        if ($result === false){
+-            die(print_r(sqlsrv_errors(), true));
++    if ($result === false) {
++        die(print_r(sqlsrv_errors(), true));
+ 
+-        } else{
+-            do{
+-                while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+-                    $RegimenUso[] = $row;
+-                }
+-            }while (sqlsrv_next_result($result));
+-        }
++    } else {
++        do {
++            while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
++                $RegimenUso[] = $row;
++            }
++        } while (sqlsrv_next_result($result));
++    }
+ 
+-        return $RegimenUso;
++    return $RegimenUso;
+ 
+-        sqlsrv_close($conn);
+-    }
++    sqlsrv_close($conn);
++}
++$_SESSION['RegimenUso'] = EjecutarRegimenUso();
+ 
+ 
+-    function validaDatosPersona(){
+-        $serverName = "192.168.100.39, 1433";
+-        $connectionInfo = array("Database" => "BDSistemaIntegral_PRETEST",
+-            "UID" => "Development",
+-            "PWD" => "Development123*",
+-            'CharacterSet' => 'UTF-8');
++function validaDatosPersona()
++{
++    $serverName = "192.168.100.39, 1433";
++    $connectionInfo = array(
++        "Database" => "BDSistemaIntegral_PRETEST",
++        "UID" => "Development",
++        "PWD" => "Development123*",
++        'CharacterSet' => 'UTF-8'
++    );
+ 
+-        $conn = sqlsrv_connect($serverName, $connectionInfo);
++    $conn = sqlsrv_connect($serverName, $connectionInfo);
+ 
+-        if ($conn === false) {
+-            die( print_r( sqlsrv_errors(), true));
+-        }
++    if ($conn === false) {
++        die(print_r(sqlsrv_errors(), true));
++    }
+ 
+-        $nombre = $_POST['nombre'];
+-        $vchPrimerApellido = $_POST['PrimerApellido'];
+-        $vchSegundoApellido = $_POST['SegundoApellido'];
+-        $dFechaNacimiento = $_POST['FechaNacimiento'];
+-        $idGenero = $_POST['genero'];
+-        $idNacionalidad = $_POST['nacionalidad'];
+-        $CURP = $_POST['CURP'];
+-        $codigoFiscal = $_POST['CodigoFiscal'];
+-        $UsoFiscal   = $_POST['usoFiscal'];
+-        $RegimenFiscal  = $_POST['regimenFiscal'];
+-
+-
+-        $datosPersona = array (
+-            'vchNombre' => $nombre,
+-            'vchPrimerApellido' => $vchPrimerApellido,
+-            'vchSegundoApellido' => $vchSegundoApellido,
+-            'dFechaNacimiento' => $dFechaNacimiento,
+-            'iIdGenero' => $idGenero,
+-            'iIdNacionalidad' => $idNacionalidad,
+-            'iIdTipoPersona' => 61,
+-            'RegimenFiscal' => $RegimenFiscal,
+-            'UsoFiscal' => $UsoFiscal,
+-            'CURP' => $CURP,
+-            'CodigoFiscal' => $codigoFiscal,
+-            'iEstatus' => 0,
+-            'iOpcion' => 1,
+-            'iProceso' => 1,
+-            'iIdPersona' => 0,
+-            'iIdUsoFiscal' => 0,
+-            'bResultado' => 0,
+-            'vchCampoError' => '',
+-            'vchMensaje' => ''
+-
+-        );
+-
+-        $procedureName = "EXEC prcRN_Persona        @vchNombre = ?,
++    $nombre = $_POST['nombre'];
++    $vchPrimerApellido = $_POST['PrimerApellido'];
++    $vchSegundoApellido = $_POST['SegundoApellido'];
++    $dFechaNacimiento = $_POST['FechaNacimiento'];
++    $idGenero = $_POST['genero'];
++    $idNacionalidad = $_POST['nacionalidad'];
++    $CURP = $_POST['CURP'];
++    $codigoFiscal = $_POST['CodigoFiscal'];
++    $UsoFiscal = $_POST['usoFiscal'];
++    $RegimenFiscal = $_POST['regimenFiscal'];
++
++
++    $datosPersona = array(
++        'vchNombre' => $nombre,
++        'vchPrimerApellido' => $vchPrimerApellido,
++        'vchSegundoApellido' => $vchSegundoApellido,
++        'dFechaNacimiento' => $dFechaNacimiento,
++        'iIdGenero' => $idGenero,
++        'iIdNacionalidad' => $idNacionalidad,
++        'iIdTipoPersona' => 61,
++        'RegimenFiscal' => $RegimenFiscal,
++        'UsoFiscal' => $UsoFiscal,
++        'CURP' => $CURP,
++        'CodigoFiscal' => $codigoFiscal,
++        'iEstatus' => 0,
++        'iOpcion' => 1,
++        'iProceso' => 1,
++        'iIdPersona' => 0,
++        'iIdUsoFiscal' => 0,
++        'bResultado' => 0,
++        'vchCampoError' => '',
++        'vchMensaje' => ''
++
++    );
++
++    $procedureName = "EXEC prcRN_Persona        @vchNombre = ?,
+                                                     @vchPrimerApellido = ?
+                                                     @vchSegundoApellido = ?
+                                                     @vchRFC = ?
+                                                     @vchCURP = ?
+                                                     @dFechaNacimiento = ?
+                                                     @iIdGenero = ?
