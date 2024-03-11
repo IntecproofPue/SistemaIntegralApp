@@ -80,26 +80,8 @@ function ObtenerNombre($nombreaBuscar)
         'iIdPersona' => 0,
         'vchCadena' => ''
     );
+
     $procedureName = "EXEC prcConsultaPersona    @iIdPersona = ?,
-    function ObtenerNombre($nombreaBuscar){
-        $serverName = "192.168.100.39, 1433";
-        $connectionInfo = array("Database" => "BDSistemaIntegral_PRETEST",
-            "UID" => "Development",
-            "PWD" => "Development123*",
-            'CharacterSet' => 'UTF-8');
-
-        $conn = sqlsrv_connect($serverName, $connectionInfo);
-
-        if ($conn === false) {
-            die( print_r( sqlsrv_errors(), true));
-        }
-
-        $datosPersona = array (
-            'iIdPersona' => 0 ,
-            'vchCadena' => ''
-        );
-
-        $procedureName = "EXEC prcConsultaPersona    @iIdPersona = ?,
                                                      @vchCadena = ?
                                                     ";
 
@@ -129,7 +111,6 @@ function ObtenerNombre($nombreaBuscar)
     return false;
 
     sqlsrv_close($conn);
-
 }
 function EjecutarRegimenUso()
 {
@@ -153,7 +134,7 @@ function EjecutarRegimenUso()
     );
 
     $procedureName = "EXEC prcConsultaRegimenUso    @iOpcion = ?,
-                                                    @iIdTipoPersona = ?
+                                                        @iIdTipoPersona = ?
                                                     ";
 
     $params = array(
@@ -176,14 +157,12 @@ function EjecutarRegimenUso()
         } while (sqlsrv_next_result($result));
     }
 
-
     return $RegimenUso;
-=======
-    $_SESSION['RegimenUso'] = EjecutarRegimenUso();
+
     sqlsrv_close($conn);
 }
-$_SESSION['RegimenUso'] = EjecutarRegimenUso();
 
+$_SESSION['RegimenUso'] = EjecutarRegimenUso();
 
 function validaDatosPersona()
 {
@@ -353,35 +332,6 @@ function ObtenerIdRegimen()
 
 $resultadoRegimen = ObtenerIdRegimen();
 
-function ObtenerUsoFiscal($iIdRegimen)
-{
-    $datosUsoFiscal = $_SESSION['RegimenUso'];
-    $UsoFiscalEncontrado = array();
-
-    foreach ($datosUsoFiscal as $valorUsoFiscal) {
-        if ($valorUsoFiscal['iIdRegimenFiscal'] == $iIdRegimen) {
-            $UsoFiscalEncontrado[] = $valorUsoFiscal;
-        }
-=======
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['usoFiscal'])){
-        $regimenSeleccionado = $_POST['usoFiscal'];
-        $resultadoUsoFiscal = ObtenerUsoFiscal($regimenSeleccionado);
-
-    } else {
-        var_dump($_POST);
-        echo ("No hay información para mostrar");
->>>>>>> origin/Dev
-    }
-    return $UsoFiscalEncontrado;
-}
-
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['regimenFiscal'])) {
-    $regimenSeleccionado = $_POST['regimenFiscal'];
-    $resultadoUsoFiscal = ObtenerUsoFiscal($regimenSeleccionado);
-
-}
-
 ?>
 
 <!doctype html>
@@ -455,38 +405,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['regimenFiscal'])) {
             patronAceptado = /[0-9]/;
             tecla_final = String.fromCharCode(tecla);
             return patronAceptado.test(tecla_final);
-        }
-
-        function soloRfc(e) {
-
-            tecla = (document.all) ? e.keyCode : e.which;
 
 
-            if (tecla == 8) {
-                return true;
+            function cargarUsosFiscales() {
+
+
+                window.alert("Hola");
+
+
+
+            }
+
+            function soloRfc(e) {
+
+                tecla = (document.all) ? e.keyCode : e.which;
+
+
+                if (tecla == 8) {
+                    return true;
+                }
+
+
+                patronAceptado = /[A-Za-z0-9]/;
+                tecla_final = String.fromCharCode(tecla);
+                return patronAceptado.test(tecla_final);
             }
 
 
-            patronAceptado = /[A-Za-z0-9]/;
-            tecla_final = String.fromCharCode(tecla);
-            return patronAceptado.test(tecla_final);
-        }
+            function soloNombre(e) {
+
+                tecla = (document.all) ? e.keyCode : e.which;
 
 
-        function soloNombre(e) {
-
-            tecla = (document.all) ? e.keyCode : e.which;
-
-
-            if (tecla == 8) {
-                return true;
+                if (tecla == 8) {
+                    return true;
+                }
+                patronAceptado = /[a-zA-Z áéíóúñÁÉÍÓÚÑ]+/;
+                tecla_final = String.fromCharCode(tecla);
+                return patronAceptado.test(tecla_final);
             }
-            patronAceptado = /[a-zA-Z áéíóúñÁÉÍÓÚÑ]+/;
-            tecla_final = String.fromCharCode(tecla);
-            return patronAceptado.test(tecla_final);
-        }
     </script>
-    <!--<input class="tf w-input" id="txtCurp" name="txtCurp" maxlength="150" onkeypress="return quitarEspeciales(event)" placeholder="No. de CURP" type="text">-->
+    /*<input class="tf w-input" id="txtCurp" name="txtCurp" maxlength="150" onkeypress="return quitarEspeciales(event)" placeholder="No. de CURP" type="text">*/
 
 </head>
 
@@ -569,21 +528,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['regimenFiscal'])) {
                         </div>
                     </div>
                     <nav class="navbar navbar-expand-lg cp-nav-2">
-                        <button class="navbar-toggler" type="button" data-toggle="collapse"
-                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav">
-                                <li class="menu-item active"><a title="PERSONA" href="altaPersona.php">PERSONA</a></li>
-                                <li class="menu-item active"><a title="DOMICILIO" href="altaDomicilio.php">DOMICILIO</a>
-                                </li>
-                                <li class="menu-item active"><a title="CONTACTO" href="altaContacto.php">CONTACTO</a>
-                                </li>
-                                <li class="menu-item active"><a title="CONTACTO" href="altaEmpleado.php">EMPLEADO</a>
-                                </li>
-                            </ul>
+                        <ul class="navbar-nav">
+                            <li class="menu-item active"><a title="PERSONA" href="altaPersona.php">PERSONA</a></li>
+                            <li class="menu-item active"><a title="DOMICILIO" href="altaDomicilio.php">DOMICILIO</a></li>
+                            <li class="menu-item active"><a title="CONTACTO" href="altaContacto.php">CONTACTO</a></li>
+                            <li class="menu-item active"><a title="CONTACTO" href="altaEmpleado.php">EMPLEADO</a></li>
+                        </ul>
+                        </div>
+                    </nav>
                         </div>
                     </nav>
                 </div>
@@ -600,7 +557,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['regimenFiscal'])) {
                         <h1>Alta Persona</h1>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">INICIO</a></li>
+                                <li class="breadcrumb-item"><a href="#">Inicio</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">ALTA PERSONA&nbsp;&nbsp;</li>
                             </ol>
                         </nav>
@@ -622,31 +579,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['regimenFiscal'])) {
                 <div class="col">
                     <div class="dashboard-container">
                         <div class="dashboard-content-wrapper">
+
                             <?php
                             if (isset($_POST['submitBuscar'])) {
                                 $nombreaBuscar = $_POST['nombreaBuscar'];
                                 echo "<br>El nombre a buscar es <b>$nombreaBuscar</b>";
                                 //Mandar el prc de consulta de persona
-                                $resultadoNombre = ObtenerNombre($nombreaBuscar);
-                                if ($resultadoNombre == 1) { ?>
+                                if ($nombreaBuscar == 'Luis') { ?>
 
-                                    <div style="background-color: #117a8b; text-align: center">
+                                    <div style="background-color: #11bdd9; text-align: center">
                                         <?php echo "<i><span style='color: #ededee' size='-2'> $busquedaEncontradaTxt</span></i><br />"; ?>
                                     </div>
                                     <br>Aquí la lista de coincidencias
-                        <?php
-                        if(isset($_POST['submitBuscar']))
-                        {
-                            $nombreaBuscar = $_POST['nombreaBuscar'];
-                            echo"<br>El nombre a buscar es <b>$nombreaBuscar</b>";
-                            //Mandar el prc de consulta de persona
-                            if($nombreaBuscar == 'Luis'){ ?>
-
-                                <div style="background-color: #11bdd9; text-align: center"><?php echo "<i><span style='color: #ededee' size='-2'> $busquedaEncontradaTxt</span></i><br />"; ?></div>
-                                <br>Aquí la lista de coincidencias
 
 
                                 <?php } else { ?>
+
                                     <div style="background-color: #c82333; text-align: center">
                                         <?php echo "<i><span style='color: #ededee' size='-2'> $busquedaNoEncontradaTxt</span></i><br />"; ?>
                                     </div>
@@ -654,38 +602,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['regimenFiscal'])) {
                                     <form action="altaPersona" method="post" class="dashboard-form">
 
                                         <div class="dashboard-section basic-info-input">
-                                            <h4><i data-feather="user-check"></i>Basic Infos</h4>
+                                            <h4><i data-feather="user-check"></i>INFORMACION BASICA</h4>
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">NOMBRE (S)</label>
+                                                <label class="col-sm-3 col-form-label">* NOMBRE (S)</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" id="nombre" class="form-control" placeholder="NOMBRE"
-                                                        min="2" maxlength="150" style="text-transform: uppercase"
+                                                        min="2" maxlength="150"
                                                         onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)"
                                                         required>
-
                                                 </div>
-=======
-                                <div style="background-color: #c82333; text-align: center"><?php echo "<i><span style='color: #ededee' size='-2'> $busquedaNoEncontradaTxt</span></i><br />"; ?></div>
-
-                                <form action="altaPersona" method="post" class="dashboard-form">
-
-                                    <div class="dashboard-section basic-info-input">
-                                        <h4><i data-feather="user-check"></i>Basic Infos</h4>
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">Nombre (s)</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" id="nombre" class="form-control" placeholder="Nombre" min="2" maxlength="150" onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)" required>
-
->>>>>>> origin/Dev
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">PRIMER APELLIDO:</label>
+                                                <label class="col-sm-3 col-form-label">* PRIMER APELLIDO:</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" id="PrimerApellido" class="form-control"
                                                         placeholder="PRIMER APELLIDO" min="2" name="nombreEscrito"
-                                                        maxlength="50" style="text-transform: uppercase
-                                                        onkeypress=" this.value=this.value.toUpperCase();return
-                                                        soloNombre(event)" required>
+                                                        maxlength="50"
+                                                        onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)"
+                                                        required>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -693,25 +627,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['regimenFiscal'])) {
                                                 <div class="col-sm-9">
                                                     <input type="text" id="SegundoApellido" class="form-control"
                                                         placeholder="SEGUNDO APELLIDO" min="2" name="apeUnoEsccrito"
-                                                        maxlength="50" style="text-transform: uppercase
-                                                        onkeypress=" this.value=this.value.toUpperCase();return
-                                                        soloNombre(event)" required>
+                                                        maxlength="50"
+                                                        onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)"
+                                                        required>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">CURP:</label>
+                                                <label class="col-sm-3 col-form-label">* CURP:</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" id="CURP" class="form-control"
-                                                        placeholder="INGRESA LA CURP" name="curpEscrito"
+                                                    <input type="text" id="CURP" class="form-control" placeholder="INGRESA CURP"
+                                                        name="curpEscrito" maxlength="18"
                                                         pattern="[A-Z]{4}[0-9]{6}[HM]{1}[A-Z]{5}[0-9]{2}"
-                                                        style="text-transform: uppercase" maxlength="18">
+                                                        title="LA CURP DE BE SER DE 18 CARACTERES" Required>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">Género:</label>
+                                                <label class="col-sm-3 col-form-label">* GENERO:</label>
                                                 <div class="col-sm-9">
                                                     <select class="form-control" name="genero">
-                                                        <option value="" selected>Selecciona un género</option>
+                                                        <option value="" selected>SELECCIONE UN GENERO</option>
                                                         <?php foreach ($resultadoGenero as $genero): ?>
                                                             <option value="<?= $genero['iIdConstante'] ?>">
                                                                 [
@@ -723,10 +657,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['regimenFiscal'])) {
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">NACIONALIDAD</label>
+                                                <label class="col-sm-3 col-form-label">* NACIONALIDAD</label>
                                                 <div class="col-sm-9">
                                                     <select class="form-control" name="nacionalidad">
-                                                        <option value="" selected>Selecciona una nacionalidad</option>
+                                                        <option value="" selected>SELECCIONE NACIONALIDAD</option>
                                                         <?php foreach ($resultadoNacionalidad as $nacionalidad): ?>
                                                             <option value="<?= $nacionalidad['iIdConstante'] ?>">
                                                                 [
@@ -734,196 +668,135 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['regimenFiscal'])) {
                                                                 <?= $nacionalidad['vchDescripcion'] ?>
                                                             </option>
                                                         <?php endforeach; ?>
-
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">FECHA DE NACIMIENTO:</label>
-                                                <?php
-                                                // Calcular la fecha actual
-                                                $fechaActual = date('Y-m-d');
-
-                                                // Restar 18 años a la fecha actual
-                                                $fechaMinima = date('Y-m-d', strtotime('-18 years', strtotime($fechaActual)));
-
-                                                // Establecer la fecha máxima como la fecha actual  
-                                                $fechaMaxima = $fechaActual;
-
-                                                // Establecer la fecha mínima como 1900-01-01 (opcional)
-                                                $fechaLimiteInferior = '1900-01-01';
-                                                ?>
+                                                <label class="col-sm-3 col-form-label">* FECHA DE NACIMIENTO:</label>
                                                 <div class="col-sm-9">
                                                     <input type="date" id="FechaNacimiento" class="form-control"
-                                                        placeholder="FECHA DE NACIMIENTO" name="fechNacimientoEscrita"
+                                                        placeholder="FECHA DE NACIMIENTO" name="apeDosEscrito"
                                                         pattern="\d{4}-\d{2}-\d{2}"
                                                         title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required
-                                                        min="<?php echo $fechaMinima; ?>" max="<?php echo $fechaMaxima; ?>"
+                                                        min="<?php echo $fechaMinima="1950-01-01"; ?>" max="<?php echo $fechaMaxima="2024-01-01"; ?>"
                                                         maxlength="10">
+                                                    <?php
+                                                    // Calcular la fecha actual
+                                                    $fechaActual = date('Y-m-d');
+                                                    // Restar 18 años a la fecha actual
+                                                    $fechaMinima = date('Y-m-d', strtotime('-18 years', strtotime($fechaActual)));
+                                                    // Establecer la fecha máxima como la fecha actual  
+                                                    $fechaMaxima = $fechaActual;
+                                                    // Establecer la fecha mínima como 1900-01-01 (opcional)
+                                                    $fechaLimiteInferior = '1950-01-01';
+                                                    ?>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">R.F.C:</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" id="RFC" class="form-control"
-                                                        placeholder="Escribe tu RFC" name="rfcEscrito" maxlength="13"
-                                                        pattern="[A-Z]{4}[0-9]{6}[HM]{1}[A-Z]{2}"
-                                                        style="text-transform: uppercase"
-                                                        onkeypress="this.value = this.value.toUpperCase();return soloRfc(event)">
-                                                    <input type="text" onkeyup="this.value = this.value.toUpperCase();">
+                                                        placeholder="ESCRIBE TU RFC" name="rfcEscrito" maxlength="13"
+                                                        pattern="[A-Z]{4}[0-9]{6}[HM]{1}[A-Z]{2}" style="text-transform: uppercase"
+                                                        onkeyup="this.value = this.value.toUpperCase();" return="soloRfc(event)"  required>
                                                 </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">REGIMEN FISCAL</label>
-                                                <div class="col-sm-9">
-                                                    <select class="form-control" name="regimenFiscal">
-                                                        <option value="" selected class="form-control">SELECCIONA UN REGIMEN
-                                                            FISCAL</option>
-                                                        <?php foreach ($resultadoRegimen as $regimen): ?>
-                                                            <option value="<?= $regimen['iIdRegimenFiscal'] ?>">
-                                                                [
-                                                                <?= $regimen['iRegimen'] ?>] -
-                                                                <?= $regimen['vchDescripcionRegimen'] ?>
-                                                            </option>
-                                                        <?php endforeach; ?>
-
-                                                    </select>
+                                            </div>   
+                                            <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" class="dashboard-form">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">REGIMEN FISCAL</label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control" name="regimenFiscal" id="regimenFiscal"
+                                                            onchange="cargarUsoFiscal()">
+                                                            <option value="" selected class="form-control">SELECCIONE UN REGIMEN FISCAL                                                                fiscal</option>
+                                                            <!-- Lista desplegable de Regímenes Fiscales -->
+                                                            <?php foreach ($resultadoRegimen as $regimen): ?>
+                                                                <option value="<?= $regimen['iIdRegimenFiscal'] ?>">
+                                                                    [
+                                                                    <?= $regimen['iRegimen'] ?>] -
+                                                                    <?= $regimen['vchDescripcionRegimen'] ?>
+                                                                </option>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">USO FISCAL</label>
-                                                <div class="col-sm-9">
-                                                    <select class="form-control" name="usoFiscal"
-                                                        onclick="ObtenerUsoFiscal(event)">
-                                                        <option value="" selected class="form-control">SELECCIONE UN USO FISCAL
-                                                        </option>
+                                                <!-- Lista desplegable de Uso Fiscal (dinámica) -->
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">USO FISCAL</label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control" name="usoFiscal" id="usoFiscal">
+                                                            <option value="" selected class="form-control">SELECCIONA UN USO
+                                                                FISCAL</option>
+                                                        </select>
                                                         <script>
-                                                            window.onload = function (); {
-                                                                actualizarUsoFiscal();
-                                                            }
-                                                            function actualizarUsoFiscal() {
-                                                                var selectUsoFiscal = document.getElementsByName('usoFiscal')[0];
+                                                                function cargarUsoFiscal() {
+                                                                    var regimenSeleccionado = document.getElementById("regimenFiscal").value;
+                                                                    console.log("Regimen seleccionado: " + regimenSeleccionado);
+                                                                    var usoFiscalSeleccionado = document.getElementById("usoFiscal");
+                                                                    console.log("Uso Fiscal seleccionado: " + usoFiscalSeleccionado);
 
-                                                                <?php foreach ($resultadoUsoFiscal as $usoFiscal): ?>
-                                                                    var option = document.createElement('option');
-                                                                    option.value = '<?= $usoFiscal['iIdCatUsoFiscal'] ?>';
-                                                                    option.text = '[<?= $usoFiscal['vchClaveUso'] ?>] - <?= $usoFiscal['vchDescripcionUso'] ?>';
-                                                                    selectUsoFiscal.add(option);
-                                                                <?php endforeach; ?>
-                                                            }
+                                                                    usoFiscalSeleccionado.innerHTML = '<option value="" selected class="form-control">SELECCIONA UN USO FISCAL</option>';
+
+                                                                    var opcionesUsos = ObtenerUsosFiscales(regimenSeleccionado);
+
+                                                                    for (var i = 0; i < opcionesUsos.length; i++) {
+                                                                        var opcionUsoFiscal = document.createElement("option");
+                                                                        opcionUsoFiscal.value = opcionesUsos[i].uso;
+                                                                        opcionUsoFiscal.textContent = '[' + opcionesUsos[i].uso + '] - ' + opcionesUsos[i].descripcion;
+                                                                        usoFiscalSeleccionado.add(opcionUsoFiscal);
+                                                                    }
+                                                                }
+
+                                                                function ObtenerUsosFiscales(regimenSeleccionado) {
+
+                                                                    var datosUsosFiscales = <?php echo json_encode($_SESSION['RegimenUso']); ?>;
+                                                                    console.log("Datos fiscales: ", datosUsosFiscales);
+                                                                    var usosFiscales = [];
+
+                                                                    for (var i = 0; i < datosUsosFiscales.length; i++) {
+                                                                        if (datosUsosFiscales[i].iIdRegimenFiscal == regimenSeleccionado) {
+                                                                            usosFiscales.push({
+                                                                                uso: datosUsosFiscales[i].vchClaveUso,
+                                                                                descripcion: datosUsosFiscales[i].vchDescripcionUso
+                                                                            });
+                                                                        }
+                                                                    }
+                                                                    console.log("Usos fiscales: ", usosFiscales);
+                                                                    return usosFiscales;
+                                                                }
                                                         </script>
-                                                    </select>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </form>
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">CÓDIGO POSTAL FISCAL:</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" id="CodigoFiscal" class="form-control"
-                                                        placeholder="CODIGO POSTAL FISCAL"" name=" cpfEscrito" maxlength="5"
-                                                        oninput="validarCodigoPostal(this)"
+                                                        placeholder="Código postal fiscal" name="rfcEscrito" maxlength="5"
                                                         onkeypress="return soloNumeros(event)">
                                                 </div>
-                                                    <?php endforeach; ?>
-                                                </select>
                                             </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">NACIONALIDAD</label>
-                                            <div class="col-sm-9">
-                                                <select class="form-control" name ="nacionalidad" >
-                                                    <option value="" selected>Selecciona una nacionalidad</option>
-                                                    <?php foreach ($resultadoNacionalidad as $nacionalidad): ?>
-                                                        <option value="<?= $nacionalidad['iIdConstante'] ?>">
-                                                            [<?= $nacionalidad['iClaveCatalogo'] ?>] - <?= $nacionalidad['vchDescripcion'] ?>
-                                                        </option>
-                                                    <?php endforeach; ?>
-
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">REGIMEN FISCAL</label>
-                                            <div class="col-sm-9">
-                                                <select class="form-control" name = "regimenFiscal" id = "regimenFiscal">
-                                                    <option value="" selected class="form-control">Selecciona un regimen fiscal</option>
-                                                    <?php foreach ($resultadoRegimen as $regimen): ?>
-                                                        <option value="<?= $regimen['iIdRegimenFiscal'] ?>">
-                                                            [<?= $regimen['iRegimen'] ?>] - <?= $regimen['vchDescripcionRegimen'] ?>
-                                                        </option>
-                                                    <?php endforeach; ?>
-
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">USO FISCAL</label>
-                                            <div class="col-sm-9">
-                                                <form method="post" action="" id="miFormulario">
-                                                    <select class="form-control" name="usoFiscal" onchange="ObtenerUsoFiscal(event)">
-                                                        <option value="" selected class="form-control">Selecciona un uso fiscal</option>
-                                                        <?php
-                                                        // Llenar la lista desplegable con los resultados obtenidos
-                                                        var_dump($resultadoUsoFiscal);
-                                                        foreach ($resultadoUsoFiscal as $usoFiscal) {
-                                                            echo '<option value="' . $usoFiscal['iIdCatUsoFiscal'] . '">' .
-                                                                '[' . $usoFiscal['vchClaveUso'] . '] - ' . $usoFiscal['vchDescripcionUso'] .
-                                                                '</option>';
-                                                        }
-                                                        ?>
-                                                    </select>
-                                                    <script>
-                                                        document.getElementById('miFormulario').addEventListener('submit', function () {
-                                                            // Enviar el formulario cuando se cambie la selección
-                                                            this.submit();
-
-                                                        });
-                                                    </script>
-                                                </form>                                           </div>
-                                        </div>
-                                        <div class="dashboard-section basic-info-input">
-
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label"></label>
                                                 <div class="col-sm-9">
                                                     <button type="reset" class="button">LIMPIAR</button>
-                                                    <button type="button" class="button"
-                                                        onclick="window.location.href = 'altaDomicilio.php'">SIGUIENTE</button>
+                                                    <button type="button" class="button" onclick="window.location.href = 'altaDomicilio.php'">SIGUIENTE</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
-
-
                                 <?php }
-
-
                                 ?>
-
-
-
-
-
-
-
                                 <?php
                             } else {
-
-
-
-
-
                                 ?>
                                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="dashboard-form">
-
                                     <div class="dashboard-section basic-info-input">
-                                        <h4><i data-feather="user-check"></i>BUSQUEDA</h4>
+                                        <h4><i data-feather="user-check"></i>búsqueda</h4>
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">NOMBRE:</label>
+                                            <label class="col-sm-3 col-form-label">Nombre:</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control"
-                                                    placeholder="INGRESA EL NOMBRE COMPLETO" name="nombreaBuscar">
+                                                    placeholder="Ingresa el nombre completo" name="nombreaBuscar">
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -932,31 +805,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['regimenFiscal'])) {
                                                 <button class="button" type="submit" name="submitBuscar">Buscar</button>
                                             </div>
                                         </div>
-
                                     </div>
-
                                 </form>
-
-
-
-
-
-                                <?php
-                            }
-
-                            ?>
-
-
-
-
+                                <?php } ?>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 
     <!-- Footer -->
     <footer class="footer-bg">

@@ -121,7 +121,7 @@ require_once('../../includes/pandora.php');
             <div class="logo-area">
               <a href="../../index.html"><img src="../../images/logo-2.png" alt=""></a>
               <a>
-                <h7>CONSULTA DE EMPLEADO</h7>
+                <h7>CONSULTA DE DOMICILIO</h7>
               </a>
             </div>
             <div class="header-top-toggler">
@@ -227,7 +227,7 @@ require_once('../../includes/pandora.php');
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-                <li class="breadcrumb-item active" aria-current="page">CONSULTA EMPLEADO&nbsp;&nbsp;</li>
+                <li class="breadcrumb-item active" aria-current="page">CONSULTA DOMICILIO&nbsp;&nbsp;</li>
               </ol>
             </nav>
           </div>

@@ -398,7 +398,7 @@
                                             <select class="form-control" Name="SEDE" id="iTdSede" required>
                                                 <option value="">SELEECIONE UNA SEDE</option>
                                                 <?php foreach ($resultadoSede as $sede): ?>
-                                                    <option value="<?= $sede['iIdConstante'] ?>">
+                                                    <option value="<?= $sede['iIdConstante'] ?>"
                                                         [<?= $sede['iClaveCatalogo'] ?>] - <?= $sede['vchDescripcion'] ?>
                                                     </option>
                                                 <?php endforeach; ?>
