@@ -445,7 +445,6 @@ $resultadoRegimen = ObtenerIdRegimen();
                 return patronAceptado.test(tecla_final);
             }
     </script>
-    /*<input class="tf w-input" id="txtCurp" name="txtCurp" maxlength="150" onkeypress="return quitarEspeciales(event)" placeholder="No. de CURP" type="text">*/
 
 </head>
 
@@ -707,7 +706,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                                                     <div class="col-sm-9">
                                                         <select class="form-control" name="regimenFiscal" id="regimenFiscal"
                                                             onchange="cargarUsoFiscal()">
-                                                            <option value="" selected class="form-control">SELECCIONE UN REGIMEN FISCAL                                                                fiscal</option>
+                                                            <option value="" selected class="form-control">SELECCIONE UN REGIMEN FISCAL</option>
                                                             <!-- Lista desplegable de Regímenes Fiscales -->
                                                             <?php foreach ($resultadoRegimen as $regimen): ?>
                                                                 <option value="<?= $regimen['iIdRegimenFiscal'] ?>">
@@ -771,7 +770,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                                                 <label class="col-sm-3 col-form-label">CÓDIGO POSTAL FISCAL:</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" id="CodigoFiscal" class="form-control"
-                                                        placeholder="Código postal fiscal" name="rfcEscrito" maxlength="5"
+                                                        placeholder="CODIGO POSTAL FISCAL" name="cpfEscrito" maxlength="5"
                                                         onkeypress="return soloNumeros(event)">
                                                 </div>
                                             </div>
