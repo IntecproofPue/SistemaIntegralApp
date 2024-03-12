@@ -692,7 +692,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">R.F.C:</label>
+                                                <label class="col-sm-3 col-form-label">* R.F.C:</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" id="RFC" class="form-control"
                                                         placeholder="ESCRIBE TU RFC" name="rfcEscrito" maxlength="13"
