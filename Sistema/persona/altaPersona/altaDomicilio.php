@@ -2,13 +2,17 @@
         require_once('../../includes/pandora.php');
 
         session_start();
+
+        $agrupadorEstado = 4;
         function ObtenerEstadoProcedencia(){
+            global $agrupadorEstado;
             if (isset ($_SESSION['CatConstante'])){
                 $datosEdoProcedencia = $_SESSION['CatConstante'];
                 $estadoEncontrado = array();
 
+
                 foreach ($datosEdoProcedencia as $valorEstado) {
-                    if ($valorEstado['iAgrupador'] == 4) {
+                    if ($valorEstado['iAgrupador'] == $agrupadorEstado) {
                         $estadoEncontrado [] = $valorEstado;
                     }
                 }
@@ -22,6 +26,7 @@
 
 
 ?>
+
 <!doctype html>
 <html lang="en">
 
@@ -121,12 +126,12 @@
             if (tecla == 8) {
                 return true;
             }
-
-
             patronAceptado = /[a-zA-Z áéíóúñÁÉÍÓÚÑ]+/;
             tecla_final = String.fromCharCode(tecla);
             return patronAceptado.test(tecla_final);
         }
+
+
     </script>
     <!--<input class="tf w-input" id="txtCurp" name="txtCurp" maxlength="150" onkeypress="return quitarEspeciales(event)" placeholder="No. de CURP" type="text">-->
 
@@ -262,17 +267,20 @@
                     <div class="dashboard-container">
                         <div class="dashboard-content-wrapper">
 
-                            <form action="altaPersona" method="post" class="dashboard-form">
+                            <form class="dashboard-form" id = "FormDomicilioAlta">
+
+                                <input type="hidden" name = "iIdConstanteEstado" id="iIdConstanteEstado" value="" >
+                                <input type="hidden" name = "iClaveEstado" id="iClaveEstado" value="" >
 
                                 <div class="dashboard-section basic-info-input">
                                     <h4><i data-feather="user-check"></i>Basic Infos</h4>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*ESTADO:</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control" Name="estado" required>
+                                            <select class="form-control" id="estadoLista"  name = "estadoLista" required>
                                                 <option value="" selected>SELECCIONE UN ESTADO</option>
                                                 <?php foreach ($resultadoEstado as $estado): ?>
-                                                    <option value="<?= $estado['iIdConstante'] ?>">
+                                                    <option value="<?= $estado['iIdConstante'].'-'.$estado['iClaveCatalogo'] ?>">
                                                         [<?= $estado['iClaveCatalogo'] ?>] - <?= $estado['vchDescripcion'] ?>
                                                     </option>
                                                 <?php endforeach; ?>
@@ -282,7 +290,7 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*MUNICIPIO:</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" placeholder="MUNICIPIO"
+                                            <input type="text" class="form-control" id = "vchMunicipio" name = "vchMunicipio" placeholder="MUNICIPIO"
                                                 style="text-transform: uppercase" pattern="[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+"
                                                 title="SOLO SE PERMITEN LETRAS" required>
                                         </div>
@@ -290,7 +298,7 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*LOCALIDAD:</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" placeholder="LOCALIDAD" min="2"
+                                            <input type="text" class="form-control" id = "vchLocalidad" name = "vchLocalidad" placeholder="LOCALIDAD" min="2"
                                                 name="apeUnoEsccrito" style="text-transform: uppercase"
                                                 style="text-transform: uppercase" required>
                                         </div>
@@ -298,8 +306,7 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*CÓDIGO POSTAL:</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" placeholder="CODIGO POSTAL"
-                                                name="cpfEscrito" oninput="validarCodigoPostal(this)"
+                                            <input type="text" class="form-control" placeholder="CODIGO POSTAL"  id="codigoPostal" name = "codigoPostal"
                                                 onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                                 maxlength="5">
                                         </div>
@@ -307,44 +314,105 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*COLONIA:</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" placeholder="COLONIA"
-                                                style="text-transform: uppercase" required>
+                                            <input type="text" class="form-control" placeholder="COLONIA" id = "vchColonia" name = "vchColonia" style="text-transform: uppercase" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*CALLE:</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" placeholder="CALLE"
+                                            <input type="text" class="form-control" placeholder="CALLE" id = "vchCalle" name = "vchCalle"
                                                 style="text-transform: uppercase" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*LETRA:</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" placeholder="LETRA"
+                                            <input type="text" class="form-control" placeholder="LETRA" id = "vchLetra" name = "vchLetra"
                                                 style="text-transform: uppercase" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*No EXT:</label>
                                         <div class="col-sm-9">
-                                            <input type="number" class="form-control" placeholder="No EXT"
+                                            <input type="number" class="form-control" placeholder="No EXT" id = "vchNoExt" name = "vchNoExt"
                                                 style="text-transform: uppercase" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*No INT:</label>
                                         <div class="col-sm-9">
-                                            <input type="number" class="form-control" placeholder="No INT"
+                                            <input type="number" class="form-control" placeholder="No INT" id = "vchNoInt" name = "vchNoInt"
                                                 style="text-transform: uppercase" required>
                                         </div>
                                     </div>
+
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label"></label>
                                         <div class="col-sm-9">
+                                            <script>
+                                                function ValidarDatosDomicilio() {
+                                                    // Obtener los valores de los elementos del formulario
+                                                    var EstadoSeleccionado = document.getElementById('estadoLista');
+                                                    var EstadoPartes = EstadoSeleccionado.value.split('-');
+                                                    var iIdConstanteEstado = EstadoPartes[0];
+                                                    var iClaveEstado = EstadoPartes[1];
+
+                                                    // Asignar los valores a los campos ocultos
+                                                    document.getElementById('iIdConstanteEstado').value = iIdConstanteEstado;
+                                                    document.getElementById('iClaveEstado').value = iClaveEstado;
+
+                                                    // Crear un objeto con los datos del formulario
+                                                    var datosFormulario = {
+                                                        estadoLista: EstadoSeleccionado.value,
+                                                        vchMunicipio: document.getElementById('vchMunicipio').value,
+                                                        vchLocalidad: document.getElementById('vchLocalidad').value,
+                                                        codigoPostal: document.getElementById('codigoPostal').value,
+                                                        vchColonia: document.getElementById('vchColonia').value,
+                                                        vchCalle: document.getElementById('vchCalle').value,
+                                                        vchLetra: document.getElementById('vchLetra').value,
+                                                        vchNoExt: document.getElementById('vchNoExt').value,
+                                                        vchNoInt: document.getElementById('vchNoInt').value,
+                                                        iIdConstanteEstado: iIdConstanteEstado,
+                                                        iClaveEstado: iClaveEstado
+                                                    };
+
+                                                    // Crear una instancia de XMLHttpRequest
+                                                    var datosDomicilio = new XMLHttpRequest();
+
+                                                    // Configurar la solicitud
+                                                    datosDomicilio.open('POST', 'validarDatosDomicilio.php', true);
+                                                    datosDomicilio.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                                                    // Convertir el objeto de datos a una cadena de consulta URL
+                                                    var formData = new URLSearchParams(datosFormulario).toString();
+
+                                                    // Enviar la solicitud
+                                                    datosDomicilio.send(formData);
+
+                                                    // Manejar la respuesta
+                                                    datosDomicilio.onload = function() {
+                                                        if (datosDomicilio.status === 200) {
+                                                            var respuesta = JSON.parse(datosDomicilio.responseText);
+                                                            if (respuesta.bResultado === 1) {
+                                                                console.log(respuesta);
+                                                                window.location.href = "altaContacto.php";
+                                                            } else {
+                                                                console.error("Mensaje Error: " + respuesta.vchMensaje);
+                                                                alert(respuesta.vchMensaje)
+                                                            }
+                                                        } else {
+                                                            console.error("Error en la solicitud al servidor");
+                                                        }
+                                                    };
+                                                }
+
+                                            </script>
+                                            <button type="button" class="button" id = "botonSiguiente" >SIGUIENTE</button>
+                                            <script>
+                                                document.getElementById('botonSiguiente').addEventListener('click', ValidarDatosDomicilio);
+                                            </script>
                                             <button type="reset" class="button">LIMPIAR</button>
-                                            <button type="button" class="button"
-                                                onclick="window.location.href = 'altaContacto.php'">SIGUIENTE</button>
+
                                         </div>
                                     </div>
                                 </div>
@@ -385,6 +453,7 @@
                 </div>
             </div>
         </div>
+
     </footer>
     <!-- Footer End -->
 
@@ -412,6 +481,7 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
     <script src="../../js/map.js"></script>
+
 </body>
 
 </html>

@@ -396,9 +396,9 @@
                                         <label class="col-sm-3 col-form-label">*SEDE:</label>
                                         <div class="col-sm-9">
                                             <select class="form-control" Name="SEDE" id="iTdSede" required>
-                                                <option value="">SELEECIONE UNA SEDE</option>
+                                                <option value="">SELECCIONE UNA SEDE</option>
                                                 <?php foreach ($resultadoSede as $sede): ?>
-                                                    <option value="<?= $sede['iIdConstante'] ?>"
+                                                    <option value="<?= $sede['iIdConstante'] ?>">
                                                         [<?= $sede['iClaveCatalogo'] ?>] - <?= $sede['vchDescripcion'] ?>
                                                     </option>
                                                 <?php endforeach; ?>
@@ -468,10 +468,10 @@
                                             <label class="col-sm-3 col-form-label"></label>
                                             <div class="col-sm-9">
                                                 <button type="button" class="button"
-                                                    onclick="agregarDocumento()">Agregar Documento</button>
-                                                <button type="reset" class="button">LIMPIAR</button>
+                                                        onclick="window.location.href = 'consultaEmpleado.php'">SIGUIENTE</button>
                                                 <button type="button" class="button"
-                                                    onclick="window.location.href = 'consultaEmpleado.php'">SIGUIENTE</button>
+                                                    onclick="agregarDocumento()">AGREGAR DOCUMENTO</button>
+                                                <button type="reset" class="button">LIMPIAR</button>
                                             </div>
                                         </div>
 
@@ -479,34 +479,35 @@
                                             function agregarDocumento() {
                                                 var contenedor = document.getElementById('documentosContainer');
 
-                                                // Create a new container div for each set of fields
                                                 var nuevoDocumentoContainer = document.createElement('div');
-                                                nuevoDocumentoContainer.className = 'col-md-12'; // Adjust the class as needed
+                                                nuevoDocumentoContainer.className = 'col-md-12';
 
-                                                // Create the "TIPO DE DOCUMENTO" field
                                                 var nuevoTipoDocumento = document.createElement('div');
-                                                nuevoTipoDocumento.className = 'col-md-6';
-                                                nuevoTipoDocumento.innerHTML =
-                                                    '<?php foreach ($resultadoDocumento as $documento): ?>' +
-                                                    '<option value="<?= $documento['iIdConstante'] ?>">' +
-                                                    '[<?= $documento['iClaveCatalogo'] ?>] - <?= $documento['vchDescripcion'] ?>' +
-                                                    '</option>' +
-                                                    '<?php endforeach; ?>';
-
-                                                // Create the "DOCUMENTO PDF" field
+                                                //nuevoTipoDocumento.className = 'col-md-6';
+                                                nuevoTipoDocumento.innerHTML = `
+                                                    <label class="col-sm-3 col-form-label">*TIPO DE DOCUMENTO:</label>
+                                                        <div class="col-sm-9">
+                                                             <select class="form-control" id="ilDocumento" name="TIPO DE DOCUMENTO []">
+                                                                 <option value="">SELECCIONE UN TIPO DE DOCUMENTO</option>
+                                                                    <?php foreach ($resultadoDocumento as $documento): ?>
+                                                                        <option value="<?= $documento['iIdConstante'] ?>">
+                                                                            [<?= $documento['iClaveCatalogo'] ?>] - <?= $documento['vchDescripcion'] ?>
+                                                                        </option>
+                                                                    <?php endforeach; ?>
+                                                             </select>
+                                                        </div>
+                                                    `;
                                                 var nuevoDocumentoPDF = document.createElement('div');
                                                 nuevoDocumentoPDF.className = 'col-md-6';
                                                 nuevoDocumentoPDF.innerHTML = `
-            <label for="documentoPDF">DOCUMENTO PDF</label>
-            <input type="file" accept=".pdf" class="button-area" name="documentoPDF[]">
-            <small class=""></small>
-        `;
+                                                        <label for="documentoPDF">DOCUMENTO PDF</label>
+                                                        <input type="file" accept=".pdf" class="button-area" name="documentoPDF[]">
+                                                        <small class=""></small>
+                                                    `;
 
-                                                // Append the new fields to the container
                                                 nuevoDocumentoContainer.appendChild(nuevoTipoDocumento);
                                                 nuevoDocumentoContainer.appendChild(nuevoDocumentoPDF);
 
-                                                // Append the new container to the main container
                                                 contenedor.appendChild(nuevoDocumentoContainer);
                                             }
                                         </script>

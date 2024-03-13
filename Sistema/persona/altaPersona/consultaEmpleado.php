@@ -249,12 +249,6 @@ require_once('../../includes/pandora.php');
           <div class="dashboard-container">
             <div class="dashboard-content-wrapper">
 
-
-
-
-
-
-
               <?php
               if (isset($_POST['submitBuscar'])) {
                 $nombreaBuscar = $_POST['nombreaBuscar'];
