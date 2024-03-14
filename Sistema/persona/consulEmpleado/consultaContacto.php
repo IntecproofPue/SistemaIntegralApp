@@ -456,7 +456,7 @@ $resultadoRegimen = ObtenerIdRegimen();
         <div class="col">
           <div class="header-top">
             <div class="logo-area">
-              <a href="../../index.html"><img src="../../images/logo-2.png" alt=""></a>
+              <a href="../../index.php"><img src="../../images/logo-2.png" alt=""></a>
             </div>
             <div class="header-top-toggler">
               <div class="header-top-toggler-button"></div>
@@ -535,13 +535,18 @@ $resultadoRegimen = ObtenerIdRegimen();
       <div class="row">
         <div class="col-md-6">
           <div class="breadcrumb-area">
-            <h1>CONSULTA DOMICILIO</h1>
+            <h1>CONSULTA CONTACTO</h1>
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">INICIO</a></li>
-                <li class="breadcrumb-item active" aria-current="page">CONSULTA DOMICILIO&nbsp;&nbsp;</li>
+                <li class="breadcrumb-item active" aria-current="page">CONSULTA CONTACTO&nbsp;&nbsp;</li>
               </ol>
             </nav>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="breadcrumb-form">
+
           </div>
         </div>
       </div>
@@ -555,70 +560,47 @@ $resultadoRegimen = ObtenerIdRegimen();
         <div class="col">
           <div class="dashboard-container">
             <div class="dashboard-content-wrapper">
+
               <form action="altaPersona" method="post" class="dashboard-form">
                 <div class="dashboard-section basic-info-input">
                   <h4><i data-feather="user-check"></i>INFORMACION BASICA</h4>
                   <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">ENTIDAD</label>
+                    <label class="col-sm-3 col-form-label">TIPO DE CONTACTO</label>
                     <div class="col-sm-9">
                       <ul>
-                        <li>INGRESA ENTIDAD EMPLEADO</li>
+                        <li>INGRESA CONTACTO EMPLEADO</li>
                       </ul>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">MUNICIPIO:</label>
+                    <label class="col-sm-3 col-form-label">CONTACTO:</label>
                     <div class="col-sm-9">
                       <ul>
-                        <li>INGRESA MUNICIPIO EMPLEADO</li>
+                        <li>INGRESA CONTACTO EMPLEADO</li>
                       </ul>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">LOCALIDAD:</label>
+                    <label class="col-sm-3 col-form-label">ESTATUS:</label>
                     <div class="col-sm-9">
                       <ul>
-                        <li>INGRESA LOCALIDAD EMPLEADO</li>
+                        <li>INGRESA ESTATUS EMPLEADO</li>
                       </ul>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">C.P.:</label>
+                    <label class="col-sm-3 col-form-label">USUARIO:</label>
                     <div class="col-sm-9">
                       <ul>
-                        <li>INGRESA CP EMPLEADO</li>
+                        <li>INGRESA USUARIO EMPLEADO</li>
                       </ul>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">COLONIA:</label>
+                    <label class="col-sm-3 col-form-label">FECHA DE MODIFICACION:</label>
                     <div class="col-sm-9">
                       <ul>
-                        <li>INGRESA COL EMPLEADO</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">CALLE</label>
-                    <div class="col-sm-9">
-                      <ul>
-                        <li>INGRESA CALLE EMPLEADO</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">LETRA:</label>
-                    <div class="col-sm-9">
-                      <ul>
-                        <li>INGRESA No EXT EMPLEADO</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">No. INTERIOR:</label>
-                    <div class="col-sm-9">
-                      <ul>
-                        <li>INGRESA INT EMPLEADO</li>
+                        <li>INGRESA FECH EMPLEADO</li>
                       </ul>
                     </div>
                   </div>
