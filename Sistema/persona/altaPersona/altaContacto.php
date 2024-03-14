@@ -322,7 +322,7 @@ $resultadoContacto = ObtenerTipoContacto();
             <div class="col">
                 <div class="dashboard-container">
                     <div class="dashboard-content-wrapper">
-                        <form class="dashboard-form">
+                        <form class="dashboard-form" id = "FormContactoAlta">
 
                             <input type="hidden" name = "iIdConstanteContacto" id="iIdConstanteContacto" value="" >
                             <input type="hidden" name = "iClaveContacto" id="iClaveContacto" value="" >
@@ -348,7 +348,7 @@ $resultadoContacto = ObtenerTipoContacto();
                                     <label class="col-sm-3 col-form-label">*CONTACTO:</label>
                                     <div class="col-sm-9">
                                         <input type="text" id="contacto" name="contacto" class="form-control"
-                                               placeholder="CONTACTO" style="text-transform: uppercase">
+                                               placeholder="CONTACTO">
                                     </div>
                                 </div>
                                 <div class="form-group row" id="nuevosCamposContainer">
@@ -396,6 +396,7 @@ $resultadoContacto = ObtenerTipoContacto();
                                                         var respuesta = JSON.parse(datosContacto.responseText);
                                                         if (respuesta.bResultado === 1) {
                                                             console.log(respuesta);
+                                                            localStorage.setItem('datosContacto',JSON.stringify(datosFormulario));
                                                             window.location.href = "altaEmpleado.php";
                                                         } else {
                                                             console.error("Mensaje Error: " + respuesta.vchMensaje);
@@ -406,7 +407,6 @@ $resultadoContacto = ObtenerTipoContacto();
                                                     }
                                                 };
                                             }
-
                                         </script>
                                         <button type="button" class="button" id = "botonSiguiente" >SIGUIENTE</button>
                                         <script>
