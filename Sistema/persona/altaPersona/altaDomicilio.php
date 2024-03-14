@@ -395,6 +395,7 @@
                                                             var respuesta = JSON.parse(datosDomicilio.responseText);
                                                             if (respuesta.bResultado === 1) {
                                                                 console.log(respuesta);
+                                                                localStorage.setItem('datosDomicilio',JSON.stringify(datosFormulario));
                                                                 window.location.href = "altaContacto.php";
                                                             } else {
                                                                 console.error("Mensaje Error: " + respuesta.vchMensaje);
