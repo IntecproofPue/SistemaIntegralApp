@@ -19,7 +19,7 @@
     }
 
 
-    $datosEmpleado= array(
+    $datosEmpleadoConsulta= array(
         'iIdPersona' => 0,
         'vchNombre' => $datosPersona['nombre'],
         'vchPrimerApellido' => $datosPersona['primerApellido'],
@@ -54,9 +54,9 @@
         'iAgrupadorContacto' => 8,
         'iClaveContacto' => $datosContacto['iClaveContacto'],
         'vchContacto' => $datosContacto['contacto'],
+        'vchNSS' => $datosEmpleado['vchNSS'],
         'iIdPuesto' => $datosEmpleado['iIdPuesto'],
         'dFechaIngreso' => $datosEmpleado['fechaIngreso'],
-        'vchNSS' => $datosEmpleado['vchNSS'],
         'iIdSede' => $datosEmpleado['iIdConstanteSede'],
         'iAgrupadorSede' => 4,
         'iClaveSede' =>$datosEmpleado['iClaveSede'],
@@ -66,6 +66,10 @@
         'vchCampoError' => '',
         'vchMensaje' => ''
     );
+
+
+    var_dump($datosEmpleadoConsulta);
+
     $procedureName = "EXEC prcAltaEmpleado      @iIdPersona				= ? ,
                                                 @vchNombre				= ? ,
                                                 @vchPrimerApellido		= ? ,
@@ -88,7 +92,7 @@
                                                 @vchCalle				= ? ,
                                                 @vchNumeroInterior		= ? ,
                                                 @vchNumeroExterior		= ? ,
-                                                @vchLetra				= ? 
+                                                @vchLetra				= ? ,
                                                 @iCodigoPostal			= ? ,
                                                 @vchColonia				= ? ,
                                                 @vchLocalidad			= ? ,
@@ -100,13 +104,12 @@
                                                 @iAgrupadorContacto		= ? , 
                                                 @iClaveContacto			= ? , 
                                                 @vchContacto			= ? ,
+                                                @vchNSS                 = ? ,
                                                 @iIdPuesto				= ? ,
                                                 @dFechaIngreso			= ? , 
-                                                @vchNSS					= ? ,
                                                 @iIdSede				= ? ,
                                                 @iAgrupadorSede			= ? ,
                                                 @iClaveSede				= ? , 
-                                                @iIdTipoDocumento		= ? , 
                                                 @iIdUsuario				= ? , 
                                                 @iIdEmpleado			= ? , 
                                                 @bResultado				= ? , 
@@ -114,68 +117,133 @@
                                                 @vchMensaje				= ?
                                                        ";
 
+    echo $procedureName;
+
     $params = array(
-        $datosEmpleado['iIdPersona'],
-        $datosEmpleado['vchNombre'],
-        $datosEmpleado['vchPrimerApellido'],
-        $datosEmpleado['vchSegundoApellido'],
-        $datosEmpleado['vchRFC'],
-        $datosEmpleado['vchCURP'],
-        $datosEmpleado['dFechaNacimiento'],
-        $datosEmpleado['iIdGenero'],
-        $datosEmpleado['iAgrupadorGenero'],
-        $datosEmpleado['iClaveGenero'],
-        $datosEmpleado['iIdNacionalidad'],
-        $datosEmpleado['iAgrupadorNacionalidad'],
-        $datosEmpleado['iClaveNacionalidad'],
-        $datosEmpleado['iIdTipoPersona'],
-        $datosEmpleado['iAgrupadorTipoPersona'],
-        $datosEmpleado['iClaveTipoPersona'],
-        $datosEmpleado['iRegimen'],
-        $datosEmpleado['vchUsoFiscal'],
-        $datosEmpleado['iCodigoPostalFiscal'],
-        $datosEmpleado['vchCalle'],
-        $datosEmpleado['vchNumeroInterior'],
-        $datosEmpleado['vchNumeroExterior'],
-        $datosEmpleado['vchLetra'],
-        $datosEmpleado['iCodigoPostal'],
-        $datosEmpleado['vchColonia'],
-        $datosEmpleado['vchLocalidad'],
-        $datosEmpleado['vchMunicipio'],
-        $datosEmpleado['iIdEntidadFederativa'],
-        $datosEmpleado['iAgrupadorEntidad'],
-        $datosEmpleado['iClaveEntidad'],
-        $datosEmpleado['iIdTipoContacto'],
-        $datosEmpleado['iAgrupadorContacto'],
-        $datosEmpleado['iClaveContacto'],
-        $datosEmpleado['vchContacto'],
-        $datosEmpleado['iIdPuesto'],
-        $datosEmpleado['dFechaIngreso'],
-        $datosEmpleado['vchNSS'],
-        $datosEmpleado['iIdSede'],
-        $datosEmpleado['iAgrupadorSede'],
-        $datosEmpleado['iClaveSede'],
-        $datosEmpleado['iIdUsuario'],
-        array(&$datosEmpleado['iIdEmpleado'], SQLSRV_PARAM_OUT),
-        array(&$datosEmpleado['bResultado'], SQLSRV_PARAM_OUT),
-        array(&$datosEmpleado['vchCampoError'], SQLSRV_PARAM_OUT),
-        array(&$datosEmpleado['vchMensaje'], SQLSRV_PARAM_OUT)
+        $datosEmpleadoConsulta['iIdPersona'],
+        $datosEmpleadoConsulta['vchNombre'],
+        $datosEmpleadoConsulta['vchPrimerApellido'],
+        $datosEmpleadoConsulta['vchSegundoApellido'],
+        $datosEmpleadoConsulta['vchRFC'],
+        $datosEmpleadoConsulta['vchCURP'],
+        $datosEmpleadoConsulta['dFechaNacimiento'],
+        $datosEmpleadoConsulta['iIdGenero'],
+        $datosEmpleadoConsulta['iAgrupadorGenero'],
+        $datosEmpleadoConsulta['iClaveGenero'],
+        $datosEmpleadoConsulta['iIdNacionalidad'],
+        $datosEmpleadoConsulta['iAgrupadorNacionalidad'],
+        $datosEmpleadoConsulta['iClaveNacionalidad'],
+        $datosEmpleadoConsulta['iIdTipoPersona'],
+        $datosEmpleadoConsulta['iAgrupadorTipoPersona'],
+        $datosEmpleadoConsulta['iClaveTipoPersona'],
+        $datosEmpleadoConsulta['iRegimen'],
+        $datosEmpleadoConsulta['vchUsoFiscal'],
+        $datosEmpleadoConsulta['iCodigoPostalFiscal'],
+        $datosEmpleadoConsulta['vchCalle'],
+        $datosEmpleadoConsulta['vchNumeroInterior'],
+        $datosEmpleadoConsulta['vchNumeroExterior'],
+        $datosEmpleadoConsulta['vchLetra'],
+        $datosEmpleadoConsulta['iCodigoPostal'],
+        $datosEmpleadoConsulta['vchColonia'],
+        $datosEmpleadoConsulta['vchLocalidad'],
+        $datosEmpleadoConsulta['vchMunicipio'],
+        $datosEmpleadoConsulta['iIdEntidadFederativa'],
+        $datosEmpleadoConsulta['iAgrupadorEntidad'],
+        $datosEmpleadoConsulta['iClaveEntidad'],
+        $datosEmpleadoConsulta['iIdTipoContacto'],
+        $datosEmpleadoConsulta['iAgrupadorContacto'],
+        $datosEmpleadoConsulta['iClaveContacto'],
+        $datosEmpleadoConsulta['vchContacto'],
+        $datosEmpleadoConsulta['vchNSS'],
+        $datosEmpleadoConsulta['iIdPuesto'],
+        $datosEmpleadoConsulta['dFechaIngreso'],
+        $datosEmpleadoConsulta['iIdSede'],
+        $datosEmpleadoConsulta['iAgrupadorSede'],
+        $datosEmpleadoConsulta['iClaveSede'],
+        $datosEmpleadoConsulta['iIdUsuario'],
+        array(&$datosEmpleadoConsulta['iIdEmpleado'], SQLSRV_PARAM_OUT),
+        array(&$datosEmpleadoConsulta['bResultado'], SQLSRV_PARAM_OUT),
+        array(&$datosEmpleadoConsulta['vchCampoError'], SQLSRV_PARAM_OUT),
+        array(&$datosEmpleadoConsulta['vchMensaje'], SQLSRV_PARAM_OUT)
     );
+
+    var_dump($params);
+
 
     $result = sqlsrv_query($conn, $procedureName, $params);
 
+    var_dump($result);
+
+$sql = "EXEC prcAltaEmpleado    @iIdPersona				= '{$datosEmpleadoConsulta['iIdPersona']}' ,
+                                @vchNombre				= '{$datosEmpleadoConsulta['vchNombre']}' ,
+                                @vchPrimerApellido		= '{$datosEmpleadoConsulta['vchPrimerApellido']}',
+                                @vchSegundoApellido		= '{$datosEmpleadoConsulta['vchSegundoApellido']}' ,
+                                @vchRFC					= '{$datosEmpleadoConsulta['vchRFC']}' ,
+                                @vchCURP				= '{$datosEmpleadoConsulta['vchCURP']}' ,
+                                @dFechaNacimiento		= '{$datosEmpleadoConsulta['dFechaNacimiento']}' ,
+                                @iIdGenero				= '{$datosEmpleadoConsulta['iIdGenero']}' ,
+                                @iAgrupadorGenero		= '{$datosEmpleadoConsulta['iAgrupadorGenero']}' ,
+                                @iClaveGenero			= '{$datosEmpleadoConsulta['iClaveGenero']}' ,
+                                @iIdNacionalidad		= '{$datosEmpleadoConsulta['iIdNacionalidad']}' ,
+                                @iAgrupadorNacionalidad	= '{$datosEmpleadoConsulta['iAgrupadorNacionalidad']}' ,
+                                @iClaveNacionalidad		= '{$datosEmpleadoConsulta['iClaveNacionalidad']}',
+                                @iIdTipoPersona			= '{$datosEmpleadoConsulta['iIdTipoPersona']}' ,
+                                @iAgrupadorTipoPersona	= '{$datosEmpleadoConsulta['iAgrupadorTipoPersona']}' ,
+                                @iClaveTipoPersona		= '{$datosEmpleadoConsulta['iClaveTipoPersona']}' ,
+                                @iRegimen				= '{$datosEmpleadoConsulta['iRegimen']}' ,
+                                @vchUsoFiscal			= '{$datosEmpleadoConsulta['vchUsoFiscal']}' ,
+                                @iCodigoPostalFiscal	= '{$datosEmpleadoConsulta['iCodigoPostalFiscal']}' ,
+                                @vchCalle				= '{$datosEmpleadoConsulta['vchCalle']}' ,
+                                @vchNumeroInterior		= '{$datosEmpleadoConsulta['vchNumeroInterior']}' ,
+                                @vchNumeroExterior		= '{$datosEmpleadoConsulta['vchNumeroExterior']}' ,
+                                @vchLetra				= '{$datosEmpleadoConsulta['vchLetra']}' ,
+                                @iCodigoPostal			= '{$datosEmpleadoConsulta['iCodigoPostal']}' ,
+                                @vchColonia				= '{$datosEmpleadoConsulta['vchColonia']}' ,
+                                @vchLocalidad			= '{$datosEmpleadoConsulta['vchLocalidad']}' ,
+                                @vchMunicipio			= '{$datosEmpleadoConsulta['vchMunicipio']}' ,
+                                @iIdEntidadFederativa	= '{$datosEmpleadoConsulta['iIdEntidadFederativa']}' ,
+                                @iAgrupadorEntidad		= '{$datosEmpleadoConsulta['iAgrupadorEntidad']}' ,
+                                @iClaveEntidad			= '{$datosEmpleadoConsulta['iClaveEntidad']}' ,
+                                @iIdTipoContacto		= '{$datosEmpleadoConsulta['iIdTipoContacto']}' ,
+                                @iAgrupadorContacto		= '{$datosEmpleadoConsulta['iAgrupadorContacto']}' ,
+                                @iClaveContacto			= '{$datosEmpleadoConsulta['iClaveContacto']}' ,
+                                @vchContacto			= '{$datosEmpleadoConsulta['vchContacto']}' ,
+                                @vchNSS                 = '{$datosEmpleadoConsulta['vchNSS']}' ,
+                                @iIdPuesto				= '{$datosEmpleadoConsulta['iIdPuesto']}' ,
+                                @dFechaIngreso			= '{$datosEmpleadoConsulta['dFechaIngreso']}' ,
+                                @iIdSede				= '{$datosEmpleadoConsulta['iIdSede']}' ,
+                                @iAgrupadorSede			= '{$datosEmpleadoConsulta['iAgrupadorSede']}' ,
+                                @iClaveSede				= '{$datosEmpleadoConsulta['iClaveSede']}' ,
+                                @iIdUsuario				= '{$datosEmpleadoConsulta['iIdUsuario']}' ,
+                                @iIdEmpleado			= '{$datosEmpleadoConsulta['iIdEmpleado']}' ,
+                                @bResultado				= '{$datosEmpleadoConsulta['bResultado']}' ,
+                                @vchCampoError			= '{$datosEmpleadoConsulta['vchCampoError']}' ,
+                                @vchMensaje				= '{$datosEmpleadoConsulta['vchMensaje']}' ";
+
+
+echo "<br>Voy a ejecutar la consulta: <b>$sql</b>";
+
     if ($result === false) {
+        echo ("No se está ejecutando el query");
         $errorInformacion = sqlsrv_errors();
         $respuesta   = array (
             'error' => true,
-            'mensaje' => $datosEmpleado['vchMensaje'],
-            'campoError' => $datosEmpleado['vchCampoError'],
+            'mensaje' => $datosEmpleadoConsulta['vchMensaje'],
+            'campoError' => $datosEmpleadoConsulta['vchCampoError'],
             'sqlError' => $errorInformacion
         );
         echo json_encode($respuesta);
 
     } else {
-        echo json_encode($datosEmpleado);
+        echo ("Si se está ejecutando el query");
+        $vchMensaje = mb_convert_encoding($datosEmpleadoConsulta['vchMensaje'],'ISO-8859-1', 'UTF-8' );
+
+        echo ("=========================================");
+
+        echo $vchMensaje;
+
+        var_dump($datosEmpleadoConsulta);
+        echo json_encode($datosEmpleadoConsulta);
     }
 
     sqlsrv_close($conn);

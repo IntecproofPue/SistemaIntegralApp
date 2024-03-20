@@ -48,6 +48,7 @@ $procedureName = "EXEC prcRN_Contacto          @iIdPersona = ?,
                                                @vchMensaje = ?
                                                        ";
 
+
 $params = array(
     $datosContacto['iIdPersona'],
     $datosContacto['iIdTipoContacto'],

@@ -1,5 +1,27 @@
 <?php
 require_once('../../includes/pandora.php');
+
+session_start();
+function ObtenerEstadoProcedencia()
+{
+    if (isset($_SESSION['CatConstante'])) {
+        $datosEdoProcedencia = $_SESSION['CatConstante'];
+        $estadoEncontrado = array();
+
+        foreach ($datosEdoProcedencia as $valorEstado) {
+            if ($valorEstado['iAgrupador'] == 4) {
+                $estadoEncontrado[] = $valorEstado;
+            }
+        }
+        return $estadoEncontrado;
+    } else {
+        echo ("No hay datos del Estado de Procedencia");
+    }
+}
+
+$resultadoEstado = ObtenerEstadoProcedencia();
+
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -107,6 +129,7 @@ require_once('../../includes/pandora.php');
             return patronAceptado.test(tecla_final);
         }
     </script>
+    <!--<input class="tf w-input" id="txtCurp" name="txtCurp" maxlength="150" onkeypress="return quitarEspeciales(event)" placeholder="No. de CURP" type="text">-->
 
 </head>
 
@@ -178,8 +201,7 @@ require_once('../../includes/pandora.php');
                                     <ul class="account-item-list">
                                         <li><a href="#"><span class="ti-user"></span>Account</a></li>
                                         <li><a href="#"><span class="ti-settings"></span>Settings</a></li>
-                                        <li><a href='../../index.php'"><span class=" ti-power-off"></span>SALIR</a>
-                                        </li>
+                                        <li><a href="#"><span class="ti-power-off"></span>Log Out</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -187,8 +209,6 @@ require_once('../../includes/pandora.php');
                     </div>
                 </div>
             </div>
-        </div>
-        </div>
         </div>
     </header>
 
@@ -198,12 +218,10 @@ require_once('../../includes/pandora.php');
             <div class="row">
                 <div class="col-md-6">
                     <div class="breadcrumb-area">
-                        <a>
-                            <h1>CONSULTA PUESTO</h1>
-                        </a>
+                        <h1>CONSULTA PUESTO</h1>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                                <li class="breadcrumb-item"><a href="#">INICIO</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">CONSULTA PUESTO&nbsp;&nbsp;</li>
                             </ol>
                         </nav>
@@ -219,197 +237,93 @@ require_once('../../includes/pandora.php');
     </div>
     <!-- Breadcrumb End -->
 
-    <div class="alice-bg section-padding-bottom" id="dashboardSection">
+    <div class="alice-bg section-padding-bottom">
         <div class="container no-gliters">
             <div class="row no-gliters">
                 <div class="col">
                     <div class="dashboard-container">
                         <div class="dashboard-content-wrapper">
-                            <?php
-                            if (isset($_POST['submitBuscar'])) {
-                                $nombreaBuscar = $_POST['nombreaBuscar'];
-                                echo "<br>El nombre a buscar es <b>$nombreaBuscar</b>";
 
-                                if ($nombreaBuscar == 'Luis') { ?>
+                            <form action="altaPersona" method="post" class="dashboard-form">
 
-                                    <div style="background-color: #117a8b; text-align: center">
-                                        <?php echo "<i><span style='color: #ededee' size='-2'> $busquedaEncontradaTxt</span></i><br />"; ?>
+                                <div class="dashboard-section basic-info-input">
+                                    <h4><i data-feather="user-check"></i>INFORMACION BASICA</h4>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">*NOMBRE (S)</label>
+                                        <div class="col-sm-9">
+                                            <ul>
+                                                <li>INGRESA info EMPLEADO</li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                    <br>Aquí la lista de coincidencias
-
-
-                                <?php } else { ?>
-                                    <div style="background-color: #c82333; text-align: center">
-                                        <?php echo "<i><span style='color: #ededee' size='-2'> $busquedaNoEncontradaTxt</span></i><br />"; ?>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">*DESCRIPCION DE PUESTO:</label>
+                                        <div class="col-sm-9">
+                                            <ul>
+                                                <li>INGRESA info EMPLEADO</li>
+                                            </ul>
+                                        </div>
                                     </div>
-
-                                    <form action="#" method="post" class="dashboard-form">
-
-                                        <div class="dashboard-section basic-info-input">
-                                            <h3><i data-feather="user-check"></i>DATOS DE PUESTO</h3>
-                                            <div class="dashboard-section basic-info-input">
-                                                <h4><i data-feather="user-check"></i>INFORMACION BASICA</h4>
-                                                <div class="form-group row">
-                                                    <label class="col-sm-3 col-form-label">*NOMBRE (S)</label>
-                                                    <div class="col-sm-9">
-                                                        <ul>
-                                                            <li>INGRESA info EMPLEADO</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-sm-3 col-form-label">*DESCRIPCION DE PUESTO:</label>
-                                                    <div class="col-sm-9">
-                                                        <ul>
-                                                            <li>INGRESA info EMPLEADO</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-sm-3 col-form-label">*TIPO DE CONTARTACION:</label>
-                                                    <div class="col-sm-9">
-                                                        <ul>
-                                                            <li>INGRESA info EMPLEADO</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-sm-3 col-form-label">*HORAS LAVORALES:</label>
-                                                    <div class="col-sm-9">
-                                                        <ul>
-                                                            <li>INGRESA info EMPLEADO</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-sm-3 col-form-label">*SALARIO NETO:</label>
-                                                    <div class="col-sm-9">
-                                                        <ul>
-                                                            <li>INGRESA info EMPLEADO</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-sm-3 col-form-label">*SALARIO FISCAL:</label>
-                                                    <div class="col-sm-9">
-                                                        <ul>
-                                                            <li>INGRESA info EMPLEADO</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-sm-3 col-form-label">*SALARIO COMPLEMENTARIO:</label>
-                                                    <div class="col-sm-9">
-                                                        <ul>
-                                                            <li>INGRESA info EMPLEADO</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-
-                                            </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">*TIPO DE CONTARTACION:</label>
+                                        <div class="col-sm-9">
+                                            <ul>
+                                                <li>INGRESA info EMPLEADO</li>
+                                            </ul>
                                         </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label"></label>
-                                            <div class="col-sm-9">
-                                                <button type="button" class="button"
-                                                    id="toggleDomicilioButton">DOMICILIO</button>
-                                                <button type="button" class="button"
-                                                    onclick="window.location.href = '#'">EDITAR</button>
-                                            </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">*HORAS LAVORALES:</label>
+                                        <div class="col-sm-9">
+                                            <ul>
+                                                <li>INGRESA info EMPLEADO</li>
+                                            </ul>
                                         </div>
-
-                                    <?php }
-                                ?>
-                                    <?php
-                            } else {
-                                ?>
-                                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="dashboard-form">
-
-                                        <div id="busquedaDiv" class="dashboard-section basic-info-input">
-                                            <h4><i data-feather="user-check"></i>BUSQUEDA</h4>
-                                            <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">SELECCIONAR CAMPO:</label>
-                                                <div class="col-sm-9">
-                                                    <select class="form-control" id="selectCampos"
-                                                        onchange="mostrarCampoSeleccionado()">
-                                                        <option value="iDBuscar">ID DE PUESTO</option>
-                                                        <option value="nombreaBuscar">NOMBRE</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label"></label>
-                                                <div class="col-sm-9">
-                                                    <div class="campo-container">
-                                                        <div id="iDBuscar" class="campo-busqueda">
-                                                            <input type="text" class="form-control"
-                                                                placeholder="INGRESA ID DEL PUESTO" name="iDBuscar"
-                                                                style="text-transform: uppercase">
-                                                        </div>
-                                                        <div id="nombreaBuscar" class="campo-busqueda"
-                                                            style="display: none;">
-                                                            <input type="text" class="form-control"
-                                                                placeholder="INGRESA EL NOMBRE DEL PUESTO"
-                                                                name="nombreaBuscar" style="text-transform: uppercase">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label"></label>
-                                                <div class="job-apply-buttons">
-                                                    <a href="#" class="apply" data-toggle="modal"
-                                                        data-target="#apply-popup-id">SELECCIONAR</a>
-                                                    <button class="button" type="reset">LIMPIAR</button>
-                                                </div>
-                                            </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">*SALARIO NETO:</label>
+                                        <div class="col-sm-9">
+                                            <ul>
+                                                <li>INGRESA info EMPLEADO</li>
+                                            </ul>
                                         </div>
-                                        <!-- MODAL POPUP -->
-                                        <div class="apply-popup">
-                                            <div class="modal fade" id="apply-popup-id" tabindex="-1" role="dialog"
-                                                aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title"><i data-feather="edit"></i>RESULTADO DE
-                                                                LA BUSQUEDA</h5>
-                                                            <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <form action="#">
-                                                                <ul
-                                                                    style="list-style: none; padding: 0; display: flex; flex-direction: row; align-items: center;">
-                                                                    <li style="margin-right: 7px;"><span>ID DEL
-                                                                            PUESTO:</span> MOSTRAR ID</li>
-                                                                    <li style="margin-right: 7px;"><span>NOMBRE DEL
-                                                                            PUESTO:</span> MOSTRAR NOMBRE</li>
-                                                                </ul>
-                                                                <button class="button primary-bg btn-block"
-                                                                    name="submitBuscar"
-                                                                    onclick="seleccionarEmpleado()">SELECCIONAR</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">*SALARIO FISCAL:</label>
+                                        <div class="col-sm-9">
+                                            <ul>
+                                                <li>INGRESA info EMPLEADO</li>
+                                            </ul>
                                         </div>
-                            </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">*SALARIO COMPLEMENTARIO:</label>
+                                        <div class="col-sm-9">
+                                            <ul>
+                                                <li>INGRESA info EMPLEADO</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label"></label>
+                                        <div class="col-sm-9">
+                                            <button type="reset" class="button">LIMPIAR</button>
+                                            <button type="button" class="button"
+                                                onclick="window.location.href = 'altaContacto.php'">SIGUIENTE</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </form>
-                            <?php
-                            }
-
-                            ?>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <!-- Footer -->
     <footer class="footer-bg">
+
+
         <div class="footer-bottom-area">
             <div class="container">
                 <div class="row">
@@ -417,17 +331,17 @@ require_once('../../includes/pandora.php');
                         <div class="footer-bottom border-top">
                             <div class="row">
                                 <div class="col-xl-4 col-lg-5 order-lg-2">
+                                    <div class="footer-app-download">
+                                        <!--<a href="#" class="apple-app">Apple Store</a>
+                  <a href="#" class="android-app">Google Play</a>-->
+                                    </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 order-lg-1">
-                                    <a href="#">
-                                        <img src="images/footer-logo.png" class="img-fluid" alt="">
-                                    </a>
-                                    <p class="copyright-text">Copyright <a href="#">Intecproof</a> 2024, All right
-                                        reserved</p>
+                                    <!-- <p class="copyright-text">Copyright <a href="#">Oficiona</a> 2020, All right reserved</p> -->
                                 </div>
                                 <div class="col-xl-4 col-lg-3 order-lg-3">
                                     <div class="back-to-top">
-                                        <a href="#">Back to top<i class="fas fa-angle-up"></i></a>
+                                        <a href="#">Subir<i class="fas fa-angle-up"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -463,89 +377,6 @@ require_once('../../includes/pandora.php');
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
     <script src="../../js/map.js"></script>
-
-    <script>
-        // función para mostrar u ocultar la sección de Domicilio
-        function toggleDomicilioSection() {
-            var domicilioSection = document.getElementById('domicilioSection');
-
-            // Cambia la visibilidad de la sección
-            if (domicilioSection.style.display === 'none') {
-                domicilioSection.style.display = 'block';
-            } else {
-                domicilioSection.style.display = 'none';
-            }
-        }
-        function limpiarCampos(element) {
-            // Desactiva todos los campos
-            var inputs = document.getElementsByName('iDBuscar').concat(
-                document.getElementsByName('RFCBuscar'),
-                document.getElementsByName('PUESTOBuscar'),
-                document.getElementsByName('SEDEBuscar'),
-                document.getElementsByName('nombreaBuscar')
-            );
-
-            for (var i = 0; i < inputs.length; i++) {
-                inputs[i].disabled = true;
-            }
-            // Habilita solo el campo correspondiente al input actualmente activo
-            element.disabled = false;
-
-            // Habilita solo el campo correspondiente al input actualmente activo
-            element.disabled = false;
-        }
-        element.focus();
-
-
-        function validarBusqueda() {
-            // Agrega tu lógica de validación aquí si es necesario
-            return true; // Cambia a 'false' si quieres prevenir el envío del formulario en ciertos casos
-        }
-
-        function mostrarCampoSeleccionado() {
-            var select = document.getElementById("selectCampos");
-            var selectedCampo = select.options[select.selectedIndex].value;
-
-            // Oculta todos los campos de búsqueda
-            var campos = document.querySelectorAll('.campo-busqueda');
-            campos.forEach(function (campo) {
-                campo.style.display = 'none';
-            });
-
-            // Muestra solo el campo seleccionado
-            var campoSeleccionado = document.getElementById(selectedCampo);
-            campoSeleccionado.style.display = 'block';
-        }
-
-        function mostrarCampoSeleccionado() {
-            var select = document.getElementById("selectCampos");
-            var selectedCampo = select.options[select.selectedIndex].value;
-
-            // Oculta todos los campos de búsqueda
-            var campos = document.querySelectorAll('.campo-busqueda');
-            campos.forEach(function (campo) {
-                campo.style.display = 'none';
-            });
-
-            // Muestra solo el campo seleccionado
-            var campoSeleccionado = document.getElementById(selectedCampo);
-            campoSeleccionado.style.display = 'block';
-        }
-
-        function realizarBusqueda() {
-            // Oculta el primer div (busquedaDiv)
-            document.getElementById("busquedaDiv").style.display = 'none';
-
-            // Muestra el segundo div (resultadoDiv)
-            document.getElementById("resultadoDiv").style.display = 'block';
-
-            // Aquí puedes realizar cualquier acción adicional relacionada con la búsqueda
-        }
-
-    </script>
-
-
-
 </body>
 
 </html>

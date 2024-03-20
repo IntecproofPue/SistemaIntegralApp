@@ -1,7 +1,23 @@
 <?php
 require_once('../../includes/pandora.php');
-
+require_once('../../includes/load.php');
 session_start();
+
+if ( isset( $_SESSION['user_id'] ) ) {?>
+    <?php }else{
+
+    ?>
+    <script type="text/javascript">
+        //Redireccionamiento tras 5 segundos
+        setTimeout( function() { window.location.href = "../../index.php"; }, 0 );
+    </script>
+    <?php
+
+}
+
+
+
+
 
 function EjecutarConstante()
 {
@@ -583,19 +599,88 @@ $resultadoRegimen = ObtenerIdRegimen();
                         if (isset($_POST['submitBuscar'])) {
                             $nombreaBuscar = $_POST['nombreaBuscar'];
                             echo "<br>El nombre a buscar es <b>$nombreaBuscar</b>";
-                            //Mandar el prc de consulta de persona
-                            if ($nombreaBuscar == 'Luis') { ?>
 
-                                <div style="background-color: #11bdd9; text-align: center">
-                                    <?php echo "<i><span style='color: #ededee' size='-2'> $busquedaEncontradaTxt</span></i><br />"; ?>
+                            //Mandar el prc de consulta de persona
+
+                        if(empty($errors)){
+
+                            $user = searchPersona($nombreaBuscar); ///XXXXX
+                            // print_r($GLOBALS['row']);
+
+
+                            $contadodGlobal = $GLOBALS['contador'];
+                            $contador= 0;
+                            $row0=0; //incializando variable para evitar warning
+
+                            for($contador=0 ; $contador<$contadodGlobal; $contador++){
+                                //echo "Contador Global =$contadodGlobal, contador= $contador ==== <br>";
+
+                                $row =$GLOBALS['row'.$contador+1];
+                                //echo $contador+1 ." bResultado = ".$row['bResultado']."Nombre =".$row['vchNombre']."Apellidos  =".$row['vchPrimerApellido']." ".$row['vchSegundoApellido']."<br>";
+
+                            }
+
+                        }else{
+                            echo "erorr====";
+
+                        }
+
+                            if ($row['bResultado']==1) { ?>
+
+                                <div style="background-color: #c82333; text-align: center">
+                                    <?php
+                                        echo "<i><span style='color: #ededee' size='-2'> $personaEncontradaTxt $coincidenciasTxt</span></i><br />";
+
+
+                                    ?>
                                 </div>
-                                <br>Aquí la lista de coincidencias
+
+
+                                <?php
+
+                                for($contador=0 ; $contador<$contadodGlobal; $contador++){
+                                    //echo "Contador Global =$contadodGlobal, contador= $contador ==== <br>";
+
+                                    $row =$GLOBALS['row'.$contador+1];
+                                    //echo $contador+1 ." bResultado = ".$row['bResultado']."Nombre =".$row['vchNombre']."Apellidos  =".$row['vchPrimerApellido']." ".$row['vchSegundoApellido']."<br>";
+
+
+echo "
+                                <div class='candidate-filter-result'>
+                                    <div class='candidate'>
+                                        <div class='thumb'>
+                                            <a href='#'>
+                                                <img src='../../images/candidate/thumb-1.jpg' class='img-fluid' alt=''>
+                                            </a>
+                                        </div>
+                                        <div class='body'>
+                                            <div class='content'>
+                                                <h4><a href='#'>".$row['vchNombre'].$row['vchPrimerApellido']." ".$row['vchSegundoApellido']."</a></h4>
+                                                <div class='info'>
+                                                    <span class='work-post'><a href='#'><i data-feather='check-square'></i>"."EL PUESTO"."</a></span>
+                                                    <span class='location'><a href='#'><i data-feather='map-pin'></i>".$row['vchNacionalidad']."</a></span>
+                                                    <span class='location'><a href='#'><i data-feather='phone'></i>".$row['vchNacionalidad']."</a></span>
+                                                </div>
+                                            </div>
+                                            <div class='button-area'>
+                                                <a href='#'>EDITAR</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+";
+ }
+                                ?>
 
 
                             <?php } else { ?>
 
-                                <div style="background-color: #c82333; text-align: center">
-                                    <?php echo "<i><span style='color: #ededee' size='-2'> $busquedaNoEncontradaTxt</span></i><br />"; ?>
+                                <div style="background-color: #0c5460; text-align: center">
+                                    <?php echo "<i><span style='color: #ebfcff' size='-2'> $personaNoEncontradaTxt $continuaRegistroTxt</span></i><br />"; ?>
                                 </div>
 
                                 <form class="dashboard-form" id = "FormPersonaAlta">

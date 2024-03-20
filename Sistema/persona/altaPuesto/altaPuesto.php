@@ -2,24 +2,44 @@
 require_once('../../includes/pandora.php');
 
 session_start();
-function ObtenerEstadoProcedencia()
+function ObtenerTipoContratacion()
 {
     if (isset($_SESSION['CatConstante'])) {
-        $datosEdoProcedencia = $_SESSION['CatConstante'];
-        $estadoEncontrado = array();
+        $datosTipoContratacion = $_SESSION['CatConstante'];
+        $contratacionEncontrada = array();
 
-        foreach ($datosEdoProcedencia as $valorEstado) {
-            if ($valorEstado['iAgrupador'] == 4) {
-                $estadoEncontrado[] = $valorEstado;
+        foreach ($datosTipoContratacion as $valorContratacion) {
+            if ($valorContratacion['iAgrupador'] == 1) {
+                $contratacionEncontrada[] = $valorContratacion;
             }
         }
-        return $estadoEncontrado;
+        return $contratacionEncontrada;
     } else {
-        echo ("No hay datos del Estado de Procedencia");
+        echo ("No hay datos del Tipo de Contratación");
     }
 }
 
-$resultadoEstado = ObtenerEstadoProcedencia();
+$resultadoContratacion = ObtenerTipoContratacion();
+
+
+function ObtenerHorasLaborales()
+{
+    if (isset($_SESSION['CatConstante'])) {
+        $datosHorasLaborales = $_SESSION['CatConstante'];
+        $horasLaboralesEncontradas = array();
+
+        foreach ($datosHorasLaborales as $valorHorasLaborales) {
+            if ($valorHorasLaborales['iAgrupador'] == 2) {
+                $horasLaboralesEncontradas[] = $valorHorasLaborales;
+            }
+        }
+        return $horasLaboralesEncontradas;
+    } else {
+        echo ("No hay datos de las horas laborales");
+    }
+}
+
+$resultadoHorasLaborales = ObtenerHorasLaborales();
 
 
 ?>
@@ -28,7 +48,7 @@ $resultadoEstado = ObtenerEstadoProcedencia();
 
 <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>
@@ -266,14 +286,20 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                     <div class="dashboard-container">
                         <div class="dashboard-content-wrapper">
 
-                            <form action="altaPersona" method="post" class="dashboard-form">
+                            <form  class="dashboard-form">
+
+                                <input type="hidden" name = "iIdConstanteContratacion" id="iIdConstanteContratacion" value="" >
+                                <input type="hidden" name = "iClaveContratacion" id="iClaveContratacion" value="" >
+
+                                <input type="hidden" name = "iIdConstanteHoras" id="iIdConstanteHoras" value="" >
+                                <input type="hidden" name = "iClaveHoras" id="iClaveHoras" value="" >
 
                                 <div class="dashboard-section basic-info-input">
-                                    <h4><i data-feather="user-check"></i>INFORMACION BASICA</h4>
+                                    <h4><i data-feather="user-check"></i>INFORMACIÓN DEL PUESTO</h4>
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">*NOMBRE (S)</label>
+                                        <label class="col-sm-3 col-form-label">*NOMBRE DEL PUESTO</label>
                                         <div class="col-sm-9">
-                                            <input type="text" id="nombre" class="form-control" placeholder="NOMBRE (S)"
+                                            <input type="text" id="nombrePuesto" name = "nombrePuesto" class="form-control" placeholder="NOMBRE DEL PUESTO"
                                                 min="2" maxlength="150"
                                                 onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)"
                                                 required>
@@ -282,33 +308,41 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*DESCRIPCION DE PUESTO:</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" placeholder="DESCRIPCION DE PUESTO"
+                                            <input type="text" id = "descripcionPuesto" name = "descripcionPuesto" class="form-control" placeholder="DESCRIPCION DE PUESTO"
                                                 style="text-transform: uppercase" pattern="[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+"
                                                 title="SOLO SE PERMITEN LETRAS" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">*TIPO DE CONTARTACION:</label>
+                                        <label class="col-sm-3 col-form-label">*TIPO DE CONTRATACIÓN:</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control" name="TIPO DE CONTRATACION">
-                                                <option value="" selected>TIPO 1</option>
-                                                <option value="" selected>TIPO 2</option>
+                                            <select class="form-control" id="tipoContratacion" name="tipoContratacion">
+                                                <option value="" selected>SELECCIONE UN TIPO DE CONTRATACIÓN</option>
+                                                <?php foreach ($resultadoContratacion as $contratacion): ?>
+                                                    <option value="<?= $contratacion['iIdConstante'].'-'.$contratacion['iClaveCatalogo'] ?>">
+                                                        [<?= $contratacion['iClaveCatalogo'] ?>] - <?= $contratacion['vchDescripcion'] ?>
+                                                    </option>
+                                                <?php endforeach; ?>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">*HORAS LAVORALES:</label>
+                                        <label class="col-sm-3 col-form-label">*HORAS LABORALES:</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control" name="HORAS LAVORALES">
-                                                <option value="" selected>TIPO 1</option>
-                                                <option value="" selected>TIPO 2</option>
+                                            <select class="form-control" id = "horasLaborales" name="horasLaborales">
+                                                <option value="" selected>SELECCIONE LAS HORALES LABORALES </option>
+                                                <?php foreach ($resultadoHorasLaborales as $horas): ?>
+                                                    <option value="<?= $horas['iIdConstante'].'-'.$horas['iClaveCatalogo'] ?>">
+                                                        [<?= $horas['iClaveCatalogo'] ?>] - <?= $horas['vchDescripcion'] ?>
+                                                    </option>
+                                                <?php endforeach; ?>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*SALARIO NETO:</label>
                                         <div class="col-sm-9">
-                                            <input type="number" class="form-control" placeholder="SALARIO NETO"
+                                            <input type="number" id = "salarioNeto" name="salarioNeto" class="form-control" placeholder="SALARIO NETO"
                                                 required step="any" pattern="\d+(\.\d{1,2})?"
                                                 title="INGRESA UN NUMERO VALIDO (HASTA 2 DECIMALES)">
                                         </div>
@@ -316,7 +350,7 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*SALARIO FISCAL:</label>
                                         <div class="col-sm-9">
-                                            <input type="number" class="form-control" placeholder="SALARIO FISCAL"
+                                            <input type="number"  id = "salarioFiscal" name="salarioFiscal" class="form-control" placeholder="SALARIO FISCAL"
                                                 step="any" pattern="\d+(\.\d{1,2})?"
                                                 title="INGRESA UN NUMERO VALIDO (HASTA 2 DECIMALES)" required>
                                         </div>
@@ -324,7 +358,7 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*SALARIO COMPLEMENTARIO:</label>
                                         <div class="col-sm-9">
-                                            <input type="number" class="form-control"
+                                            <input type="number" class="form-control" id = "salarioComplementario" name="salarioComplementario"
                                                 placeholder="SALARIO COMPLEMENTARIO" step="any"
                                                 pattern="\d+(\.\d{1,2})?"
                                                 title="INGRESA UN NUMERO VALIDO (HASTA 2 DECIMALES)" required>
@@ -333,9 +367,77 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label"></label>
                                         <div class="col-sm-9">
+                                            <script>
+                                                function ValidarDatosPuesto() {
+                                                    // Obtener los valores de los elementos del formulario
+                                                    var TipoContratacionSeleccionado = document.getElementById('tipoContratacion');
+                                                    var ContratacionPartes = TipoContratacionSeleccionado.value.split('-');
+                                                    var iIdConstanteContratacion = ContratacionPartes[0];
+                                                    var iClaveContratacion = ContratacionPartes[1];
+
+                                                    // Asignar los valores a los campos ocultos
+                                                    document.getElementById('iIdConstanteContratacion').value = iIdConstanteContratacion;
+                                                    document.getElementById('iClaveContratacion').value = iClaveContratacion;
+
+
+                                                    // Obtener los valores de los elementos del formulario
+                                                    var HorasSeleccionadas = document.getElementById('horasLaborales');
+                                                    var HorasPartes = HorasSeleccionadas.value.split('-');
+                                                    var iIdConstanteHoras = HorasPartes[0];
+                                                    var iClaveHoras= HorasPartes[1];
+
+                                                    // Asignar los valores a los campos ocultos
+                                                    document.getElementById('iIdConstanteHoras').value = iIdConstanteHoras;
+                                                    document.getElementById('iClaveHoras').value = iClaveHoras;
+
+                                                    // Crear un objeto con los datos del formulario
+                                                    var datosFormularioPuesto = {
+                                                        nombrePuesto: document.getElementById('nombrePuesto').value,
+                                                        descripcionPuesto: document.getElementById('descripcionPuesto').value,
+                                                        iIdConstanteContratacion: iIdConstanteContratacion,
+                                                        iClaveContratacion: iClaveContratacion,
+                                                        iIdConstanteHoras: iIdConstanteHoras,
+                                                        iClaveHoras: iClaveHoras,
+                                                        salarioNeto: document.getElementById('salarioNeto').value,
+                                                        salarioFiscal: document.getElementById('salarioFiscal').value,
+                                                        salarioComplementario: document.getElementById('salarioComplementario').value
+                                                    };
+
+                                                    // Crear una instancia de XMLHttpRequest
+                                                    var datosPuesto = new XMLHttpRequest();
+
+                                                    // Configurar la solicitud
+                                                    datosPuesto.open('POST', 'validarDatosPuesto.php', true);
+                                                    datosPuesto.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                                                    // Convertir el objeto de datos a una cadena de consulta URL
+                                                    var formData = new URLSearchParams(datosFormularioPuesto).toString();
+
+                                                    // Enviar la solicitud
+                                                    datosPuesto.send(formData);
+
+                                                    // Manejar la respuesta
+                                                    datosPuesto.onload = function() {
+                                                        if (datosPuesto.status === 200) {
+                                                            var respuesta = JSON.parse(datosPuesto.responseText);
+                                                            if (respuesta.bResultado === 1) {
+                                                                console.log();
+                                                              //  window.location.href = "altaContacto.php";
+                                                            } else {
+                                                                console.error("Mensaje Error: " + respuesta.vchMensaje);
+                                                                alert(respuesta.vchMensaje)
+                                                            }
+                                                        } else {
+                                                            console.error("Error en la solicitud al servidor");
+                                                        }
+                                                    };
+                                                }
+                                            </script>
+                                            <button type="button" class="button" id = "botonSiguiente" >SIGUIENTE</button>
+                                            <script>
+                                                document.getElementById('botonSiguiente').addEventListener('click', ValidarDatosPuesto);
+                                            </script>
                                             <button type="reset" class="button">LIMPIAR</button>
-                                            <button type="button" class="button"
-                                                onclick="window.location.href = 'altaContacto.php'">SIGUIENTE</button>
                                         </div>
                                     </div>
                                 </div>
