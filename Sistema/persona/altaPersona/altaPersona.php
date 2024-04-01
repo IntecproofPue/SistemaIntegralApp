@@ -106,11 +106,7 @@ if ( isset( $_SESSION['user_id'] ) ) {?>
 
 
             function cargarUsosFiscales() {
-
-
                 window.alert("Hola");
-
-
             }
 
             function soloRfc(e) {
@@ -654,7 +650,7 @@ if ( isset( $_SESSION['user_id'] ) ) {?>
                                         <label class="col-sm-3 col-form-label">Nombre:</label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control"
-                                                   placeholder="Ingresa el nombre completo" name="nombreaBuscar">
+                                                   placeholder="Ingresa el nombre completo" name="nombreaBuscar" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">

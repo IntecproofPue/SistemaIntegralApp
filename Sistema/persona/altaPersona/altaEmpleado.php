@@ -574,7 +574,7 @@
                                                                 if (respuesta.bResultado === 1) {
                                                                     console.log(respuesta);
                                                                     alert(respuesta.vchMensaje);
-                                                                    window.location.href = ("../consulEmpleado/consultaEmpleado.php");
+                                                                    setTimeout( function() { window.location.href = ("../consulEmpleado/consultaEmpleado.php"); }, 0 );
 
                                                                 } else {
                                                                     console.error("Mensaje Error: " + respuesta.vchMensaje);
@@ -587,13 +587,23 @@
 
                                                     }
                                                 </script>
-                                                <button type="button" class="button" id = "botonSiguiente" >SIGUIENTE</button>
                                                 <script>
-                                                    document.getElementById('botonSiguiente').addEventListener('click', enviarFormularios);
+                                                    function RegresarInicio(){
+                                                        localStorage.clear(); //Limpiar el localStorage para no almacenar basura
+                                                        window.location.href = ("altaPersona.php");
+                                                    }
+                                                </script>
+                                                <button type="button" class="button" id = "registrarEmpleado" >REGISTRAR EMPLEADO</button>
+                                                <script>
+                                                    document.getElementById('registrarEmpleado').addEventListener('click', enviarFormularios);
                                                 </script>
                                                 <button type="button" class="button"
                                                     onclick="agregarDocumento()">AGREGAR DOCUMENTO</button>
                                                 <button type="reset" class="button">LIMPIAR</button>
+                                                <button type="button" class="button" id = "Cancelar">CANCELAR</button>
+                                                <script>
+                                                    document.getElementById('Cancelar').addEventListener('click', RegresarInicio);
+                                                </script>
                                             </div>
                                         </div>
                                         <script>

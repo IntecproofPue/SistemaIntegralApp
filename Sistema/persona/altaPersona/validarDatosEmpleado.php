@@ -154,7 +154,8 @@
         array(&$datosEmpleadoConsulta['vchMensaje'], SQLSRV_PARAM_OUT, SQLSRV_PHPTYPE_STRING(SQLSRV_ENC_CHAR))
     );
 
-    $result = sqlsrv_query($GLOBALS['conn'], $procedureName, $params);
+
+$result = sqlsrv_query($GLOBALS['conn'], $procedureName, $params);
 
 
 $sql = "EXEC prcAltaEmpleado    @iIdPersona				= '{$datosEmpleadoConsulta['iIdPersona']}' ,
@@ -203,7 +204,6 @@ $sql = "EXEC prcAltaEmpleado    @iIdPersona				= '{$datosEmpleadoConsulta['iIdPe
                                 @bResultado				= '{$datosEmpleadoConsulta['bResultado']}' ,
                                 @vchCampoError			= '{$datosEmpleadoConsulta['vchCampoError']}' ,
                                 @vchMensaje				= '{$datosEmpleadoConsulta['vchMensaje']}' ";
-
 
     if ($result === false) {
         $errorInformacion = sqlsrv_errors();

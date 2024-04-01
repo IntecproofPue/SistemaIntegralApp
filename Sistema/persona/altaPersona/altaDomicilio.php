@@ -321,24 +321,24 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">*LETRA:</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" placeholder="LETRA" id = "vchLetra" name = "vchLetra"
-                                                style="text-transform: uppercase" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*No EXT:</label>
                                         <div class="col-sm-9">
-                                            <input type="number" class="form-control" placeholder="No EXT" id = "vchNoExt" name = "vchNoExt"
+                                            <input type="text" class="form-control" placeholder="No EXT" id = "vchNoExt" name = "vchNoExt"
                                                 style="text-transform: uppercase" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*No INT:</label>
                                         <div class="col-sm-9">
-                                            <input type="number" class="form-control" placeholder="No INT" id = "vchNoInt" name = "vchNoInt"
+                                            <input type="text" class="form-control" placeholder="No INT" id = "vchNoInt" name = "vchNoInt"
                                                 style="text-transform: uppercase" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">*LETRA:</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" placeholder="LETRA" id = "vchLetra" name = "vchLetra"
+                                                   style="text-transform: uppercase" required>
                                         </div>
                                     </div>
 
