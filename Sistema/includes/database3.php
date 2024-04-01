@@ -18,7 +18,7 @@ class SQLSRV_DB
     public function db_connect()
     {
 
-        $connectionInfo = array("Database" => $GLOBALS['DB_NAME'], "UID" => $GLOBALS['DB_USER'], "PWD" => $GLOBALS['DB_PASS']);
+        $connectionInfo = array("Database" => $GLOBALS['DB_NAME'], "UID" => $GLOBALS['DB_USER'], "PWD" => $GLOBALS['DB_PASS'], "CharacterSet" => $GLOBALS['DB_CHARACTER']);
         $serverName = "192.168.100.39, 1433"; //serverName\instanceName, portNumber (por defecto es 1433)
         $conn = sqlsrv_connect($serverName, $connectionInfo);
         $GLOBALS['conn'] = $conn;
@@ -26,7 +26,7 @@ class SQLSRV_DB
 
         if ($conn) {
 
-            echo "Conexión establecida. <i><span style='color: #8a6d3b' size='-2'> Sólo para fines de desarrollo</span></i><br /> ";
+            //echo "Conexión establecida. <i><span style='color: #8a6d3b' size='-2'> Sólo para fines de desarrollo</span></i><br /> ";
         } else {
             echo "Conexión no se pudo establecer. <i><span style='color: #8a6d3b' size='-2'> Sólo para fines de desarrollo</span></i><br />";
             die(print_r(sqlsrv_errors(), true));
@@ -41,13 +41,9 @@ class SQLSRV_DB
     {
         sqlsrv_close($GLOBALS['conn']);
 
-
     }
 
-
-    }
-
-
+}
 
 
 $db = new SQLSRV_DB();

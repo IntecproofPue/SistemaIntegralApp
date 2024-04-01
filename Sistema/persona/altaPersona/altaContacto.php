@@ -1,5 +1,6 @@
 <?php
 require_once('../../includes/pandora.php');
+require_once ('../../includes/load.php');
 session_start();
 
 // Inicializa las variables para almacenar mensajes de error

@@ -1,29 +1,29 @@
 <?php
         require_once('../../includes/pandora.php');
+        require_once('../../includes/load.php');
 
         session_start();
 
+
+    function ObtenerEstadoProcedencia(){
         $agrupadorEstado = 4;
-        function ObtenerEstadoProcedencia(){
-            global $agrupadorEstado;
-            if (isset ($_SESSION['CatConstante'])){
-                $datosEdoProcedencia = $_SESSION['CatConstante'];
-                $estadoEncontrado = array();
+        if (isset ($_SESSION['CatConstante'])){
+            $datosEdoProcedencia = $_SESSION['CatConstante'];
+            $estadoEncontrado = array();
 
 
-                foreach ($datosEdoProcedencia as $valorEstado) {
-                    if ($valorEstado['iAgrupador'] == $agrupadorEstado) {
-                        $estadoEncontrado [] = $valorEstado;
-                    }
+            foreach ($datosEdoProcedencia as $valorEstado) {
+                if ($valorEstado['iAgrupador'] == $agrupadorEstado) {
+                    $estadoEncontrado [] = $valorEstado;
                 }
-                return $estadoEncontrado;
-            } else {
-                echo ("No hay datos del Estado de Procedencia");
             }
+            return $estadoEncontrado;
+        } else {
+            echo ("No hay datos del Estado de Procedencia");
         }
+    }
 
-        $resultadoEstado = ObtenerEstadoProcedencia();
-
+    $resultadoEstado = ObtenerEstadoProcedencia();
 
 ?>
 
@@ -106,11 +106,9 @@
 
             tecla = (document.all) ? e.keyCode : e.which;
 
-
             if (tecla == 8) {
                 return true;
             }
-
 
             patronAceptado = /[A-Za-z0-9]/;
             tecla_final = String.fromCharCode(tecla);
@@ -266,9 +264,7 @@
                 <div class="col">
                     <div class="dashboard-container">
                         <div class="dashboard-content-wrapper">
-
                             <form class="dashboard-form" id = "FormDomicilioAlta">
-
                                 <input type="hidden" name = "iIdConstanteEstado" id="iIdConstanteEstado" value="" >
                                 <input type="hidden" name = "iClaveEstado" id="iClaveEstado" value="" >
 

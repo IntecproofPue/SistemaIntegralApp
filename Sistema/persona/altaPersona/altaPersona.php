@@ -16,338 +16,6 @@ if ( isset( $_SESSION['user_id'] ) ) {?>
 }
 
 
-
-
-
-function EjecutarConstante()
-{
-    $serverName = "192.168.100.39, 1433";
-    $connectionInfo = array(
-        "Database" => "BDSistemaIntegral_PRETEST",
-        "UID" => "Development",
-        "PWD" => "Development123*",
-        'CharacterSet' => 'UTF-8'
-    );
-
-    $conn = sqlsrv_connect($serverName, $connectionInfo);
-
-    if ($conn === false) {
-        die(print_r(sqlsrv_errors(), true));
-    }
-
-    $datosCatConstante = array(
-        'iOpcion' => 4,
-        'iAgrupador' => 0,
-        'iClaveCatalogo' => 0,
-        'iIdConstante' => 0
-    );
-
-    $procedureName = "EXEC prcConsultaCatConstante  @iOpcion = ?,
-                                                        @iAgrupador = ?, 
-                                                        @iClave = ?, 
-                                                        @iIdConstante = ? 
-                                                    ";
-
-    $params = array(
-        $datosCatConstante['iOpcion'],
-        $datosCatConstante['iAgrupador'],
-        $datosCatConstante['iClaveCatalogo'],
-        $datosCatConstante['iIdConstante']
-    );
-
-    $result = sqlsrv_query($conn, $procedureName, $params);
-
-    $CatConstante = array();
-
-    if ($result === false) {
-        die(print_r(sqlsrv_errors(), true));
-
-    } else {
-        do {
-            while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
-                $CatConstante[] = $row;
-            }
-        } while (sqlsrv_next_result($result));
-    }
-    return $CatConstante;
-
-    sqlsrv_close($conn);
-}
-
-$_SESSION['CatConstante'] = EjecutarConstante();
-
-function ObtenerNombre($nombreaBuscar)
-{
-    $serverName = "192.168.100.39, 1433";
-    $connectionInfo = array(
-        "Database" => "BDSistemaIntegral_PRETEST",
-        "UID" => "Development",
-        "PWD" => "Development123*",
-        'CharacterSet' => 'UTF-8'
-    );
-
-    $conn = sqlsrv_connect($serverName, $connectionInfo);
-
-    if ($conn === false) {
-        die(print_r(sqlsrv_errors(), true));
-    }
-
-    $datosPersona = array(
-        'iIdPersona' => 0,
-        'vchCadena' => ''
-    );
-
-    $procedureName = "EXEC prcConsultaPersona    @iIdPersona = ?,
-                                                     @vchCadena = ?
-                                                    ";
-
-    $params = array(
-        $datosPersona['iIdPersona'],
-        $datosPersona['vchCadena']
-    );
-
-    $DatosPersona = array();
-    $result = sqlsrv_query($conn, $procedureName, $params);
-
-
-    if ($result === false) {
-        die(print_r(sqlsrv_errors(), true));
-
-    } else {
-        do {
-            while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
-                $DatosPersona[] = $row;
-            }
-        } while (sqlsrv_next_result($result));
-    }
-
-    if ($DatosPersona[0]['bResultado' == 1]) {
-        return true;
-    }
-    return false;
-
-    sqlsrv_close($conn);
-}
-function EjecutarRegimenUso()
-{
-    $serverName = "192.168.100.39, 1433";
-    $connectionInfo = array(
-        "Database" => "BDSistemaIntegral_PRETEST",
-        "UID" => "Development",
-        "PWD" => "Development123*",
-        'CharacterSet' => 'UTF-8'
-    );
-
-    $conn = sqlsrv_connect($serverName, $connectionInfo);
-
-    if ($conn === false) {
-        die(print_r(sqlsrv_errors(), true));
-    }
-
-    $datosRegimenUso = array(
-        'iOpcion' => 1,
-        'iIdTipoPersona' => 61
-    );
-
-    $procedureName = "EXEC prcConsultaRegimenUso    @iOpcion = ?,
-                                                        @iIdTipoPersona = ?
-                                                    ";
-
-    $params = array(
-        $datosRegimenUso['iOpcion'],
-        $datosRegimenUso['iIdTipoPersona']
-    );
-
-    $result = sqlsrv_query($conn, $procedureName, $params);
-
-    $RegimenUso = array();
-
-    if ($result === false) {
-        die(print_r(sqlsrv_errors(), true));
-
-    } else {
-        do {
-            while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
-                $RegimenUso[] = $row;
-            }
-        } while (sqlsrv_next_result($result));
-    }
-
-    return $RegimenUso;
-
-    sqlsrv_close($conn);
-}
-
-$_SESSION['RegimenUso'] = EjecutarRegimenUso();
-
-function validaDatosPersona()
-{
-    $serverName = "192.168.100.39, 1433";
-    $connectionInfo = array(
-        "Database" => "BDSistemaIntegral_PRETEST",
-        "UID" => "Development",
-        "PWD" => "Development123*",
-        'CharacterSet' => 'UTF-8'
-    );
-
-    $conn = sqlsrv_connect($serverName, $connectionInfo);
-
-    if ($conn === false) {
-        die(print_r(sqlsrv_errors(), true));
-    }
-
-    $nombre = $_POST['nombre'];
-    $vchPrimerApellido = $_POST['PrimerApellido'];
-    $vchSegundoApellido = $_POST['SegundoApellido'];
-    $dFechaNacimiento = $_POST['FechaNacimiento'];
-    $idGenero = $_POST['genero'];
-    $idNacionalidad = $_POST['nacionalidad'];
-    $CURP = $_POST['CURP'];
-    $codigoFiscal = $_POST['CodigoFiscal'];
-    $UsoFiscal = $_POST['usoFiscal'];
-    $RegimenFiscal = $_POST['regimenFiscal'];
-
-
-    $datosPersona = array(
-        'vchNombre' => $nombre,
-        'vchPrimerApellido' => $vchPrimerApellido,
-        'vchSegundoApellido' => $vchSegundoApellido,
-        'dFechaNacimiento' => $dFechaNacimiento,
-        'iIdGenero' => $idGenero,
-        'iIdNacionalidad' => $idNacionalidad,
-        'iIdTipoPersona' => 61,
-        'RegimenFiscal' => $RegimenFiscal,
-        'UsoFiscal' => $UsoFiscal,
-        'CURP' => $CURP,
-        'CodigoFiscal' => $codigoFiscal,
-        'iEstatus' => 0,
-        'iOpcion' => 1,
-        'iProceso' => 1,
-        'iIdPersona' => 0,
-        'iIdUsoFiscal' => 0,
-        'bResultado' => 0,
-        'vchCampoError' => '',
-        'vchMensaje' => ''
-
-    );
-
-    $procedureName = "EXEC prcRN_Persona        @vchNombre = ?,
-                                                    @vchPrimerApellido = ?
-                                                    @vchSegundoApellido = ?
-                                                    @vchRFC = ?
-                                                    @vchCURP = ?
-                                                    @dFechaNacimiento = ?
-                                                    @iIdGenero = ?
-                                                    @iIdNacionalidad = ?
-                                                    @iIdTipoPersona = ?
-                                                    @iRegimen = ?
-                                                    @vchUsoFiscal = ?
-                                                    @iCodigoFiscal = ?
-                                                    @iEstatus = ?
-                                                    @iOpcion = ? 
-                                                    @iProceso = ? 
-                                                    @iIdPersona = ? 
-                                                    @iIdUsoFiscal = ?
-                                                    @bResultado = ?
-                                                    @vchCampoError = ? 
-                                                    @vchMensaje = ?
-                                                    ";
-
-    $params = array(
-        $datosPersona['vchNombre'],
-        $datosPersona['vchPrimerApellido'],
-        $datosPersona['vchSegundoApellido'],
-        $datosPersona['RFC'],
-        $datosPersona['CURP'],
-        $datosPersona['dFechaNacimiento'],
-        $datosPersona['iIdGenero'],
-        $datosPersona['iIdNacionalidad'],
-        $datosPersona['iIdTipoPersona'],
-        $datosPersona['RegimenFiscal'],
-        $datosPersona['UsoFiscal'],
-        $datosPersona['CodigoFiscal'],
-        $datosPersona['iEstatus'],
-        $datosPersona['iOpcion'],
-        $datosPersona['iProceso'],
-        array(&$datosPersona['iIdPersona'], SQLSRV_PARAM_OUT),
-        array(&$datosPersona['iIdUsoFiscal'], SQLSRV_PARAM_OUT),
-        array(&$datosPersona['bResultado'], SQLSRV_PARAM_OUT),
-        array(&$datosPersona['vchCampoError'], SQLSRV_PARAM_OUT),
-        array(&$datosPersona['vchMensaje'], SQLSRV_PARAM_OUT)
-    );
-
-    $result = sqlsrv_query($conn, $procedureName, $params);
-
-    if ($result === false) {
-        die(print_r(sqlsrv_errors(), true));
-
-    } else {
-        if ($datosPersona['bResultado'] == 1) {
-            header("Location: altaDomicilio.php ");
-            exit;
-        } else {
-            echo "Mensaje Error: " . $datosPersona["vchMensaje"] . "<br>";
-        }
-    }
-
-    sqlsrv_close($conn);
-}
-
-
-function ObtenerIdGenero()
-{
-    if (isset($_SESSION['CatConstante'])) {
-        $datosGenero = $_SESSION['CatConstante'];
-        $generoEncontrado = array();
-
-        foreach ($datosGenero as $valorGenero) {
-            if ($valorGenero['iAgrupador'] == 3) {
-                $generoEncontrado[] = $valorGenero;
-            }
-        }
-        return $generoEncontrado;
-    } else {
-        echo ("No hay datos del género");
-    }
-}
-$resultadoGenero = ObtenerIdGenero();
-
-
-function obtenerIdNacionalidad()
-{
-    if (isset($_SESSION['CatConstante'])) {
-        $datosNacionalidad = $_SESSION['CatConstante'];
-        $nacionalidadEncontrada = array();
-
-        foreach ($datosNacionalidad as $valorNacionalidad) {
-            if ($valorNacionalidad['iAgrupador'] == 6) {
-                $nacionalidadEncontrada[] = $valorNacionalidad;
-            }
-        }
-        return $nacionalidadEncontrada;
-    } else {
-        echo ("No hay datos de la nacionalidad");
-    }
-}
-$resultadoNacionalidad = ObtenerIdNacionalidad();
-
-
-function ObtenerIdRegimen()
-{
-    $datosRegimen = $_SESSION['RegimenUso'];
-    $RegimenEncontrado = array();
-
-    foreach ($datosRegimen as $valorRegimen) {
-        $idRegimen = $valorRegimen['iIdRegimenFiscal'];
-        $RegimenEncontrado[$idRegimen] = $valorRegimen;
-    }
-
-
-    return array_values($RegimenEncontrado);
-}
-
-$resultadoRegimen = ObtenerIdRegimen();
-
 ?>
 
 <!doctype html>
@@ -394,6 +62,20 @@ $resultadoRegimen = ObtenerIdRegimen();
     <script src="assets/js/html5shiv.min.js"></script>
     <script src="assets/js/respond.min.js"></script>
     <![endif]-->
+
+
+
+    <script>
+        function funcionDesbloquearMensaje() {
+            var x = document.getElementById("divOculto");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                //x.style.display = "none";
+            }
+        }
+    </script>
+
 
 
     <script>
@@ -517,6 +199,18 @@ $resultadoRegimen = ObtenerIdRegimen();
                                 </div>
                             </div>
                         </div>
+
+                        <?php
+
+                        $user = obtenerUsuario($_SESSION['user_id']);
+                        $row =$GLOBALS['rowObtenerNombre'];
+                        $nombrePersona = $row['nombrePersona'];
+                        $emailPersona = $row['contacto'];
+
+
+
+                        ?>
+
                         <div class="dropdown header-top-account">
                             <a href="#" class="account-button">My Account</a>
                             <div class="account-card">
@@ -525,14 +219,14 @@ $resultadoRegimen = ObtenerIdRegimen();
                                         <img src="../../images/account/thumb-1.jpg" class="img-fluid" alt="">
                                     </a>
                                     <div class="account-body">
-                                        <h5><a href="#">Robert Chavez</a></h5>
-                                        <span class="mail">chavez@domain.com</span>
+                                        <h5><a href="#"><?php echo $nombrePersona; ?></a></h5>
+                                        <span class="mail"><?php echo $emailPersona; ?></span>
                                     </div>
                                 </div>
                                 <ul class="account-item-list">
                                     <li><a href="#"><span class="ti-user"></span>Account</a></li>
                                     <li><a href="#"><span class="ti-settings"></span>Settings</a></li>
-                                    <li><a href="#"><span class="ti-power-off"></span>Log Out</a></li>
+                                    <li><a href="../../includes/logout.php"><span class="ti-power-off"></span>Log Out</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -549,10 +243,6 @@ $resultadoRegimen = ObtenerIdRegimen();
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav">
-                            <li class="menu-item active"><a title="PERSONA" href="altaPersona.php">PERSONA</a></li>
-                            <li class="menu-item active"><a title="DOMICILIO" href="altaDomicilio.php">DOMICILIO</a></li>
-                            <li class="menu-item active"><a title="CONTACTO" href="altaContacto.php">CONTACTO</a></li>
-                            <li class="menu-item active"><a title="CONTACTO" href="altaEmpleado.php">EMPLEADO</a></li>
                         </ul>
                     </div>
                 </nav>
@@ -569,7 +259,7 @@ $resultadoRegimen = ObtenerIdRegimen();
         <div class="row">
             <div class="col-md-6">
                 <div class="breadcrumb-area">
-                    <h1>Alta Persona</h1>
+                    <h1><?php echo $altaPersonaTxt; ?></h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="#">Inicio</a></li>
@@ -594,23 +284,18 @@ $resultadoRegimen = ObtenerIdRegimen();
             <div class="col">
                 <div class="dashboard-container">
                     <div class="dashboard-content-wrapper">
-
                         <?php
                         if (isset($_POST['submitBuscar'])) {
                             $nombreaBuscar = $_POST['nombreaBuscar'];
-                            echo "<br>El nombre a buscar es <b>$nombreaBuscar</b>";
-
-                            //Mandar el prc de consulta de persona
+                            //echo "<br>El nombre a buscar es <b>$nombreaBuscar</b>";
 
                         if(empty($errors)){
 
-                            $user = searchPersona($nombreaBuscar); ///XXXXX
-                            // print_r($GLOBALS['row']);
-
+                            $user = searchPersona($nombreaBuscar);
 
                             $contadodGlobal = $GLOBALS['contador'];
                             $contador= 0;
-                            $row0=0; //incializando variable para evitar warning
+                            $row0 = 0; //incializando variable para evitar warning
 
                             for($contador=0 ; $contador<$contadodGlobal; $contador++){
                                 //echo "Contador Global =$contadodGlobal, contador= $contador ==== <br>";
@@ -624,17 +309,13 @@ $resultadoRegimen = ObtenerIdRegimen();
                             echo "erorr====";
 
                         }
-
                             if ($row['bResultado']==1) { ?>
 
                                 <div style="background-color: #c82333; text-align: center">
                                     <?php
                                         echo "<i><span style='color: #ededee' size='-2'> $personaEncontradaTxt $coincidenciasTxt</span></i><br />";
-
-
                                     ?>
                                 </div>
-
 
                                 <?php
 
@@ -643,45 +324,47 @@ $resultadoRegimen = ObtenerIdRegimen();
 
                                     $row =$GLOBALS['row'.$contador+1];
                                     //echo $contador+1 ." bResultado = ".$row['bResultado']."Nombre =".$row['vchNombre']."Apellidos  =".$row['vchPrimerApellido']." ".$row['vchSegundoApellido']."<br>";
-
-
-echo "
-                                <div class='candidate-filter-result'>
-                                    <div class='candidate'>
-                                        <div class='thumb'>
-                                            <a href='#'>
-                                                <img src='../../images/candidate/thumb-1.jpg' class='img-fluid' alt=''>
-                                            </a>
-                                        </div>
-                                        <div class='body'>
-                                            <div class='content'>
-                                                <h4><a href='#'>".$row['vchNombre'].$row['vchPrimerApellido']." ".$row['vchSegundoApellido']."</a></h4>
-                                                <div class='info'>
-                                                    <span class='work-post'><a href='#'><i data-feather='check-square'></i>"."EL PUESTO"."</a></span>
-                                                    <span class='location'><a href='#'><i data-feather='map-pin'></i>".$row['vchNacionalidad']."</a></span>
-                                                    <span class='location'><a href='#'><i data-feather='phone'></i>".$row['vchNacionalidad']."</a></span>
-                                                </div>
+                               echo "
+                                    <div class='candidate-filter-result'>
+                                        <div class='candidate'>
+                                            <div class='thumb'>
+                                                <a href='#'>
+                                                    <img src='../../images/candidate/thumb-1.jpg' class='img-fluid' alt=''>
+                                                </a>
                                             </div>
-                                            <div class='button-area'>
-                                                <a href='#'>EDITAR</a>
+                                            <div class='body'>
+                                                <div class='content'>
+                                                    <h4><a href='#'>".$row['vchNombre']." ".$row['vchPrimerApellido']." ".$row['vchSegundoApellido']."</a></h4>
+                                                    <div class='info'>
+                                                        <span class='work-post'><a href='#'><i data-feather='check-square'></i>"."EL PUESTO"."</a></span>
+                                                        <span class='location'><a href='#'><i data-feather='map-pin'></i>".$row['vchNacionalidad']."</a></span>
+                                                        <span class='location'><a href='#'><i data-feather='phone'></i>".$row['vchNacionalidad']."</a></span>
+                                                    </div>
+                                                </div>
+                                                <div class='button-area'>
+                                                    <a href='#'>EDITAR</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-
-
-                                </div>
-
-
-";
+                                ";
  }
                                 ?>
-
 
                             <?php } else { ?>
 
                                 <div style="background-color: #0c5460; text-align: center">
                                     <?php echo "<i><span style='color: #ebfcff' size='-2'> $personaNoEncontradaTxt $continuaRegistroTxt</span></i><br />"; ?>
                                 </div>
+                                <div id="divOculto" style="background-color: #c82333; text-align: center; display: none;" >
+                                    <i><span id="spanOculto" style='color: #ebfcff' size='-2'></span></i>
+                                </div>
+
+                                <?php
+                                    $resultadoGenero = ObtenerIdGenero();
+                                    $resultadoNacionalidad = ObtenerIdNacionalidad();
+                                    $resultadoRegimen = ObtenerIdRegimen();
+                                ?>
 
                                 <form class="dashboard-form" id = "FormPersonaAlta">
                                     <div class="dashboard-section basic-info-input">
@@ -722,13 +405,13 @@ echo "
                                                 <input type="text" id="curp" class="form-control" placeholder="INGRESA CURP"
                                                        name="curp" maxlength="18"
                                                        pattern="[A-Z]{4}[0-9]{6}[HM]{1}[A-Z]{5}[0-9]{2}"
-                                                       title="LA CURP DE BE SER DE 18 CARACTERES" Required>
+                                                       title="LA CURP DE BE SER DE 18 CARACTERES" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">* GENERO:</label>
                                             <div class="col-sm-9">
-                                                <select class="form-control" name="genero" id="genero">
+                                                <select class="form-control" name="genero" id="genero" required>
                                                     <option value="" selected>SELECCIONE UN GENERO</option>
                                                     <?php foreach ($resultadoGenero as $genero): ?>
                                                         <option value="<?= $genero['iIdConstante'].'-'.$genero['iClaveCatalogo'] ?>">
@@ -743,7 +426,7 @@ echo "
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">* NACIONALIDAD</label>
                                             <div class="col-sm-9">
-                                                <select class="form-control" name="nacionalidad" id = "nacionalidad">
+                                                <select class="form-control" name="nacionalidad" id = "nacionalidad" required>
                                                     <option value="" selected>SELECCIONE NACIONALIDAD</option>
                                                     <?php foreach ($resultadoNacionalidad as $nacionalidad): ?>
                                                         <option value="<?= $nacionalidad['iIdConstante'].'-'.$nacionalidad['iClaveCatalogo'] ?>">
@@ -758,12 +441,12 @@ echo "
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">* FECHA DE NACIMIENTO:</label>
                                             <div class="col-sm-9">
-                                                <input type="date" id="fechaNacimiento" class="form-control"
+                                                <input  type="date" id="fechaNacimiento" class="form-control"
                                                        placeholder="FECHA DE NACIMIENTO" name="fechaNacimiento"
                                                        pattern="\d{4}-\d{2}-\d{2}"
                                                        title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required
                                                        min="<?php echo $fechaMinima="1950-01-01"; ?>" max="<?php echo $fechaMaxima="2024-01-01"; ?>"
-                                                       maxlength="10">
+                                                       maxlength="10" >
                                                 <?php
                                                 // Calcular la fecha actual
                                                 $fechaActual = date('Y-m-d');
@@ -863,6 +546,7 @@ echo "
                                             <div class="col-sm-9">
                                                 <script>
                                                     function ValidarDatosPersona() {
+                                                        var respuestaFinal = "";
 
                                                         localStorage.clear(); //Limpiar el localStorage para no almancenar basura
 
@@ -934,6 +618,12 @@ echo "
                                                                 } else {
                                                                     console.error("Mensaje Error: " + respuesta.vchMensaje);
                                                                     alert(respuesta.vchMensaje);
+                                                                    respuestaFinal = respuesta.vchMensaje;
+
+                                                                    //document.write(respuestaFinal);
+                                                                    var miSpan = document.getElementById('spanOculto');
+                                                                    miSpan.innerHTML = respuestaFinal;
+                                                                    funcionDesbloquearMensaje();
                                                                 }
                                                             } else {
                                                                 console.error("Error en la solicitud al servidor");
@@ -956,6 +646,7 @@ echo "
                             <?php
                         } else {
                             ?>
+
                             <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="dashboard-form">
                                 <div class="dashboard-section basic-info-input">
                                     <h4><i data-feather="user-check"></i>búsqueda</h4>
