@@ -1,23 +1,10 @@
 <?php
 
-session_start();
+require_once('../../includes/load.php');
 
 $agrupadorNacionalidad = 6;
 $agrupadorGenero = 3;
 $agrupadorPersona = 7;
-
-$serverName = "192.168.100.39, 1433";
-$connectionInfo = array("Database" => "BDSistemaIntegral_PRETEST",
-    "UID" => "Development",
-    "PWD" => "Development123*",
-    'CharacterSet' => 'UTF-8');
-
-$conn = sqlsrv_connect($serverName, $connectionInfo);
-
-if ($conn === false) {
-    die(print_r(sqlsrv_errors(), true));
-}
-
 
 $nombre = isset($_POST['nombre'])? $_POST['nombre']:'';
 $primerApellido = isset($_POST['primerApellido'])?$_POST['primerApellido']: '';
@@ -124,7 +111,7 @@ $params = array(
     array(&$datosPersona['vchMensaje'], SQLSRV_PARAM_OUT)
 );
 
-$result = sqlsrv_query($conn, $procedureName, $params);
+$result = sqlsrv_query($GLOBALS['conn'], $procedureName, $params);
 
 if ($result === false) {
     $errorInformacion = sqlsrv_errors();
@@ -141,6 +128,6 @@ if ($result === false) {
     $_SESSION['iIdPersona'] = $datosPersona['iIdPersona'];
 }
 
-sqlsrv_close($conn);
+sqlsrv_close($GLOBALS['conn']);
 
 

@@ -1,6 +1,7 @@
 <?php
 
         require_once('../../includes/pandora.php');
+        require_once ('../../includes/load.php');
 
         session_start();
         function ObtenerSede(){
@@ -41,18 +42,6 @@
         $resultadoDocumento = ObtenerTipoDocumento();
 
         function ObtenerPuesto(){
-            $serverName = "192.168.100.39, 1433";
-            $connectionInfo = array("Database" => "BDSistemaIntegral_PRETEST",
-                "UID" => "Development",
-                "PWD" => "Development123*",
-                'CharacterSet' => 'UTF-8');
-
-            $conn = sqlsrv_connect($serverName, $connectionInfo);
-
-            if ($conn === false) {
-                die( print_r( sqlsrv_errors(), true));
-            }
-
             $datosPuesto = array (
                             'iOpcion' => 4,
                             'iIdPuesto' => 0 ,
@@ -79,7 +68,7 @@
                 $datosPuesto['iAgruContratacion']
             );
 
-            $result = sqlsrv_query($conn, $procedureName, $params);
+            $result = sqlsrv_query($GLOBALS['conn'], $procedureName, $params);
 
             $CatPuestos = array();
 
@@ -95,10 +84,46 @@
             }
             return $CatPuestos;
 
-            sqlsrv_close($conn);
+            sqlsrv_close($GLOBALS['conn']);
 
         }
         $resultadoPuesto = ObtenerPuesto();
+
+    function ObtenerAutorizacionContratante(){
+        $datosConsulta = array (
+            'iIdEmpleado' => 0,
+            'iOpcion' => 2
+        );
+
+        $procedureName = "EXEC prcConsultaEmpleado      @iIdEmpleado = ?,
+                                                        @iOpcion = ? 
+                                                        ";
+        $params = array(
+            $datosConsulta['iIdEmpleado'],
+            $datosConsulta['iOpcion']
+        );
+        $result = sqlsrv_query($GLOBALS['conn'], $procedureName, $params);
+
+        $Contratantes = array();
+
+        if ($result === false){
+            die(print_r(sqlsrv_errors(), true));
+
+        } else{
+            do{
+                while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+                    $Contratantes[] = $row;
+                }
+            }while (sqlsrv_next_result($result));
+        }
+        return $Contratantes;
+
+        sqlsrv_close($GLOBALS['conn']);
+
+    }
+    $resultadoContratantes = ObtenerAutorizacionContratante();
+
+
 
 ?>
 <!doctype html>
@@ -412,26 +437,41 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">TIPO DE DOCUMENTO:</label>
+                                        <label class="col-sm-3 col-form-label">*PERSONA QUE AUTORIZA CONTRATACIÓN:</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control" id="iIdDocumento" name="iIdDocumento">
-                                                <option value="">SELECCIONE UN TIPO DE DOCUMENTO</option>
-                                                <?php foreach ($resultadoDocumento as $documento): ?>
-                                                    <option value="<?= $documento['iIdConstante'].'-'.$documento['iClaveCatalogo'] ?>">
-                                                        [<?= $documento['iClaveCatalogo'] ?>] - <?= $documento['vchDescripcion'] ?>
+                                            <select class="form-control" Name="iIdPersonaContratante"  id = "iIdPersonaContratante" required>
+                                                <option value="" selected>SELECCIONA LA PERSONA </option>
+                                                <?php foreach ($resultadoContratantes as $contratante): ?>
+                                                    <option value="<?= $contratante['iIdPersona'] ?>">
+                                                        [<?= $contratante['iIdPersona']?>] - <?= $contratante['vchPrimerApellido'].' '. $contratante['vchSegundoApellido'].' '.$contratante['vchNombre'] ?>
                                                     </option>
                                                 <?php endforeach; ?>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">DOCUMENTO PDF:</label>
-                                        <div class="col-sm-9">
-                                            <input type="file" accept=".pdf" class="button-area" id="documentoPDF"
-                                                name="documentoPDF">
-                                            <small class=""></small>
+                                    <form id ="uploadForm" enctype="multipart/form-data">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">TIPO DE DOCUMENTO:</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control" id="iIdDocumento" name="iIdDocumento[]">
+                                                    <option value="">SELECCIONE UN TIPO DE DOCUMENTO</option>
+                                                    <?php foreach ($resultadoDocumento as $documento): ?>
+                                                        <option value="<?= $documento['iIdConstante'].'-'.$documento['iClaveCatalogo'] ?>">
+                                                            [<?= $documento['iClaveCatalogo'] ?>] - <?= $documento['vchDescripcion'] ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">DOCUMENTO PDF:</label>
+                                            <div class="col-sm-9">
+                                                <input type="file" accept=".pdf" class="button-area" id="documentoPDF"
+                                                    name="documentoPDF">
+                                                <small class=""></small>
+                                            </div>
+                                        </div>
+                                    </form>
                                     <?php
                                     if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         // directorio donde se guardarán los archivos PDF
@@ -443,22 +483,11 @@
                                         }
 
                                         // Itera sobre los campos tipoDocumento y documentoPDF
-                                        foreach ($_FILES['DOCUMENTO PDF']['tmp_name'] as $key => $tmp_name) {
-                                            // Si hay un archivo cargado para el índice actual
+                                        foreach ($_FILES['documentoPDF']['tmp_name'] as $key => $tmp_name) {
                                             if (!empty($tmp_name)) {
-                                                // ombre del archivo en el servidor (ajustarlo)
                                                 $nombreArchivo = "documento_pdf_" . time() . "_$key.pdf";
-
-                                                // ruta completa del archivo en el servidor
                                                 $rutaCompleta = $directorioDestino . $nombreArchivo;
-
-                                                // mover el archivo cargado al directorio de destino
                                                 if (move_uploaded_file($tmp_name, $rutaCompleta)) {
-                                                    // Guarda en la base de datos: $_POST['TIPO DE DOCUMENTO'][$key] y $rutaCompleta
-                                                    // Puedes usar consultas SQL para insertar estos valores en tu base de datos
-                                                    // Ejemplo (usando PDO):
-                                                    // $pdo->prepare("INSERT INTO tu_tabla (tipoDocumento, rutaDocumento) VALUES (?, ?)")->execute([$_POST['TIPO DE DOCUMENTO'][$key], $rutaCompleta]);
-                                    
                                                     echo "EL ARCHIVO SE CARGÓ CORRECTAMENTE $directorioDestino.";
                                                 } else {
                                                     echo "ERROR AL SUBIR EL ARCHIVO.";
@@ -492,8 +521,6 @@
                                                         var iIdConstanteDocumento = DocumentoPartes[0];
                                                         var iClaveDocumento= DocumentoPartes[1];
 
-
-
                                                         // Asignar los valores a los campos ocultos
                                                         document.getElementById('iIdConstanteDocumento').value = iIdConstanteDocumento;
                                                         document.getElementById('iClaveDocumento').value = iClaveDocumento;
@@ -514,10 +541,10 @@
                                                         var datosEmpleado = obtenerDatosFormulario('FormEmpleadoAlta');
 
                                                         let data = {
-                                                                    datosPersona:JSON.stringify(datosPersona),
-                                                                    datosDomicilio: JSON.stringify(datosDomicilio),
-                                                                    datosContacto: JSON.stringify(datosContacto),
-                                                                    datosEmpleado: JSON.stringify(datosEmpleado)
+                                                                datosPersona:JSON.stringify(datosPersona),
+                                                                datosDomicilio: JSON.stringify(datosDomicilio),
+                                                                datosContacto: JSON.stringify(datosContacto),
+                                                                datosEmpleado: JSON.stringify(datosEmpleado)
                                                         };
 
                                                         console.log(data);
@@ -546,6 +573,8 @@
                                                                 var respuesta = JSON.parse(request.responseText);
                                                                 if (respuesta.bResultado === 1) {
                                                                     console.log(respuesta);
+                                                                    alert(respuesta.vchMensaje);
+                                                                    window.location.href = ("../consulEmpleado/consultaEmpleado.php");
 
                                                                 } else {
                                                                     console.error("Mensaje Error: " + respuesta.vchMensaje);
@@ -557,7 +586,6 @@
                                                         };
 
                                                     }
-
                                                 </script>
                                                 <button type="button" class="button" id = "botonSiguiente" >SIGUIENTE</button>
                                                 <script>
@@ -594,7 +622,7 @@
                                                 nuevoDocumentoPDF.className = 'col-md-6';
                                                 nuevoDocumentoPDF.innerHTML = `
                                                         <label for="documentoPDF">DOCUMENTO PDF</label>
-                                                        <input type="file" accept=".pdf" class="button-area" name="documentoPDF[]">
+                                                        <input type="file" accept=".pdf" class="button-area" id="documentoPDF" name="documentoPDF[]" multiple>
                                                         <small class=""></small>
                                                     `;
 

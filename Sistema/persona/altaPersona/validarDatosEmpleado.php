@@ -1,22 +1,11 @@
 <?php
 
+    require_once ('../../includes/load.php');
+
     $datosPersona = json_decode(isset($_POST['datosPersona'])? $_POST['datosPersona']:'', true);
     $datosDomicilio = json_decode(isset($_POST['datosDomicilio'])? $_POST['datosDomicilio']:'', true);
     $datosContacto = json_decode(isset($_POST['datosContacto'])? $_POST['datosContacto']:'', true);
     $datosEmpleado = json_decode(isset($_POST['datosEmpleado'])? $_POST['datosEmpleado']:'', true);
-
-
-    $serverName = "192.168.100.39, 1433";
-    $connectionInfo = array("Database" => "BDSistemaIntegral_PRETEST",
-        "UID" => "Development",
-        "PWD" => "Development123*",
-        'CharacterSet' => 'UTF-8');
-
-    $conn = sqlsrv_connect($serverName, $connectionInfo);
-
-    if ($conn === false) {
-        die(print_r(sqlsrv_errors(), true));
-    }
 
 
     $datosEmpleadoConsulta= array(
@@ -60,15 +49,13 @@
         'iIdSede' => $datosEmpleado['iIdConstanteSede'],
         'iAgrupadorSede' => 4,
         'iClaveSede' =>$datosEmpleado['iClaveSede'],
+        'iIdContratante' => $datosEmpleado['iIdPersonaContratante'],
         'iIdUsuario' => 3,
         'iIdEmpleado' => 0,
         'bResultado' => 0,
         'vchCampoError' => '',
         'vchMensaje' => ''
     );
-
-
-    var_dump($datosEmpleadoConsulta);
 
     $procedureName = "EXEC prcAltaEmpleado      @iIdPersona				= ? ,
                                                 @vchNombre				= ? ,
@@ -110,14 +97,13 @@
                                                 @iIdSede				= ? ,
                                                 @iAgrupadorSede			= ? ,
                                                 @iClaveSede				= ? , 
+                                                @iIdContratante         = ? ,
                                                 @iIdUsuario				= ? , 
                                                 @iIdEmpleado			= ? , 
                                                 @bResultado				= ? , 
                                                 @vchCampoError			= ? , 
                                                 @vchMensaje				= ?
                                                        ";
-
-    echo $procedureName;
 
     $params = array(
         $datosEmpleadoConsulta['iIdPersona'],
@@ -160,19 +146,16 @@
         $datosEmpleadoConsulta['iIdSede'],
         $datosEmpleadoConsulta['iAgrupadorSede'],
         $datosEmpleadoConsulta['iClaveSede'],
+        $datosEmpleadoConsulta['iIdContratante'],
         $datosEmpleadoConsulta['iIdUsuario'],
-        array(&$datosEmpleadoConsulta['iIdEmpleado'], SQLSRV_PARAM_OUT),
-        array(&$datosEmpleadoConsulta['bResultado'], SQLSRV_PARAM_OUT),
-        array(&$datosEmpleadoConsulta['vchCampoError'], SQLSRV_PARAM_OUT),
-        array(&$datosEmpleadoConsulta['vchMensaje'], SQLSRV_PARAM_OUT)
+        array(&$datosEmpleadoConsulta['iIdEmpleado'], SQLSRV_PARAM_OUT, SQLSRV_PHPTYPE_INT),
+        array(&$datosEmpleadoConsulta['bResultado'], SQLSRV_PARAM_OUT,SQLSRV_PHPTYPE_INT),
+        array(&$datosEmpleadoConsulta['vchCampoError'], SQLSRV_PARAM_OUT, SQLSRV_PHPTYPE_STRING(SQLSRV_ENC_CHAR)),
+        array(&$datosEmpleadoConsulta['vchMensaje'], SQLSRV_PARAM_OUT, SQLSRV_PHPTYPE_STRING(SQLSRV_ENC_CHAR))
     );
 
-    var_dump($params);
+    $result = sqlsrv_query($GLOBALS['conn'], $procedureName, $params);
 
-
-    $result = sqlsrv_query($conn, $procedureName, $params);
-
-    var_dump($result);
 
 $sql = "EXEC prcAltaEmpleado    @iIdPersona				= '{$datosEmpleadoConsulta['iIdPersona']}' ,
                                 @vchNombre				= '{$datosEmpleadoConsulta['vchNombre']}' ,
@@ -214,6 +197,7 @@ $sql = "EXEC prcAltaEmpleado    @iIdPersona				= '{$datosEmpleadoConsulta['iIdPe
                                 @iIdSede				= '{$datosEmpleadoConsulta['iIdSede']}' ,
                                 @iAgrupadorSede			= '{$datosEmpleadoConsulta['iAgrupadorSede']}' ,
                                 @iClaveSede				= '{$datosEmpleadoConsulta['iClaveSede']}' ,
+                                @iIdContratante			= '{$datosEmpleadoConsulta['iIdContratante']}' ,
                                 @iIdUsuario				= '{$datosEmpleadoConsulta['iIdUsuario']}' ,
                                 @iIdEmpleado			= '{$datosEmpleadoConsulta['iIdEmpleado']}' ,
                                 @bResultado				= '{$datosEmpleadoConsulta['bResultado']}' ,
@@ -221,29 +205,18 @@ $sql = "EXEC prcAltaEmpleado    @iIdPersona				= '{$datosEmpleadoConsulta['iIdPe
                                 @vchMensaje				= '{$datosEmpleadoConsulta['vchMensaje']}' ";
 
 
-echo "<br>Voy a ejecutar la consulta: <b>$sql</b>";
-
     if ($result === false) {
-        echo ("No se está ejecutando el query");
         $errorInformacion = sqlsrv_errors();
         $respuesta   = array (
             'error' => true,
-            'mensaje' => $datosEmpleadoConsulta['vchMensaje'],
-            'campoError' => $datosEmpleadoConsulta['vchCampoError'],
+            'mensaje' => mb_convert_encoding($datosEmpleadoConsulta['vchMensaje'], "UTF-8", "ISO-8859-1"),
+            'campoError' => mb_convert_encoding($datosEmpleadoConsulta['vchCampoError'], "UTF-8", "ISO-8859-1"),
             'sqlError' => $errorInformacion
         );
         echo json_encode($respuesta);
 
     } else {
-        echo ("Si se está ejecutando el query");
-        $vchMensaje = mb_convert_encoding($datosEmpleadoConsulta['vchMensaje'],'ISO-8859-1', 'UTF-8' );
-
-        echo ("=========================================");
-
-        echo $vchMensaje;
-
-        var_dump($datosEmpleadoConsulta);
         echo json_encode($datosEmpleadoConsulta);
     }
 
-    sqlsrv_close($conn);
+    sqlsrv_close($GLOBALS['conn']);

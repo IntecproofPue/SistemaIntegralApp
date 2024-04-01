@@ -1,16 +1,6 @@
 <?php
 
-    $serverName = "192.168.100.39, 1433";
-    $connectionInfo = array("Database" => "BDSistemaIntegral_PRETEST",
-        "UID" => "Development",
-        "PWD" => "Development123*",
-        'CharacterSet' => 'UTF-8');
-
-    $conn = sqlsrv_connect($serverName, $connectionInfo);
-
-    if ($conn === false) {
-        die(print_r(sqlsrv_errors(), true));
-    }
+    require_once('../../includes/load.php');
 
     $iIdConstanteEstado = isset($_POST['iIdConstanteEstado'])? $_POST['iIdConstanteEstado']:'';
     $iClaveEstado = isset($_POST['iClaveEstado'])?$_POST['iClaveEstado']: 0;
@@ -47,6 +37,8 @@
                         'vchCampoError' => '',
                         'vchMensaje' => ''
     );
+
+
     $procedureName = "EXEC prcRN_Domicilio     @iIdPersona = ?,
                                                @vchCalle = ?,
                                                @vchNumeroExterior = ?,
@@ -92,7 +84,7 @@
         array(&$datosDomicilio['vchMensaje'], SQLSRV_PARAM_OUT)
     );
 
-    $result = sqlsrv_query($conn, $procedureName, $params);
+    $result = sqlsrv_query($GLOBALS['conn'], $procedureName, $params);
 
     if ($result === false) {
         $errorInformacion = sqlsrv_errors();
@@ -108,6 +100,7 @@
         echo json_encode($datosDomicilio);
     }
 
-    sqlsrv_close($conn);
+
+    sqlsrv_close($GLOBALS['conn']);
 
 

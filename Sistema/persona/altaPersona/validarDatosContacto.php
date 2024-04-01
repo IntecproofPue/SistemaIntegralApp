@@ -1,16 +1,5 @@
 <?php
-
-$serverName = "192.168.100.39, 1433";
-$connectionInfo = array("Database" => "BDSistemaIntegral_PRETEST",
-    "UID" => "Development",
-    "PWD" => "Development123*",
-    'CharacterSet' => 'UTF-8');
-
-$conn = sqlsrv_connect($serverName, $connectionInfo);
-
-if ($conn === false) {
-    die(print_r(sqlsrv_errors(), true));
-}
+require_once ('../../includes/load.php');
 
 $iIdConstanteContacto = isset($_POST['iIdConstanteContacto'])? $_POST['iIdConstanteContacto']:0;
 $iClaveContacto = isset($_POST['iClaveContacto'])?$_POST['iClaveContacto']: 0;
@@ -66,7 +55,7 @@ $params = array(
 );
 
 
-$result = sqlsrv_query($conn, $procedureName, $params);
+$result = sqlsrv_query($GLOBALS['conn'], $procedureName, $params);
 
 if ($result === false) {
     $errorInformacion = sqlsrv_errors();
@@ -82,4 +71,4 @@ if ($result === false) {
     echo json_encode($datosContacto);
 }
 
-sqlsrv_close($conn);
+sqlsrv_close($GLOBALS['conn']);
