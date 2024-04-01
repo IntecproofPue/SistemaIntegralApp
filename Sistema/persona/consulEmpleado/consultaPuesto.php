@@ -148,60 +148,67 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                         </div>
                         <div class="top-nav">
                             <div class="dropdown header-top-notification">
-                                <a href="#" class="notification-button">Notification</a>
+                                <a href="#" class="notification-button">Notificaciones</a>
                                 <div class="notification-card">
                                     <div class="notification-head">
-                                        <span>Notifications</span>
-                                        <a href="#">Mark all as read</a>
+                                        <span>Notificaciones</span>
+                                        <a href="#">Marcar todo como leido</a>
                                     </div>
                                     <div class="notification-body">
                                         <a href="../../home-2.html" class="notification-list">
                                             <i class="fas fa-bolt"></i>
-                                            <p>Your Resume Updated!</p>
+                                            <p>Tu CV actualizado</p>
                                             <span class="time">5 hours ago</span>
                                         </a>
                                         <a href="#" class="notification-list">
                                             <i class="fas fa-arrow-circle-down"></i>
-                                            <p>Someone downloaded resume</p>
+                                            <p>Alguien descargo tu CV</p>
                                             <span class="time">11 hours ago</span>
                                         </a>
                                         <a href="#" class="notification-list">
                                             <i class="fas fa-check-square"></i>
-                                            <p>You applied for Project Manager <span>@homeland</span></p>
+                                            <p>solicitaste un puesto de.... <span>@homeland</span></p>
                                             <span class="time">11 hours ago</span>
                                         </a>
                                         <a href="#" class="notification-list">
                                             <i class="fas fa-user"></i>
-                                            <p>You changed password</p>
+                                            <p>Cambiaste la contraseña</p>
                                             <span class="time">5 hours ago</span>
                                         </a>
                                         <a href="#" class="notification-list">
                                             <i class="fas fa-arrow-circle-down"></i>
-                                            <p>Someone downloaded resume</p>
+                                            <p>Alguien descargo tu CV</p>
                                             <span class="time">11 hours ago</span>
                                         </a>
                                     </div>
                                     <div class="notification-footer">
-                                        <a href="#">See all notification</a>
+                                        <a href="#">Ver Notificaciones</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="dropdown header-top-account">
-                                <a href="#" class="account-button">My Account</a>
+                                <a href="#" class="account-button">MI CUENTA</a>
                                 <div class="account-card">
                                     <div class="header-top-account-info">
                                         <a href="#" class="account-thumb">
                                             <img src="../../images/account/thumb-1.jpg" class="img-fluid" alt="">
                                         </a>
                                         <div class="account-body">
-                                            <h5><a href="#">Robert Chavez</a></h5>
-                                            <span class="mail">chavez@domain.com</span>
+                                            <h5><a href="#">Mostrar Empleado</a></h5>
+                                            <span class="mail">empleado@intecproof.com</span>
                                         </div>
                                     </div>
                                     <ul class="account-item-list">
+<<<<<<< HEAD
                                         <li><a href="#"><span class="ti-user"></span>Account</a></li>
                                         <li><a href="#"><span class="ti-settings"></span>Settings</a></li>
                                         <li><a href="#"><span class="ti-power-off"></span>Log Out</a></li>
+=======
+                                        <li><a href="#"><span class="ti-user"></span>CUENTA</a></li>
+                                        <li><a href="#"><span class="ti-settings"></span>AJUSTES</a></li>
+                                        <li><a href='../../index.php' onClick="terminarProcesosBD();"><span
+                                                    class="ti-power-off"></span>SALIR</a></li>
+>>>>>>> 48f34ba06e50c28b0bb29cef1522669c4d7e45b8
                                     </ul>
                                 </div>
                             </div>
@@ -271,6 +278,7 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                                 <li>INGRESA info EMPLEADO</li>
                                             </ul>
                                         </div>
+<<<<<<< HEAD
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*HORAS LAVORALES:</label>
@@ -278,6 +286,18 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                             <ul>
                                                 <li>INGRESA info EMPLEADO</li>
                                             </ul>
+=======
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label"></label>
+                                            <div class="col-sm-9">
+                                            <button type="button" class="button"
+                                                    onclick="window.location.href='/sitemaintegralPHP/Sistema/persona/consulEmpleado/consultaDomicilio.php'">
+                                                    DOMICILIO</button>
+                                                <button type="button" class="button"
+                                                    onclick="window.location.href='/sitemaintegralPHP/Sistema/persona/modifPersona/modifPuesto.php'">
+                                                    EDITAR</button>
+                                            </div>
+>>>>>>> 48f34ba06e50c28b0bb29cef1522669c4d7e45b8
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -341,7 +361,11 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                 </div>
                                 <div class="col-xl-4 col-lg-3 order-lg-3">
                                     <div class="back-to-top">
+<<<<<<< HEAD
                                         <a href="#">Subir<i class="fas fa-angle-up"></i></a>
+=======
+                                        <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
+>>>>>>> 48f34ba06e50c28b0bb29cef1522669c4d7e45b8
                                     </div>
                                 </div>
                             </div>
