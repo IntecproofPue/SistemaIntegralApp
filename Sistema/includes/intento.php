@@ -5,7 +5,7 @@ $params=array();
 
 // Setup connection
 $serverName = "192.168.100.39";
-$connectionInfo = array( "Database"=>"BDSistemaIntegral_PRETEST", "UID"=>"RTorres", "PWD"=>"RTorres*");
+$connectionInfo = array( "Database"=>"BDSistemaIntegral_PRETEST", "UID"=>"Development", "PWD"=>"Development1234*");
 $conn = sqlsrv_connect( $serverName, $connectionInfo);
 if( $conn === false) {
     die( print_r( sqlsrv_errors(), true));

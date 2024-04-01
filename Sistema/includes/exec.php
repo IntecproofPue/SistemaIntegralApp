@@ -2,7 +2,7 @@
 /*Connect to the local server using Windows Authentication and
 specify the AdventureWorks database as the database in use. */
 $serverName = "192.168.100.39, 1433";
-$connectionInfo = array( "Database"=>"BDSistemaIntegral_PRETEST", "UID"=>"RTorres", "PWD"=>"RTorres123*");
+$connectionInfo = array( "Database"=>"BDSistemaIntegral_PRETEST", "UID"=>"Development", "PWD"=>"Development1234*");
 $conn = sqlsrv_connect( $serverName, $connectionInfo);
 if( $conn === false)
 {
