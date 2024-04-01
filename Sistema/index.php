@@ -1,10 +1,16 @@
 <?php
-  ob_start();
+  //ob_start();
   require_once('includes/load.php');
  require_once ('includes/pandora.php');
-  //if($session->isUserLoggedIn(true)) { redirect('home.php', false);}
+session_start();
 
 
+if ( isset( $_SESSION['user_id'] ) ) {?>
+    <script type="text/javascript">
+        //Redireccionamiento tras 5 segundos
+        setTimeout( function() { window.location.href = "persona/altaPersona/altaPersona.php"; }, 0 );
+    </script>
+<?php }
 
 
 ?>
@@ -75,7 +81,7 @@
           <div class="col-xl-4 col-md-6">
             <div class="access-form">
               <div class="form-header">
-                <h5><i data-feather="user"></i>Login</h5>
+                <h5><i data-feather="user"></i><?php echo $loginTxt; ?></h5>
               </div>
 				<?php //echo display_msg($msg); 
 				
@@ -119,8 +125,8 @@ $passwordInserted = $_POST['passwordInserted'];
                     $user = authenticate_v2($emailAddress, $passwordInserted);
                    // print_r($GLOBALS['row']);
                     $row =$GLOBALS['row'];
+                    $idUsuario = $row['iIdUsuario'];
 
-                    //echo $row['vchMensaje'];
 
 
                     if($row['bResult']==0){ ?>
@@ -133,10 +139,24 @@ $passwordInserted = $_POST['passwordInserted'];
 
                 <?php    }elseif ($row['bResult']==1){ ?>
 
-                        <div style="background-color: #117a8b; text-align: center"><?php echo "<i><span style='color: #ededee' size='-2'> $bienUsuPwdTxt</span></i><br />"; ?></div>
+                        <div style="background-color: #117a8b; text-align: center">
+                            <?php echo "<i><span style='color: #ededee' size='-2'> $bienUsuPwdTxt</span></i><br />"; ?>
+                            <?php
+                            session_start();
+                            //echo "Aquí sigo teniendo el valor de IDUSUARIO =".$idUsuario;
+                            $_SESSION['user_id'] = $idUsuario;
+                            $_SESSION['instante']   = time();
+
+
+
+                            ?>
+
+                        </div>
+
+
                         <script type="text/javascript">
                             //Redireccionamiento tras 5 segundos
-                            setTimeout( function() { window.location.href = "persona/altaPersona/altaPersona.html"; }, 3000 );
+                            setTimeout( function() { window.location.href = "persona/altaPersona/altaPersona.php"; }, 0 );
                         </script>
                 <?php    }else{
 
@@ -169,10 +189,10 @@ echo "erorr====";
 ?>
               <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                 <div class="form-group">
-                  <input type="email" placeholder="Email Address" class="form-control" name="emailAddress">
+                  <input type="email" placeholder="<?php echo $ingresarUsuarioTxt; ?>" class="form-control" name="emailAddress" required>
                 </div>
                 <div class="form-group">
-                  <input type="password" placeholder="Password" class="form-control" name="passwordInserted">
+                  <input type="password" placeholder="<?php echo $ingresarContraTxt; ?>" class="form-control" name="passwordInserted" required>
                 </div>
                 <div class="more-option">
                   <div class="mt-0 terms">
@@ -181,9 +201,9 @@ echo "erorr====";
                       <span class="dot"></span> Remember Me
                     </label>-->
                   </div>
-                  <a href="#">Forget Password?</a>
+                  <a href="#"><?php echo $olvideContraTxt; ?></a>
                 </div>
-				  <input type="submit" name="submit" value="Submit Form" class="button primary-bg btn-block"><br>
+				  <input type="submit" name="submit" value="<?php echo $ingresarTxt; ?>" class="button primary-bg btn-block"><br>
                 <!--<button class="button primary-bg btn-block" type="submit">Login</button>-->
               </form>
              <!-- <div class="shortcut-login">
