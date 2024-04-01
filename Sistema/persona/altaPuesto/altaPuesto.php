@@ -1,5 +1,6 @@
 <?php
 require_once('../../includes/pandora.php');
+require_once ('../../includes/load.php');
 
 session_start();
 function ObtenerTipoContratacion()
@@ -40,6 +41,26 @@ function ObtenerHorasLaborales()
 }
 
 $resultadoHorasLaborales = ObtenerHorasLaborales();
+
+
+function ObtenerNivel()
+{
+    if (isset($_SESSION['CatConstante'])) {
+        $datosNivel = $_SESSION['CatConstante'];
+        $nivelesEncontrados = array();
+
+        foreach ($datosNivel as $valorNivel) {
+            if ($valorNivel['iAgrupador'] == 22) {
+                $nivelesEncontrados[] = $valorNivel;
+            }
+        }
+        return $nivelesEncontrados;
+    } else {
+        echo ("No hay datos de las horas laborales");
+    }
+}
+
+$resultadoNiveles = ObtenerNivel();
 
 
 ?>
@@ -294,6 +315,10 @@ $resultadoHorasLaborales = ObtenerHorasLaborales();
                                 <input type="hidden" name = "iIdConstanteHoras" id="iIdConstanteHoras" value="" >
                                 <input type="hidden" name = "iClaveHoras" id="iClaveHoras" value="" >
 
+
+                                <input type="hidden" name = "iIdConstanteNivel" id="iIdConstanteNivel" value="" >
+                                <input type="hidden" name = "iClaveNivel" id="iClaveNivel" value="" >
+
                                 <div class="dashboard-section basic-info-input">
                                     <h4><i data-feather="user-check"></i>INFORMACIÓN DEL PUESTO</h4>
                                     <div class="form-group row">
@@ -311,6 +336,19 @@ $resultadoHorasLaborales = ObtenerHorasLaborales();
                                             <input type="text" id = "descripcionPuesto" name = "descripcionPuesto" class="form-control" placeholder="DESCRIPCION DE PUESTO"
                                                 style="text-transform: uppercase" pattern="[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+"
                                                 title="SOLO SE PERMITEN LETRAS" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">*NIVEL ORGANIZACIONAL:</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="nivelOrganizacional" name="nivelOrganizacional">
+                                                <option value="" selected>SELECCIONE UN NIVEL ORGANIZACIONAL</option>
+                                                <?php foreach ($resultadoNiveles as $nivel): ?>
+                                                    <option value="<?= $nivel['iIdConstante'].'-'.$nivel['iClaveCatalogo'] ?>">
+                                                        [<?= $nivel['iClaveCatalogo'] ?>] - <?= $nivel['vchDescripcion'] ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -390,10 +428,23 @@ $resultadoHorasLaborales = ObtenerHorasLaborales();
                                                     document.getElementById('iIdConstanteHoras').value = iIdConstanteHoras;
                                                     document.getElementById('iClaveHoras').value = iClaveHoras;
 
+
+                                                    // Obtener los valores de los elementos del formulario
+                                                    var NivelSeleccionado = document.getElementById('nivelOrganizacional');
+                                                    var NivelPartes = NivelSeleccionado.value.split('-');
+                                                    var iIdConstanteNivel = NivelPartes[0];
+                                                    var iClaveNivel= NivelPartes[1];
+
+                                                    // Asignar los valores a los campos ocultos
+                                                    document.getElementById('iIdConstanteNivel').value = iIdConstanteNivel;
+                                                    document.getElementById('iClaveNivel').value = iClaveNivel;
+
                                                     // Crear un objeto con los datos del formulario
                                                     var datosFormularioPuesto = {
                                                         nombrePuesto: document.getElementById('nombrePuesto').value,
                                                         descripcionPuesto: document.getElementById('descripcionPuesto').value,
+                                                        iIdConstanteNivel: iIdConstanteNivel,
+                                                        iClaveNivel: iClaveNivel,
                                                         iIdConstanteContratacion: iIdConstanteContratacion,
                                                         iClaveContratacion: iClaveContratacion,
                                                         iIdConstanteHoras: iIdConstanteHoras,
@@ -420,9 +471,10 @@ $resultadoHorasLaborales = ObtenerHorasLaborales();
                                                     datosPuesto.onload = function() {
                                                         if (datosPuesto.status === 200) {
                                                             var respuesta = JSON.parse(datosPuesto.responseText);
-                                                            if (respuesta.bResultado === 1) {
-                                                                console.log();
-                                                              //  window.location.href = "altaContacto.php";
+                                                            if (respuesta.bResultado == 1) {
+                                                                console.log("Exito");
+                                                                alert(respuesta.vchMensaje);
+                                                                //window.location.href = "";
                                                             } else {
                                                                 console.error("Mensaje Error: " + respuesta.vchMensaje);
                                                                 alert(respuesta.vchMensaje)

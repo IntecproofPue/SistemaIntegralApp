@@ -14,6 +14,8 @@ if ($conn === false) {
 
 $nombrePuesto = isset($_POST['nombrePuesto'])? $_POST['nombrePuesto']:'';
 $descripcionPuesto = isset($_POST['descripcionPuesto'])?$_POST['descripcionPuesto']: '';
+$iIdConstanteNivel = isset($_POST['iIdConstanteNivel'])?$_POST['iIdConstanteNivel']:0;
+$iClaveNivel = isset($_POST['iClaveNivel'])? $_POST['iClaveNivel']:0;
 $iIdConstanteContratacion = isset($_POST['iIdConstanteContratacion'])?$_POST['iIdConstanteContratacion']:0;
 $iClaveContratacion = isset($_POST['iClaveContratacion'])? $_POST['iClaveContratacion']:0;
 $iIdConstanteHoras = isset($_POST['iIdConstanteHoras'])? $_POST['iIdConstanteHoras']:0;
@@ -27,6 +29,9 @@ $salarioComplementario = isset($_POST['salarioComplementario'])? $_POST['salario
 $datosPuesto = array(
     'vchPuesto' => $nombrePuesto,
     'vchDescripcion' => $descripcionPuesto,
+    'iIdConstanteNivel' => $iIdConstanteNivel,
+    'iAgrupadorNivel' => 22,
+    'iCveNivel' => $iClaveNivel,
     'iIdTipoContratacion' => $iIdConstanteContratacion,
     'iAgrupadorContratacion' => 1,
     'iCveContratacion' => $iClaveContratacion,
@@ -38,12 +43,12 @@ $datosPuesto = array(
     'mSalarioNeto' => $salarioNeto,
     'iIdUsuarioUltModif' => 2,
     'iIdPuesto' => 0,
-    'bResultado' => 0,
-    'vchCampoError' =>  'ALGO',
+    'bResultado' => false,
+    'vchCampoError' =>  '',
     'vchMensaje' => ''
 );
 
-$procedureName = "EXEC prcAltaPuesto_prueba    @vchPuesto = ?,
+$procedureName = "EXEC prcAltaPuesto           @vchPuesto = ?,
                                                @vchDescripcion = ?, 
                                                @iIdTipoContratacion = ?, 
                                                @iAgrupadorContratacion = ?, 
@@ -55,6 +60,9 @@ $procedureName = "EXEC prcAltaPuesto_prueba    @vchPuesto = ?,
                                                @mSalarioComplemento = ?,
                                                @mSalarioNeto = ?,
                                                @iIdUsuarioUltModif = ? ,
+                                               @iIdNivel = ?, 
+                                               @iAgrupadorNivel = ?, 
+                                               @iCveNivel = ?,
                                                @iIdPuesto = ?, 
                                                @bResultado = ?,
                                                @vchCampoError = ?,
@@ -74,19 +82,14 @@ $params = array(
     $datosPuesto['mSalarioComplemento'],
     $datosPuesto['mSalarioNeto'],
     $datosPuesto['iIdUsuarioUltModif'],
-    array(&$datosPuesto['iIdPuesto'], SQLSRV_PARAM_OUT),
-    array(&$datosPuesto['bResultado'], SQLSRV_PARAM_OUT),
-    array(&$datosPuesto['vchCampoError'], SQLSRV_PARAM_OUT),
-    array(&$datosPuesto['vchMensaje'], SQLSRV_PARAM_OUT)
+    $datosPuesto['iIdConstanteNivel'],
+    $datosPuesto['iAgrupadorNivel'],
+    $datosPuesto['iCveNivel'],
+    array(&$datosPuesto['iIdPuesto'], SQLSRV_PARAM_OUT, SQLSRV_PHPTYPE_INT),
+    array(&$datosPuesto['bResultado'], SQLSRV_PARAM_OUT, SQLSRV_PHPTYPE_INT),
+    array(&$datosPuesto['vchCampoError'], SQLSRV_PARAM_OUT, SQLSRV_PHPTYPE_STRING(SQLSRV_ENC_CHAR)),
+    array(&$datosPuesto['vchMensaje'], SQLSRV_PARAM_OUT, SQLSRV_PHPTYPE_STRING(SQLSRV_ENC_CHAR))
 );
-
-var_dump($params);
-
-
-echo ("==============================");
-echo ("Esto es el vchCampoError: ".$datosPuesto['vchCampoError']);
-echo ("Esto es el vchMensaje:" .$datosPuesto['vchMensaje']);
-echo ("==============================");
 
 
 $sql = "EXEC prcAltaPuesto     @vchPuesto = '{$datosPuesto['vchPuesto']}' ,
@@ -101,39 +104,26 @@ $sql = "EXEC prcAltaPuesto     @vchPuesto = '{$datosPuesto['vchPuesto']}' ,
                                @mSalarioComplemento = '{$datosPuesto['mSalarioComplemento']}',
                                @mSalarioNeto = '{$datosPuesto['mSalarioNeto']}',
                                @iIdUsuarioUltModif = '{$datosPuesto['iIdUsuarioUltModif']}' ,
-                               @iIdPuesto = '{$datosPuesto['iIdPuesto']}', 
-                               @bResultado = '{$datosPuesto['bResultado']}',
                                @vchCampoError = '{$datosPuesto['vchCampoError']}',
                                @vchMensaje = '{$datosPuesto['vchMensaje']}'
                                ";
 
 
-echo ("Voy a ejecutar esta consulta: ".$sql);
-
 $result = sqlsrv_query($conn, $procedureName, $params);
 
-var_dump($result);
-
 if ($result === false) {
-    echo("No se está ejecutando el proceso");
     $errorInformacion = sqlsrv_errors();
     $respuesta   = array (
         'error' => true,
-        'campoError' => mb_convert_encoding($datosPuesto['vchCampoError'], "UTF-8", "ISO-8859-1"),
-        'mensaje' => mb_convert_encoding($datosPuesto['vchMensaje'], "UTF-8", "ISO-8859-1"),
+        'mensaje' => $datosPuesto['vchMensaje'],
+        'campoError' => $datosPuesto['vchCampoError'],
         'sqlError' => $errorInformacion
     );
     echo json_encode($respuesta);
 
 } else {
-    echo ("Proceso correcto");
-    echo ("==================================");
-    echo ($datosPuesto['vchCampoError']);
-    echo ($datosPuesto['vchMensaje']);
-    echo ($datosPuesto['bResultado']);
     echo json_encode($datosPuesto);
 }
 
-var_dump($datosPuesto);
 
 sqlsrv_close($conn);
