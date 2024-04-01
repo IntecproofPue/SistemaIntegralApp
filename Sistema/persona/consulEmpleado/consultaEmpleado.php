@@ -107,6 +107,7 @@ require_once('../../includes/pandora.php');
       return patronAceptado.test(tecla_final);
     }
   </script>
+  <!--<input class="tf w-input" id="txtCurp" name="txtCurp" maxlength="150" onkeypress="return quitarEspeciales(event)" placeholder="No. de CURP" type="text">-->
 
 </head>
 
@@ -119,71 +120,95 @@ require_once('../../includes/pandora.php');
           <div class="header-top">
             <div class="logo-area">
               <a href="../../index.html"><img src="../../images/logo-2.png" alt=""></a>
+              <a>
+                <h7>CONSULTA DE EMPLEADO</h7>
+              </a>
             </div>
             <div class="header-top-toggler">
               <div class="header-top-toggler-button"></div>
             </div>
             <div class="top-nav">
               <div class="dropdown header-top-notification">
-                <a href="#" class="notification-button">Notificaciones</a>
+                <a href="#" class="notification-button">Notification</a>
                 <div class="notification-card">
                   <div class="notification-head">
-                    <span>Notificaciones</span>
-                    <a href="#">Marcar todo como leido</a>
+                    <span>Notifications</span>
+                    <a href="#">Mark all as read</a>
                   </div>
                   <div class="notification-body">
                     <a href="../../home-2.html" class="notification-list">
                       <i class="fas fa-bolt"></i>
-                      <p>Tu CV actualizado</p>
+                      <p>Your Resume Updated!</p>
                       <span class="time">5 hours ago</span>
                     </a>
                     <a href="#" class="notification-list">
                       <i class="fas fa-arrow-circle-down"></i>
-                      <p>Alguien descargo tu CV</p>
+                      <p>Someone downloaded resume</p>
                       <span class="time">11 hours ago</span>
                     </a>
                     <a href="#" class="notification-list">
                       <i class="fas fa-check-square"></i>
-                      <p>solicitaste un puesto de.... <span>@homeland</span></p>
+                      <p>You applied for Project Manager <span>@homeland</span></p>
                       <span class="time">11 hours ago</span>
                     </a>
                     <a href="#" class="notification-list">
                       <i class="fas fa-user"></i>
-                      <p>Cambiaste la contraseña</p>
+                      <p>You changed password</p>
                       <span class="time">5 hours ago</span>
                     </a>
                     <a href="#" class="notification-list">
                       <i class="fas fa-arrow-circle-down"></i>
-                      <p>Alguien descargo tu CV</p>
+                      <p>Someone downloaded resume</p>
                       <span class="time">11 hours ago</span>
                     </a>
                   </div>
                   <div class="notification-footer">
-                    <a href="#">Ver Notificaciones</a>
+                    <a href="#">See all notification</a>
                   </div>
                 </div>
               </div>
               <div class="dropdown header-top-account">
-                <a href="#" class="account-button">MI CUENTA</a>
+                <a href="#" class="account-button">My Account</a>
                 <div class="account-card">
                   <div class="header-top-account-info">
                     <a href="#" class="account-thumb">
                       <img src="../../images/account/thumb-1.jpg" class="img-fluid" alt="">
                     </a>
                     <div class="account-body">
-                      <h5><a href="#">Mostrar Empleado</a></h5>
-                      <span class="mail">empleado@intecproof.com</span>
+                      <h5><a href="#">Robert Chavez</a></h5>
+                      <span class="mail">chavez@domain.com</span>
                     </div>
                   </div>
                   <ul class="account-item-list">
-                    <li><a href="#"><span class="ti-user"></span>CUENTA</a></li>
-                    <li><a href="#"><span class="ti-settings"></span>AJUSTES</a></li>
-                    <li><a href='../../index.php' onClick="terminarProcesosBD();"><span class="ti-power-off"></span>SALIR</a></li>
+                    <li><a href="#"><span class="ti-user"></span>Account</a></li>
+                    <li><a href="#"><span class="ti-settings"></span>Settings</a></li>
+                    <li><a href="#"><span class="ti-power-off"></span>Log Out</a></li>
                   </ul>
                 </div>
               </div>
+              <!--<select class="selectpicker select-language" data-width="fit">
+                  <option data-content='<span class="flag-icon flag-icon-us"></span> English'>English</option>
+                  <option  data-content='<span class="flag-icon flag-icon-mx"></span> Español'>Español</option>
+                </select>-->
             </div>
           </div>
+          <nav class="navbar navbar-expand-lg cp-nav-2">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav">
+                <li class="menu-item active"><a title="PERSONA" href="altaPersona.php">PERSONA</a></li>
+                <li class="menu-item active"><a title="DOMICILIO" href="altaDomicilio.php">DOMICILIO</a>
+                </li>
+                <li class="menu-item active"><a title="CONTACTO" href="altaContacto.php">CONTACTO</a>
+                </li>
+                <li class="menu-item active"><a title="CONTACTO" href="altaEmpleado.php">EMPLEADO</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
         </div>
       </div>
     </div>
@@ -204,6 +229,11 @@ require_once('../../includes/pandora.php');
                 <li class="breadcrumb-item active" aria-current="page">CONSULTA EMPLEADO&nbsp;&nbsp;</li>
               </ol>
             </nav>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="breadcrumb-form">
+
           </div>
         </div>
       </div>
@@ -239,7 +269,7 @@ require_once('../../includes/pandora.php');
 
                 <?php } else { ?>
 
-
+                 
                   <!-- var datos = ["Dato1", "Dato2", "Dato3", "Dato4"]; // reemplaza esto con tu array de datos -->
 
 
@@ -252,431 +282,535 @@ require_once('../../includes/pandora.php');
                     <div class="dashboard-section basic-info-input">
                       <h3><i data-feather="user-check"></i>DATOS DE EMPLEADO</h3>
                       <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">ID:</label>
+                          <label class="col-sm-3 col-form-label">ID</label>
+                          <div class="col-sm-9">
+                          <input id="idInput" type="text" class="form-control" placeholder="ID" value="<?php echo $datos[0]; ?>" readonly />
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">NOMBRES (s)</label>
                         <div class="col-sm-9">
-                          <ul>
-                            <li>INGRESA ID EMPLEADO</li>
-                          </ul>
+                          <input type="text" class="form-control" placeholder="Nombre" style="text-transform: uppercase"
+                            min="2" maxlength="150"
+                            onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)" required>
+
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">NOMBRES (S):</label>
+                        <label class="col-sm-3 col-form-label">Primer Apellido:</label>
                         <div class="col-sm-9">
-                          <ul>
-                            <li>INGRESA NOMBRE(S) EMPLEADO</li>
-                          </ul>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">PRIMER APELLIDO:</label>
-                        <div class="col-sm-9">
-                          <ul>
-                            <li>INGRESA PRIMER APELLIDO EMPLEADO</li>
-                          </ul>
+                          <input type="text" class="form-control" placeholder="Apellido Paterno" min="2"
+                            name="nombreEscrito" style="text-transform: uppercase" maxlength="50"
+                            onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)" required>
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Segundo Apellido:</label>
                         <div class="col-sm-9">
-                          <ul>
-                            <li>INGRESA SEGUNDO APELLIDO EMPLEADO</li>
-                          </ul>
+                          <input type="text" class="form-control" placeholder="Apellido Materno" min="2"
+                            name="apeUnoEsccrito" style="text-transform: uppercase" maxlength="50"
+                            onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)" required>
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">PUESTO</label>
                         <div class="col-sm-9">
-                          <ul>
-                            <li>INGRESA PUESTO EMPLEADO</li>
-                          </ul>
+                          <input type="text" class="form-control" placeholder="PUESTO" min="2" maxlength="150"
+                            onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)" required>
+
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">FECHA DE INGRESO:</label>
                         <div class="col-sm-9">
-                          <ul>
-                            <li></span>INGRESA FECHA EMPLEADO</li>
-                          </ul>
+                          <input type="date" class="form-control" placeholder="FECHA DE INGRESO" name="apeDosEscrito">
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">ESTATUS:</label>
                         <div class="col-sm-9">
-                          <ul>
-                            <li>INGRESA ESTATUS EMPLEADO</li>
-                          </ul>
+                          <input type="text" class="form-control" placeholder="ESTATUS" name="ESTATUS"
+                            style="text-transform: uppercase" maxlength="18">
                         </div>
 
                       </div>
 
                       <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">NSS:</label>
+                        <label class="col-sm-3 col-form-label">NSS</label>
                         <div class="col-sm-9">
-                          <ul>
-                            <li>INGRESA NSS EMPLEADO</li>
-                          </ul>
+                          <input type="text" class="form-control" placeholder="NSS" name="NSS"
+                            style="text-transform: uppercase" maxlength="18">
                         </div>
                       </div>
 
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">FECHA ULTIMA PROMOCION:</label>
                         <div class="col-sm-9">
-                          <ul>
-                            <li>INGRESA FECHA PROMO EMPLEADO</li>
-                          </ul>
+                          <input type="date" class="form-control" placeholder="FECHA ULTIMA PROMOCION" name="apeDosEscrito">
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">SEDE:</label>
+                        <label class="col-sm-3 col-form-label">SEDE</label>
                         <div class="col-sm-9">
-                          <ul>
-                            <li>INGRESA SEDE EMPLEADO</li>
-                          </ul>
+                          <input type="text" class="form-control" placeholder="SEDE" name="SEDE"
+                            style="text-transform: uppercase" maxlength="18">
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">FECHA BAJA:</label>
                         <div class="col-sm-9">
-                          <ul>
-                            <li>INGRESA FECHA BAJA EMPLEADO</li>
-                          </ul>
+                          <input type="text" class="form-control" placeholder="FECHA BAJA" name="FECHA BAJA"
+                            style="text-transform: uppercase" maxlength="18">
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">USUARIO ULTIMA MODIFICACION:</label>
                         <div class="col-sm-9">
-                          <ul>
-                            <li>INGRESA SUARIO EMPLEADO</li>
-                          </ul>
+                          <input type="text" class="form-control" placeholder="ULTIMAMODIF" name="ULTIMA MODIFICACION"
+                            style="text-transform: uppercase" maxlength="18">
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">FECHA ULTIMA MODIFICACION:</label>
                         <div class="col-sm-9">
-                          <ul>
-                            <li>INGRESA MODIFICACION EMPLEADO</li>
-                          </ul>
+                          <input type="text" class="form-control" placeholder="FECHA ULTMODIFICACION"
+                            name="FECHA ULTIMA MODIFICACION" style="text-transform: uppercase" maxlength="18">
                         </div>
                       </div>
                       <h3><i data-feather="user-check"></i>DATOS DE LA PERSONA</h3>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">RFC:</label>
                         <div class="col-sm-9">
-                          <ul>
-                            <li>INGRESA RFC EMPLEADO</li>
-                          </ul>
+                          <input type="text" class="form-control" placeholder="RFC" name="RFC"
+                            style="text-transform: uppercase" maxlength="13">
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">CURP:</label>
                         <div class="col-sm-9">
-                          <ul>
-                            <li>INGRESA CURP EMPLEADO</li>
-                          </ul>
+                          <input type="text" class="form-control" placeholder="CURP" name="CURP"
+                            style="text-transform: uppercase" maxlength="18">
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">FECHA NACIMIENTO:</label>
                         <div class="col-sm-9">
-                          <ul>
-                            <li>INGRESA LA FECHA EMPLEADO</li>
-                          </ul>
+                          <input type="date" class="form-control" placeholder="FECHA de nacimiento"
+                            name="fehca de nacimeinto" style="text-transform: uppercase">
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">GENERO:</label>
                         <div class="col-sm-9">
-                          <ul>
-                            <li>INGRESA GENERO EMPLEADO</li>
-                          </ul>
+                          <input type="text" class="form-control" placeholder="genero" name="genero"
+                            style="text-transform: uppercase" maxlength="13">
                         </div>
                       </div>
+
+
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">NACIONALIDAD:</label>
                         <div class="col-sm-9">
-                          <ul>
-                            <li>INGRESA NACIONALIDAD EMPLEADO</li>
-                          </ul>
+                          <input type="text" class="form-control" placeholder="NACIONALIDAD" name="NACIONALIDAD"
+                            style="text-transform: uppercase" maxlength="18">
                         </div>
                       </div>
-                      <h3><i data-feather="user-check"></i>DATOS FISCALES</h3>
+                      <h6><i data-feather=""></i>DATOS FISCALES</h6>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">TIPO DE PERSONA:</label>
                         <div class="col-sm-9">
-                          <ul>
-                            <li>INGRESA TIPO EMPLEADO</li>
-                          </ul>
+                          <input type="text" class="form-control" placeholder="TIPO DE PERSONA" name="TIPO DE PERSONA"
+                            style="text-transform: uppercase" maxlength="13">
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">REGIMEN FISCAL:</label>
                         <div class="col-sm-9">
-                          <ul>
-                            <li>INGRESA REGIMEN EMPLEADO</li>
-                          </ul>
+                          <input type="text" class="form-control" placeholder="REGIMEN FISCAL" name="REGIMEN FISCAL"
+                            style="text-transform: uppercase" maxlength="13">
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">USO FISCAL:</label>
                         <div class="col-sm-9">
-                          <ul>
-                            <li>INGRESA USO FISCAL EMPLEADO</li>
-                          </ul>
+                          <input type="text" class="form-control" placeholder="USO FISCAL" name="USO FISCAL"
+                            style="text-transform: uppercase" maxlength="13">
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">C.P. FISCAL:</label>
                         <div class="col-sm-9">
-                          <ul>
-                            <li>INGRESA CP EMPLEADO</li>
-                          </ul>
+                          <input type="text" class="form-control" placeholder="C.P. FISCAL" name="C.P. FISCAL"
+                            style="text-transform: uppercase" maxlength="13">
                         </div>
+                      </div>
+
+                      <!--<div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Email Address</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" placeholder="email@example.com">
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-sm-3 col-form-label"></label>
-                      <div class="call-to-action-button">
-                        <button type="button" class="button"
-                          onclick="window.location.href='/sitemaintegralPHP/Sistema/persona/modifPersona/modifEmpleado.php'">
-                          EDITAR</button>
+                      <label class="col-sm-3 col-form-label">Phone</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" placeholder="+55 123 4563 4643">
                       </div>
                     </div>
-                  <?php }
+                    <div class="form-group row">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Address</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" placeholder="Washington D.C">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Indestry Expertise</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" placeholder="UI & UX Designer">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">About Me</label>
+                      <div class="col-sm-9">
+                        <textarea class="form-control" placeholder="Introduce Yourself"></textarea>
+                      </div>
+                    </div>-->
+                    </div>
+                    <div class="dashboard-section basic-info-input">
+
+
+                      <div class="row">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label"></label>
+                          <div class="col-sm-9">
+                            <button class="button" id="toggleDomicilioButton">DOMICILIO</button>
+                          </div>
+                        </div>
+                      <?php }
                 ?>
-                  <?php
+                      <?php
               } else {
                 ?>
-                  <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="dashboard-form">
+                      <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="dashboard-form">
 
-                    <div id="busquedaDiv" class="dashboard-section basic-info-input">
-                      <h4><i data-feather="user-check"></i>BUSQUEDA</h4>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">SELECCIONAR CAMPO:</label>
-                        <div class="col-sm-9">
-                          <select class="form-control" id="selectCampos" onchange="mostrarCampoSeleccionado()">
-                            <option value="iDBuscar">ID DE EMPLEADO</option>
-                            <option value="RFCBuscar">RFC</option>
-                            <option value="PUESTOBuscar">PUESTO</option>
-                            <option value="SEDE">SEDE</option>
-                            <option value="nombreaBuscar">NOMBRE</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label"></label>
-                        <div class="col-sm-9">
-                          <div class="campo-container">
-                            <div id="iDBuscar" class="campo-busqueda">
-                              <input type="text" class="form-control" placeholder="INGRESA ID DEL EMPLEADO"
-                                name="iDBuscar" style="text-transform: uppercase">
-                            </div>
-                            <div id="RFCBuscar" class="campo-busqueda" style="display: none;">
-                              <input type="text" class="form-control" placeholder="INGRESA RFC CORRECTO" name="RFCBuscar"
-                                style="text-transform: uppercase">
-                            </div>
-                            <div id="PUESTOBuscar" class="campo-busqueda" style="display: none;">
-                              <select class="form-control" placeholder="PUESTO" name="PUESTO">
-                                <option value="ANALISTA">ANALISTA</option>
-                                <option value="TESTER">TESTER</option>
+                        <div class="dashboard-section basic-info-input">
+                          <h4><i data-feather="user-check"></i>BUSQUEDA</h4>
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">SELECCIONAR CAMPO:</label>
+                            <div class="col-sm-9">
+                              <select class="form-control" id="selectCampos" onchange="mostrarCampoSeleccionado()">
+                                <option value="iDBuscar">ID DE EMPEADO</option>
+                                <option value="RFCBuscar">RFC</option>
+                                <option value="PUESTOBuscar">PUESTO</option>
+                                <option value="SEDE">SEDE</option>
+                                <option value="nombreaBuscar">NOMBRE</option>
                               </select>
                             </div>
-                            <div id="SEDE" class="campo-busqueda" style="display: none;">
-                              <select class="form-control" placeholder="SEDE" name="SEDE">
-                                <option value="PUEBLA">PUEBLA</option>
-                                <option value="GUADALAJARA">GUADALAJARA</option>
-                              </select>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label"></label>
+                            <div class="col-sm-9">
+                              <div class="campo-container">
+                                <div id="iDBuscar" class="campo-busqueda" style="display: none;">
+                                  <input type="text" class="form-control" placeholder="INGRESA ID DEL EMPLEADO"
+                                    name="iDBuscar" style="text-transform: uppercase">
+                                </div>
+                                <div id="RFCBuscar" class="campo-busqueda" style="display: none;">
+                                  <input type="text" class="form-control" placeholder="INGRESA RFC CORRECTO"
+                                    name="RFCBuscar" style="text-transform: uppercase">
+                                </div>
+                                <div id="PUESTOBuscar" class="campo-busqueda" style="display: none;">
+                                  <input type="text" class="form-control" placeholder="INGRESA EL PUESTO"
+                                    name="PUESTOBuscar" style="text-transform: uppercase">
+                                </div>
+                                <div id="SEDE" class="campo-busqueda" style="display: none;">
+                                  <select class="form-control" placeholder="SEDE" name="SEDE">
+                                    <option value="PUEBLA">PUEBLA</option>
+                                    <option value="GUADALAJARA">GUADALAJARA</option>
+                                  </select>
+                                </div>
+                                <div id="nombreaBuscar" class="campo-busqueda" style="display: none;">
+                                  <input type="text" class="form-control" placeholder="INGRESA EL NOMBRE"
+                                    name="nombreaBuscar" style="text-transform: uppercase">
+                                </div>
+                              </div>
                             </div>
-                            <div id="nombreaBuscar" class="campo-busqueda" style="display: none;">
-                              <input type="text" class="form-control" placeholder="INGRESA EL NOMBRE" name="nombreaBuscar"
-                                style="text-transform: uppercase">
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-sm-3 col-form-label"></label>
+                            <div class="col-sm-9">
+                              <button class="button" type="submit" name="submitBuscar">Buscar</button>
+                              <button class="button" type="reset" name="submitBuscar">Limpiar</button>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label"></label>
-                        <div class="job-apply-buttons">
-                          <a href="#" class="apply" data-toggle="modal" data-target="#apply-popup-id">SELECCIONAR</a>
-                          <button class="button" type="reset">LIMPIAR</button>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- MODAL POPUP -->
-                    <div class="apply-popup">
-                      <div class="modal fade" id="apply-popup-id" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title"><i data-feather="edit"></i>RESULTADO DE LA BUSQUEDA</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <form action="#">
-                                <ul
-                                  style="list-style: none; padding: 0; display: flex; flex-direction: row; align-items: center;">
-                                  <li style="margin-right: 10px;"><span>ID EMPLEADO:</span> MOSTRAR ID</li>
-                                  <li style="margin-right: 10px;"><span>RFC:</span> MOSTRAR RFC</li>
-                                  <li style="margin-right: 10px;"><span>NOMBRE:</span> MOSTRAR NOMBRE</li>
-                                  <li style="margin-right: 10px;"><span>PUESTO:</span> MOSTRAR PUESTO</li>
-                                  <li style="margin-right: 10px;"><span>SEDE:</span> MOSTRAR SEDE</li>
-                                </ul>
-                                <button class="button primary-bg btn-block" name="submitBuscar"
-                                  onclick="seleccionarEmpleado()">SELECCIONAR</button>
-                              </form>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-              </div>
-              </form>
-              <?php
+
+                      </form>
+
+
+
+
+
+                      <?php
               }
 
               ?>
+
+
+
+
+                  </div>
+
+                </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <!-- Footer -->
-  <footer class="footer-bg">
-    <div class="footer-bottom-area">
-      <div class="container">
-        <div class="row">
-          <div class="col">
-            <div class="footer-bottom border-top">
-              <div class="row">
-                <div class="col-xl-4 col-lg-5 order-lg-2">
-                </div>
-                <div class="col-xl-4 col-lg-4 order-lg-1">
-                  <a href="#">
-                    <img src="images/footer-logo.png" class="img-fluid" alt="">
-                  </a>
-                  <p class="copyright-text">Copyright <a href="#">Intecproof</a> 2024, All right
-                    reserved</p>
-                </div>
-                <div class="col-xl-4 col-lg-3 order-lg-3">
-                  <div class="back-to-top">
-                    <a href="#">Back to top<i class="fas fa-angle-up"></i></a>
+      <!-- seccion a mostrar -->
+      <div class="alice-bg section-padding-bottom" id="dashboardSection">
+        <div class="container no-gliters">
+          <div class="row no-gliters">
+            <div class="col">
+              <div class="dashboard-container">
+                <div class="dashboard-content-wrapper" id="domicilioSection" style="display: none;">
+
+                  <h3><i data-feather="user-check"></i>DOMICILIO</h3>
+
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">CALLE:</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" placeholder="CALLE" name="CALLE"
+                        style="text-transform: uppercase" maxlength="13">
+                    </div>
                   </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">N° EXTERIOR:</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" placeholder="N° EXTERIOR" name="N° EXTERIOR"
+                        style="text-transform: uppercase" maxlength="13">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">N° INTERIOR:</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" placeholder="N° INTERIOR" name="N° INTERIOR"
+                        style="text-transform: uppercase" maxlength="13">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">LETRA:</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" placeholder="LETAR" name="LETRA"
+                        style="text-transform: uppercase" maxlength="13">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">COLONIA:</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" placeholder="COLONIA" name="COLONIA"
+                        style="text-transform: uppercase" maxlength="13">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">C. P.:</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" placeholder="C.P." name="C. P."
+                        style="text-transform: uppercase" maxlength="13">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">LOCALIDAD:</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" placeholder="LOCALIDAD" name="LOCALIDAD"
+                        style="text-transform: uppercase" maxlength="13">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">MUNICIPIO:</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" placeholder="MUNICIPIO" name="MUNICIPIO"
+                        style="text-transform: uppercase" maxlength="13">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">ENTIDAD:</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" placeholder="ENTIDAD" name="ENTIDAD"
+                        style="text-transform: uppercase" maxlength="13">
+                    </div>
+                  </div>
+
+                  <h6><i data-feather=""></i>CONTACTO</h6>
+
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">TIPO DE CONTACTO:</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" placeholder="TIPO DE CONTACTO" name="TIPO DE CONTACTO"
+                        style="text-transform: uppercase" maxlength="13">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">CONTACTO:</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" placeholder="CONTACTO" name="CONTACTO"
+                        style="text-transform: uppercase" maxlength="13">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">ESTATUS:</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" placeholder="ESTATUS" name="ESTATUS"
+                        style="text-transform: uppercase" maxlength="13">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label"></label>
+                      <div class="col-sm-9">
+                        <button class="button">MODIFICAR</button>
+                      </div>
+                    </div>
+                  </div>
+                  </form>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- Call to Action 
+    <div class="call-to-action-bg padding-top-90 padding-bottom-90">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="call-to-action-2">
+              <div class="call-to-action-content">
+                <h2>Buscar empleado:</h2>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </footer>
-  <!-- Footer End -->
+     Call to Action End -->
 
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="../../assets/js/jquery.min.js"></script>
-  <script src="../../assets/js/popper.min.js"></script>
-  <script src="../../assets/js/bootstrap.min.js"></script>
-  <script src="../../assets/js/feather.min.js"></script>
-  <script src="../../assets/js/bootstrap-select.min.js"></script>
-  <script src="../../assets/js/jquery.nstSlider.min.js"></script>
-  <script src="../../assets/js/owl.carousel.min.js"></script>
-  <script src="../../assets/js/visible.js"></script>
-  <script src="../../assets/js/jquery.countTo.js"></script>
-  <script src="../../assets/js/chart.js"></script>
-  <script src="../../assets/js/plyr.js"></script>
-  <script src="../../assets/js/tinymce.min.js"></script>
-  <script src="../../assets/js/slick.min.js"></script>
-  <script src="../../assets/js/jquery.ajaxchimp.min.js"></script>
+      <!-- Footer -->
+      <footer class="footer-bg">
 
-  <script src="../../js/custom.js"></script>
-  <script src="../../dashboard/js/dashboard.js"></script>
-  <script src="../../dashboard/js/datePicker.js"></script>
-  <script src="../../dashboard/js/upload-input.js"></script>
 
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
-  <script src="../../js/map.js"></script>
+        <div class="footer-bottom-area">
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <div class="footer-bottom border-top">
+                  <div class="row">
+                    <div class="col-xl-4 col-lg-5 order-lg-2">
+                      <div class="footer-app-download">
+                        <!--<a href="#" class="apple-app">Apple Store</a>
+                      <a href="#" class="android-app">Google Play</a>-->
+                      </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 order-lg-1">
+                      <!-- <p class="copyright-text">Copyright <a href="#">Oficiona</a> 2020, All right reserved</p> -->
+                    </div>
+                    <div class="col-xl-4 col-lg-3 order-lg-3">
+                      <div class="back-to-top">
+                        <a href="#">Subir<i class="fas fa-angle-up"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+      <!-- Footer End -->
 
-  <script>
-    // función para mostrar u ocultar la sección de Domicilio
-    function toggleDomicilioSection() {
-      var domicilioSection = document.getElementById('domicilioSection');
+      <!-- Optional JavaScript -->
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script src="../../assets/js/jquery.min.js"></script>
+      <script src="../../assets/js/popper.min.js"></script>
+      <script src="../../assets/js/bootstrap.min.js"></script>
+      <script src="../../assets/js/feather.min.js"></script>
+      <script src="../../assets/js/bootstrap-select.min.js"></script>
+      <script src="../../assets/js/jquery.nstSlider.min.js"></script>
+      <script src="../../assets/js/owl.carousel.min.js"></script>
+      <script src="../../assets/js/visible.js"></script>
+      <script src="../../assets/js/jquery.countTo.js"></script>
+      <script src="../../assets/js/chart.js"></script>
+      <script src="../../assets/js/plyr.js"></script>
+      <script src="../../assets/js/tinymce.min.js"></script>
+      <script src="../../assets/js/slick.min.js"></script>
+      <script src="../../assets/js/jquery.ajaxchimp.min.js"></script>
 
-      // Cambia la visibilidad de la sección
-      if (domicilioSection.style.display === 'none') {
-        domicilioSection.style.display = 'block';
-      } else {
-        domicilioSection.style.display = 'none';
-      }
+      <script src="../../js/custom.js"></script>
+      <script src="../../dashboard/js/dashboard.js"></script>
+      <script src="../../dashboard/js/datePicker.js"></script>
+      <script src="../../dashboard/js/upload-input.js"></script>
+
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
+      <script src="../../js/map.js"></script>
+
+      <script>
+        // función para mostrar u ocultar la sección de Domicilio
+        function toggleDomicilioSection() {
+          var domicilioSection = document.getElementById('domicilioSection');
+
+          // Cambia la visibilidad de la sección
+          if (domicilioSection.style.display === 'none') {
+            domicilioSection.style.display = 'block';
+          } else {
+            domicilioSection.style.display = 'none';
+          }
+        }
+
+        <script>
+          function limpiarCampos(element) {
+        // Desactiva todos los campos
+        var inputs = document.getElementsByName('iDBuscar').concat(
+          document.getElementsByName('RFCBuscar'),
+          document.getElementsByName('PUESTOBuscar'),
+          document.getElementsByName('SEDEBuscar'),
+          document.getElementsByName('nombreaBuscar')
+          );
+
+          for (var i = 0; i < inputs.length; i++) {
+            inputs[i].disabled = true;
+        }
+          // Habilita solo el campo correspondiente al input actualmente activo
+          element.disabled = false;
+
+          // Habilita solo el campo correspondiente al input actualmente activo
+          element.disabled = false;
     }
-    function limpiarCampos(element) {
-      // Desactiva todos los campos
-      var inputs = document.getElementsByName('iDBuscar').concat(
-        document.getElementsByName('RFCBuscar'),
-        document.getElementsByName('PUESTOBuscar'),
-        document.getElementsByName('SEDEBuscar'),
-        document.getElementsByName('nombreaBuscar')
-      );
+          element.focus();
+  }
 
-      for (var i = 0; i < inputs.length; i++) {
-        inputs[i].disabled = true;
-      }
-      // Habilita solo el campo correspondiente al input actualmente activo
-      element.disabled = false;
-
-      // Habilita solo el campo correspondiente al input actualmente activo
-      element.disabled = false;
+          function validarBusqueda() {
+        // Agrega tu lógica de validación aquí si es necesario
+        return true; // Cambia a 'false' si quieres prevenir el envío del formulario en ciertos casos
     }
-    element.focus();
+      </script>
+      <script>
+          function mostrarCampoSeleccionado() {
+        // Obtén el valor seleccionado del menú desplegable
+        var selectedCampo = document.getElementById("selectCampos").value;
 
+          // Oculta todos los campos
+          var campos = document.getElementsByClassName("campo-busqueda");
+          for (var i = 0; i < campos.length; i++) {
+            campos[i].style.display = "none";
+        }
 
-    function validarBusqueda() {
-      // Agrega tu lógica de validación aquí si es necesario
-      return true; // Cambia a 'false' si quieres prevenir el envío del formulario en ciertos casos
+          // Muestra el campo seleccionado
+          document.getElementById(selectedCampo).style.display = "block";
     }
-
-    function mostrarCampoSeleccionado() {
-      var select = document.getElementById("selectCampos");
-      var selectedCampo = select.options[select.selectedIndex].value;
-
-      // Oculta todos los campos de búsqueda
-      var campos = document.querySelectorAll('.campo-busqueda');
-      campos.forEach(function (campo) {
-        campo.style.display = 'none';
-      });
-
-      // Muestra solo el campo seleccionado
-      var campoSeleccionado = document.getElementById(selectedCampo);
-      campoSeleccionado.style.display = 'block';
-    }
-
-    function mostrarCampoSeleccionado() {
-      var select = document.getElementById("selectCampos");
-      var selectedCampo = select.options[select.selectedIndex].value;
-
-      // Oculta todos los campos de búsqueda
-      var campos = document.querySelectorAll('.campo-busqueda');
-      campos.forEach(function (campo) {
-        campo.style.display = 'none';
-      });
-
-      // Muestra solo el campo seleccionado
-      var campoSeleccionado = document.getElementById(selectedCampo);
-      campoSeleccionado.style.display = 'block';
-    }
-
-    function realizarBusqueda() {
-      // Oculta el primer div (busquedaDiv)
-      document.getElementById("busquedaDiv").style.display = 'none';
-
-      // Muestra el segundo div (resultadoDiv)
-      document.getElementById("resultadoDiv").style.display = 'block';
-
-      // Aquí puedes realizar cualquier acción adicional relacionada con la búsqueda
-    }
-
-  </script>
+      </script>
 
 
 
