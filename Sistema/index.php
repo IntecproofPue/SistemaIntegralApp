@@ -8,7 +8,7 @@ session_start();
 if ( isset( $_SESSION['user_id'] ) ) {?>
     <script type="text/javascript">
         //Redireccionamiento tras 5 segundos
-        setTimeout( function() { window.location.href = "persona/altaPersona/altaPersona.php"; }, 0 );
+        setTimeout( function() { window.location.href = "index.php"; }, 0 );
     </script>
 <?php }
 
@@ -156,7 +156,7 @@ $passwordInserted = $_POST['passwordInserted'];
 
                         <script type="text/javascript">
                             //Redireccionamiento tras 5 segundos
-                            setTimeout( function() { window.location.href = "Sistema/inicio.php"; }, 0 );
+                            setTimeout( function() { window.location.href = "../Sistema/inicio.php"; }, 0 );
                         </script>
                 <?php    }else{
 

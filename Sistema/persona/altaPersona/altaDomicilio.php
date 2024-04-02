@@ -1,29 +1,30 @@
 <?php
-        require_once('../../includes/pandora.php');
-        require_once('../../includes/load.php');
+require_once('../../includes/pandora.php');
+require_once('../../includes/load.php');
 
-        session_start();
-
-
-    function ObtenerEstadoProcedencia(){
-        $agrupadorEstado = 4;
-        if (isset ($_SESSION['CatConstante'])){
-            $datosEdoProcedencia = $_SESSION['CatConstante'];
-            $estadoEncontrado = array();
+session_start();
 
 
-            foreach ($datosEdoProcedencia as $valorEstado) {
-                if ($valorEstado['iAgrupador'] == $agrupadorEstado) {
-                    $estadoEncontrado [] = $valorEstado;
-                }
+function ObtenerEstadoProcedencia()
+{
+    $agrupadorEstado = 4;
+    if (isset($_SESSION['CatConstante'])) {
+        $datosEdoProcedencia = $_SESSION['CatConstante'];
+        $estadoEncontrado = array();
+
+
+        foreach ($datosEdoProcedencia as $valorEstado) {
+            if ($valorEstado['iAgrupador'] == $agrupadorEstado) {
+                $estadoEncontrado[] = $valorEstado;
             }
-            return $estadoEncontrado;
-        } else {
-            echo ("No hay datos del Estado de Procedencia");
         }
+        return $estadoEncontrado;
+    } else {
+        echo ("No hay datos del Estado de Procedencia");
     }
+}
 
-    $resultadoEstado = ObtenerEstadoProcedencia();
+$resultadoEstado = ObtenerEstadoProcedencia();
 
 ?>
 
@@ -203,7 +204,7 @@
                                     <ul class="account-item-list">
                                         <li><a href="#"><span class="ti-user"></span>Account</a></li>
                                         <li><a href="#"><span class="ti-settings"></span>Settings</a></li>
-                                        <li><a href="#"><span class="ti-power-off"></span>Log Out</a></li>
+                                        <li><a href="../../includes/logout.php"><span class="ti-power-off"></span>Log Out</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -222,9 +223,12 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav">
                                 <li class="menu-item active"><a title="PERSONA" href="altaPersona.php">PERSONA</a></li>
-                                <li class="menu-item active"><a title="DOMICILIO" href="altaDomicilio.php">DOMICILIO</a></li>
-                                <li class="menu-item active"><a title="CONTACTO" href="altaContacto.php">CONTACTO</a></li>
-                                <li class="menu-item active"><a title="CONTACTO" href="altaEmpleado.php">EMPLEADO</a></li>
+                                <li class="menu-item active"><a title="DOMICILIO" href="altaDomicilio.php">DOMICILIO</a>
+                                </li>
+                                <li class="menu-item active"><a title="CONTACTO" href="altaContacto.php">CONTACTO</a>
+                                </li>
+                                <li class="menu-item active"><a title="CONTACTO" href="altaEmpleado.php">EMPLEADO</a>
+                                </li>
                             </ul>
                         </div>
                     </nav>
@@ -264,20 +268,23 @@
                 <div class="col">
                     <div class="dashboard-container">
                         <div class="dashboard-content-wrapper">
-                            <form class="dashboard-form" id = "FormDomicilioAlta">
-                                <input type="hidden" name = "iIdConstanteEstado" id="iIdConstanteEstado" value="" >
-                                <input type="hidden" name = "iClaveEstado" id="iClaveEstado" value="" >
+                            <form class="dashboard-form" id="FormDomicilioAlta">
+                                <input type="hidden" name="iIdConstanteEstado" id="iIdConstanteEstado" value="">
+                                <input type="hidden" name="iClaveEstado" id="iClaveEstado" value="">
 
                                 <div class="dashboard-section basic-info-input">
                                     <h4><i data-feather="user-check"></i>Basic Infos</h4>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*ESTADO:</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control" id="estadoLista"  name = "estadoLista" required>
+                                            <select class="form-control" id="estadoLista" name="estadoLista" required>
                                                 <option value="" selected>SELECCIONE UN ESTADO</option>
                                                 <?php foreach ($resultadoEstado as $estado): ?>
-                                                    <option value="<?= $estado['iIdConstante'].'-'.$estado['iClaveCatalogo'] ?>">
-                                                        [<?= $estado['iClaveCatalogo'] ?>] - <?= $estado['vchDescripcion'] ?>
+                                                    <option
+                                                        value="<?= $estado['iIdConstante'] . '-' . $estado['iClaveCatalogo'] ?>">
+                                                        [
+                                                        <?= $estado['iClaveCatalogo'] ?>] -
+                                                        <?= $estado['vchDescripcion'] ?>
                                                     </option>
                                                 <?php endforeach; ?>
                                             </select>
@@ -286,7 +293,8 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*MUNICIPIO:</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id = "vchMunicipio" name = "vchMunicipio" placeholder="MUNICIPIO"
+                                            <input type="text" class="form-control" id="vchMunicipio"
+                                                name="vchMunicipio" placeholder="MUNICIPIO"
                                                 style="text-transform: uppercase" pattern="[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+"
                                                 title="SOLO SE PERMITEN LETRAS" required>
                                         </div>
@@ -294,7 +302,8 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*LOCALIDAD:</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id = "vchLocalidad" name = "vchLocalidad" placeholder="LOCALIDAD" min="2"
+                                            <input type="text" class="form-control" id="vchLocalidad"
+                                                name="vchLocalidad" placeholder="LOCALIDAD" min="2"
                                                 name="apeUnoEsccrito" style="text-transform: uppercase"
                                                 style="text-transform: uppercase" required>
                                         </div>
@@ -302,7 +311,8 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*CÓDIGO POSTAL:</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" placeholder="CODIGO POSTAL"  id="codigoPostal" name = "codigoPostal"
+                                            <input type="text" class="form-control" placeholder="CODIGO POSTAL"
+                                                id="codigoPostal" name="codigoPostal"
                                                 onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                                 maxlength="5">
                                         </div>
@@ -310,35 +320,37 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*COLONIA:</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" placeholder="COLONIA" id = "vchColonia" name = "vchColonia" style="text-transform: uppercase" required>
+                                            <input type="text" class="form-control" placeholder="COLONIA"
+                                                id="vchColonia" name="vchColonia" style="text-transform: uppercase"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*CALLE:</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" placeholder="CALLE" id = "vchCalle" name = "vchCalle"
-                                                style="text-transform: uppercase" required>
+                                            <input type="text" class="form-control" placeholder="CALLE" id="vchCalle"
+                                                name="vchCalle" style="text-transform: uppercase" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*No EXT:</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" placeholder="No EXT" id = "vchNoExt" name = "vchNoExt"
-                                                style="text-transform: uppercase" required>
+                                            <input type="text" class="form-control" placeholder="No EXT" id="vchNoExt"
+                                                name="vchNoExt" style="text-transform: uppercase" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*No INT:</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" placeholder="No INT" id = "vchNoInt" name = "vchNoInt"
-                                                style="text-transform: uppercase" required>
+                                            <input type="text" class="form-control" placeholder="No INT" id="vchNoInt"
+                                                name="vchNoInt" style="text-transform: uppercase" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*LETRA:</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" placeholder="LETRA" id = "vchLetra" name = "vchLetra"
-                                                   style="text-transform: uppercase" required>
+                                            <input type="text" class="form-control" placeholder="LETRA" id="vchLetra"
+                                                name="vchLetra" style="text-transform: uppercase" required>
                                         </div>
                                     </div>
 
@@ -386,12 +398,12 @@
                                                     datosDomicilio.send(formData);
 
                                                     // Manejar la respuesta
-                                                    datosDomicilio.onload = function() {
+                                                    datosDomicilio.onload = function () {
                                                         if (datosDomicilio.status === 200) {
                                                             var respuesta = JSON.parse(datosDomicilio.responseText);
                                                             if (respuesta.bResultado === 1) {
                                                                 console.log(respuesta);
-                                                                localStorage.setItem('datosDomicilio',JSON.stringify(datosFormulario));
+                                                                localStorage.setItem('datosDomicilio', JSON.stringify(datosFormulario));
                                                                 window.location.href = "altaContacto.php";
                                                             } else {
                                                                 console.error("Mensaje Error: " + respuesta.vchMensaje);
@@ -404,7 +416,7 @@
                                                 }
 
                                             </script>
-                                            <button type="button" class="button" id = "botonSiguiente" >SIGUIENTE</button>
+                                            <button type="button" class="button" id="botonSiguiente">SIGUIENTE</button>
                                             <script>
                                                 document.getElementById('botonSiguiente').addEventListener('click', ValidarDatosDomicilio);
                                             </script>

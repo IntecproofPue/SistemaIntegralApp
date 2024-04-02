@@ -149,7 +149,7 @@
                         </div>
                     </li>
                     <li class="menu-item login-popup"><button title="Slir de la aplicación"  type="button" 
-                    onclick="window.location.href = 'index.php'">SALIR</button></li>
+                    onclick="window.location.href = '../Sistema/index.php'">SALIR</button></li>
                 </ul>
             </div>
         </nav>

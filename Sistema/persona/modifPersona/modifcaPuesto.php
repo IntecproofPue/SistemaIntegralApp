@@ -284,8 +284,7 @@ $resultadoPuesto = ObtenerPuesto();
                                     <ul class="account-item-list">
                                         <li><a href="#"><span class="ti-user"></span>CUENTA</a></li>
                                         <li><a href="#"><span class="ti-settings"></span>AJUSTES</a></li>
-                                        <li><a href='../../index.php' onClick="terminarProcesosBD();"><span
-                                                    class="ti-power-off"></span>SALIR</a></li>
+                                        <li><a href="../../includes/logout.php"><span class="ti-power-off"></span>Log Out</a></li>
                                     </ul>
                                 </div>
                             </div>

@@ -205,7 +205,7 @@
                                     <ul class="account-item-list">
                                         <li><a href="#"><span class="ti-user"></span>Account</a></li>
                                         <li><a href="#"><span class="ti-settings"></span>Settings</a></li>
-                                        <li><a href="#"><span class="ti-power-off"></span>Log Out</a></li>
+                                        <li><a href="../../includes/logout.php"><span class="ti-power-off"></span>Log Out</a></li>
                                     </ul>
                                 </div>
                             </div>

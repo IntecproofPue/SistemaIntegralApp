@@ -199,16 +199,12 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                         </div>
                                     </div>
                                     <ul class="account-item-list">
-<<<<<<< HEAD
                                         <li><a href="#"><span class="ti-user"></span>Account</a></li>
                                         <li><a href="#"><span class="ti-settings"></span>Settings</a></li>
                                         <li><a href="#"><span class="ti-power-off"></span>Log Out</a></li>
-=======
                                         <li><a href="#"><span class="ti-user"></span>CUENTA</a></li>
                                         <li><a href="#"><span class="ti-settings"></span>AJUSTES</a></li>
-                                        <li><a href='../../index.php' onClick="terminarProcesosBD();"><span
-                                                    class="ti-power-off"></span>SALIR</a></li>
->>>>>>> 48f34ba06e50c28b0bb29cef1522669c4d7e45b8
+                                        <li><a href="../../includes/logout.php"><span class="ti-power-off"></span>LogOut</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -278,61 +274,61 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                                 <li>INGRESA info EMPLEADO</li>
                                             </ul>
                                         </div>
-<<<<<<< HEAD
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">*HORAS LAVORALES:</label>
-                                        <div class="col-sm-9">
-                                            <ul>
-                                                <li>INGRESA info EMPLEADO</li>
-                                            </ul>
-=======
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label"></label>
-                                            <div class="col-sm-9">
-                                            <button type="button" class="button"
-                                                    onclick="window.location.href='/sitemaintegralPHP/Sistema/persona/consulEmpleado/consultaDomicilio.php'">
-                                                    DOMICILIO</button>
-                                                <button type="button" class="button"
-                                                    onclick="window.location.href='/sitemaintegralPHP/Sistema/persona/modifPersona/modifPuesto.php'">
-                                                    EDITAR</button>
+                                        <<<<<<< HEAD </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">*HORAS LAVORALES:</label>
+                                                <div class="col-sm-9">
+                                                    <ul>
+                                                        <li>INGRESA info EMPLEADO</li>
+                                                    </ul>
+                                                    =======
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-3 col-form-label"></label>
+                                                        <div class="col-sm-9">
+                                                            <button type="button" class="button"
+                                                                onclick="window.location.href='/sitemaintegralPHP/Sistema/persona/consulEmpleado/consultaDomicilio.php'">
+                                                                DOMICILIO</button>
+                                                            <button type="button" class="button"
+                                                                onclick="window.location.href='/sitemaintegralPHP/Sistema/persona/modifPersona/modifPuesto.php'">
+                                                                EDITAR</button>
+                                                        </div>
+                                                        >>>>>>> 48f34ba06e50c28b0bb29cef1522669c4d7e45b8
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">*SALARIO NETO:</label>
+                                                    <div class="col-sm-9">
+                                                        <ul>
+                                                            <li>INGRESA info EMPLEADO</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">*SALARIO FISCAL:</label>
+                                                    <div class="col-sm-9">
+                                                        <ul>
+                                                            <li>INGRESA info EMPLEADO</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">*SALARIO
+                                                        COMPLEMENTARIO:</label>
+                                                    <div class="col-sm-9">
+                                                        <ul>
+                                                            <li>INGRESA info EMPLEADO</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label"></label>
+                                                    <div class="col-sm-9">
+                                                        <button type="reset" class="button">LIMPIAR</button>
+                                                        <button type="button" class="button"
+                                                            onclick="window.location.href = 'altaContacto.php'">SIGUIENTE</button>
+                                                    </div>
+                                                </div>
                                             </div>
->>>>>>> 48f34ba06e50c28b0bb29cef1522669c4d7e45b8
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">*SALARIO NETO:</label>
-                                        <div class="col-sm-9">
-                                            <ul>
-                                                <li>INGRESA info EMPLEADO</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">*SALARIO FISCAL:</label>
-                                        <div class="col-sm-9">
-                                            <ul>
-                                                <li>INGRESA info EMPLEADO</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">*SALARIO COMPLEMENTARIO:</label>
-                                        <div class="col-sm-9">
-                                            <ul>
-                                                <li>INGRESA info EMPLEADO</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label"></label>
-                                        <div class="col-sm-9">
-                                            <button type="reset" class="button">LIMPIAR</button>
-                                            <button type="button" class="button"
-                                                onclick="window.location.href = 'altaContacto.php'">SIGUIENTE</button>
-                                        </div>
-                                    </div>
-                                </div>
                             </form>
                         </div>
                     </div>
@@ -361,11 +357,10 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                 </div>
                                 <div class="col-xl-4 col-lg-3 order-lg-3">
                                     <div class="back-to-top">
-<<<<<<< HEAD
-                                        <a href="#">Subir<i class="fas fa-angle-up"></i></a>
-=======
-                                        <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
->>>>>>> 48f34ba06e50c28b0bb29cef1522669c4d7e45b8
+                                        <<<<<<< HEAD <a href="#">Subir<i class="fas fa-angle-up"></i></a>
+                                            =======
+                                            <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
+                                            >>>>>>> 48f34ba06e50c28b0bb29cef1522669c4d7e45b8
                                     </div>
                                 </div>
                             </div>
