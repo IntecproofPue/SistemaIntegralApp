@@ -9,7 +9,7 @@ function EjecutarConstante()
   $connectionInfo = array(
     "Database" => "BDSistemaIntegral_PRETEST",
     "UID" => "Development",
-    "PWD" => "Development123*",
+    "PWD" => "Development1234*",
     'CharacterSet' => 'UTF-8'
   );
 
@@ -66,7 +66,7 @@ function ObtenerNombre($nombreaBuscar)
   $connectionInfo = array(
     "Database" => "BDSistemaIntegral_PRETEST",
     "UID" => "Development",
-    "PWD" => "Development123*",
+    "PWD" => "Development1234*",
     'CharacterSet' => 'UTF-8'
   );
 
@@ -118,7 +118,7 @@ function EjecutarRegimenUso()
   $connectionInfo = array(
     "Database" => "BDSistemaIntegral_PRETEST",
     "UID" => "Development",
-    "PWD" => "Development123*",
+    "PWD" => "Development1234*",
     'CharacterSet' => 'UTF-8'
   );
 
@@ -170,7 +170,7 @@ function validaDatosPersona()
   $connectionInfo = array(
     "Database" => "BDSistemaIntegral_PRETEST",
     "UID" => "Development",
-    "PWD" => "Development123*",
+    "PWD" => "Development1234*",
     'CharacterSet' => 'UTF-8'
   );
 

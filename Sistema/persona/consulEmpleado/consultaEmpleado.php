@@ -119,10 +119,7 @@ require_once('../../includes/pandora.php');
         <div class="col">
           <div class="header-top">
             <div class="logo-area">
-              <a href="../../index.html"><img src="../../images/logo-2.png" alt=""></a>
-              <a>
-                <h7>CONSULTA DE EMPLEADO</h7>
-              </a>
+              <a href="../../inicio.php"><img src="../../images/logo-2.png" alt=""></a>
             </div>
             <div class="header-top-toggler">
               <div class="header-top-toggler-button"></div>
@@ -202,7 +199,7 @@ require_once('../../includes/pandora.php');
                 <li class="menu-item active"><a title="PERSONA" href="altaPersona.php">PERSONA</a></li>
                 <li class="menu-item active"><a title="DOMICILIO" href="altaDomicilio.php">DOMICILIO</a>
                 </li>
-                <li class="menu-item active"><a title="CONTACTO" href="altaContacto.php">CONTACTO</a>
+                <li class="menu-item active"><a title="CONTACTO" href="consultaContacto.php">CONTACTO</a>
                 </li>
                 <li class="menu-item active"><a title="CONTACTO" href="altaEmpleado.php">EMPLEADO</a>
                 </li>
@@ -259,7 +256,7 @@ require_once('../../includes/pandora.php');
                 $nombreaBuscar = $_POST['nombreaBuscar'];
                 echo "<br>El nombre a buscar es <b>$nombreaBuscar</b>";
 
-                if ($nombreaBuscar == 'Luis') { ?>
+                if ($nombreaBuscar == 'LUIS') { ?>
 
                   <div style="background-color: #117a8b; text-align: center">
                     <?php echo "<i><span style='color: #ededee' size='-2'> $busquedaEncontradaTxt</span></i><br />"; ?>
@@ -269,7 +266,7 @@ require_once('../../includes/pandora.php');
 
                 <?php } else { ?>
 
-                 
+
                   <!-- var datos = ["Dato1", "Dato2", "Dato3", "Dato4"]; // reemplaza esto con tu array de datos -->
 
 
@@ -282,10 +279,11 @@ require_once('../../includes/pandora.php');
                     <div class="dashboard-section basic-info-input">
                       <h3><i data-feather="user-check"></i>DATOS DE EMPLEADO</h3>
                       <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">ID</label>
-                          <div class="col-sm-9">
-                          <input id="idInput" type="text" class="form-control" placeholder="ID" value="<?php echo $datos[0]; ?>" readonly />
-                          </div>
+                        <label class="col-sm-3 col-form-label">ID</label>
+                        <div class="col-sm-9">
+                          <input id="idInput" type="text" class="form-control" placeholder="ID"
+                            value="<?php echo $datos[0]; ?>" readonly />
+                        </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">NOMBRES (s)</label>
@@ -487,72 +485,112 @@ require_once('../../includes/pandora.php');
                             <button class="button" id="toggleDomicilioButton">DOMICILIO</button>
                           </div>
                         </div>
-                      <?php }
+                      </div>
+                    <?php }
                 ?>
-                      <?php
+                    <?php
               } else {
                 ?>
-                      <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="dashboard-form">
+                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="dashboard-form">
 
-                        <div class="dashboard-section basic-info-input">
-                          <h4><i data-feather="user-check"></i>BUSQUEDA</h4>
-                          <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">SELECCIONAR CAMPO:</label>
-                            <div class="col-sm-9">
-                              <select class="form-control" id="selectCampos" onchange="mostrarCampoSeleccionado()">
-                                <option value="iDBuscar">ID DE EMPEADO</option>
-                                <option value="RFCBuscar">RFC</option>
-                                <option value="PUESTOBuscar">PUESTO</option>
-                                <option value="SEDE">SEDE</option>
-                                <option value="nombreaBuscar">NOMBRE</option>
+                      <div class="dashboard-section basic-info-input">
+                        <h4><i data-feather="user-check"></i>BUSQUEDA</h4>
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">SELECCIONAR CAMPO:</label>
+                          <div class="col-sm-9">
+                            <ul class="campo-list">
+                              <li class="campo-item" id="iDBuscar" value="iDBuscar"
+                                onclick="mostrarCampo('campoIDEmpleado')">ID DE EMPLEADO</li>
+                              <li class="campo-item" id="RFCBuscar" value="RFCBuscar" onclick="mostrarCampo('campoRFC')">
+                                RFC</li>
+                              <li class="campo-item" id="PUESTOBuscar" value="PUESTOBuscar"
+                                onclick="mostrarCampo('campoPuesto')">PUESTO</li>
+                              <li class="campo-item" id="SEDE" value="SEDE" onclick="mostrarCampo('campoSede')">SEDE</li>
+                              <li class="campo-item" id="nombreaBuscar" value="nombreaBuscar"
+                                onclick="mostrarCampo('campoNombre')">NOMBRE</li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label"></label>
+                          <div class="col-sm-9 campo-container" style="display: flex;">
+                            <div id="campoIDEmpleado" class="campo-busqueda" style="display: none; flex: 1;">
+                              <input type="text" class="form-control" placeholder="INGRESA ID DEL EMPLEADO"
+                                name="iDBuscar" style="text-transform: uppercase">
+                            </div>
+                            <div id="campoRFC" class="campo-busqueda" style="display: none; flex: 1;">
+                              <input type="text" class="form-control" placeholder="INGRESA RFC CORRECTO" name="RFCBuscar"
+                                style="text-transform: uppercase">
+                            </div>
+                            <div id="campoPuesto" class="campo-busqueda" style="display: none; flex: 1;">
+                              <input type="text" class="form-control" placeholder="INGRESA EL PUESTO" name="PUESTOBuscar"
+                                style="text-transform: uppercase">
+                            </div>
+                            <div id="campoSede" class="campo-busqueda" style="display: none; flex: 1;">
+                              <select class="form-control" placeholder="SEDE" name="SEDE">
+                                <option value="PUEBLA">PUEBLA</option>
+                                <option value="GUADALAJARA">GUADALAJARA</option>
                               </select>
                             </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-3 col-form-label"></label>
-                            <div class="col-sm-9">
-                              <div class="campo-container">
-                                <div id="iDBuscar" class="campo-busqueda" style="display: none;">
-                                  <input type="text" class="form-control" placeholder="INGRESA ID DEL EMPLEADO"
-                                    name="iDBuscar" style="text-transform: uppercase">
-                                </div>
-                                <div id="RFCBuscar" class="campo-busqueda" style="display: none;">
-                                  <input type="text" class="form-control" placeholder="INGRESA RFC CORRECTO"
-                                    name="RFCBuscar" style="text-transform: uppercase">
-                                </div>
-                                <div id="PUESTOBuscar" class="campo-busqueda" style="display: none;">
-                                  <input type="text" class="form-control" placeholder="INGRESA EL PUESTO"
-                                    name="PUESTOBuscar" style="text-transform: uppercase">
-                                </div>
-                                <div id="SEDE" class="campo-busqueda" style="display: none;">
-                                  <select class="form-control" placeholder="SEDE" name="SEDE">
-                                    <option value="PUEBLA">PUEBLA</option>
-                                    <option value="GUADALAJARA">GUADALAJARA</option>
-                                  </select>
-                                </div>
-                                <div id="nombreaBuscar" class="campo-busqueda" style="display: none;">
-                                  <input type="text" class="form-control" placeholder="INGRESA EL NOMBRE"
-                                    name="nombreaBuscar" style="text-transform: uppercase">
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label class="col-sm-3 col-form-label"></label>
-                            <div class="col-sm-9">
-                              <button class="button" type="submit" name="submitBuscar">Buscar</button>
-                              <button class="button" type="reset" name="submitBuscar">Limpiar</button>
+                            <div id="campoNombre" class="campo-busqueda" style="display: none; flex: 1;">
+                              <input type="text" class="form-control" placeholder="INGRESA EL NOMBRE" name="nombreaBuscar"
+                                style="text-transform: uppercase">
                             </div>
                           </div>
                         </div>
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label"></label>
+                          <div class="col-sm-9">
+                            <button class="button" type="submit" name="submitBuscar">Buscar</button>
+                            <button class="button" type="reset" name="submitBuscar">Limpiar</button>
+                          </div>
+                        </div>
+                      </div>
 
-                      </form>
+                      <style>
+                        .campo-list {
+                          list-style-type: none;
+                          padding: 0;
+                          margin: 0;
+                          display: flex;
+                        }
+
+                        .campo-item {
+                          margin-right: 10px;
+                          cursor: pointer;
+                        }
+                      </style>
+
+                      <script>
+                        function mostrarCampo(idCampo) {
+                          // Oculta todos los campos de búsqueda
+                          var campos = document.querySelectorAll('.campo-busqueda');
+                          campos.forEach(function (campo) {
+                            campo.style.display = 'none';
+                          });
+
+                          // Obtiene el campo correspondiente al ID pasado como argumento
+                          var campoMostrar = document.getElementById(idCampo);
+
+                          // Si el campo está oculto, lo muestra; de lo contrario, lo oculta
+                          if (campoMostrar.style.display === 'none') {
+                            campoMostrar.style.display = 'flex';
+                          } else {
+                            campoMostrar.style.display = 'none';
+                          }
+                        }
+                      </script>
+
+
+
+
+                    </form>
 
 
 
 
 
-                      <?php
+                    <?php
               }
 
               ?>
@@ -560,257 +598,239 @@ require_once('../../includes/pandora.php');
 
 
 
-                  </div>
-
                 </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <!-- seccion a mostrar -->
-      <div class="alice-bg section-padding-bottom" id="dashboardSection">
-        <div class="container no-gliters">
-          <div class="row no-gliters">
-            <div class="col">
-              <div class="dashboard-container">
-                <div class="dashboard-content-wrapper" id="domicilioSection" style="display: none;">
-
-                  <h3><i data-feather="user-check"></i>DOMICILIO</h3>
-
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">CALLE:</label>
-                    <div class="col-sm-9">
-                      <input type="text" class="form-control" placeholder="CALLE" name="CALLE"
-                        style="text-transform: uppercase" maxlength="13">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">N° EXTERIOR:</label>
-                    <div class="col-sm-9">
-                      <input type="text" class="form-control" placeholder="N° EXTERIOR" name="N° EXTERIOR"
-                        style="text-transform: uppercase" maxlength="13">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">N° INTERIOR:</label>
-                    <div class="col-sm-9">
-                      <input type="text" class="form-control" placeholder="N° INTERIOR" name="N° INTERIOR"
-                        style="text-transform: uppercase" maxlength="13">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">LETRA:</label>
-                    <div class="col-sm-9">
-                      <input type="text" class="form-control" placeholder="LETAR" name="LETRA"
-                        style="text-transform: uppercase" maxlength="13">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">COLONIA:</label>
-                    <div class="col-sm-9">
-                      <input type="text" class="form-control" placeholder="COLONIA" name="COLONIA"
-                        style="text-transform: uppercase" maxlength="13">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">C. P.:</label>
-                    <div class="col-sm-9">
-                      <input type="text" class="form-control" placeholder="C.P." name="C. P."
-                        style="text-transform: uppercase" maxlength="13">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">LOCALIDAD:</label>
-                    <div class="col-sm-9">
-                      <input type="text" class="form-control" placeholder="LOCALIDAD" name="LOCALIDAD"
-                        style="text-transform: uppercase" maxlength="13">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">MUNICIPIO:</label>
-                    <div class="col-sm-9">
-                      <input type="text" class="form-control" placeholder="MUNICIPIO" name="MUNICIPIO"
-                        style="text-transform: uppercase" maxlength="13">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">ENTIDAD:</label>
-                    <div class="col-sm-9">
-                      <input type="text" class="form-control" placeholder="ENTIDAD" name="ENTIDAD"
-                        style="text-transform: uppercase" maxlength="13">
-                    </div>
-                  </div>
-
-                  <h6><i data-feather=""></i>CONTACTO</h6>
-
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">TIPO DE CONTACTO:</label>
-                    <div class="col-sm-9">
-                      <input type="text" class="form-control" placeholder="TIPO DE CONTACTO" name="TIPO DE CONTACTO"
-                        style="text-transform: uppercase" maxlength="13">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">CONTACTO:</label>
-                    <div class="col-sm-9">
-                      <input type="text" class="form-control" placeholder="CONTACTO" name="CONTACTO"
-                        style="text-transform: uppercase" maxlength="13">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">ESTATUS:</label>
-                    <div class="col-sm-9">
-                      <input type="text" class="form-control" placeholder="ESTATUS" name="ESTATUS"
-                        style="text-transform: uppercase" maxlength="13">
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="form-group row">
-                      <label class="col-sm-3 col-form-label"></label>
-                      <div class="col-sm-9">
-                        <button class="button">MODIFICAR</button>
-                      </div>
-                    </div>
-                  </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Call to Action 
-    <div class="call-to-action-bg padding-top-90 padding-bottom-90">
-      <div class="container">
-        <div class="row">
-          <div class="col">
-            <div class="call-to-action-2">
-              <div class="call-to-action-content">
-                <h2>Buscar empleado:</h2>
-              </div>
-              
             </div>
           </div>
         </div>
       </div>
     </div>
-     Call to Action End -->
+  </div>
 
-      <!-- Footer -->
-      <footer class="footer-bg">
+  <!-- seccion a mostrar -->
+  <div class="alice-bg section-padding-bottom" id="dashboardSection">
+    <div class="container no-gliters">
+      <div class="row no-gliters">
+        <div class="col">
+          <div class="dashboard-container">
+            <div class="dashboard-content-wrapper" id="domicilioSection" style="display: none;">
 
+              <h3><i data-feather="user-check"></i>DOMICILIO</h3>
 
-        <div class="footer-bottom-area">
-          <div class="container">
-            <div class="row">
-              <div class="col">
-                <div class="footer-bottom border-top">
-                  <div class="row">
-                    <div class="col-xl-4 col-lg-5 order-lg-2">
-                      <div class="footer-app-download">
-                        <!--<a href="#" class="apple-app">Apple Store</a>
-                      <a href="#" class="android-app">Google Play</a>-->
-                      </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 order-lg-1">
-                      <!-- <p class="copyright-text">Copyright <a href="#">Oficiona</a> 2020, All right reserved</p> -->
-                    </div>
-                    <div class="col-xl-4 col-lg-3 order-lg-3">
-                      <div class="back-to-top">
-                        <a href="#">Subir<i class="fas fa-angle-up"></i></a>
-                      </div>
-                    </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">CALLE:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="CALLE" name="CALLE"
+                    style="text-transform: uppercase" maxlength="13">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">N° EXTERIOR:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="N° EXTERIOR" name="N° EXTERIOR"
+                    style="text-transform: uppercase" maxlength="13">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">N° INTERIOR:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="N° INTERIOR" name="N° INTERIOR"
+                    style="text-transform: uppercase" maxlength="13">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">LETRA:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="LETAR" name="LETRA"
+                    style="text-transform: uppercase" maxlength="13">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">COLONIA:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="COLONIA" name="COLONIA"
+                    style="text-transform: uppercase" maxlength="13">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">C. P.:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="C.P." name="C. P."
+                    style="text-transform: uppercase" maxlength="13">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">LOCALIDAD:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="LOCALIDAD" name="LOCALIDAD"
+                    style="text-transform: uppercase" maxlength="13">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">MUNICIPIO:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="MUNICIPIO" name="MUNICIPIO"
+                    style="text-transform: uppercase" maxlength="13">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">ENTIDAD:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="ENTIDAD" name="ENTIDAD"
+                    style="text-transform: uppercase" maxlength="13">
+                </div>
+              </div>
+
+              <h6><i data-feather=""></i>CONTACTO</h6>
+
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">TIPO DE CONTACTO:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="TIPO DE CONTACTO" name="TIPO DE CONTACTO"
+                    style="text-transform: uppercase" maxlength="13">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">CONTACTO:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="CONTACTO" name="CONTACTO"
+                    style="text-transform: uppercase" maxlength="13">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">ESTATUS:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="ESTATUS" name="ESTATUS"
+                    style="text-transform: uppercase" maxlength="13">
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label"></label>
+                  <div class="col-sm-9">
+                    <button class="button">MODIFICAR</button>
+                  </div>
+                </div>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer-bg">
+    <div class="footer-bottom-area">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="footer-bottom border-top">
+              <div class="row">
+                <div class="col-xl-4 col-lg-5 order-lg-2">
+                </div>
+                <div class="col-xl-4 col-lg-4 order-lg-1">
+                  <a href="#">
+                    <img src="images/footer-logo.png" class="img-fluid" alt="">
+                  </a>
+                  <p class="copyright-text">Copyright <a href="#">Intecproof</a> 2024, All right
+                    reserved</p>
+                </div>
+                <div class="col-xl-4 col-lg-3 order-lg-3">
+                  <div class="back-to-top">
+                    <a href="#">Back to top<i class="fas fa-angle-up"></i></a>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </footer>
-      <!-- Footer End -->
+      </div>
+    </div>
+  </footer>
+  <!-- Footer End -->
 
-      <!-- Optional JavaScript -->
-      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-      <script src="../../assets/js/jquery.min.js"></script>
-      <script src="../../assets/js/popper.min.js"></script>
-      <script src="../../assets/js/bootstrap.min.js"></script>
-      <script src="../../assets/js/feather.min.js"></script>
-      <script src="../../assets/js/bootstrap-select.min.js"></script>
-      <script src="../../assets/js/jquery.nstSlider.min.js"></script>
-      <script src="../../assets/js/owl.carousel.min.js"></script>
-      <script src="../../assets/js/visible.js"></script>
-      <script src="../../assets/js/jquery.countTo.js"></script>
-      <script src="../../assets/js/chart.js"></script>
-      <script src="../../assets/js/plyr.js"></script>
-      <script src="../../assets/js/tinymce.min.js"></script>
-      <script src="../../assets/js/slick.min.js"></script>
-      <script src="../../assets/js/jquery.ajaxchimp.min.js"></script>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="../../assets/js/jquery.min.js"></script>
+  <script src="../../assets/js/popper.min.js"></script>
+  <script src="../../assets/js/bootstrap.min.js"></script>
+  <script src="../../assets/js/feather.min.js"></script>
+  <script src="../../assets/js/bootstrap-select.min.js"></script>
+  <script src="../../assets/js/jquery.nstSlider.min.js"></script>
+  <script src="../../assets/js/owl.carousel.min.js"></script>
+  <script src="../../assets/js/visible.js"></script>
+  <script src="../../assets/js/jquery.countTo.js"></script>
+  <script src="../../assets/js/chart.js"></script>
+  <script src="../../assets/js/plyr.js"></script>
+  <script src="../../assets/js/tinymce.min.js"></script>
+  <script src="../../assets/js/slick.min.js"></script>
+  <script src="../../assets/js/jquery.ajaxchimp.min.js"></script>
 
-      <script src="../../js/custom.js"></script>
-      <script src="../../dashboard/js/dashboard.js"></script>
-      <script src="../../dashboard/js/datePicker.js"></script>
-      <script src="../../dashboard/js/upload-input.js"></script>
+  <script src="../../js/custom.js"></script>
+  <script src="../../dashboard/js/dashboard.js"></script>
+  <script src="../../dashboard/js/datePicker.js"></script>
+  <script src="../../dashboard/js/upload-input.js"></script>
 
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
-      <script src="../../js/map.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
+  <script src="../../js/map.js"></script>
 
-      <script>
-        // función para mostrar u ocultar la sección de Domicilio
-        function toggleDomicilioSection() {
-          var domicilioSection = document.getElementById('domicilioSection');
+  <script>
+    // función para mostrar u ocultar la sección de Domicilio
+    function toggleDomicilioSection() {
+      var domicilioSection = document.getElementById('domicilioSection');
 
-          // Cambia la visibilidad de la sección
-          if (domicilioSection.style.display === 'none') {
-            domicilioSection.style.display = 'block';
-          } else {
-            domicilioSection.style.display = 'none';
-          }
-        }
+      // Cambia la visibilidad de la sección
+      if (domicilioSection.style.display === 'none') {
+        domicilioSection.style.display = 'block';
+      } else {
+        domicilioSection.style.display = 'none';
+      }
+    }
 
-        <script>
-          function limpiarCampos(element) {
+    <script>
+      function limpiarCampos(element) {
         // Desactiva todos los campos
         var inputs = document.getElementsByName('iDBuscar').concat(
-          document.getElementsByName('RFCBuscar'),
-          document.getElementsByName('PUESTOBuscar'),
-          document.getElementsByName('SEDEBuscar'),
-          document.getElementsByName('nombreaBuscar')
-          );
+      document.getElementsByName('RFCBuscar'),
+      document.getElementsByName('PUESTOBuscar'),
+      document.getElementsByName('SEDEBuscar'),
+      document.getElementsByName('nombreaBuscar')
+      );
 
-          for (var i = 0; i < inputs.length; i++) {
-            inputs[i].disabled = true;
+      for (var i = 0; i < inputs.length; i++) {
+        inputs[i].disabled = true;
         }
-          // Habilita solo el campo correspondiente al input actualmente activo
-          element.disabled = false;
+      // Habilita solo el campo correspondiente al input actualmente activo
+      element.disabled = false;
 
-          // Habilita solo el campo correspondiente al input actualmente activo
-          element.disabled = false;
+      // Habilita solo el campo correspondiente al input actualmente activo
+      element.disabled = false;
     }
-          element.focus();
+      element.focus();
   }
 
-          function validarBusqueda() {
+      function validarBusqueda() {
         // Agrega tu lógica de validación aquí si es necesario
         return true; // Cambia a 'false' si quieres prevenir el envío del formulario en ciertos casos
     }
-      </script>
-      <script>
-          function mostrarCampoSeleccionado() {
+  </script>
+  <script>
+      function mostrarCampoSeleccionado() {
         // Obtén el valor seleccionado del menú desplegable
         var selectedCampo = document.getElementById("selectCampos").value;
 
-          // Oculta todos los campos
-          var campos = document.getElementsByClassName("campo-busqueda");
-          for (var i = 0; i < campos.length; i++) {
-            campos[i].style.display = "none";
+      // Oculta todos los campos
+      var campos = document.getElementsByClassName("campo-busqueda");
+      for (var i = 0; i < campos.length; i++) {
+        campos[i].style.display = "none";
         }
 
-          // Muestra el campo seleccionado
-          document.getElementById(selectedCampo).style.display = "block";
+      // Muestra el campo seleccionado
+      document.getElementById(selectedCampo).style.display = "block";
     }
-      </script>
+  </script>
 
 
 

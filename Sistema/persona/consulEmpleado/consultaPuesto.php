@@ -204,7 +204,8 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                         <li><a href="#"><span class="ti-power-off"></span>Log Out</a></li>
                                         <li><a href="#"><span class="ti-user"></span>CUENTA</a></li>
                                         <li><a href="#"><span class="ti-settings"></span>AJUSTES</a></li>
-                                        <li><a href="../../includes/logout.php"><span class="ti-power-off"></span>LogOut</a></li>
+                                        <li><a href="../../includes/logout.php"><span
+                                                    class="ti-power-off"></span>LogOut</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -246,13 +247,11 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                 <div class="col">
                     <div class="dashboard-container">
                         <div class="dashboard-content-wrapper">
-
                             <form action="altaPersona" method="post" class="dashboard-form">
-
                                 <div class="dashboard-section basic-info-input">
                                     <h4><i data-feather="user-check"></i>INFORMACION BASICA</h4>
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">*NOMBRE (S)</label>
+                                        <label class="col-sm-3 col-form-label">NOMBRE (S)</label>
                                         <div class="col-sm-9">
                                             <ul>
                                                 <li>INGRESA info EMPLEADO</li>
@@ -260,7 +259,7 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">*DESCRIPCION DE PUESTO:</label>
+                                        <label class="col-sm-3 col-form-label">DESCRIPCION DE PUESTO:</label>
                                         <div class="col-sm-9">
                                             <ul>
                                                 <li>INGRESA info EMPLEADO</li>
@@ -268,67 +267,56 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">*TIPO DE CONTARTACION:</label>
+                                        <label class="col-sm-3 col-form-label">TIPO DE CONTARTACION:</label>
                                         <div class="col-sm-9">
                                             <ul>
                                                 <li>INGRESA info EMPLEADO</li>
                                             </ul>
                                         </div>
-                                        <<<<<<< HEAD </div>
-                                            <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">*HORAS LAVORALES:</label>
-                                                <div class="col-sm-9">
-                                                    <ul>
-                                                        <li>INGRESA info EMPLEADO</li>
-                                                    </ul>
-                                                    =======
-                                                    <div class="form-group row">
-                                                        <label class="col-sm-3 col-form-label"></label>
-                                                        <div class="col-sm-9">
-                                                            <button type="button" class="button"
-                                                                onclick="window.location.href='/sitemaintegralPHP/Sistema/persona/consulEmpleado/consultaDomicilio.php'">
-                                                                DOMICILIO</button>
-                                                            <button type="button" class="button"
-                                                                onclick="window.location.href='/sitemaintegralPHP/Sistema/persona/modifPersona/modifPuesto.php'">
-                                                                EDITAR</button>
-                                                        </div>
-                                                        >>>>>>> 48f34ba06e50c28b0bb29cef1522669c4d7e45b8
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-sm-3 col-form-label">*SALARIO NETO:</label>
-                                                    <div class="col-sm-9">
-                                                        <ul>
-                                                            <li>INGRESA info EMPLEADO</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-sm-3 col-form-label">*SALARIO FISCAL:</label>
-                                                    <div class="col-sm-9">
-                                                        <ul>
-                                                            <li>INGRESA info EMPLEADO</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-sm-3 col-form-label">*SALARIO
-                                                        COMPLEMENTARIO:</label>
-                                                    <div class="col-sm-9">
-                                                        <ul>
-                                                            <li>INGRESA info EMPLEADO</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-sm-3 col-form-label"></label>
-                                                    <div class="col-sm-9">
-                                                        <button type="reset" class="button">LIMPIAR</button>
-                                                        <button type="button" class="button"
-                                                            onclick="window.location.href = 'altaContacto.php'">SIGUIENTE</button>
-                                                    </div>
-                                                </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">HORAS LAVORALES:</label>
+                                        <div class="col-sm-9">
+                                            <ul>
+                                                <li>INGRESA info EMPLEADO</li>
+                                            </ul>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">SALARIO NETO:</label>
+                                            <div class="col-sm-9">
+                                                <ul>
+                                                    <li>INGRESA info EMPLEADO</li>
+                                                </ul>
                                             </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">SALARIO FISCAL:</label>
+                                            <div class="col-sm-9">
+                                                <ul>
+                                                    <li>INGRESA info EMPLEADO</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">SALARIO COMPLEMENTARIO:</label>
+                                            <div class="col-sm-9">
+                                                <ul>
+                                                    <li>INGRESA info EMPLEADO</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-9">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-9">
+                                                <button type="button" class="button"
+                                                    onclick="window.location.href='/sitemaintegralPHP/Sistema/persona/modifPersona/modifPuesto.php'">
+                                                    EDITAR</button>
+                                            </div>
+                                        </div>
+                                    </div>
                             </form>
                         </div>
                     </div>
@@ -348,19 +336,13 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                             <div class="row">
                                 <div class="col-xl-4 col-lg-5 order-lg-2">
                                     <div class="footer-app-download">
-                                        <!--<a href="#" class="apple-app">Apple Store</a>
-                  <a href="#" class="android-app">Google Play</a>-->
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 order-lg-1">
-                                    <!-- <p class="copyright-text">Copyright <a href="#">Oficiona</a> 2020, All right reserved</p> -->
                                 </div>
                                 <div class="col-xl-4 col-lg-3 order-lg-3">
                                     <div class="back-to-top">
-                                        <<<<<<< HEAD <a href="#">Subir<i class="fas fa-angle-up"></i></a>
-                                            =======
-                                            <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
-                                            >>>>>>> 48f34ba06e50c28b0bb29cef1522669c4d7e45b8
+                                        <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
                                     </div>
                                 </div>
                             </div>

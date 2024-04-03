@@ -308,7 +308,8 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                                     <ul class="account-item-list">
                                         <li><a href="#"><span class="ti-user"></span>Account</a></li>
                                         <li><a href="#"><span class="ti-settings"></span>Settings</a></li>
-                                        <li><a href="../../includes/logout.php"><span class="ti-power-off"></span>Log Out</a></li>
+                                        <li><a href="../../includes/logout.php"><span class="ti-power-off"></span>Log
+                                                Out</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -636,9 +637,9 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                                                              <select class="form-control" id="ilDocumento" name="TIPO DE DOCUMENTO []">
                                                                  <option value="">SELECCIONE UN TIPO DE DOCUMENTO</option>
                                                                     <?php foreach ($resultadoDocumento as $documento): ?>
-                                                                            <option value="<?= $documento['iIdConstante'] . '-' . $documento['iClaveCatalogo'] ?>">
-                                                                                [<?= $documento['iClaveCatalogo'] ?>] - <?= $documento['vchDescripcion'] ?>
-                                                                            </option>
+                                                                                <option value="<?= $documento['iIdConstante'] . '-' . $documento['iClaveCatalogo'] ?>">
+                                                                                    [<?= $documento['iClaveCatalogo'] ?>] - <?= $documento['vchDescripcion'] ?>
+                                                                                </option>
                                                                     <?php endforeach; ?>
                                                              </select>
                                                         </div>
@@ -739,7 +740,7 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                 <?php foreach ($resultadoDocumento as $documento): ?>
                     < option value = "<?= $documento['iIdConstante'] . '-' . $documento['iClaveCatalogo'] ?>" >
                         [<?= $documento['iClaveCatalogo'] ?>] - <?= $documento['vchDescripcion'] ?>
-                            </option >
+                                </option >
                 <?php endforeach; ?>;
             var nuevoDocumentoPDF = document.createElement('div');
             nuevoDocumentoPDF.className = 'col-md-6';
