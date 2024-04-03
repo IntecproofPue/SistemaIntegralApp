@@ -1,12 +1,29 @@
 <?php
-require_once('../../includes/pandora.php');
+    require_once('../../includes/pandora.php');
+    require_once ('../../includes/load.php');
+
+    session_start();
+
+
+    if ( isset( $_SESSION['user_id'] ) ) {?>
+    <?php }else{
+
+        ?>
+        <script type="text/javascript">
+            //Redireccionamiento tras 5 segundos
+            setTimeout( function() { window.location.href = "../../index.php"; }, 0 );
+        </script>
+        <?php
+
+    }
+
 ?>
 <!doctype html>
 <html lang="en">
 
 <head>
   <!-- Required meta tags -->
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <title>
@@ -164,6 +181,16 @@ require_once('../../includes/pandora.php');
                   </div>
                 </div>
               </div>
+
+                <?php
+
+                $user = obtenerUsuario($_SESSION['user_id']);
+                $row =$GLOBALS['rowObtenerNombre'];
+                $nombrePersona = $row['nombrePersona'];
+                $emailPersona = $row['contacto'];
+
+                ?>
+
               <div class="dropdown header-top-account">
                 <a href="#" class="account-button">My Account</a>
                 <div class="account-card">
@@ -172,8 +199,8 @@ require_once('../../includes/pandora.php');
                       <img src="../../images/account/thumb-1.jpg" class="img-fluid" alt="">
                     </a>
                     <div class="account-body">
-                      <h5><a href="#">Robert Chavez</a></h5>
-                      <span class="mail">chavez@domain.com</span>
+                      <h5><a href="#"><?php echo $nombrePersona; ?></a></h5>
+                      <span class="mail"><?php echo $emailPersona; ?></span>
                     </div>
                   </div>
                   <ul class="account-item-list">
@@ -244,13 +271,6 @@ require_once('../../includes/pandora.php');
         <div class="col">
           <div class="dashboard-container">
             <div class="dashboard-content-wrapper">
-
-
-
-
-
-
-
               <?php
               if (isset($_POST['submitBuscar'])) {
                 $nombreaBuscar = $_POST['nombreaBuscar'];
@@ -442,38 +462,6 @@ require_once('../../includes/pandora.php');
                             style="text-transform: uppercase" maxlength="13">
                         </div>
                       </div>
-
-                      <!--<div class="form-group row">
-                      <label class="col-sm-3 col-form-label">Email Address</label>
-                      <div class="col-sm-9">
-                        <input type="text" class="form-control" placeholder="email@example.com">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-3 col-form-label">Phone</label>
-                      <div class="col-sm-9">
-                        <input type="text" class="form-control" placeholder="+55 123 4563 4643">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                    <div class="form-group row">
-                      <label class="col-sm-3 col-form-label">Address</label>
-                      <div class="col-sm-9">
-                        <input type="text" class="form-control" placeholder="Washington D.C">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-3 col-form-label">Indestry Expertise</label>
-                      <div class="col-sm-9">
-                        <input type="text" class="form-control" placeholder="UI & UX Designer">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-3 col-form-label">About Me</label>
-                      <div class="col-sm-9">
-                        <textarea class="form-control" placeholder="Introduce Yourself"></textarea>
-                      </div>
-                    </div>-->
                     </div>
                     <div class="dashboard-section basic-info-input">
 
@@ -541,8 +529,8 @@ require_once('../../includes/pandora.php');
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label"></label>
                           <div class="col-sm-9">
-                            <button class="button" type="submit" name="submitBuscar">Buscar</button>
-                            <button class="button" type="reset" name="submitBuscar">Limpiar</button>
+                            <button class="button" type="submit" name="submitBuscar">BUSCAR</button>
+                            <button class="button" type="reset" name="submitBuscar">LIMPIAR</button>
                           </div>
                         </div>
                       </div>
