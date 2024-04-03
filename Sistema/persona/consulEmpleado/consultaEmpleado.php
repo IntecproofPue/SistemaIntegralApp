@@ -266,10 +266,6 @@ require_once('../../includes/pandora.php');
 
                 <?php } else { ?>
 
-
-                  <!-- var datos = ["Dato1", "Dato2", "Dato3", "Dato4"]; // reemplaza esto con tu array de datos -->
-
-
                   <div style="background-color: #c82333; text-align: center">
                     <?php echo "<i><span style='color: #ededee' size='-2'> $busquedaNoEncontradaTxt</span></i><br />"; ?>
                   </div>
@@ -288,201 +284,139 @@ require_once('../../includes/pandora.php');
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">NOMBRES (s)</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" placeholder="Nombre" style="text-transform: uppercase"
-                            min="2" maxlength="150"
-                            onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)" required>
-
+                          <li class="campo-item" id="mostrarnombre">mostrar nombres</li>
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Primer Apellido:</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" placeholder="Apellido Paterno" min="2"
-                            name="nombreEscrito" style="text-transform: uppercase" maxlength="50"
-                            onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)" required>
+                          <li class="campo-item" id="mostrarprimerApellido">mostrar prim apellido</li>
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Segundo Apellido:</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" placeholder="Apellido Materno" min="2"
-                            name="apeUnoEsccrito" style="text-transform: uppercase" maxlength="50"
-                            onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)" required>
+                          <li class="campo-item" id="mostrarsegApellido">mostrar seg apellido</li>
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">PUESTO</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" placeholder="PUESTO" min="2" maxlength="150"
-                            onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)" required>
-
+                          <li class="campo-item" id="mostrarPuesto">mostrar puesto</li>
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">FECHA DE INGRESO:</label>
                         <div class="col-sm-9">
-                          <input type="date" class="form-control" placeholder="FECHA DE INGRESO" name="apeDosEscrito">
+                          <li class="campo-item" id="mostrarfechaingreso">mostrar fecha de ingreso</li>
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">ESTATUS:</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" placeholder="ESTATUS" name="ESTATUS"
-                            style="text-transform: uppercase" maxlength="18">
+                          <li class="campo-item" id="mostrarEstatus">mostrar Estatus</li>
                         </div>
-
                       </div>
-
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">NSS</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" placeholder="NSS" name="NSS"
-                            style="text-transform: uppercase" maxlength="18">
+                          <li class="campo-item" id="mostrarNSS">mostrar NSS</li>
                         </div>
                       </div>
-
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">FECHA ULTIMA PROMOCION:</label>
                         <div class="col-sm-9">
-                          <input type="date" class="form-control" placeholder="FECHA ULTIMA PROMOCION" name="apeDosEscrito">
+                          <li class="campo-item" id="mostrarfechUltimaPromocion">mostrar ultima promo</li>
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">SEDE</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" placeholder="SEDE" name="SEDE"
-                            style="text-transform: uppercase" maxlength="18">
+                          <li class="campo-item" id="mostrarSede">mostrar SEDE</li>
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">FECHA BAJA:</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" placeholder="FECHA BAJA" name="FECHA BAJA"
-                            style="text-transform: uppercase" maxlength="18">
+                          <li class="campo-item" id="mostrarfechaBaja">mostrar fecha de baja</li>
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">USUARIO ULTIMA MODIFICACION:</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" placeholder="ULTIMAMODIF" name="ULTIMA MODIFICACION"
-                            style="text-transform: uppercase" maxlength="18">
+                          <li class="campo-item" id="mostrarUsuariUltimaModificacion">mostrar usuario de ultima modificacion
+                          </li>
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">FECHA ULTIMA MODIFICACION:</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" placeholder="FECHA ULTMODIFICACION"
-                            name="FECHA ULTIMA MODIFICACION" style="text-transform: uppercase" maxlength="18">
+                          <li class="campo-item" id="mostrarfechUltimaModificacion">mostrar fecha de ultima</li>
                         </div>
                       </div>
                       <h3><i data-feather="user-check"></i>DATOS DE LA PERSONA</h3>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">RFC:</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" placeholder="RFC" name="RFC"
-                            style="text-transform: uppercase" maxlength="13">
+                          <li class="campo-item" id="mostrarRFC">mostrar RFC</li>
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">CURP:</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" placeholder="CURP" name="CURP"
-                            style="text-transform: uppercase" maxlength="18">
+                          <li class="campo-item" id="mostrarCURP">mostrar CURP</li>
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">FECHA NACIMIENTO:</label>
                         <div class="col-sm-9">
-                          <input type="date" class="form-control" placeholder="FECHA de nacimiento"
-                            name="fehca de nacimeinto" style="text-transform: uppercase">
+                          <li class="campo-item" id="mostrarFechNacimineto">mostrar fecha de nacimiento</li>
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">GENERO:</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" placeholder="genero" name="genero"
-                            style="text-transform: uppercase" maxlength="13">
+                          <li class="campo-item" id="mostraGenero">mostrar genero</li>
                         </div>
                       </div>
-
-
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">NACIONALIDAD:</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" placeholder="NACIONALIDAD" name="NACIONALIDAD"
-                            style="text-transform: uppercase" maxlength="18">
+                          <li class="campo-item" id="mostraNacionalidad">mostrar nacionalidad</li>
                         </div>
                       </div>
-                      <h6><i data-feather=""></i>DATOS FISCALES</h6>
+                      <h3><i data-feather="user-check"></i>DATOS FISCALES</h3>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">TIPO DE PERSONA:</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" placeholder="TIPO DE PERSONA" name="TIPO DE PERSONA"
-                            style="text-transform: uppercase" maxlength="13">
+                          <li class="campo-item" id="mostradatosTipoPersona">mostrar tipo de persona</li>
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">REGIMEN FISCAL:</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" placeholder="REGIMEN FISCAL" name="REGIMEN FISCAL"
-                            style="text-transform: uppercase" maxlength="13">
+                          <li class="campo-item" id="mostrarRegimen">mostrar regimen fiscal</li>
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">USO FISCAL:</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" placeholder="USO FISCAL" name="USO FISCAL"
-                            style="text-transform: uppercase" maxlength="13">
+                          <li class="campo-item" id="mostraUsoFiscal">mostrar uso fiscal</li>
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">C.P. FISCAL:</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" placeholder="C.P. FISCAL" name="C.P. FISCAL"
-                            style="text-transform: uppercase" maxlength="13">
+                          <li class="campo-item" id="mosrtarCPFiscal">mostrar C.P. fiscal</li>
                         </div>
                       </div>
-
-                      <!--<div class="form-group row">
-                      <label class="col-sm-3 col-form-label">Email Address</label>
-                      <div class="col-sm-9">
-                        <input type="text" class="form-control" placeholder="email@example.com">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-3 col-form-label">Phone</label>
-                      <div class="col-sm-9">
-                        <input type="text" class="form-control" placeholder="+55 123 4563 4643">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                    <div class="form-group row">
-                      <label class="col-sm-3 col-form-label">Address</label>
-                      <div class="col-sm-9">
-                        <input type="text" class="form-control" placeholder="Washington D.C">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-3 col-form-label">Indestry Expertise</label>
-                      <div class="col-sm-9">
-                        <input type="text" class="form-control" placeholder="UI & UX Designer">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-3 col-form-label">About Me</label>
-                      <div class="col-sm-9">
-                        <textarea class="form-control" placeholder="Introduce Yourself"></textarea>
-                      </div>
-                    </div>-->
                     </div>
                     <div class="dashboard-section basic-info-input">
-
-
                       <div class="row">
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label"></label>
                           <div class="col-sm-9">
-                            <button class="button" id="toggleDomicilioButton">DOMICILIO</button>
+                            <button class="button" href="../consultaDomicilio.php">DOMICILIO</button>
                           </div>
                         </div>
                       </div>
@@ -499,15 +433,25 @@ require_once('../../includes/pandora.php');
                           <label class="col-sm-3 col-form-label">SELECCIONAR CAMPO:</label>
                           <div class="col-sm-9">
                             <ul class="campo-list">
-                              <li class="campo-item" id="iDBuscar" value="iDBuscar"
-                                onclick="mostrarCampo('campoIDEmpleado')">ID DE EMPLEADO</li>
-                              <li class="campo-item" id="RFCBuscar" value="RFCBuscar" onclick="mostrarCampo('campoRFC')">
-                                RFC</li>
-                              <li class="campo-item" id="PUESTOBuscar" value="PUESTOBuscar"
-                                onclick="mostrarCampo('campoPuesto')">PUESTO</li>
-                              <li class="campo-item" id="SEDE" value="SEDE" onclick="mostrarCampo('campoSede')">SEDE</li>
-                              <li class="campo-item" id="nombreaBuscar" value="nombreaBuscar"
-                                onclick="mostrarCampo('campoNombre')">NOMBRE</li>
+                              <input type="radio" class="campo-item" id="iDBuscar" value="iDBuscar"
+                                name="campoSeleccionado" onclick="mostrarCampo('campoIDEmpleado')" />
+                              <label for="iDBuscar">ID DE EMPLEADO</label>
+
+                              <input type="radio" class="campo-item" id="RFCBuscar" value="RFCBuscar"
+                                name="campoSeleccionado" onclick="mostrarCampo('campoRFC')" />
+                              <label for="RFCBuscar">RFC</label>
+
+                              <input type="radio" class="campo-item" id="PUESTOBuscar" value="PUESTOBuscar"
+                                name="campoSeleccionado" onclick="mostrarCampo('campoPuesto')" />
+                              <label for="PUESTOBuscar">PUESTO</label>
+
+                              <input type="radio" class="campo-item" id="SEDE" value="SEDE" name="campoSeleccionado"
+                                onclick="mostrarCampo('campoSede')" />
+                              <label for="SEDE">SEDE</label>
+
+                              <input type="radio" class="campo-item" id="nombreaBuscar" value="nombreaBuscar"
+                                name="campoSeleccionado" onclick="mostrarCampo('campoNombre')" />
+                              <label for="nombreaBuscar">NOMBRE</label>
                             </ul>
                           </div>
                         </div>
@@ -600,119 +544,6 @@ require_once('../../includes/pandora.php');
 
                 </div>
 
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- seccion a mostrar -->
-  <div class="alice-bg section-padding-bottom" id="dashboardSection">
-    <div class="container no-gliters">
-      <div class="row no-gliters">
-        <div class="col">
-          <div class="dashboard-container">
-            <div class="dashboard-content-wrapper" id="domicilioSection" style="display: none;">
-
-              <h3><i data-feather="user-check"></i>DOMICILIO</h3>
-
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">CALLE:</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="CALLE" name="CALLE"
-                    style="text-transform: uppercase" maxlength="13">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">N° EXTERIOR:</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="N° EXTERIOR" name="N° EXTERIOR"
-                    style="text-transform: uppercase" maxlength="13">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">N° INTERIOR:</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="N° INTERIOR" name="N° INTERIOR"
-                    style="text-transform: uppercase" maxlength="13">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">LETRA:</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="LETAR" name="LETRA"
-                    style="text-transform: uppercase" maxlength="13">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">COLONIA:</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="COLONIA" name="COLONIA"
-                    style="text-transform: uppercase" maxlength="13">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">C. P.:</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="C.P." name="C. P."
-                    style="text-transform: uppercase" maxlength="13">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">LOCALIDAD:</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="LOCALIDAD" name="LOCALIDAD"
-                    style="text-transform: uppercase" maxlength="13">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">MUNICIPIO:</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="MUNICIPIO" name="MUNICIPIO"
-                    style="text-transform: uppercase" maxlength="13">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">ENTIDAD:</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="ENTIDAD" name="ENTIDAD"
-                    style="text-transform: uppercase" maxlength="13">
-                </div>
-              </div>
-
-              <h6><i data-feather=""></i>CONTACTO</h6>
-
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">TIPO DE CONTACTO:</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="TIPO DE CONTACTO" name="TIPO DE CONTACTO"
-                    style="text-transform: uppercase" maxlength="13">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">CONTACTO:</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="CONTACTO" name="CONTACTO"
-                    style="text-transform: uppercase" maxlength="13">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">ESTATUS:</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="ESTATUS" name="ESTATUS"
-                    style="text-transform: uppercase" maxlength="13">
-                </div>
-              </div>
-              <div class="row">
-                <div class="form-group row">
-                  <label class="col-sm-3 col-form-label"></label>
-                  <div class="col-sm-9">
-                    <button class="button">MODIFICAR</button>
-                  </div>
-                </div>
-              </div>
-              </form>
             </div>
           </div>
         </div>
