@@ -10,7 +10,7 @@
  /*--------------------------------------------------------------*/
    function authenticate_v2($username='', $password='') {
        $sql = "exec prcAutenticacionUsuario @vchUsuario='$username', @vbPass ='$password'";
-       echo "<br>Voy a ejecutar la consulta: <b>$sql</b>";
+       //echo "<br>Voy a ejecutar la consulta: <b>$sql</b>";
        $stmt = sqlsrv_query($GLOBALS['conn'], $sql);
        //echo "<br>===Contenido del smt :<br>";
        //print_r($stmt);
@@ -82,7 +82,7 @@ function obtenerUsuario($idUsuario='') {
 
 function searchPersona($vchCadena='') {
     $sql = "exec prcConsultaPersona     @iIdPersona = -1,   @vchCadena = '$vchCadena'";
-    echo "<br>Voy a ejecutar la consulta: <b>$sql</b><br>";
+    //echo "<br>Voy a ejecutar la consulta: <b>$sql</b><br>";
     $stmt = sqlsrv_query($GLOBALS['conn'], $sql);
     //echo "<br>===Contenido del smt :<br>";
     //print_r($stmt);
@@ -116,7 +116,7 @@ function searchPersona($vchCadena='') {
     }
 
 
-    function EjecutarConstante()
+    /*function EjecutarConstante()
     {
 
         $datosCatConstante = array(
@@ -155,10 +155,11 @@ function searchPersona($vchCadena='') {
         }
         return $CatConstante;
 
-        sqlsrv_close($conn);
+        sqlsrv_close($GLOBALS['conn']);
     }
 
-    $_SESSION['CatConstante'] = EjecutarConstante();
+    $_SESSION['CatConstante'] = EjecutarConstante();*/
+
 
 
     function EjecutarRegimenUso()
@@ -290,8 +291,6 @@ function searchPersona($vchCadena='') {
     }
 
 
-
-
     function ObtenerTipoContratacion()
     {
         if (isset($_SESSION['CatConstante'])) {
@@ -328,7 +327,6 @@ function searchPersona($vchCadena='') {
     }
 
 
-
 // Close statement and connection
     sqlsrv_free_stmt($stmt);
  //   sqlsrv_close($GLOBALS['conn']);
@@ -336,7 +334,6 @@ function searchPersona($vchCadena='') {
 
     return false;
 }
-
 
 
 ?>

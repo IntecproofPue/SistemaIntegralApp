@@ -1,24 +1,63 @@
 <?php
   //ob_start();
-  require_once('includes/load.php');
- require_once ('includes/pandora.php');
-session_start();
+    require_once('includes/load.php');
+    require_once ('includes/pandora.php');
+    session_start();
 
 
-if ( isset( $_SESSION['user_id'] ) ) {?>
-    <script type="text/javascript">
-        //Redireccionamiento tras 5 segundos
-        setTimeout( function() { window.location.href = "index.php"; }, 0 );
-    </script>
-<?php }
+function EjecutarConstante()
+{
+
+    $datosCatConstante = array(
+        'iOpcion' => 4,
+        'iAgrupador' => 0,
+        'iClaveCatalogo' => 0,
+        'iIdConstante' => 0
+    );
+
+    $procedureName = "EXEC prcConsultaCatConstante  @iOpcion = ?,
+                                                        @iAgrupador = ?, 
+                                                        @iClave = ?, 
+                                                        @iIdConstante = ? 
+                                                    ";
+
+    $params = array(
+        $datosCatConstante['iOpcion'],
+        $datosCatConstante['iAgrupador'],
+        $datosCatConstante['iClaveCatalogo'],
+        $datosCatConstante['iIdConstante']
+    );
+
+    $result = sqlsrv_query($GLOBALS['conn'], $procedureName, $params);
+
+    $CatConstante = array();
+
+    if ($result === false) {
+        die(print_r(sqlsrv_errors(), true));
+
+    } else {
+        do {
+            while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+                $CatConstante[] = $row;
+            }
+        } while (sqlsrv_next_result($result));
+    }
+    return $CatConstante;
+
+    sqlsrv_close($GLOBALS['conn']);
+}
+
+$_SESSION['CatConstante'] = EjecutarConstante();
+
 
 
 ?>
+
 <!doctype html>
 <html lang="en">
   <head>
 
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title><?php echo $tituloPagina; ?></title>
@@ -92,32 +131,22 @@ if(isset($_POST['submit']))
  
 {
 
-    require_once('includes/load.php');
+        require_once('includes/load.php');
  
-$emailAddress = $_POST['emailAddress'];
-$passwordInserted = $_POST['passwordInserted'];
+        $emailAddress = $_POST['emailAddress'];
+        $passwordInserted = $_POST['passwordInserted'];
  
-    //echo "<i><span style='color: #8a6d3b' size='-2'> Sólo para fines de desarrollo</span></i><br>El usuario ha escrito : <b> $emailAddress </b><br>";
-	//echo "El usuario ha escrito : <b> $passwordInserted </b>";
-    //echo "<br>Aquí se inicia la validación de usuario.<br><br>";
+        //echo "<i><span style='color: #8a6d3b' size='-2'> Sólo para fines de desarrollo</span></i><br>El usuario ha escrito : <b> $emailAddress </b><br>";
+        //echo "El usuario ha escrito : <b> $passwordInserted </b>";
+        //echo "<br>Aquí se inicia la validación de usuario.<br><br>";
 
+        $pwd_peppered = hash_hmac("sha256", $passwordInserted, "Palabra Secreta");
+        $pwd_hashed = password_hash($pwd_peppered, PASSWORD_DEFAULT);
 
-
-    $pwd_peppered = hash_hmac("sha256", $passwordInserted, "Palabra Secreta");
-    $pwd_hashed = password_hash($pwd_peppered, PASSWORD_DEFAULT);
-
-
-
-
-   // echo "<i><span style='color: #8a6d3b' size='-2'> Sólo para fines de desarrollo</span></i><br>    Usuario: $emailAddress<br>
-   //                   PWD Sin encriptar: $passwordInserted <br>
-   //                   PWD Encriptada: $pwd_hashed<bR>
-   //                   Tamaño de cadena:". strlen($pwd_hashed);
-
-
-
-  
-
+           // echo "<i><span style='color: #8a6d3b' size='-2'> Sólo para fines de desarrollo</span></i><br>    Usuario: $emailAddress<br>
+           //                   PWD Sin encriptar: $passwordInserted <br>
+           //                   PWD Encriptada: $pwd_hashed<bR>
+           //                   Tamaño de cadena:". strlen($pwd_hashed);
 
 
                 if(empty($errors)){
@@ -129,63 +158,41 @@ $passwordInserted = $_POST['passwordInserted'];
 
 
 
-                    if($row['bResult']==0){ ?>
-
-
-
+                    if($row['bResult'] == 0){ ?>
                             <div style="background-color: #c82333; text-align: center"><?php echo "<i><span style='color: #ededee' size='-2'> $errorUsuPwdTxt</span></i><br />"; ?></div>
-
-
-
-                <?php    }elseif ($row['bResult']==1){ ?>
-
+                         <?php
+                    }elseif ($row['bResult'] == 1){ ?>
                         <div style="background-color: #117a8b; text-align: center">
                             <?php echo "<i><span style='color: #ededee' size='-2'> $bienUsuPwdTxt</span></i><br />"; ?>
                             <?php
-                            session_start();
+                            //session_start();
                             //echo "Aquí sigo teniendo el valor de IDUSUARIO =".$idUsuario;
                             $_SESSION['user_id'] = $idUsuario;
                             $_SESSION['instante']   = time();
 
+                            if ( isset( $_SESSION['user_id'] )  ) {?>
+                                <script type="text/javascript">
+                                    setTimeout( function() { window.location.href = "inicio.php"; }, 1000 );
+                                </script>
+                                <?php
 
+
+                                ?>
+                            <?php }
 
                             ?>
 
                         </div>
-
-
-                        <script type="text/javascript">
-                            //Redireccionamiento tras 5 segundos
-                            setTimeout( function() { window.location.href = "../Sistema/inicio.php"; }, 0 );
-                        </script>
                 <?php    }else{
 
                     }
-
-
-
-
                 }else{
 echo "erorr====";
 
                 }
 
-	
-	
-	
-	
-
-
-
-
-
-
 }
-				
 
- //echo display_msg($msg);
-
- 
 ?>
               <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                 <div class="form-group">
@@ -196,24 +203,11 @@ echo "erorr====";
                 </div>
                 <div class="more-option">
                   <div class="mt-0 terms">
-                    <!--<input class="custom-radio" type="checkbox" id="radio-4" name="termsandcondition">
-                    <label for="radio-4">
-                      <span class="dot"></span> Remember Me
-                    </label>-->
                   </div>
                   <a href="#"><?php echo $olvideContraTxt; ?></a>
                 </div>
 				  <input type="submit" name="submit" value="<?php echo $ingresarTxt; ?>" class="button primary-bg btn-block"><br>
-                <!--<button class="button primary-bg btn-block" type="submit">Login</button>-->
               </form>
-             <!-- <div class="shortcut-login">
-                <span>Or connect with</span>
-                <div class="buttons">
-                  <a href="#" class="facebook"><i class="fab fa-facebook-f"></i>Facebook</a>
-                  <a href="#" class="google"><i class="fab fa-google"></i>Google</a>
-                </div>
-                <p>Don't have an account? <a href="register.html">Register</a></p>
-              </div>-->
             </div>
           </div>
         </div>

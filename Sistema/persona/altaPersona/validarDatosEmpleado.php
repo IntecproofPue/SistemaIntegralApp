@@ -1,6 +1,7 @@
 <?php
 
     require_once ('../../includes/load.php');
+    session_start();
 
     $datosPersona = json_decode(isset($_POST['datosPersona'])? $_POST['datosPersona']:'', true);
     $datosDomicilio = json_decode(isset($_POST['datosDomicilio'])? $_POST['datosDomicilio']:'', true);
@@ -50,7 +51,7 @@
         'iAgrupadorSede' => 4,
         'iClaveSede' =>$datosEmpleado['iClaveSede'],
         'iIdContratante' => $datosEmpleado['iIdPersonaContratante'],
-        'iIdUsuario' => 3,
+        'iIdUsuario' => $_SESSION['user_id'],
         'iIdEmpleado' => 0,
         'bResultado' => 0,
         'vchCampoError' => '',
@@ -155,55 +156,7 @@
     );
 
 
-$result = sqlsrv_query($GLOBALS['conn'], $procedureName, $params);
-
-
-$sql = "EXEC prcAltaEmpleado    @iIdPersona				= '{$datosEmpleadoConsulta['iIdPersona']}' ,
-                                @vchNombre				= '{$datosEmpleadoConsulta['vchNombre']}' ,
-                                @vchPrimerApellido		= '{$datosEmpleadoConsulta['vchPrimerApellido']}',
-                                @vchSegundoApellido		= '{$datosEmpleadoConsulta['vchSegundoApellido']}' ,
-                                @vchRFC					= '{$datosEmpleadoConsulta['vchRFC']}' ,
-                                @vchCURP				= '{$datosEmpleadoConsulta['vchCURP']}' ,
-                                @dFechaNacimiento		= '{$datosEmpleadoConsulta['dFechaNacimiento']}' ,
-                                @iIdGenero				= '{$datosEmpleadoConsulta['iIdGenero']}' ,
-                                @iAgrupadorGenero		= '{$datosEmpleadoConsulta['iAgrupadorGenero']}' ,
-                                @iClaveGenero			= '{$datosEmpleadoConsulta['iClaveGenero']}' ,
-                                @iIdNacionalidad		= '{$datosEmpleadoConsulta['iIdNacionalidad']}' ,
-                                @iAgrupadorNacionalidad	= '{$datosEmpleadoConsulta['iAgrupadorNacionalidad']}' ,
-                                @iClaveNacionalidad		= '{$datosEmpleadoConsulta['iClaveNacionalidad']}',
-                                @iIdTipoPersona			= '{$datosEmpleadoConsulta['iIdTipoPersona']}' ,
-                                @iAgrupadorTipoPersona	= '{$datosEmpleadoConsulta['iAgrupadorTipoPersona']}' ,
-                                @iClaveTipoPersona		= '{$datosEmpleadoConsulta['iClaveTipoPersona']}' ,
-                                @iRegimen				= '{$datosEmpleadoConsulta['iRegimen']}' ,
-                                @vchUsoFiscal			= '{$datosEmpleadoConsulta['vchUsoFiscal']}' ,
-                                @iCodigoPostalFiscal	= '{$datosEmpleadoConsulta['iCodigoPostalFiscal']}' ,
-                                @vchCalle				= '{$datosEmpleadoConsulta['vchCalle']}' ,
-                                @vchNumeroInterior		= '{$datosEmpleadoConsulta['vchNumeroInterior']}' ,
-                                @vchNumeroExterior		= '{$datosEmpleadoConsulta['vchNumeroExterior']}' ,
-                                @vchLetra				= '{$datosEmpleadoConsulta['vchLetra']}' ,
-                                @iCodigoPostal			= '{$datosEmpleadoConsulta['iCodigoPostal']}' ,
-                                @vchColonia				= '{$datosEmpleadoConsulta['vchColonia']}' ,
-                                @vchLocalidad			= '{$datosEmpleadoConsulta['vchLocalidad']}' ,
-                                @vchMunicipio			= '{$datosEmpleadoConsulta['vchMunicipio']}' ,
-                                @iIdEntidadFederativa	= '{$datosEmpleadoConsulta['iIdEntidadFederativa']}' ,
-                                @iAgrupadorEntidad		= '{$datosEmpleadoConsulta['iAgrupadorEntidad']}' ,
-                                @iClaveEntidad			= '{$datosEmpleadoConsulta['iClaveEntidad']}' ,
-                                @iIdTipoContacto		= '{$datosEmpleadoConsulta['iIdTipoContacto']}' ,
-                                @iAgrupadorContacto		= '{$datosEmpleadoConsulta['iAgrupadorContacto']}' ,
-                                @iClaveContacto			= '{$datosEmpleadoConsulta['iClaveContacto']}' ,
-                                @vchContacto			= '{$datosEmpleadoConsulta['vchContacto']}' ,
-                                @vchNSS                 = '{$datosEmpleadoConsulta['vchNSS']}' ,
-                                @iIdPuesto				= '{$datosEmpleadoConsulta['iIdPuesto']}' ,
-                                @dFechaIngreso			= '{$datosEmpleadoConsulta['dFechaIngreso']}' ,
-                                @iIdSede				= '{$datosEmpleadoConsulta['iIdSede']}' ,
-                                @iAgrupadorSede			= '{$datosEmpleadoConsulta['iAgrupadorSede']}' ,
-                                @iClaveSede				= '{$datosEmpleadoConsulta['iClaveSede']}' ,
-                                @iIdContratante			= '{$datosEmpleadoConsulta['iIdContratante']}' ,
-                                @iIdUsuario				= '{$datosEmpleadoConsulta['iIdUsuario']}' ,
-                                @iIdEmpleado			= '{$datosEmpleadoConsulta['iIdEmpleado']}' ,
-                                @bResultado				= '{$datosEmpleadoConsulta['bResultado']}' ,
-                                @vchCampoError			= '{$datosEmpleadoConsulta['vchCampoError']}' ,
-                                @vchMensaje				= '{$datosEmpleadoConsulta['vchMensaje']}' ";
+    $result = sqlsrv_query($GLOBALS['conn'], $procedureName, $params);
 
     if ($result === false) {
         $errorInformacion = sqlsrv_errors();

@@ -1,5 +1,6 @@
 <?php
 require_once ('../../includes/load.php');
+session_start();
 
 $iIdConstanteContacto = isset($_POST['iIdConstanteContacto'])? $_POST['iIdConstanteContacto']:0;
 $iClaveContacto = isset($_POST['iClaveContacto'])?$_POST['iClaveContacto']: 0;
@@ -15,7 +16,7 @@ $datosContacto = array(
     'vchContacto' => $vchContacto,
     'bEstatus' => 1,
     'iIdContacto' => 0,
-    'iIdUsuarioUltModificacion' => 2,
+    'iIdUsuarioUltModificacion' => $_SESSION['user_id'],
     'iOpcion' => 1,
     'iProceso' => 2,
     'bResultado' => 0,
