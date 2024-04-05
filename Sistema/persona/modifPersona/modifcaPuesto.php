@@ -1,6 +1,6 @@
 <?php
 
-require_once('../../includes/pandora.php');
+require_once ('../../includes/pandora.php');
 
 session_start();
 function ObtenerSede()
@@ -48,7 +48,7 @@ function ObtenerPuesto()
     $connectionInfo = array(
         "Database" => "BDSistemaIntegral_PRETEST",
         "UID" => "Development",
-        "PWD" => "Development123*",
+        "PWD" => "Development1234*",
         'CharacterSet' => 'UTF-8'
     );
 
@@ -284,7 +284,8 @@ $resultadoPuesto = ObtenerPuesto();
                                     <ul class="account-item-list">
                                         <li><a href="#"><span class="ti-user"></span>CUENTA</a></li>
                                         <li><a href="#"><span class="ti-settings"></span>AJUSTES</a></li>
-                                        <li><a href="../../includes/logout.php"><span class="ti-power-off"></span>Log Out</a></li>
+                                        <li><a href="../../includes/logout.php"><span class="ti-power-off"></span>Log
+                                                Out</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -413,6 +414,15 @@ $resultadoPuesto = ObtenerPuesto();
                                             </select>
                                         </div>
                                     </div>
+
+                                    <div class="form-group file-input-wrap">
+                                        <label for="up-cv">
+                                            <input id="up-cv" type="file">
+                                            <i data-feather="upload-cloud"></i>
+                                            <span>SUBE TU ARCHIVO <span>(pdf,zip,doc,docx)</span></span>
+                                        </label>
+                                    </div>
+
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">DOCUMENTO PDF:</label>
                                         <div class="col-sm-9">
@@ -573,9 +583,9 @@ $resultadoPuesto = ObtenerPuesto();
                                                              <select class="form-control" id="ilDocumento" name="TIPO DE DOCUMENTO []">
                                                                  <option value="">SELECCIONE UN TIPO DE DOCUMENTO</option>
                                                                     <?php foreach ($resultadoDocumento as $documento): ?>
-                                                                                <option value="<?= $documento['iIdConstante'] . '-' . $documento['iClaveCatalogo'] ?>">
-                                                                                    [<?= $documento['iClaveCatalogo'] ?>] - <?= $documento['vchDescripcion'] ?>
-                                                                                </option>
+                                                                                    <option value="<?= $documento['iIdConstante'] . '-' . $documento['iClaveCatalogo'] ?>">
+                                                                                        [<?= $documento['iClaveCatalogo'] ?>] - <?= $documento['vchDescripcion'] ?>
+                                                                                    </option>
                                                                     <?php endforeach; ?>
                                                              </select>
                                                         </div>
@@ -673,7 +683,7 @@ $resultadoPuesto = ObtenerPuesto();
                 <?php foreach ($resultadoDocumento as $documento): ?>
                     < option value = "<?= $documento['iIdConstante'] . '-' . $documento['iClaveCatalogo'] ?>" >
                         [<?= $documento['iClaveCatalogo'] ?>] - <?= $documento['vchDescripcion'] ?>
-                                </option >
+                                    </option >
                 <?php endforeach; ?>;
             var nuevoDocumentoPDF = document.createElement('div');
             nuevoDocumentoPDF.className = 'col-md-6';

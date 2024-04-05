@@ -48,7 +48,7 @@ function ObtenerPuesto()
     $connectionInfo = array(
         "Database" => "BDSistemaIntegral_PRETEST",
         "UID" => "Development",
-        "PWD" => "Development123*",
+        "PWD" => "Development1234*",
         'CharacterSet' => 'UTF-8'
     );
 
