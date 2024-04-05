@@ -18,9 +18,11 @@ if (ini_get("session.use_cookies")) {
 }
 
 session_unset();
-
 // Finalmente, destruir la sesión.
 session_destroy();
+
+$GLOBALS['DB_LOGOUT'] = 1; //se actualiza el valor para redireccionar correctamente desde index.php
+
 
 ?>
 <script type="text/javascript">

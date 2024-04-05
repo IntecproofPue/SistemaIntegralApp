@@ -203,8 +203,6 @@ if ( isset( $_SESSION['user_id'] ) ) {?>
                         $nombrePersona = $row['nombrePersona'];
                         $emailPersona = $row['contacto'];
 
-
-
                         ?>
 
                         <div class="dropdown header-top-account">
@@ -226,10 +224,6 @@ if ( isset( $_SESSION['user_id'] ) ) {?>
                                 </ul>
                             </div>
                         </div>
-                        <!--<select class="selectpicker select-language" data-width="fit">
-                      <option data-content='<span class="flag-icon flag-icon-us"></span> English'>English</option>
-                      <option  data-content='<span class="flag-icon flag-icon-mx"></span> Español'>Español</option>
-                    </select>-->
                     </div>
                 </div>
                 <nav class="navbar navbar-expand-lg cp-nav-2">
@@ -286,13 +280,10 @@ if ( isset( $_SESSION['user_id'] ) ) {?>
                             //echo "<br>El nombre a buscar es <b>$nombreaBuscar</b>";
 
                         if(empty($errors)){
-
                             $user = searchPersona($nombreaBuscar);
-
                             $contadodGlobal = $GLOBALS['contador'];
                             $contador= 0;
                             $row0 = 0; //incializando variable para evitar warning
-
                             for($contador=0 ; $contador<$contadodGlobal; $contador++){
                                 //echo "Contador Global =$contadodGlobal, contador= $contador ==== <br>";
 

@@ -1,60 +1,57 @@
 <?php
 
-require_once('../../includes/pandora.php');
-require_once('../../includes/load.php');
+        require_once('../../includes/pandora.php');
+        require_once ('../../includes/load.php');
 
-session_start();
-function ObtenerSede()
-{
-    if (isset($_SESSION['CatConstante'])) {
-        $datosSede = $_SESSION['CatConstante'];
-        $sedeEncontrado = array();
+        session_start();
+        function ObtenerSede(){
+            if (isset ($_SESSION['CatConstante'])){
+                $datosSede = $_SESSION['CatConstante'];
+                $sedeEncontrado = array();
 
-        foreach ($datosSede as $valorSede) {
-            if ($valorSede['iAgrupador'] == 4) {
-                $sedeEncontrado[] = $valorSede;
+                foreach ($datosSede as $valorSede) {
+                    if ($valorSede['iAgrupador'] == 4) {
+                        $sedeEncontrado [] = $valorSede;
+                    }
+                }
+                return $sedeEncontrado;
+            } else {
+                echo ("No hay datos del Estado de Procedencia");
             }
         }
-        return $sedeEncontrado;
-    } else {
-        echo ("No hay datos del Estado de Procedencia");
-    }
-}
 
-$resultadoSede = ObtenerSede();
+        $resultadoSede = ObtenerSede();
 
 
-function ObtenerTipoDocumento()
-{
-    if (isset($_SESSION['CatConstante'])) {
-        $datosDocumentos = $_SESSION['CatConstante'];
-        $documentosEncontrados = array();
+        function ObtenerTipoDocumento(){
+            if (isset ($_SESSION['CatConstante'])){
+                $datosDocumentos = $_SESSION['CatConstante'];
+                $documentosEncontrados= array();
 
-        foreach ($datosDocumentos as $valorDocumento) {
-            if ($valorDocumento['iAgrupador'] == 10) {
-                $documentosEncontrados[] = $valorDocumento;
+                foreach ($datosDocumentos as $valorDocumento) {
+                    if ($valorDocumento['iAgrupador'] == 10) {
+                        $documentosEncontrados [] = $valorDocumento;
+                    }
+                }
+                return $documentosEncontrados;
+            } else {
+                echo ("No hay datos del Estado de Procedencia");
             }
         }
-        return $documentosEncontrados;
-    } else {
-        echo ("No hay datos del Estado de Procedencia");
-    }
-}
 
-$resultadoDocumento = ObtenerTipoDocumento();
+        $resultadoDocumento = ObtenerTipoDocumento();
 
-function ObtenerPuesto()
-{
-    $datosPuesto = array(
-        'iOpcion' => 4,
-        'iIdPuesto' => 0,
-        'vchPuesto' => '',
-        'iIdTipoContratacion' => 0,
-        'iCveContratacion' => 0,
-        'iAgruContratacion' => 0
-    );
+        function ObtenerPuesto(){
+            $datosPuesto = array (
+                            'iOpcion' => 4,
+                            'iIdPuesto' => 0 ,
+                            'vchPuesto' => '',
+                            'iIdTipoContratacion' => 0,
+                            'iCveContratacion' => 0,
+                            'iAgruContratacion' => 0
+            );
 
-    $procedureName = "EXEC prcConsultaPuesto    @iOpcion = ?,
+            $procedureName = "EXEC prcConsultaPuesto    @iOpcion = ?,
                                                         @iIdPuesto = ?, 
                                                         @vchPuesto = ?, 
                                                         @iIdTipoContratacion = ?,
@@ -62,74 +59,84 @@ function ObtenerPuesto()
                                                         @iAgruContratacion = ? 
                                                     ";
 
-    $params = array(
-        $datosPuesto['iOpcion'],
-        $datosPuesto['iIdPuesto'],
-        $datosPuesto['vchPuesto'],
-        $datosPuesto['iIdTipoContratacion'],
-        $datosPuesto['iCveContratacion'],
-        $datosPuesto['iAgruContratacion']
-    );
+            $params = array(
+                $datosPuesto['iOpcion'],
+                $datosPuesto['iIdPuesto'],
+                $datosPuesto['vchPuesto'],
+                $datosPuesto['iIdTipoContratacion'],
+                $datosPuesto['iCveContratacion'],
+                $datosPuesto['iAgruContratacion']
+            );
 
-    $result = sqlsrv_query($GLOBALS['conn'], $procedureName, $params);
+            $result = sqlsrv_query($GLOBALS['conn'], $procedureName, $params);
 
-    $CatPuestos = array();
+            $CatPuestos = array();
 
-    if ($result === false) {
-        die(print_r(sqlsrv_errors(), true));
+            if ($result === false){
+                die(print_r(sqlsrv_errors(), true));
 
-    } else {
-        do {
-            while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
-                $CatPuestos[] = $row;
+            } else{
+                do{
+                    while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+                        $CatPuestos[] = $row;
+                    }
+                }while (sqlsrv_next_result($result));
             }
-        } while (sqlsrv_next_result($result));
-    }
-    return $CatPuestos;
+            return $CatPuestos;
 
-    sqlsrv_close($GLOBALS['conn']);
+            sqlsrv_close($GLOBALS['conn']);
 
-}
-$resultadoPuesto = ObtenerPuesto();
+        }
+        $resultadoPuesto = ObtenerPuesto();
 
-function ObtenerAutorizacionContratante()
-{
-    $datosConsulta = array(
-        'iIdEmpleado' => 0,
-        'iOpcion' => 2
-    );
+    function ObtenerAutorizacionContratante(){
+        $datosConsulta = array (
+            'iIdEmpleado' => 0,
+            'iOpcion' => 2
+        );
 
-    $procedureName = "EXEC prcConsultaEmpleado      @iIdEmpleado = ?,
+        $procedureName = "EXEC prcConsultaEmpleado      @iIdEmpleado = ?,
                                                         @iOpcion = ? 
                                                         ";
-    $params = array(
-        $datosConsulta['iIdEmpleado'],
-        $datosConsulta['iOpcion']
-    );
-    $result = sqlsrv_query($GLOBALS['conn'], $procedureName, $params);
+        $params = array(
+            $datosConsulta['iIdEmpleado'],
+            $datosConsulta['iOpcion']
+        );
+        $result = sqlsrv_query($GLOBALS['conn'], $procedureName, $params);
 
-    $Contratantes = array();
+        $Contratantes = array();
 
-    if ($result === false) {
-        die(print_r(sqlsrv_errors(), true));
+        if ($result === false){
+            die(print_r(sqlsrv_errors(), true));
 
-    } else {
-        do {
-            while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
-                $Contratantes[] = $row;
-            }
-        } while (sqlsrv_next_result($result));
+        } else{
+            do{
+                while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+                    $Contratantes[] = $row;
+                }
+            }while (sqlsrv_next_result($result));
+        }
+        return $Contratantes;
+
+        sqlsrv_close($GLOBALS['conn']);
+
     }
-    return $Contratantes;
-
-    sqlsrv_close($GLOBALS['conn']);
-
-}
-$resultadoContratantes = ObtenerAutorizacionContratante();
+    $resultadoContratantes = ObtenerAutorizacionContratante();
 
 
+    if ( isset( $_SESSION['user_id'] ) ) {?>
+    <?php }else{
 
+        ?>
+        <script type="text/javascript">
+            //Redireccionamiento tras 5 segundos
+            setTimeout( function() { window.location.href = "../../index.php"; }, 0 );
+        </script>
+        <?php
+
+    }
 ?>
+
 <!doctype html>
 <html lang="en">
 
@@ -293,6 +300,12 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                                     </div>
                                 </div>
                             </div>
+                            <?php
+                                $user = obtenerUsuario($_SESSION['user_id']);
+                                $row =$GLOBALS['rowObtenerNombre'];
+                                $nombrePersona = $row['nombrePersona'];
+                                $emailPersona = $row['contacto'];
+                            ?>
                             <div class="dropdown header-top-account">
                                 <a href="#" class="account-button">My Account</a>
                                 <div class="account-card">
@@ -301,22 +314,17 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                                             <img src="../../images/account/thumb-1.jpg" class="img-fluid" alt="">
                                         </a>
                                         <div class="account-body">
-                                            <h5><a href="#">Robert Chavez</a></h5>
-                                            <span class="mail">chavez@domain.com</span>
+                                            <h5><a href="#"><?php echo $nombrePersona; ?></a></h5>
+                                            <span class="mail"><?php echo $emailPersona; ?></span>
                                         </div>
                                     </div>
                                     <ul class="account-item-list">
                                         <li><a href="#"><span class="ti-user"></span>Account</a></li>
                                         <li><a href="#"><span class="ti-settings"></span>Settings</a></li>
-                                        <li><a href="../../includes/logout.php"><span class="ti-power-off"></span>Log
-                                                Out</a></li>
+                                        <li><a href="../../includes/logout.php"><span class="ti-power-off"></span>Log Out</a></li>
                                     </ul>
                                 </div>
                             </div>
-                            <!--<select class="selectpicker select-language" data-width="fit">
-                  <option data-content='<span class="flag-icon flag-icon-us"></span> English'>English</option>
-                  <option  data-content='<span class="flag-icon flag-icon-mx"></span> Español'>Español</option>
-                </select>-->
                         </div>
                     </div>
                     <nav class="navbar navbar-expand-lg cp-nav-2">
@@ -374,20 +382,20 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                     <div class="dashboard-container">
                         <div class="dashboard-content-wrapper">
 
-                            <form class="dashboard-form" id="FormEmpleadoAlta">
+                            <form class="dashboard-form" id = "FormEmpleadoAlta">
 
-                                <input type="hidden" name="iIdConstanteSede" id="iIdConstanteSede" value="">
-                                <input type="hidden" name="iClaveSede" id="iClaveSede" value="">
+                                <input type="hidden" name = "iIdConstanteSede" id="iIdConstanteSede" value="" >
+                                <input type="hidden" name = "iClaveSede" id="iClaveSede" value="" >
 
-                                <input type="hidden" name="iIdConstanteDocumento" id="iIdConstanteDocumento" value="">
-                                <input type="hidden" name="iClaveDocumento" id="iClaveDocumento" value="">
+                                <input type="hidden" name = "iIdConstanteDocumento" id="iIdConstanteDocumento" value="" >
+                                <input type="hidden" name = "iClaveDocumento" id="iClaveDocumento" value="" >
 
                                 <div class="dashboard-section basic-info-input">
                                     <h4><i data-feather="user-check"></i>Basic Infos</h4>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*PUESTO:</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control" Name="iIdPuesto" id="iIdPuesto" required>
+                                            <select class="form-control" Name="iIdPuesto"  id = "iIdPuesto" required>
                                                 <option value="" selected>SELECCIONE UN PUESTO</option>
                                                 <?php foreach ($resultadoPuesto as $puesto): ?>
                                                     <option value="<?= $puesto['iIdPuesto'] ?>">
@@ -414,7 +422,7 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                                         ?>
                                         <div class="col-sm-9">
                                             <input type="date" class="form-control" placeholder="FECHA DE INGRESO"
-                                                name="fechaIngreso" id="fechaIngreso" pattern="\d{4}-\d{2}-\d{2}"
+                                                name="fechaIngreso" id="fechaIngreso"  pattern="\d{4}-\d{2}-\d{2}"
                                                 title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required
                                                 min="<?php echo $fechaMinima; ?>" max="<?php echo $fechaMaxima; ?>"
                                                 maxlength="10">
@@ -434,245 +442,192 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                                             <select class="form-control" Name="iIdSede" id="iIdSede" required>
                                                 <option value="">SELECCIONE UNA SEDE</option>
                                                 <?php foreach ($resultadoSede as $sede): ?>
-                                                    <option
-                                                        value="<?= $sede['iIdConstante'] . '-' . $sede['iClaveCatalogo'] ?>">
-                                                        [
-                                                        <?= $sede['iClaveCatalogo'] ?>] -
-                                                        <?= $sede['vchDescripcion'] ?>
+                                                    <option value="<?= $sede['iIdConstante'].'-'.$sede['iClaveCatalogo']  ?>">
+                                                        [<?= $sede['iClaveCatalogo'] ?>] - <?= $sede['vchDescripcion'] ?>
                                                     </option>
                                                 <?php endforeach; ?>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">*PERSONA QUE AUTORIZA
-                                            CONTRATACIÓN:</label>
+                                        <label class="col-sm-3 col-form-label">*PERSONA QUE AUTORIZA CONTRATACIÓN:</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control" Name="iIdPersonaContratante"
-                                                id="iIdPersonaContratante" required>
+                                            <select class="form-control" Name="iIdPersonaContratante"  id = "iIdPersonaContratante" required>
                                                 <option value="" selected>SELECCIONA LA PERSONA </option>
                                                 <?php foreach ($resultadoContratantes as $contratante): ?>
                                                     <option value="<?= $contratante['iIdPersona'] ?>">
-                                                        [
-                                                        <?= $contratante['iIdPersona'] ?>] -
-                                                        <?= $contratante['vchPrimerApellido'] . ' ' . $contratante['vchSegundoApellido'] . ' ' . $contratante['vchNombre'] ?>
+                                                        [<?= $contratante['iIdPersona']?>] - <?= $contratante['vchPrimerApellido'].' '. $contratante['vchSegundoApellido'].' '.$contratante['vchNombre'] ?>
                                                     </option>
                                                 <?php endforeach; ?>
                                             </select>
                                         </div>
                                     </div>
-                                    <form id="uploadForm" enctype="multipart/form-data">
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">TIPO DE DOCUMENTO:</label>
+                                            <label class="col-sm-3 col-form-label"></label>
                                             <div class="col-sm-9">
-                                                <select class="form-control" id="iIdDocumento" name="iIdDocumento[]">
-                                                    <option value="">SELECCIONE UN TIPO DE DOCUMENTO</option>
-                                                    <?php foreach ($resultadoDocumento as $documento): ?>
-                                                        <option
-                                                            value="<?= $documento['iIdConstante'] . '-' . $documento['iClaveCatalogo'] ?>">
-                                                            [
-                                                            <?= $documento['iClaveCatalogo'] ?>] -
-                                                            <?= $documento['vchDescripcion'] ?>
-                                                        </option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">DOCUMENTO PDF:</label>
-                                            <div class="col-sm-9">
-                                                <input type="file" accept=".pdf" class="button-area" id="documentoPDF"
-                                                    name="documentoPDF">
-                                                <small class=""></small>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <?php
-                                    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                                        // directorio donde se guardarán los archivos PDF
-                                        $directorioDestino = "includes/PDF/";
-
-                                        // verifica si el directorio existe, si no, lo crea
-                                        if (!file_exists($directorioDestino)) {
-                                            mkdir($directorioDestino, 0777, true);
-                                        }
-
-                                        // Itera sobre los campos tipoDocumento y documentoPDF
-                                        foreach ($_FILES['documentoPDF']['tmp_name'] as $key => $tmp_name) {
-                                            if (!empty($tmp_name)) {
-                                                $nombreArchivo = "documento_pdf_" . time() . "_$key.pdf";
-                                                $rutaCompleta = $directorioDestino . $nombreArchivo;
-                                                if (move_uploaded_file($tmp_name, $rutaCompleta)) {
-                                                    echo "EL ARCHIVO SE CARGÓ CORRECTAMENTE $directorioDestino.";
-                                                } else {
-                                                    echo "ERROR AL SUBIR EL ARCHIVO.";
-                                                }
-                                            }
-                                        }
-                                    }
-                                    ?>
-                                    <div class="form-group row" id="documentosContainer">
-                                        <!-- Existing document fields -->
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label"></label>
-                                        <div class="col-sm-9">
-                                            <script>
-                                                function enviarFormularios() {
-                                                    // Obtener los valores de los elementos del formulario para sede
-                                                    var SedeSeleccionada = document.getElementById('iIdSede');
-                                                    var SedePartes = SedeSeleccionada.value.split('-');
-                                                    var iIdConstanteSede = SedePartes[0];
-                                                    var iClaveSede = SedePartes[1];
+                                                <script>
+                                                    function enviarFormularios(){
+                                                        // Obtener los valores de los elementos del formulario para sede
+                                                        var SedeSeleccionada = document.getElementById('iIdSede');
+                                                        var SedePartes = SedeSeleccionada.value.split('-');
+                                                        var iIdConstanteSede = SedePartes[0];
+                                                        var iClaveSede = SedePartes[1];
 
 
-                                                    // Asignar los valores a los campos ocultos
-                                                    document.getElementById('iIdConstanteSede').value = iIdConstanteSede;
-                                                    document.getElementById('iClaveSede').value = iClaveSede;
-
-                                                    // Obtener los valores de los elementos del formulario para tipo de documento
-                                                    var DocumentoSeleccionado = document.getElementById('iIdDocumento');
-                                                    var DocumentoPartes = DocumentoSeleccionado.value.split('-');
-                                                    var iIdConstanteDocumento = DocumentoPartes[0];
-                                                    var iClaveDocumento = DocumentoPartes[1];
-
-                                                    // Asignar los valores a los campos ocultos
-                                                    document.getElementById('iIdConstanteDocumento').value = iIdConstanteDocumento;
-                                                    document.getElementById('iClaveDocumento').value = iClaveDocumento;
+                                                        // Asignar los valores a los campos ocultos
+                                                        document.getElementById('iIdConstanteSede').value = iIdConstanteSede;
+                                                        document.getElementById('iClaveSede').value = iClaveSede;
 
 
-                                                    function obtenerDatosFormulario(iIdFormulario) {
-                                                        var formData = $('#' + iIdFormulario).serializeArray();
-                                                        var formDataObj = {};
-                                                        $(formData).each(function (i, field) {
-                                                            formDataObj[field.name] = field.value;
-                                                        });
-                                                        return formDataObj;
-                                                    }
-
-                                                    var datosPersona = getFormulario('datosPersona');
-                                                    var datosDomicilio = getFormulario('datosDomicilio');
-                                                    var datosContacto = getFormulario('datosContacto');
-                                                    var datosEmpleado = obtenerDatosFormulario('FormEmpleadoAlta');
-
-                                                    let data = {
-                                                        datosPersona: JSON.stringify(datosPersona),
-                                                        datosDomicilio: JSON.stringify(datosDomicilio),
-                                                        datosContacto: JSON.stringify(datosContacto),
-                                                        datosEmpleado: JSON.stringify(datosEmpleado)
-                                                    };
-
-                                                    console.log(data);
-
-                                                    // Crear una instancia de XMLHttpRequest
-                                                    var request = new XMLHttpRequest();
-
-                                                    // Configurar la solicitud
-                                                    request.open('POST', 'validarDatosEmpleado.php', true);
-                                                    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-
-                                                    function getFormulario(key) {
-                                                        let result = localStorage.getItem(key)
-                                                        return JSON.parse(result);
-                                                    }
-
-                                                    // Enviar la solicitud
-                                                    let json = data;
-                                                    request.send(new URLSearchParams(json).toString());
-                                                    console.log(json);
-
-                                                    //Obtener la respuesta
-                                                    request.onload = function () {
-                                                        if (request.status === 200) {
-                                                            var respuesta = JSON.parse(request.responseText);
-                                                            if (respuesta.bResultado === 1) {
-                                                                console.log(respuesta);
-                                                                alert(respuesta.vchMensaje);
-                                                                setTimeout(function () { window.location.href = ("../consulEmpleado/consultaEmpleado.php"); }, 0);
-
-                                                            } else {
-                                                                console.error("Mensaje Error: " + respuesta.vchMensaje);
-                                                                alert(respuesta.vchMensaje)
-                                                            }
-                                                        } else {
-                                                            console.error("Error en la solicitud al servidor");
+                                                        function obtenerDatosFormulario(iIdFormulario){
+                                                            var formData = $('#'+iIdFormulario).serializeArray();
+                                                            var formDataObj = {};
+                                                            $(formData).each(function(i, field){
+                                                                formDataObj[field.name] = field.value;
+                                                            });
+                                                            return formDataObj;
                                                         }
-                                                    };
 
-                                                }
-                                            </script>
-                                            <script>
-                                                function RegresarInicio() {
-                                                    localStorage.clear(); //Limpiar el localStorage para no almacenar basura
-                                                    window.location.href = ("altaPersona.php");
-                                                }
-                                            </script>
-                                            <button type="button" class="button" id="registrarEmpleado">REGISTRAR
-                                                EMPLEADO</button>
-                                            <script>
-                                                document.getElementById('registrarEmpleado').addEventListener('click', enviarFormularios);
-                                            </script>
-                                            <button type="button" class="button" onclick="agregarDocumento()">AGREGAR
-                                                DOCUMENTO</button>
-                                            <button type="reset" class="button">LIMPIAR</button>
-                                            <button type="button" class="button" id="Cancelar">CANCELAR</button>
-                                            <script>
-                                                document.getElementById('Cancelar').addEventListener('click', RegresarInicio);
-                                            </script>
+                                                        var datosPersona = getFormulario('datosPersona');
+                                                        var datosDomicilio = getFormulario('datosDomicilio');
+                                                        var datosContacto = getFormulario('datosContacto');
+                                                        var datosEmpleado = obtenerDatosFormulario('FormEmpleadoAlta');
+
+
+                                                        let data = {
+                                                            datosPersona:JSON.stringify(datosPersona),
+                                                            datosDomicilio: JSON.stringify(datosDomicilio),
+                                                            datosContacto: JSON.stringify(datosContacto),
+                                                            datosEmpleado: JSON.stringify(datosEmpleado)
+                                                        };
+
+                                                        console.log(data);
+
+                                                        // Crear una instancia de XMLHttpRequest
+                                                        var request = new XMLHttpRequest();
+
+                                                        // Configurar la solicitud
+                                                        request.open('POST', 'validarDatosEmpleado.php', true);
+                                                        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                                                        function getFormulario(key){
+                                                            let result = localStorage.getItem(key)
+                                                            return JSON.parse(result);
+                                                        }
+
+                                                        // Enviar la solicitud
+                                                        let json = data;
+                                                        request.send(new URLSearchParams(json).toString());
+                                                        console.log(json);
+
+                                                        //Obtener la respuesta
+                                                        request.onload = function() {
+                                                            if (request.status === 200) {
+                                                                var respuesta = JSON.parse(request.responseText);
+                                                                if (respuesta.bResultado === 1) {
+                                                                    alert(respuesta.vchMensaje);
+                                                                    console.log(respuesta.bResultado);
+                                                                    console.log(respuesta.iIdEmpleado);
+
+                                                                    var buttonEmpleado = document.getElementById('registrarEmpleado');
+                                                                    buttonEmpleado.disabled = true;
+                                                                    document.getElementById('registrarEmpleado').style.display = 'none';
+                                                                    document.getElementById('registrarEmpleado').style.visibility = 'hidden';
+
+
+                                                                    var buttonCancelar = document.getElementById('Cancelar');
+                                                                    buttonCancelar.disabled = true;
+                                                                    document.getElementById('Cancelar').style.display = 'none';
+                                                                    document.getElementById('Cancelar').style.visibility = 'hidden';
+
+                                                                    var buttonLimpiar = document.getElementById('limpiar');
+                                                                    buttonLimpiar.disabled = true;
+                                                                    document.getElementById('limpiar').style.display = 'none';
+                                                                    document.getElementById('limpiar').style.visibility = 'hidden';
+
+
+                                                                    function deshabilitarFormulario(){
+                                                                        var inputs = document.getElementsByTagName('input');
+                                                                        for (var i= 0; i<inputs.length; i++){
+                                                                            inputs[i].disabled = true;
+                                                                        }
+
+                                                                        var selects = document.getElementsByTagName('select');
+                                                                        for (var i= 0; i< selects.length; i++){
+                                                                            selects[i].disabled = true;
+                                                                        }
+                                                                    }
+
+                                                                    deshabilitarFormulario();
+
+
+                                                                    var botonAgregar = document.createElement('button');
+                                                                    botonAgregar.type = 'button';
+                                                                    botonAgregar.className = 'button';
+                                                                    botonAgregar.id = 'botonAgregaDocumento';
+                                                                    botonAgregar.textContent = 'AGREGAR DOCUMENTO';
+                                                                    document.getElementById('botonAgregarDocumentos').appendChild(botonAgregar);
+
+                                                                    // Crear y configurar el botón para finalizar
+                                                                    var botonFinalizar = document.createElement('button');
+                                                                    botonFinalizar.type = 'button';
+                                                                    botonFinalizar.className = 'button';
+                                                                    botonFinalizar.id = 'botonFinalizar';
+                                                                    botonFinalizar.textContent = 'FINALIZAR';
+
+                                                                    // Asegúrate de que el botón 'botonFinalizar' se agregue al mismo contenedor que 'botonAgregar'
+                                                                    document.getElementById('botonAgregarDocumentos').appendChild(botonFinalizar);
+
+                                                                    // Agregar un evento de clic al botón 'botonFinalizar'
+                                                                    botonFinalizar.addEventListener('click', function (){
+                                                                        window.location.href = ('../consulEmpleado/consultaEmpleado.php');
+                                                                    });
+
+                                                                } else {
+                                                                    console.error("Mensaje Error: " + respuesta.vchMensaje);
+                                                                    alert(respuesta.vchMensaje)
+                                                                }
+                                                            } else {
+                                                                console.error("Error en la solicitud al servidor");
+                                                            }
+                                                        };
+                                                    }
+                                                </script>
+                                                <script>
+                                                    function RegresarInicio(){
+                                                        localStorage.clear(); //Limpiar el localStorage para no almacenar basura
+                                                        window.location.href = ("altaPersona.php");
+                                                    }
+                                                </script>
+                                                <button type="button" class="button" id = "registrarEmpleado" >REGISTRAR EMPLEADO</button>
+                                                <script>
+                                                    document.getElementById('registrarEmpleado').addEventListener('click', enviarFormularios);
+                                                </script>
+                                                <button type="reset" class="button" id="limpiar" >LIMPIAR</button>
+                                                <button type="button" class="button" id = "Cancelar">CANCELAR</button>
+                                                <script>
+                                                    document.getElementById('Cancelar').addEventListener('click', RegresarInicio);
+                                                </script>
+                                                <div id="botonAgregarDocumentos"></div>
+                                                <div id="botonFinalizar"></div>
+                                            </div>
                                         </div>
+
                                     </div>
-                                    <script>
-                                        function agregarDocumento() {
-                                            var contenedor = document.getElementById('documentosContainer');
-
-                                            var nuevoDocumentoContainer = document.createElement('div');
-                                            nuevoDocumentoContainer.className = 'col-md-12';
-
-                                            var nuevoTipoDocumento = document.createElement('div');
-                                            //nuevoTipoDocumento.className = 'col-md-6';
-                                            nuevoTipoDocumento.innerHTML = `
-                                                    <label class="col-sm-3 col-form-label">*TIPO DE DOCUMENTO:</label>
-                                                        <div class="col-sm-9">
-                                                             <select class="form-control" id="ilDocumento" name="TIPO DE DOCUMENTO []">
-                                                                 <option value="">SELECCIONE UN TIPO DE DOCUMENTO</option>
-                                                                    <?php foreach ($resultadoDocumento as $documento): ?>
-                                                                                <option value="<?= $documento['iIdConstante'] . '-' . $documento['iClaveCatalogo'] ?>">
-                                                                                    [<?= $documento['iClaveCatalogo'] ?>] - <?= $documento['vchDescripcion'] ?>
-                                                                                </option>
-                                                                    <?php endforeach; ?>
-                                                             </select>
-                                                        </div>
-                                                    `;
-                                            var nuevoDocumentoPDF = document.createElement('div');
-                                            nuevoDocumentoPDF.className = 'col-md-6';
-                                            nuevoDocumentoPDF.innerHTML = `
-                                                        <label for="documentoPDF">DOCUMENTO PDF</label>
-                                                        <input type="file" accept=".pdf" class="button-area" id="documentoPDF" name="documentoPDF[]" multiple>
-                                                        <small class=""></small>
-                                                    `;
-
-                                            nuevoDocumentoContainer.appendChild(nuevoTipoDocumento);
-                                            nuevoDocumentoContainer.appendChild(nuevoDocumentoPDF);
-
-                                            contenedor.appendChild(nuevoDocumentoContainer);
-                                        }
-                                    </script>
                                 </div>
+                                <?php
+                                if (isset($resultados['error'])) {
+                                    echo '<div class="alert alert-danger" role="alert">' . $resultados['error'] . '</div>';
+                                } elseif (isset($resultados['success'])) {
+                                    echo '<div class="alert alert-success" role="alert">' . $resultados['success'] . '</div>';
+                                }
+                                ?>
+                            </form>
                         </div>
-                        <?php
-                        if (isset($resultados['error'])) {
-                            echo '<div class="alert alert-danger" role="alert">' . $resultados['error'] . '</div>';
-                        } elseif (isset($resultados['success'])) {
-                            echo '<div class="alert alert-success" role="alert">' . $resultados['success'] . '</div>';
-                        }
-                        ?>
-                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
     <!-- Footer -->
     <footer class="footer-bg">
@@ -685,14 +640,9 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                         <div class="footer-bottom border-top">
                             <div class="row">
                                 <div class="col-xl-4 col-lg-5 order-lg-2">
-                                    <div class="footer-app-download">
-                                        <!--<a href="#" class="apple-app">Apple Store</a>
-                  <a href="#" class="android-app">Google Play</a>-->
-                                    </div>
+                                    <div class="footer-app-download"></div>
                                 </div>
-                                <div class="col-xl-4 col-lg-4 order-lg-1">
-                                    <!-- <p class="copyright-text">Copyright <a href="#">Oficiona</a> 2020, All right reserved</p> -->
-                                </div>
+                                <div class="col-xl-4 col-lg-4 order-lg-1"></div>
                                 <div class="col-xl-4 col-lg-3 order-lg-3">
                                     <div class="back-to-top">
                                         <a href="#">Subir<i class="fas fa-angle-up"></i></a>
@@ -731,29 +681,7 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
     <script src="../../js/map.js"></script>
-    <script>
-        function agregarDocumento() {
-            var contenedor = document.getElementById('documentosContainer');
-            var nuevoTipoDocumento = document.createElement('div');
-            nuevoTipoDocumento.className = 'col-md-6';
-            nuevoTipoDocumento.innerHTML =
-                <?php foreach ($resultadoDocumento as $documento): ?>
-                    < option value = "<?= $documento['iIdConstante'] . '-' . $documento['iClaveCatalogo'] ?>" >
-                        [<?= $documento['iClaveCatalogo'] ?>] - <?= $documento['vchDescripcion'] ?>
-                                </option >
-                <?php endforeach; ?>;
-            var nuevoDocumentoPDF = document.createElement('div');
-            nuevoDocumentoPDF.className = 'col-md-6';
-            nuevoDocumentoPDF.innerHTML =
-                '<?php foreach ($resultadoDocumento as $documento): ?>' +
-                    '<option value=<"<?= $documento['iIdConstante'] . '-' . $documento['iClaveCatalogo'] ?>">' +
-                    '[<?= $documento['iClaveCatalogo'] ?>] - <?= $documento['vchDescripcion'] ?>' +
-                    '</option>' +
-                    '<?php endforeach; ?>';
-            contenedor.appendChild(nuevoTipoDocumento);
-            contenedor.appendChild(nuevoDocumentoPDF);
-        }
-    </script>
+
 </body>
 
 </html>

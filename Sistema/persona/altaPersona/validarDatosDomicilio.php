@@ -1,6 +1,7 @@
 <?php
 
     require_once('../../includes/load.php');
+    session_start();
 
     $iIdConstanteEstado = isset($_POST['iIdConstanteEstado'])? $_POST['iIdConstanteEstado']:'';
     $iClaveEstado = isset($_POST['iClaveEstado'])?$_POST['iClaveEstado']: 0;
@@ -28,7 +29,7 @@
                         'estado' => $iIdConstanteEstado,
                         'iAgruEntidad' => 4,
                         'iCveEntidad' => $iClaveEstado,
-                        'iIdUsuarioUltModificacion' => 2,
+                        'iIdUsuarioUltModificacion' => $_SESSION['user_id'],
                         'iIdDomicilio' => 0,
                         'bEstatus' => 1,
                         'iOpcion' => 1,

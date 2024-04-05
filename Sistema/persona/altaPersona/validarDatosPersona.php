@@ -1,10 +1,12 @@
 <?php
 
 require_once('../../includes/load.php');
+session_start();
 
 $agrupadorNacionalidad = 6;
 $agrupadorGenero = 3;
 $agrupadorPersona = 7;
+
 
 $nombre = isset($_POST['nombre'])? $_POST['nombre']:'';
 $primerApellido = isset($_POST['primerApellido'])?$_POST['primerApellido']: '';
@@ -45,7 +47,7 @@ $datosPersona = array(
     'iOpcion' => 1,
     'iProceso' => 1,
     'iIdPersona' => 0,
-    'iIdUsuarioUltModificacion' => 3,
+    'iIdUsuarioUltModificacion' => $_SESSION['user_id'],
     'iIdUsoFiscal' => 0,
     'bResultado' => 0,
     'vchCampoError' => '',
