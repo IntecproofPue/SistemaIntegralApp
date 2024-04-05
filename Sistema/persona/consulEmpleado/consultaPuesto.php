@@ -281,42 +281,43 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                                 <li>INGRESA info EMPLEADO</li>
                                             </ul>
                                         </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">SALARIO NETO:</label>
-                                            <div class="col-sm-9">
-                                                <ul>
-                                                    <li>INGRESA info EMPLEADO</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">SALARIO FISCAL:</label>
-                                            <div class="col-sm-9">
-                                                <ul>
-                                                    <li>INGRESA info EMPLEADO</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">SALARIO COMPLEMENTARIO:</label>
-                                            <div class="col-sm-9">
-                                                <ul>
-                                                    <li>INGRESA info EMPLEADO</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-sm-9">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-sm-9">
-                                                <button type="button" class="button"
-                                                    onclick="window.location.href='/sitemaintegralPHP/Sistema/persona/modifPersona/modifPuesto.php'">
-                                                    EDITAR</button>
-                                            </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">SALARIO NETO:</label>
+                                        <div class="col-sm-9">
+                                            <ul>
+                                                <li>INGRESA info EMPLEADO</li>
+                                            </ul>
                                         </div>
                                     </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">SALARIO FISCAL:</label>
+                                        <div class="col-sm-9">
+                                            <ul>
+                                                <li>INGRESA info EMPLEADO</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">SALARIO COMPLEMENTARIO:</label>
+                                        <div class="col-sm-9">
+                                            <ul>
+                                                <li>INGRESA info EMPLEADO</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-9">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-9">
+                                            <button type="button" class="button"
+                                                onclick="window.location.href='/sitemaintegralPHP/Sistema/persona/modifPersona/modifPuesto.php'">
+                                                EDITAR</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>
