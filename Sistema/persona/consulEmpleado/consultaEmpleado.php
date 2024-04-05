@@ -1,21 +1,21 @@
 <?php
-    require_once('../../includes/pandora.php');
-    require_once ('../../includes/load.php');
+require_once('../../includes/pandora.php');
+require_once('../../includes/load.php');
 
-    session_start();
+session_start();
 
 
-    if ( isset( $_SESSION['user_id'] ) ) {?>
-    <?php }else{
+if (isset($_SESSION['user_id'])) { ?>
+<?php } else {
 
-        ?>
-        <script type="text/javascript">
-            //Redireccionamiento tras 5 segundos
-            setTimeout( function() { window.location.href = "../../index.php"; }, 0 );
-        </script>
-        <?php
+  ?>
+  <script type="text/javascript">
+    //Redireccionamiento tras 5 segundos
+    setTimeout(function () { window.location.href = "../../index.php"; }, 0);
+  </script>
+  <?php
 
-    }
+}
 
 ?>
 <!doctype html>
@@ -56,12 +56,6 @@
   <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
   <link rel="apple-touch-icon" sizes="72x72" href="../../images/icon-72x72.png">
   <link rel="apple-touch-icon" sizes="114x114" href="../../images/icon-114x114.png">
-
-
-  <!--[if lt IE 9]>
-    <script src="assets/js/html5shiv.min.js"></script>
-    <script src="assets/js/respond.min.js"></script>
-    <![endif]-->
 
 
   <script>
@@ -182,14 +176,14 @@
                 </div>
               </div>
 
-                <?php
+              <?php
 
-                $user = obtenerUsuario($_SESSION['user_id']);
-                $row =$GLOBALS['rowObtenerNombre'];
-                $nombrePersona = $row['nombrePersona'];
-                $emailPersona = $row['contacto'];
+              $user = obtenerUsuario($_SESSION['user_id']);
+              $row = $GLOBALS['rowObtenerNombre'];
+              $nombrePersona = $row['nombrePersona'];
+              $emailPersona = $row['contacto'];
 
-                ?>
+              ?>
 
               <div class="dropdown header-top-account">
                 <a href="#" class="account-button">My Account</a>
@@ -199,8 +193,12 @@
                       <img src="../../images/account/thumb-1.jpg" class="img-fluid" alt="">
                     </a>
                     <div class="account-body">
-                      <h5><a href="#"><?php echo $nombrePersona; ?></a></h5>
-                      <span class="mail"><?php echo $emailPersona; ?></span>
+                      <h5><a href="#">
+                          <?php echo $nombrePersona; ?>
+                        </a></h5>
+                      <span class="mail">
+                        <?php echo $emailPersona; ?>
+                      </span>
                     </div>
                   </div>
                   <ul class="account-item-list">
@@ -210,10 +208,6 @@
                   </ul>
                 </div>
               </div>
-              <!--<select class="selectpicker select-language" data-width="fit">
-                  <option data-content='<span class="flag-icon flag-icon-us"></span> English'>English</option>
-                  <option  data-content='<span class="flag-icon flag-icon-mx"></span> Español'>Español</option>
-                </select>-->
             </div>
           </div>
           <nav class="navbar navbar-expand-lg cp-nav-2">
@@ -223,12 +217,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav">
-                <li class="menu-item active"><a title="PERSONA" href="altaPersona.php">PERSONA</a></li>
-                <li class="menu-item active"><a title="DOMICILIO" href="altaDomicilio.php">DOMICILIO</a>
+                <li class="menu-item active"><a title="PERSONA" href="consultaPuesto.php">PUESTO</a></li>
+                <li class="menu-item active"><a title="DOMICILIO" href="consultaDomicilio.php">DOMICILIO</a>
                 </li>
                 <li class="menu-item active"><a title="CONTACTO" href="consultaContacto.php">CONTACTO</a>
                 </li>
-                <li class="menu-item active"><a title="CONTACTO" href="altaEmpleado.php">EMPLEADO</a>
+                <li class="menu-item active"><a title="CONTACTO" href="consultaEmpleado.php">EMPLEADO</a>
                 </li>
               </ul>
             </div>
@@ -440,121 +434,122 @@
                           </div>
                         </div>
                       </div>
-                    <?php }
+                  </form>
+                <?php }
                 ?>
-                    <?php
+                <?php
               } else {
                 ?>
-                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="dashboard-form">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="dashboard-form">
 
-                      <div class="dashboard-section basic-info-input">
-                        <h4><i data-feather="user-check"></i>BUSQUEDA</h4>
-                        <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">SELECCIONAR CAMPO:</label>
-                          <div class="col-sm-9">
-                            <ul class="campo-list">
-                              <input type="radio" class="campo-item" id="iDBuscar" value="iDBuscar"
-                                name="campoSeleccionado" onclick="mostrarCampo('campoIDEmpleado')" />
-                              <label for="iDBuscar">ID DE EMPLEADO</label>
+                  <div class="dashboard-section basic-info-input">
+                    <h4><i data-feather="user-check"></i>BUSQUEDA</h4>
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">SELECCIONAR CAMPO:</label>
+                      <div class="col-sm-9">
+                        <ul class="campo-list">
+                          <input type="radio" class="campo-item" id="iDBuscar" value="iDBuscar" name="campoSeleccionado"
+                            onclick="mostrarCampo('campoIDEmpleado')" />
+                          <label for="iDBuscar">ID DE EMPLEADO</label>
 
-                              <input type="radio" class="campo-item" id="RFCBuscar" value="RFCBuscar"
-                                name="campoSeleccionado" onclick="mostrarCampo('campoRFC')" />
-                              <label for="RFCBuscar">RFC</label>
+                          <input type="radio" class="campo-item" id="RFCBuscar" value="RFCBuscar" name="campoSeleccionado"
+                            onclick="mostrarCampo('campoRFC')" />
+                          <label for="RFCBuscar">RFC</label>
 
-                              <input type="radio" class="campo-item" id="PUESTOBuscar" value="PUESTOBuscar"
-                                name="campoSeleccionado" onclick="mostrarCampo('campoPuesto')" />
-                              <label for="PUESTOBuscar">PUESTO</label>
+                          <input type="radio" class="campo-item" id="PUESTOBuscar" value="PUESTOBuscar"
+                            name="campoSeleccionado" onclick="mostrarCampo('campoPuesto')" />
+                          <label for="PUESTOBuscar">PUESTO</label>
 
-                              <input type="radio" class="campo-item" id="SEDE" value="SEDE" name="campoSeleccionado"
-                                onclick="mostrarCampo('campoSede')" />
-                              <label for="SEDE">SEDE</label>
+                          <input type="radio" class="campo-item" id="SEDE" value="SEDE" name="campoSeleccionado"
+                            onclick="mostrarCampo('campoSede')" />
+                          <label for="SEDE">SEDE</label>
 
-                              <input type="radio" class="campo-item" id="nombreaBuscar" value="nombreaBuscar"
-                                name="campoSeleccionado" onclick="mostrarCampo('campoNombre')" />
-                              <label for="nombreaBuscar">NOMBRE</label>
-                            </ul>
-                          </div>
+                          <input type="radio" class="campo-item" id="nombreaBuscar" value="nombreaBuscar"
+                            name="campoSeleccionado" onclick="mostrarCampo('campoNombre')" />
+                          <label for="nombreaBuscar">NOMBRE</label>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label"></label>
+                      <div class="col-sm-9 campo-container" style="display: flex;">
+                        <div id="campoIDEmpleado" class="campo-busqueda" style="display: none; flex: 1;">
+                          <input type="text" class="form-control" placeholder="INGRESA ID DEL EMPLEADO" name="iDBuscar"
+                            style="text-transform: uppercase">
                         </div>
-                        <div class="form-group row">
-                          <label class="col-sm-3 col-form-label"></label>
-                          <div class="col-sm-9 campo-container" style="display: flex;">
-                            <div id="campoIDEmpleado" class="campo-busqueda" style="display: none; flex: 1;">
-                              <input type="text" class="form-control" placeholder="INGRESA ID DEL EMPLEADO"
-                                name="iDBuscar" style="text-transform: uppercase">
-                            </div>
-                            <div id="campoRFC" class="campo-busqueda" style="display: none; flex: 1;">
-                              <input type="text" class="form-control" placeholder="INGRESA RFC CORRECTO" name="RFCBuscar"
-                                style="text-transform: uppercase">
-                            </div>
-                            <div id="campoPuesto" class="campo-busqueda" style="display: none; flex: 1;">
-                              <input type="text" class="form-control" placeholder="INGRESA EL PUESTO" name="PUESTOBuscar"
-                                style="text-transform: uppercase">
-                            </div>
-                            <div id="campoSede" class="campo-busqueda" style="display: none; flex: 1;">
-                              <select class="form-control" placeholder="SEDE" name="SEDE">
-                                <option value="PUEBLA">PUEBLA</option>
-                                <option value="GUADALAJARA">GUADALAJARA</option>
-                              </select>
-                            </div>
-                            <div id="campoNombre" class="campo-busqueda" style="display: none; flex: 1;">
-                              <input type="text" class="form-control" placeholder="INGRESA EL NOMBRE" name="nombreaBuscar"
-                                style="text-transform: uppercase">
-                            </div>
-                          </div>
+                        <div id="campoRFC" class="campo-busqueda" style="display: none; flex: 1;">
+                          <input type="text" class="form-control" placeholder="INGRESA RFC CORRECTO" name="RFCBuscar"
+                            style="text-transform: uppercase">
                         </div>
-                        <div class="form-group row">
-                          <label class="col-sm-3 col-form-label"></label>
-                          <div class="col-sm-9">
-                            <button class="button" type="submit" name="submitBuscar">BUSCAR</button>
-                            <button class="button" type="reset" name="submitBuscar">LIMPIAR</button>
-                          </div>
+                        <div id="campoPuesto" class="campo-busqueda" style="display: none; flex: 1;">
+                          <input type="text" class="form-control" placeholder="INGRESA EL PUESTO" name="PUESTOBuscar"
+                            style="text-transform: uppercase">
+                        </div>
+                        <div id="campoSede" class="campo-busqueda" style="display: none; flex: 1;">
+                          <select class="form-control" placeholder="SEDE" name="SEDE">
+                            <option value="PUEBLA">PUEBLA</option>
+                            <option value="GUADALAJARA">GUADALAJARA</option>
+                          </select>
+                        </div>
+                        <div id="campoNombre" class="campo-busqueda" style="display: none; flex: 1;">
+                          <input type="text" class="form-control" placeholder="INGRESA EL NOMBRE" name="nombreaBuscar"
+                            style="text-transform: uppercase">
                         </div>
                       </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label"></label>
+                      <div class="col-sm-9">
+                        <button class="button" type="submit" name="submitBuscar">BUSCAR</button>
+                        <button class="button" type="reset" name="submitBuscar">LIMPIAR</button>
+                      </div>
+                    </div>
+                  </div>
 
-                      <style>
-                        .campo-list {
-                          list-style-type: none;
-                          padding: 0;
-                          margin: 0;
-                          display: flex;
-                        }
+                  <style>
+                    .campo-list {
+                      list-style-type: none;
+                      padding: 0;
+                      margin: 0;
+                      display: flex;
+                    }
 
-                        .campo-item {
-                          margin-right: 10px;
-                          cursor: pointer;
-                        }
-                      </style>
+                    .campo-item {
+                      margin-right: 10px;
+                      cursor: pointer;
+                    }
+                  </style>
 
-                      <script>
-                        function mostrarCampo(idCampo) {
-                          // Oculta todos los campos de búsqueda
-                          var campos = document.querySelectorAll('.campo-busqueda');
-                          campos.forEach(function (campo) {
-                            campo.style.display = 'none';
-                          });
+                  <script>
+                    function mostrarCampo(idCampo) {
+                      // Oculta todos los campos de búsqueda
+                      var campos = document.querySelectorAll('.campo-busqueda');
+                      campos.forEach(function (campo) {
+                        campo.style.display = 'none';
+                      });
 
-                          // Obtiene el campo correspondiente al ID pasado como argumento
-                          var campoMostrar = document.getElementById(idCampo);
+                      // Obtiene el campo correspondiente al ID pasado como argumento
+                      var campoMostrar = document.getElementById(idCampo);
 
-                          // Si el campo está oculto, lo muestra; de lo contrario, lo oculta
-                          if (campoMostrar.style.display === 'none') {
-                            campoMostrar.style.display = 'flex';
-                          } else {
-                            campoMostrar.style.display = 'none';
-                          }
-                        }
-                      </script>
-
-
-
-
-                    </form>
+                      // Si el campo está oculto, lo muestra; de lo contrario, lo oculta
+                      if (campoMostrar.style.display === 'none') {
+                        campoMostrar.style.display = 'flex';
+                      } else {
+                        campoMostrar.style.display = 'none';
+                      }
+                    }
+                  </script>
 
 
 
 
+                </form>
 
-                    <?php
+
+
+
+
+                <?php
               }
 
               ?>
@@ -562,13 +557,13 @@
 
 
 
-                </div>
-
             </div>
+
           </div>
         </div>
       </div>
     </div>
+  </div>
   </div>
 
   <!-- Footer -->
@@ -627,20 +622,8 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
   <script src="../../js/map.js"></script>
 
-  <script>
-    // función para mostrar u ocultar la sección de Domicilio
-    function toggleDomicilioSection() {
-      var domicilioSection = document.getElementById('domicilioSection');
-
-      // Cambia la visibilidad de la sección
-      if (domicilioSection.style.display === 'none') {
-        domicilioSection.style.display = 'block';
-      } else {
-        domicilioSection.style.display = 'none';
-      }
-    }
-
     <script>
+
       function limpiarCampos(element) {
         // Desactiva todos los campos
         var inputs = document.getElementsByName('iDBuscar').concat(
@@ -660,10 +643,10 @@
       element.disabled = false;
     }
       element.focus();
-  }
+  
 
       function validarBusqueda() {
-        // Agrega tu lógica de validación aquí si es necesario
+
         return true; // Cambia a 'false' si quieres prevenir el envío del formulario en ciertos casos
     }
   </script>
