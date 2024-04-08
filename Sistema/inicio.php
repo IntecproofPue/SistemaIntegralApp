@@ -102,7 +102,7 @@ require_once('includes/pandora.php');
                                 </div>
                             </div>
                             <div class="dropdown header-top-account login-modals">
-                                <li><a href="../../includes/logout.php"><span class="ti-power-off"></span>Log Out</a></li>
+                                <li><a href="includes/logout.php"><span class="ti-power-off"></span>Log Out</a></li>
                             </div>
                         </div>
                     </div>
@@ -123,7 +123,7 @@ require_once('includes/pandora.php');
                                             <ul class="dropdown-menu">
                                                 <li class="menu-item"><a href="persona/altaPersona/altaUsuario.php">ALTA DE USUARIO</a></li>
                                                 <li class="menu-item"><a href="persona/consulEmpleado/consultaUsuario.php">CONSULTA DE USUARIO</a></li>
-                                                <li class="menu-item"><a href="persona/modifPersona/modificaUsuario.php">MODIFICACION DE USUARIO</a></li>
+                                                <li class="menu-item"><a href="persona/modifiPersona/modificaUsuario.php">MODIFICACION DE USUARIO</a></li>
                                             </ul>
                                         </li>
 
@@ -174,7 +174,7 @@ require_once('includes/pandora.php');
                                             <ul class="dropdown-menu">
                                                 <li class="menu-item"><a href="persona/altaPersona/altaPersona.php">ALTA DE PERSONA</a></li>
                                                 <li class="menu-item"><a href="persona/consulEmpleado/consultaPersona.php">CONSULTA DE PERSONA</a></li>
-                                                <li class="menu-item"><a href="persona/modifPersona/modifPersona.php">MODIFICACION DE PERSONA</a></li>
+                                                <li class="menu-item"><a href="persona/modifiPersona/modificaPersona.php">MODIFICACION DE PERSONA</a></li>
                                             </ul>
                                         </li>
 
@@ -192,7 +192,7 @@ require_once('includes/pandora.php');
                                             <ul class="dropdown-menu">
                                                 <li class="menu-item"><a href="persona/altaPersona/altaPuesto.php">ALTA DE PUESTO</a></li>
                                                 <li class="menu-item"><a href="persona/consulEmpleado/consultaPuesto.php">CONSULTA DE PUESTO</a></li>
-                                                <li class="menu-item"><a href="persona/modifPersona/modifcaPuesto.php">MODIFICACION DE PUESTO</a></li>
+                                                <li class="menu-item"><a href="persona/modifiPersona/modificaPuesto.php">MODIFICACION DE PUESTO</a></li>
                                             </ul>
                                         </li>
 
