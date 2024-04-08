@@ -6,13 +6,17 @@
 
 /*Rutas*/
 
-$inicioTxt = "Inicio";
-$altaPersonaTxt ="Alta Persona";
+$inicioTxt = "INICIO";
+$altaPersonaTxt ="ALTA PERSONA PARA EMPLEADO";
+$consultaPersonaEmpleadotxt = "CONSULTA DE PERSONA PARA EMPLEADO";
 
 
 /*submenus*/
 $miCuentaTxt = "Mi cuenta";
 $notificacionesTxt = "Notificaciones";
+$Perfil = "Mi Perfil";
+$herramientas = "Herramientas";
+$logout = "Salir";
 $subirTxt = "Subir";
 
 /*

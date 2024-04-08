@@ -152,22 +152,24 @@ if(isset($_POST['submit']))
                 if(empty($errors)){
 
                     $user = authenticate_v2($emailAddress, $passwordInserted);
-                   // print_r($GLOBALS['row']);
-                    $row =$GLOBALS['row'];
-                    $idUsuario = $row['iIdUsuario'];
+                    //print_r($GLOBALS['rolesUser']);
+                    $row =$GLOBALS['rolesUser'];
+                    $idUsuario = $row[0]['iIdUsuario'];
+                    $bResult = $row[0]['bResult'];
 
 
 
-                    if($row['bResult'] == 0){ ?>
+                    if($bResult == 0){ ?>
                             <div style="background-color: #c82333; text-align: center"><?php echo "<i><span style='color: #ededee' size='-2'> $errorUsuPwdTxt</span></i><br />"; ?></div>
                          <?php
-                    }elseif ($row['bResult'] == 1){ ?>
+                    }elseif ($bResult == 1){ ?>
                         <div style="background-color: #117a8b; text-align: center">
                             <?php echo "<i><span style='color: #ededee' size='-2'> $bienUsuPwdTxt</span></i><br />"; ?>
                             <?php
                             //session_start();
                             //echo "Aquí sigo teniendo el valor de IDUSUARIO =".$idUsuario;
                             $_SESSION['user_id'] = $idUsuario;
+                            //echo ($_SESSION['user_id']);
                             $_SESSION['instante']   = time();
 
                             if ( isset( $_SESSION['user_id'] )  ) {?>
