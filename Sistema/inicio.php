@@ -191,7 +191,7 @@ require_once('includes/pandora.php');
                                             <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">PUESTOS</a>
                                             <ul class="dropdown-menu">
                                                 <li class="menu-item"><a href="persona/altaPersona/altaPuesto.php">ALTA DE PUESTO</a></li>
-                                                <li class="menu-item"><a href="persona/consulEmpleado/consultaPuesto.php">CONSULTA DE PUESTO</a></li>
+                                                <li class="menu-item"><a href="persona/consulEmpleado/consultaEmpleado.php">CONSULTA DE PUESTO</a></li>
                                                 <li class="menu-item"><a href="persona/modifPersona/modifcaPuesto.php">MODIFICACION DE PUESTO</a></li>
                                             </ul>
                                         </li>
