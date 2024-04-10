@@ -157,7 +157,7 @@ if ( isset( $_SESSION['user_id'] ) ) {?>
                     </div>
                     <div class="top-nav">
                         <div class="dropdown header-top-notification">
-                            <a href="#" class="notification-button">Notification</a>
+                            <a href="#" class="notification-button"> <?php echo $notificacionesTxt; ?> </a>
                             <div class="notification-card">
                                 <div class="notification-head">
                                     <span>Notifications</span>
@@ -206,7 +206,7 @@ if ( isset( $_SESSION['user_id'] ) ) {?>
                         ?>
 
                         <div class="dropdown header-top-account">
-                            <a href="#" class="account-button">My Account</a>
+                            <a href="#" class="account-button"><?php echo $miCuentaTxt;  ?></a>
                             <div class="account-card">
                                 <div class="header-top-account-info">
                                     <a href="#" class="account-thumb">
@@ -218,9 +218,9 @@ if ( isset( $_SESSION['user_id'] ) ) {?>
                                     </div>
                                 </div>
                                 <ul class="account-item-list">
-                                    <li><a href="#"><span class="ti-user"></span>Account</a></li>
-                                    <li><a href="#"><span class="ti-settings"></span>Settings</a></li>
-                                    <li><a href="../../includes/logout.php"><span class="ti-power-off"></span>Log Out</a></li>
+                                    <li><a href="#"><span class="ti-user"></span><?php echo $Perfil; ?></a></li>
+                                    <li><a href="#"><span class="ti-settings"></span><?php echo $herramientas;  ?></a></li>
+                                    <li><a href="../../includes/logout.php"><span class="ti-power-off"></span> <?php echo $logout; ?></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -249,11 +249,11 @@ if ( isset( $_SESSION['user_id'] ) ) {?>
         <div class="row">
             <div class="col-md-6">
                 <div class="breadcrumb-area">
-                    <h1><?php echo $altaPersonaTxt; ?></h1>
+                    <h1><?php echo $consultaPersonaEmpleadotxt; ?></h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">ALTA PERSONA&nbsp;&nbsp;</li>
+                            <li class="breadcrumb-item"><a href="#"><?php echo $inicioTxt;  ?></a></li>
+                            <li class="breadcrumb-item active" aria-current="page">REGISTRO DE EMPLEADO&nbsp;&nbsp;</li>
                         </ol>
                     </nav>
                 </div>
@@ -636,7 +636,7 @@ if ( isset( $_SESSION['user_id'] ) ) {?>
 
                             <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="dashboard-form">
                                 <div class="dashboard-section basic-info-input">
-                                    <h4><i data-feather="user-check"></i>búsqueda</h4>
+                                    <h4><i data-feather="user-check"></i>BÚSQUEDA DE PERSONA</h4>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">Nombre:</label>
                                         <div class="col-sm-9">
@@ -647,7 +647,16 @@ if ( isset( $_SESSION['user_id'] ) ) {?>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label"></label>
                                         <div class="col-sm-9">
-                                            <button class="button" type="submit" name="submitBuscar">Buscar</button>
+                                            <button class="button" type="submit" name="submitBuscar">BUSCAR</button>
+                                            <!--<script>
+                                                function altaEmpleado() {
+                                                    window.location.href = ("altaPersona.php");
+                                                }
+                                            </script>
+                                            <button class="button" type="button" id="nuevoEmpleado" name="nuevoEmpleado">NUEVO EMPLEADO </button>
+                                            <script>
+                                                document.getElementById('nuevoEmpleado').addEventListener('click', altaEmpleado);
+                                            </script> -->
                                         </div>
                                     </div>
                                 </div>

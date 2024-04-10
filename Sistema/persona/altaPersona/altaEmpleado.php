@@ -262,7 +262,7 @@
                         </div>
                         <div class="top-nav">
                             <div class="dropdown header-top-notification">
-                                <a href="#" class="notification-button">Notification</a>
+                                <a href="#" class="notification-button"><?php echo $notificacionesTxt; ?></a>
                                 <div class="notification-card">
                                     <div class="notification-head">
                                         <span>Notifications</span>
@@ -307,7 +307,7 @@
                                 $emailPersona = $row['contacto'];
                             ?>
                             <div class="dropdown header-top-account">
-                                <a href="#" class="account-button">My Account</a>
+                                <a href="#" class="account-button"><?php echo $miCuentaTxt; ?></a>
                                 <div class="account-card">
                                     <div class="header-top-account-info">
                                         <a href="#" class="account-thumb">
@@ -319,9 +319,9 @@
                                         </div>
                                     </div>
                                     <ul class="account-item-list">
-                                        <li><a href="#"><span class="ti-user"></span>Account</a></li>
-                                        <li><a href="#"><span class="ti-settings"></span>Settings</a></li>
-                                        <li><a href="../../includes/logout.php"><span class="ti-power-off"></span>Log Out</a></li>
+                                        <li><a href="#"><span class="ti-user"></span><?php echo $Perfil;  ?></a></li>
+                                        <li><a href="#"><span class="ti-settings"></span><?php echo $herramientas; ?></a></li>
+                                        <li><a href="../../includes/logout.php"><span class="ti-power-off"></span><?php echo $logout; ?></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -462,6 +462,7 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="form-group row"  id="documentosContainer" name = "documentosContainer"> </div>
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label"></label>
                                             <div class="col-sm-9">
@@ -567,6 +568,59 @@
                                                                     botonAgregar.id = 'botonAgregaDocumento';
                                                                     botonAgregar.textContent = 'AGREGAR DOCUMENTO';
                                                                     document.getElementById('botonAgregarDocumentos').appendChild(botonAgregar);
+
+                                                                    botonAgregar.addEventListener('click', function (){
+                                                                        var documentos = [];
+                                                                        var nuevoDocumentoContainer = document.createElement('div');
+                                                                        nuevoDocumentoContainer.className = 'col-md-12';
+
+                                                                        var nuevoTipoDocumento = document.createElement('div');
+                                                                        //nuevoTipoDocumento.className = 'col-md-6';
+                                                                        nuevoTipoDocumento.innerHTML = `
+                                                                                <label class="col-sm-3 col-form-label">*TIPO DE DOCUMENTO:</label>
+                                                                                    <div class="col-sm-9">
+                                                                                         <select class="form-control" id="iIdDocumento" name="iIdDocumento[]">
+                                                                                             <option value="">SELECCIONE UN TIPO DE DOCUMENTO</option>
+                                                                                                <?php foreach ($resultadoDocumento as $documento): ?>
+                                                                                                    <option value="<?= $documento['iIdConstante'].'-'.$documento['iClaveCatalogo']  ?>">
+                                                                                                        [<?= $documento['iClaveCatalogo'] ?>] - <?= $documento['vchDescripcion'] ?>
+                                                                                                    </option>
+                                                                                                <?php endforeach; ?>
+                                                                                         </select>
+                                                                                    </div>
+                                                                                `;
+                                                                        var nuevoDocumentoPDF = document.createElement('div');
+                                                                        nuevoDocumentoPDF.className = 'col-md-6';
+                                                                        nuevoDocumentoPDF.innerHTML = `
+                                                                                <label for="documentoPDF">DOCUMENTO PDF</label>
+                                                                                <input type="file" accept=".pdf" class="button-area" id="documentoPDF" name="documentoPDF[]" multiple>
+                                                                                <small class=""></small>
+                                                                            `;
+
+                                                                        nuevoDocumentoContainer.appendChild(nuevoTipoDocumento);
+                                                                        nuevoDocumentoContainer.appendChild(nuevoDocumentoPDF);
+
+                                                                        //contenedor.appendChild(nuevoDocumentoContainer);
+
+                                                                        var iIdConstanteDocumento = document.getElementById('iIdConstanteDocumento').value;
+                                                                        var iClaveDocumento = document.getElementById('iClaveDocumento').value;
+                                                                        var iRutaDocumento = document.getElementById('documentoPDF').value;
+
+                                                                        addDocument(iIdConstanteDocumento, iClaveDocumento, iRutaDocumento);
+
+
+                                                                        function addDocument(iIdConstanteDocumento, iClaveDocumento, iRutaDocumento){
+                                                                            var documento = {
+                                                                                id: iIdConstanteDocumento,
+                                                                                claveDocumento: iClaveDocumento,
+                                                                                ruta: iRutaDocumento
+                                                                            };
+
+                                                                            documentos.push(documento);
+                                                                        }
+
+                                                                    });
+
 
                                                                     // Crear y configurar el botón para finalizar
                                                                     var botonFinalizar = document.createElement('button');
