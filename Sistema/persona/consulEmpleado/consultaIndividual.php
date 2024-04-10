@@ -1,52 +1,51 @@
 <?php
 
-$serverName = "192.168.100.39, 1433";
-$connectionInfo = array("Database" => "BDSistemaIntegral_PRETEST",
-    "UID" => "Development",
-    "PWD" => "Development123*",
-    'CharacterSet' => 'UTF-8');
+    require_once ('../../includes/load.php');
+    session_start();
 
-$conn = sqlsrv_connect($serverName, $connectionInfo);
 
-if ($conn === false) {
-    die(print_r(sqlsrv_errors(), true));
-}
-
-$iIdEmpleado = isset($_POST['iIdEmpleado'])? $_POST['iIdEmpleado']:0;
+$iIdEmpleado = isset($_POST['idEmpleado'])? $_POST['idEmpleado']:0;
 
 
 
 $datosEmpleado = array(
-    'iIdEmpleado' => $iIdEmpleado
+    'iIdEmpleado' => $iIdEmpleado,
+    'iIdUsuarioUltModificacion' => $_SESSION['user_id']
 );
-$procedureName = "EXEC prcConsultaEmpleado @iIdEmpleado = ?
+
+$procedureName = "EXEC prcConsultaEmpleado @iIdEmpleado = ?, 
+                                           @iIdUsuarioUltModificacion = ?
                                                    ";
 
 $params = array(
-    $datosEmpleado['iIdEmpleado']
+    $datosEmpleado['iIdEmpleado'],
+    $datosEmpleado['iIdUsuarioUltModificacion']
 );
 
-var_dump($params);
 
-$result = sqlsrv_query($conn, $procedureName, $params);
-
-var_dump($result);
+$result = sqlsrv_query($GLOBALS['conn'], $procedureName, $params);
 
 if ($result === false) {
-    echo("No se está ejecutando el proceso");
     $errorInformacion = sqlsrv_errors();
     $respuesta   = array (
         'error' => true,
-        'campoError' => $datosEmpleado['vchCampoError'],
-        'mensaje' => $datosEmpleado['vchMensaje'],
         'sqlError' => $errorInformacion
     );
     echo json_encode($respuesta);
+    exit;
 
 } else {
-    echo json_encode($datosEmpleado);
+    $_SESSION['EmpleadoRespuesta'] = array();
+
+    while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+        // Procesar cada fila del conjunto de resultados actual
+        $_SESSION['EmpleadoRespuesta'] = $row;
+    }
+    $ResultadoEmpleado = $_SESSION['EmpleadoRespuesta'];
+    echo json_encode($ResultadoEmpleado);
 }
 
-var_dump($datosEmpleado);
+sqlsrv_free_stmt($result);
 
-sqlsrv_close($conn);
+
+sqlsrv_close($GLOBALS['conn']);

@@ -282,6 +282,7 @@ if (isset($_SESSION['user_id'])) {
                                                     var respuestaIndividual = JSON.parse(datosConsultaEmpleado.responseText);
                                                     if (respuestaIndividual.bResultado == 1) {
                                                         alert(respuestaIndividual.vchMensaje);
+                                                        local
                                                         document.getElementById('mostrarnombre').innerHTML = respuestaIndividual.vchNombre;
                                                     } else {
                                                         console.error("Mensaje Error: " + respuestaIndividual.vchMensaje);
@@ -328,6 +329,19 @@ if (isset($_SESSION['user_id'])) {
                                 </script>
 
                                 <form action="#" method="post" class="dashboard-form">
+                                    <script>
+                                        let datosEmpleado = JSON.parse(localStorage.getItem('datosConsultaIndividual'));
+                                        console.log(datosEmpleado);
+
+                                        const Empleados = new Array();
+
+                                        if (datosEmpleado[0].bResultado == 1) {
+
+                                            for (var i = 0; i < datosEmpleado.length; i++) {
+                                                Empleados.push(datosEmpleado[i]);
+                                            }
+                                        }
+                                    </script>
 
                                     <div class="dashboard-section basic-info-input">
                                         <h3><i data-feather="user-check"></i>DATOS DE EMPLEADO</h3>
@@ -335,32 +349,35 @@ if (isset($_SESSION['user_id'])) {
                                             <label class="col-sm-3 col-form-label">ID</label>
                                             <div class="col-sm-9">
                                                 <input id="idInput" type="text" class="form-control" placeholder="ID"
-                                                    value="<?php echo $datos[0]; ?>" readonly />
+                                                    readonly />
+                                                <script>
+                                                    var empleado = {
+                                                        bResultado: 1,
+                                                        vchMensaje: "CONSULTA EXITOSA",
+                                                        iIdEmpleado:document.getElementById('idInput').value =empleado.iIdEmpleado;
+                                                    };
+
+                                                        document.getElementById('idInput').value = empleado.iIdEmpleado;
+                                                </script>
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">NOMBRES (S)</label>
+                                            <label class="col-sm-3 col-form-label">NOMBRE (S)</label>
                                             <div class="col-sm-9">
-                                                <?php
-                                                if (isset($datos) && is_array($datos)) {
-                                                    if (isset($datos[0])) {
-                                                        $nombre = isset($datos[0]['nombre']) ? $datos[0]['nombre'] : '';
-                                                        echo "<input type='text' class='form-control' value='" . htmlspecialchars($nombre) . "' readonly />";
-                                                    } else {
-                                                        echo "El array \$datos está vacío.";
-                                                    }
-                                                } else { 
-                                                    echo "La variable \$datos no está definida o no es un array.";
-                                                }
-                                                ?>
+                                                <input id="vchNombre" type="text" class="form-control" placeholder="NOMBRE"
+                                                    readonly />
+                                                <script>
+                                                        var idEmpleado = Empleados.iIdEmpleado;
+                                                        document.getElementById('vchNombre').value = empleado.vchNombre;
+                                                </script>
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Primer Apellido:</label>
                                             <div class="col-sm-9">
-                                                <li class="campo-item" id="mostrarprimerApellido">mostrar prim apellido</li>
+                                                <li class="campo-item" id="vchPrimerApellido">mostrar prim apellido</li>
                                             </div>
                                         </div>
 
@@ -517,7 +534,7 @@ if (isset($_SESSION['user_id'])) {
                                                 </div>
                                             </div>
                                         </div>
-                                        </div>
+                                    </div>
                                 </form>
 
                                 <?php

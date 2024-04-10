@@ -5,6 +5,74 @@ require_once('../../includes/load.php');
 session_start();
 
 
+function ObtenerPuesto(){
+    $datosPuesto = array (
+        'iOpcion' => 4,
+        'iIdPuesto' => 0 ,
+        'vchPuesto' => '',
+        'iIdTipoContratacion' => 0,
+        'iCveContratacion' => 0,
+        'iAgruContratacion' => 0
+    );
+
+    $procedureName = "EXEC prcConsultaPuesto    @iOpcion = ?,
+                                                        @iIdPuesto = ?, 
+                                                        @vchPuesto = ?, 
+                                                        @iIdTipoContratacion = ?,
+                                                        @iCveContratacion = ? ,
+                                                        @iAgruContratacion = ? 
+                                                    ";
+
+    $params = array(
+        $datosPuesto['iOpcion'],
+        $datosPuesto['iIdPuesto'],
+        $datosPuesto['vchPuesto'],
+        $datosPuesto['iIdTipoContratacion'],
+        $datosPuesto['iCveContratacion'],
+        $datosPuesto['iAgruContratacion']
+    );
+
+    $result = sqlsrv_query($GLOBALS['conn'], $procedureName, $params);
+
+    $CatPuestos = array();
+
+    if ($result === false){
+        die(print_r(sqlsrv_errors(), true));
+
+    } else{
+        do{
+            while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+                $CatPuestos[] = $row;
+            }
+        }while (sqlsrv_next_result($result));
+    }
+    return $CatPuestos;
+
+    sqlsrv_close($GLOBALS['conn']);
+
+}
+$resultadoPuesto = ObtenerPuesto();
+
+
+function ObtenerSede(){
+    if (isset ($_SESSION['CatConstante'])){
+        $datosSede = $_SESSION['CatConstante'];
+        $sedeEncontrado = array();
+
+        foreach ($datosSede as $valorSede) {
+            if ($valorSede['iAgrupador'] == 4) {
+                $sedeEncontrado [] = $valorSede;
+            }
+        }
+        return $sedeEncontrado;
+    } else {
+        echo ("No hay datos del Estado de Procedencia");
+    }
+}
+$resultadoSede = ObtenerSede();
+
+
+
 if (isset($_SESSION['user_id'])) { ?>
 <?php } else {
 
@@ -137,7 +205,7 @@ if (isset($_SESSION['user_id'])) { ?>
             </div>
             <div class="top-nav">
               <div class="dropdown header-top-notification">
-                <a href="#" class="notification-button">Notification</a>
+                <a href="#" class="notification-button"><?php echo $notificacionesTxt; ?></a>
                 <div class="notification-card">
                   <div class="notification-head">
                     <span>Notifications</span>
@@ -186,7 +254,7 @@ if (isset($_SESSION['user_id'])) { ?>
               ?>
 
               <div class="dropdown header-top-account">
-                <a href="#" class="account-button">My Account</a>
+                <a href="#" class="account-button"><?php echo $miCuentaTxt; ?></a>
                 <div class="account-card">
                   <div class="header-top-account-info">
                     <a href="#" class="account-thumb">
@@ -202,9 +270,9 @@ if (isset($_SESSION['user_id'])) { ?>
                     </div>
                   </div>
                   <ul class="account-item-list">
-                    <li><a href="#"><span class="ti-user"></span>Account</a></li>
-                    <li><a href="#"><span class="ti-settings"></span>Settings</a></li>
-                    <li><a href="../../includes/logout.php"><span class="ti-power-off"></span>Log Out</a></li>
+                    <li><a href="#"><span class="ti-user"></span><?php echo $Perfil; ?></a></li>
+                    <li><a href="#"><span class="ti-settings"></span><?php echo $herramientas; ?></a></li>
+                    <li><a href="../../includes/logout.php"><span class="ti-power-off"></span><?php echo $logout; ?></a></li>
                   </ul>
                 </div>
               </div>
@@ -217,7 +285,7 @@ if (isset($_SESSION['user_id'])) { ?>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav">
-                <li class="menu-item active"><a title="PERSONA" href="consultaPuesto.php">PUESTO</a></li>
+                <li class="menu-item active"><a title="PERSONA" href="../consulEmpleado/consultaPuesto.php ">PUESTO</a></li>
                 <li class="menu-item active"><a title="DOMICILIO" href="consultaDomicilio.php">DOMICILIO</a>
                 </li>
                 <li class="menu-item active"><a title="CONTACTO" href="consultaContacto.php">CONTACTO</a>
@@ -284,21 +352,21 @@ if (isset($_SESSION['user_id'])) { ?>
                     <?php echo "<i><span style='color: #ededee' size='-2'> $busquedaNoEncontradaTxt</span></i><br />"; ?>
                   </div>
 
-                  <form action="#" method="post" class="dashboard-form">
+                  <!--
+                  <form class="dashboard-form" id="FormResultadoConsulta">
 
-                    <div class="dashboard-section basic-info-input">
+                      <div class="dashboard-section basic-info-input">
                       <h3><i data-feather="user-check"></i>DATOS DE EMPLEADO</h3>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">ID</label>
                         <div class="col-sm-9">
-                          <input id="idInput" type="text" class="form-control" placeholder="ID"
-                            value="<?php echo $datos[0]; ?>" readonly />
+                          <input id="idInput" type="text" class="form-control" placeholder="ID" "/>
                         </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">NOMBRES (s)</label>
                         <div class="col-sm-9">
-                          <li class="campo-item" id="mostrarnombre">mostrar nombres</li>
+                          <li class="campo-item" id="mostrarnombre"></li>
                         </div>
                       </div>
                       <div class="form-group row">
@@ -434,37 +502,159 @@ if (isset($_SESSION['user_id'])) { ?>
                           </div>
                         </div>
                       </div>
-                  </form>
+                  </form>-->
                 <?php }
                 ?>
                 <?php
               } else {
                 ?>
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="dashboard-form">
+                  <script>
+                      console.log ("A punto de entrar al proceso");
+                      function consultarEmpleado (){
+                          //Obtener los valores de los elementos en el formulario para sede
+                          var iIdConstanteSede = 0;
+                          var iClaveSede = 0;
 
+                          console.log('Esta es una prueba de funcionalidad');
+                          var SedeSeleccionada = document.getElementById('iIdSede');
+
+                          if (SedeSeleccionada){
+                              var SedePartes = SedeSeleccionada.value.split('-');
+                              var iIdConstanteSede = SedePartes[0];
+                              var iClaveSede = SedePartes[1];
+
+                          } else {
+                              console.error('El elemento con ID "iIdSede" no se encontró en el DOM.');
+                          }
+
+                          //Asignar los valores a los campos ocultos
+                          document.getElementById('iIdConstanteSede').value = iIdConstanteSede;
+                          document.getElementById('iClaveSede').value = iClaveSede;
+
+
+                          var FormularioConsultaEmpleado = {
+                              idEmpleado : document.getElementById('iDBuscar').value,
+                              rfc: document.getElementById('RFCBuscar').value,
+                              iIdPuesto: document.getElementById('PUESTOBuscar').value,
+                              iIdConstanteSede: iIdConstanteSede,
+                              iClaveSede: iClaveSede,
+                              nombre: document.getElementById('nombreaBuscar').value
+                          };
+
+                          console.log("Console.log de FormularioConsultaEmpleado"+FormularioConsultaEmpleado);
+
+                          var datosConsultaEmpleado = new XMLHttpRequest();
+
+                          if (FormularioConsultaEmpleado.idEmpleado != 0){
+                              consultaIndivual();
+                              console.log("ID del empleado: "+FormularioConsultaEmpleado.idEmpleado);
+                          }else{
+                              consultaMasiva();
+                              console.log("Está entrando en las pruebas masivas del proceso");
+                          }
+                          function consultaIndivual(){
+                              datosConsultaEmpleado.open('POST', 'consultaIndividual.php',true);
+                              datosConsultaEmpleado.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                              var formDataIndividual = new URLSearchParams(FormularioConsultaEmpleado).toString();
+
+                              datosConsultaEmpleado.send(formDataIndividual);
+
+                              console.log("FormDataIndividual: "+formDataIndividual);
+
+
+                              datosConsultaEmpleado.onload = function (){
+                                  if (datosConsultaEmpleado.status === 200){
+                                      localStorage.clear();
+                                      var empleadoIndividual = JSON.parse(datosConsultaEmpleado.responseText);
+                                      if (empleadoIndividual.bResultado == 1){
+                                          console.log(empleadoIndividual.bResultado);
+                                          alert(empleadoIndividual.vchMensaje);
+                                          console.log(empleadoIndividual);
+
+                                          localStorage.setItem('datosConsultaIndividual',JSON.stringify(empleadoIndividual));
+
+                                          window.location.href = "DatosEmpleado.php";
+
+
+                                      }else{
+                                          console.error("Mensaje Error: " + empleadoIndividual.vchMensaje);
+                                          alert(empleadoIndividual.vchMensaje);
+                                          respuestaFinal = empleadoIndividual.vchMensaje;
+                                      }
+                                  }else {
+                                      console.error("Error en la solicitud al servidor");
+                                  }
+                              };
+                          }
+
+                          function consultaMasiva(){
+                              datosConsultaEmpleado.open('POST', 'consultaMasiva.php', true);
+                              datosConsultaEmpleado.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                              var formDataMasiva = new URLSearchParams(FormularioConsultaEmpleado).toString();
+                              datosConsultaEmpleado.send(formDataMasiva);
+
+                              console.log("Console.log de formDataMasiva"+formDataMasiva);
+
+
+                              datosConsultaEmpleado.onload = function (){
+                                  if (datosConsultaEmpleado.status === 200){
+                                      var respuestaMasiva = JSON.parse(datosConsultaEmpleado.responseText);
+
+                                      console.log(respuestaMasiva);
+
+                                      if (respuestaMasiva[0].bResultado === 1){
+                                          console.log(respuestaMasiva[0].bResultado);
+                                          alert(respuestaMasiva[0].vchMensaje);
+                                          console.log(respuestaMasiva);
+                                          localStorage.setItem('datosConsultaMasiva',JSON.stringify(respuestaMasiva));
+                                          window.location.href = "consultaMasivaEmpleado.php";
+                                      }else{
+                                          console.error("Mensaje Error: " + respuestaMasiva[0].vchMensaje);
+                                          alert(respuestaMasiva[0].vchMensaje);
+                                          respuestaFinal = respuestaMasiva[0].vchMensaje;
+                                      }
+                                  }else {
+                                      console.error("Error en la solicitud al servidor");
+                                  }
+                              };
+
+                          }
+                          document.addEventListener('DOMContentLoaded', function (){
+                              document.getElementById('buttonBuscar').addEventListener('click', consultarEmpleado);
+                              console.log("Se está ejecutando el proceso en el DOMContentLoaded");
+                          });
+                      }
+                  </script>
+                <form class="dashboard-form" id="FormConsulta">
                   <div class="dashboard-section basic-info-input">
                     <h4><i data-feather="user-check"></i>BUSQUEDA</h4>
                     <div class="form-group row">
                       <label class="col-sm-3 col-form-label">SELECCIONAR CAMPO:</label>
                       <div class="col-sm-9">
                         <ul class="campo-list">
-                          <input type="radio" class="campo-item" id="iDBuscar" value="iDBuscar" name="campoSeleccionado"
+
+                        <input type="hidden" name = "iIdConstanteSede" id="iIdConstanteSede" value="" >
+                        <input type="hidden" name = "iClaveSede" id="iClaveSede" value="" >
+
+                          <input type="radio" class="campo-item" id="idEmpleado" value="" name="campoSeleccionado"
                             onclick="mostrarCampo('campoIDEmpleado')" />
                           <label for="iDBuscar">ID DE EMPLEADO</label>
 
-                          <input type="radio" class="campo-item" id="RFCBuscar" value="RFCBuscar" name="campoSeleccionado"
+                          <input type="radio" class="campo-item" id="rfc" value="" name="campoSeleccionado"
                             onclick="mostrarCampo('campoRFC')" />
                           <label for="RFCBuscar">RFC</label>
 
-                          <input type="radio" class="campo-item" id="PUESTOBuscar" value="PUESTOBuscar"
+                          <input type="radio" class="campo-item" id="iIdPuesto" value=""
                             name="campoSeleccionado" onclick="mostrarCampo('campoPuesto')" />
                           <label for="PUESTOBuscar">PUESTO</label>
 
-                          <input type="radio" class="campo-item" id="SEDE" value="SEDE" name="campoSeleccionado"
+                          <input type="radio" class="campo-item" id="SEDE" value="" name="campoSeleccionado"
                             onclick="mostrarCampo('campoSede')" />
                           <label for="SEDE">SEDE</label>
 
-                          <input type="radio" class="campo-item" id="nombreaBuscar" value="nombreaBuscar"
+                          <input type="radio" class="campo-item" id="nombre" value=""
                             name="campoSeleccionado" onclick="mostrarCampo('campoNombre')" />
                           <label for="nombreaBuscar">NOMBRE</label>
                         </ul>
@@ -474,34 +664,51 @@ if (isset($_SESSION['user_id'])) { ?>
                       <label class="col-sm-3 col-form-label"></label>
                       <div class="col-sm-9 campo-container" style="display: flex;">
                         <div id="campoIDEmpleado" class="campo-busqueda" style="display: none; flex: 1;">
-                          <input type="text" class="form-control" placeholder="INGRESA ID DEL EMPLEADO" name="iDBuscar"
+                          <input type="text" class="form-control" placeholder="INGRESA ID DEL EMPLEADO" name="iDBuscar" id="iDBuscar"
                             style="text-transform: uppercase">
                         </div>
                         <div id="campoRFC" class="campo-busqueda" style="display: none; flex: 1;">
-                          <input type="text" class="form-control" placeholder="INGRESA RFC CORRECTO" name="RFCBuscar"
+                          <input type="text" class="form-control" placeholder="INGRESA RFC CORRECTO" name="RFCBuscar" id = "RFCBuscar"
                             style="text-transform: uppercase">
                         </div>
                         <div id="campoPuesto" class="campo-busqueda" style="display: none; flex: 1;">
-                          <input type="text" class="form-control" placeholder="INGRESA EL PUESTO" name="PUESTOBuscar"
-                            style="text-transform: uppercase">
+                          <!--<input type="text" class="form-control" placeholder="INGRESA EL PUESTO" name="PUESTOBuscar"
+                            style="text-transform: uppercase">-->
+                            <select class="form-control" name="iIdPuesto" id="PUESTOBuscar" >
+                                <option value="" selected>SELECCIONE UN PUESTO</option>
+                                <?php foreach ($resultadoPuesto as $puesto): ?>
+                                    <option value="<?= $puesto['iIdPuesto'] ?>">
+                                        <?= $puesto['vchPuesto'] ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                         <div id="campoSede" class="campo-busqueda" style="display: none; flex: 1;">
-                          <select class="form-control" placeholder="SEDE" name="SEDE">
-                            <option value="PUEBLA">PUEBLA</option>
-                            <option value="GUADALAJARA">GUADALAJARA</option>
+                          <select class="form-control" placeholder="iIdSede" name="iIdSede" id="iIdSede">
+                              <option value = "" selected> SELECCIONE UNA SEDE</option>
+                              <?php foreach ($resultadoSede as $sede): ?>
+                                <option value ="<?=$sede['iIdConstante'].'-'.$sede['iClaveCatalogo']?>">
+                                    [<?=$sede['iClaveCatalogo']?>] - <?=$sede['vchDescripcion']?>
+                                </option>
+                              <?php endforeach;?>
                           </select>
                         </div>
                         <div id="campoNombre" class="campo-busqueda" style="display: none; flex: 1;">
-                          <input type="text" class="form-control" placeholder="INGRESA EL NOMBRE" name="nombreaBuscar"
+                          <input type="text" class="form-control" placeholder="INGRESA EL NOMBRE" name="nombreaBuscar" id = "nombreaBuscar"
                             style="text-transform: uppercase">
                         </div>
                       </div>
                     </div>
+
                     <div class="form-group row">
                       <label class="col-sm-3 col-form-label"></label>
                       <div class="col-sm-9">
-                        <button class="button" type="submit" name="submitBuscar">BUSCAR</button>
-                        <button class="button" type="reset" name="submitBuscar">LIMPIAR</button>
+                        <button type="button" class="button" id="buttonBuscar">BUSCAR</button>
+                          <script>
+                              document.getElementById('buttonBuscar').addEventListener('click', consultarEmpleado);
+                              console.log ('Se está ejecutando el proceso');
+                          </script>
+                        <button class="button" type="reset" name="buttonLimpiar" id="buttonLimpiar">LIMPIAR</button>
                       </div>
                     </div>
                   </div>
@@ -539,31 +746,17 @@ if (isset($_SESSION['user_id'])) { ?>
                       }
                     }
                   </script>
-
-
-
-
                 </form>
-
-
-
-
-
                 <?php
               }
 
               ?>
-
-
-
-
             </div>
 
           </div>
         </div>
       </div>
     </div>
-  </div>
   </div>
 
   <!-- Footer -->
@@ -643,7 +836,6 @@ if (isset($_SESSION['user_id'])) { ?>
       element.disabled = false;
     }
       element.focus();
-  
 
       function validarBusqueda() {
 

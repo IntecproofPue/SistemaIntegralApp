@@ -1,8 +1,29 @@
 <?php
 require_once('../../includes/pandora.php');
 require_once ('../../includes/load.php');
+require_once ('../../includes/sql.php');
 
 session_start();
+
+if ( isset( $_SESSION['user_id'] ) ) {?>
+<?php }else{
+
+    ?>
+    <script type="text/javascript">
+        //Redireccionamiento tras 5 segundos
+        setTimeout( function() { window.location.href = "../../index.php"; }, 0 );
+    </script>
+    <?php
+
+}
+
+?>
+
+<?php
+
+
+
+
 function ObtenerTipoContratacion()
 {
     if (isset($_SESSION['CatConstante'])) {
@@ -19,9 +40,7 @@ function ObtenerTipoContratacion()
         echo ("No hay datos del Tipo de Contratación");
     }
 }
-
 $resultadoContratacion = ObtenerTipoContratacion();
-
 
 function ObtenerHorasLaborales()
 {
@@ -39,7 +58,6 @@ function ObtenerHorasLaborales()
         echo ("No hay datos de las horas laborales");
     }
 }
-
 $resultadoHorasLaborales = ObtenerHorasLaborales();
 
 
@@ -61,7 +79,6 @@ function ObtenerNivel()
 }
 
 $resultadoNiveles = ObtenerNivel();
-
 
 ?>
 <!doctype html>
@@ -189,7 +206,7 @@ $resultadoNiveles = ObtenerNivel();
                         </div>
                         <div class="top-nav">
                             <div class="dropdown header-top-notification">
-                                <a href="#" class="notification-button">Notification</a>
+                                <a href="#" class="notification-button"><?php echo $notificacionesTxt; ?></a>
                                 <div class="notification-card">
                                     <div class="notification-head">
                                         <span>Notifications</span>
@@ -227,29 +244,32 @@ $resultadoNiveles = ObtenerNivel();
                                     </div>
                                 </div>
                             </div>
+                            <?php
+                                $user = obtenerUsuario($_SESSION['user_id']);
+                                $row =$GLOBALS['rowObtenerNombre'];
+                                $nombrePersona = $row['nombrePersona'];
+                                $emailPersona = $row['contacto'];
+
+                            ?>
                             <div class="dropdown header-top-account">
-                                <a href="#" class="account-button">My Account</a>
+                                <a href="#" class="account-button"><?php echo $miCuentaTxt; ?></a>
                                 <div class="account-card">
                                     <div class="header-top-account-info">
                                         <a href="#" class="account-thumb">
                                             <img src="../../images/account/thumb-1.jpg" class="img-fluid" alt="">
                                         </a>
                                         <div class="account-body">
-                                            <h5><a href="#">Robert Chavez</a></h5>
-                                            <span class="mail">chavez@domain.com</span>
+                                            <h5><a href="#"><?php echo $nombrePersona; ?></a></h5>
+                                            <span class="mail"><?php echo $emailPersona; ?></span>
                                         </div>
                                     </div>
                                     <ul class="account-item-list">
-                                        <li><a href="#"><span class="ti-user"></span>Account</a></li>
-                                        <li><a href="#"><span class="ti-settings"></span>Settings</a></li>
-                                        <li><a href="../../includes/logout.php"><span class="ti-power-off"></span>Log Out</a></li>
+                                        <li><a href="#"><span class="ti-user"></span><?php echo $Perfil; ?></a></li>
+                                        <li><a href="#"><span class="ti-settings"></span><?php echo $herramientas; ?></a></li>
+                                        <li><a href="../../includes/logout.php"><span class="ti-power-off"></span><?php echo $logout; ?></a></li>
                                     </ul>
                                 </div>
                             </div>
-                            <!--<select class="selectpicker select-language" data-width="fit">
-                  <option data-content='<span class="flag-icon flag-icon-us"></span> English'>English</option>
-                  <option  data-content='<span class="flag-icon flag-icon-mx"></span> Español'>Español</option>
-                </select>-->
                         </div>
                     </div>
                     <nav class="navbar navbar-expand-lg cp-nav-2">
@@ -260,12 +280,12 @@ $resultadoNiveles = ObtenerNivel();
                         </button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav">
-                                <li class="menu-item active"><a title="PERSONA" href="altaPersona.php">PERSONA</a></li>
-                                <li class="menu-item active"><a title="DOMICILIO" href="altaDomicilio.php">DOMICILIO</a>
+                                <li class="menu-item active"><a title="PERSONA" href="../altaPersona/altaPersona.php">PERSONA</a></li>
+                                <li class="menu-item active"><a title="DOMICILIO" href="../altaPersona/altaDomicilio.php">DOMICILIO</a>
                                 </li>
-                                <li class="menu-item active"><a title="CONTACTO" href="altaContacto.php">CONTACTO</a>
+                                <li class="menu-item active"><a title="CONTACTO" href="../altaPersona/altaContacto.php">CONTACTO</a>
                                 </li>
-                                <li class="menu-item active"><a title="CONTACTO" href="altaEmpleado.php">EMPLEADO</a>
+                                <li class="menu-item active"><a title="CONTACTO" href="../altaPersona/altaEmpleado.php">EMPLEADO</a>
                                 </li>
                             </ul>
                         </div>
@@ -292,7 +312,6 @@ $resultadoNiveles = ObtenerNivel();
                 </div>
                 <div class="col-md-6">
                     <div class="breadcrumb-form">
-
                     </div>
                 </div>
             </div>
