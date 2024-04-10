@@ -1,7 +1,7 @@
 <?php
 
     require_once ('../../includes/load.php');
-    session_start();
+   // session_start();
 
 
 $iIdEmpleado = isset($_POST['idEmpleado'])? $_POST['idEmpleado']:0;
