@@ -2,7 +2,7 @@
 require_once('../../includes/pandora.php');
 require_once('../../includes/load.php');
 
-session_start();
+//session_start();
 
 
 function ObtenerPuesto(){

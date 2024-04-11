@@ -1,7 +1,7 @@
 <?php
 
 require_once ('../../includes/load.php');
-session_start();
+//session_start();
 
 $vchRFC = $_POST['rfc'];
 $iIdPuesto = $_POST['iIdPuesto'];
