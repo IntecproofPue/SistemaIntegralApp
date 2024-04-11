@@ -647,18 +647,17 @@ if (isset($_SESSION['user_id'])) {
                                                 }
                                             });
                                         </script>
-
-                                        <div class="dashboard-section basic-info-input">
-                                            <div class="row">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-3 col-form-label"></label>
-                                                    <div class="col-sm-9">
-                                                        <button class="button"
+                                        
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label"></label>
+                                            <div class="col-sm-9">
+                                            <button class="button"
                                                             href="../consultaDomicilio.php">DOMICILIO</button>
-                                                    </div>
-                                                </div>
+                                                <button class="button"
+                                                            href="../consultaContacto.php">CONTACTO</button>
                                             </div>
                                         </div>
+                                    </div>
                                 </form>
 
                                 <?php
