@@ -233,6 +233,7 @@ if (isset($_SESSION['user_id'])) {
                             } else {
                                 ?>
                                 <script>
+<<<<<<< HEAD
                                     // depurar y verificar los valores en cada paso
                                     document.addEventListener('DOMContentLoaded', function () {
                                         var consultaIndivual = localStorage.getItem('datosConsultaIndividual');
@@ -250,10 +251,106 @@ if (isset($_SESSION['user_id'])) {
                                         }
                                     });
 
+=======
+                                    // Función para consultar empleado
+                                    function consultarEmpleado() {
+                                        // Obtener los valores del formulario
+                                        var iIdConstanteSede = 0;
+                                        var iClaveSede = 0;
+                                        var SedeSeleccionada = document.getElementById('iIdSede');
+
+                                        // Verificar si se ha seleccionado una sede
+                                        if (SedeSeleccionada) {
+                                            var SedePartes = SedeSeleccionada.value.split('-');
+                                            var iIdConstanteSede = SedePartes[0];
+                                            var iClaveSede = SedePartes[1];
+                                        } else {
+                                            console.error('El elemento con ID "iIdSede" no se encontró en el DOM.');
+                                        }
+
+                                        // Crear objeto con los datos del formulario
+                                        var FormularioConsultaEmpleado = {
+                                            idEmpleado: document.getElementById('iDBuscar').value,
+                                            rfc: document.getElementById('RFCBuscar').value,
+                                            iIdPuesto: document.getElementById('PUESTOBuscar').value,
+                                            iIdConstanteSede: iIdConstanteSede,
+                                            iClaveSede: iClaveSede,
+                                            nombre: document.getElementById('nombreaBuscar').value
+                                        };
+
+                                        console.log("FormularioConsultaEmpleado: ", FormularioConsultaEmpleado);
+
+                                        // Realizar consulta dependiendo del tipo de búsqueda
+                                        if (FormularioConsultaEmpleado.idEmpleado != 0) {
+                                            consultaIndivual();
+                                        } else {
+                                            consultaMasiva();
+                                        }
+
+                                        // Función para consulta individual
+                                        function consultaIndivual() {
+                                            var datosConsultaEmpleado = new XMLHttpRequest();
+                                            datosConsultaEmpleado.open('POST', 'consultaIndividual.php', true);
+                                            datosConsultaEmpleado.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                                            var formDataIndividual = new URLSearchParams(FormularioConsultaEmpleado).toString();
+                                            datosConsultaEmpleado.send(formDataIndividual);
+
+                                            datosConsultaEmpleado.onload = function () {
+                                                if (datosConsultaEmpleado.status === 200) {
+                                                    var respuestaIndividual = JSON.parse(datosConsultaEmpleado.responseText);
+                                                    if (respuestaIndividual.bResultado == 1) {
+                                                        alert(respuestaIndividual.vchMensaje);
+                                                        local
+                                                        document.getElementById('mostrarnombre').innerHTML = respuestaIndividual.vchNombre;
+                                                    } else {
+                                                        console.error("Mensaje Error: " + respuestaIndividual.vchMensaje);
+                                                        alert(respuestaIndividual.vchMensaje);
+                                                        respuestaFinal = respuestaIndividual.vchMensaje;
+                                                    }
+                                                } else {
+                                                    console.error("Error en la solicitud al servidor");
+                                                }
+                                            };
+                                        }
+
+                                        // Función para consulta masiva
+                                        function consultaMasiva() {
+                                            var datosConsultaEmpleado = new XMLHttpRequest();
+                                            datosConsultaEmpleado.open('POST', 'consultaMasiva.php', true);
+                                            datosConsultaEmpleado.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                                            var formDataMasiva = new URLSearchParams(FormularioConsultaEmpleado).toString();
+                                            datosConsultaEmpleado.send(formDataMasiva);
+
+                                            datosConsultaEmpleado.onload = function () {
+                                                if (datosConsultaEmpleado.status === 200) {
+                                                    var respuestaMasiva = JSON.parse(datosConsultaEmpleado.responseText);
+                                                    if (respuestaMasiva.bResultado == 1) {
+                                                        alert(respuestaMasiva.vchMensaje);
+                                                        localStorage.setItem('datosConsulta', JSON.stringify(respuestaMasiva));
+                                                    } else {
+                                                        console.error("Mensaje Error: " + respuestaMasiva.vchMensaje);
+                                                        alert(respuestaMasiva.vchMensaje);
+                                                        respuestaFinal = respuestaMasiva.vchMensaje;
+                                                    }
+                                                } else {
+                                                    console.error("Error en la solicitud al servidor");
+                                                }
+                                            };
+                                        }
+                                    }
+
+                                    // Esperar a que se cargue el contenido DOM antes de agregar el evento click al botón
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        document.getElementById('buttonBuscar').addEventListener('click', consultarEmpleado);
+                                    });
+>>>>>>> job
                                 </script>
 
                                 <form action="#" method="post" class="dashboard-form">
                                     <script>
+<<<<<<< HEAD
                                         document.addEventListener('DOMContentLoaded', function () {
                                             var consultaIndivual = localStorage.getItem('consultaIndivual');
                                             //Console.log('Datos almacenados en localStorage:', consultaIndivual); // Verificar los datos almacenados
@@ -266,12 +363,29 @@ if (isset($_SESSION['user_id'])) {
                                             }
                                         });
 
+=======
+                                        let datosEmpleado = JSON.parse(localStorage.getItem('datosConsultaIndividual'));
+                                        console.log(datosEmpleado);
+
+                                        const Empleados = new Array();
+
+                                        if (datosEmpleado[0].bResultado == 1) {
+
+                                            for (var i = 0; i < datosEmpleado.length; i++) {
+                                                Empleados.push(datosEmpleado[i]);
+                                            }
+                                        }
+>>>>>>> job
                                     </script>
 
                                     <div class="dashboard-section basic-info-input">
                                         <h3><i data-feather="user-check"></i>DATOS DE EMPLEADO</h3>
                                         <div class="form-group row">
+<<<<<<< HEAD
                                             <label class="col-sm-3 col-form-label">ID EMPLEADO</label>
+=======
+                                            <label class="col-sm-3 col-form-label">ID</label>
+>>>>>>> job
                                             <div class="col-sm-9">
                                                 <input id="idInput" type="text" class="form-control" placeholder="ID"
                                                     readonly />
@@ -279,13 +393,21 @@ if (isset($_SESSION['user_id'])) {
                                                     var empleado = {
                                                         bResultado: 1,
                                                         vchMensaje: "CONSULTA EXITOSA",
+<<<<<<< HEAD
                                                         iIdEmpleado: document.getElementById('idInput').value = empleado.iIdEmpleado;
                                                     };
                                                     document.getElementById('idInput').value = empleado.iIdEmpleado;
+=======
+                                                        iIdEmpleado:document.getElementById('idInput').value =empleado.iIdEmpleado;
+                                                    };
+
+                                                        document.getElementById('idInput').value = empleado.iIdEmpleado;
+>>>>>>> job
                                                 </script>
                                             </div>
                                         </div>
 
+<<<<<<< HEAD
 
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">NOMBRE (S)</label>
@@ -319,10 +441,31 @@ if (isset($_SESSION['user_id'])) {
                                                 }
                                             });
                                         </script>
+=======
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">NOMBRE (S)</label>
+                                            <div class="col-sm-9">
+                                                <input id="vchNombre" type="text" class="form-control" placeholder="NOMBRE"
+                                                    readonly />
+                                                <script>
+                                                        var idEmpleado = Empleados.iIdEmpleado;
+                                                        document.getElementById('vchNombre').value = empleado.vchNombre;
+                                                </script>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Primer Apellido:</label>
+                                            <div class="col-sm-9">
+                                                <li class="campo-item" id="vchPrimerApellido">mostrar prim apellido</li>
+                                            </div>
+                                        </div>
+>>>>>>> job
 
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Segundo Apellido:</label>
                                             <div class="col-sm-9">
+<<<<<<< HEAD
                                                 <input type="text" class="form-control" placeholder="SEGUNDO APELLIDO"
                                                     id="vchSegundoApellido" readonly />
                                             </div>
@@ -336,10 +479,16 @@ if (isset($_SESSION['user_id'])) {
                                                 }
                                             });
                                         </script>
+=======
+                                                <li class="campo-item" id="mostrarsegApellido">mostrar seg apellido</li>
+                                            </div>
+                                        </div>
+>>>>>>> job
 
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">PUESTO</label>
                                             <div class="col-sm-9">
+<<<<<<< HEAD
                                                 <input type="text" class="form-control" placeholder="PUESTO" id="vchPuesto"
                                                     readonly />
                                             </div>
@@ -353,10 +502,16 @@ if (isset($_SESSION['user_id'])) {
                                                 }
                                             });
                                         </script>
+=======
+                                                <li class="campo-item" id="mostrarPuesto">mostrar puesto</li>
+                                            </div>
+                                        </div>
+>>>>>>> job
 
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">FECHA DE INGRESO:</label>
                                             <div class="col-sm-9">
+<<<<<<< HEAD
                                                 <input type="text" class="form-control" placeholder="FECHA DE INGRESO"
                                                     id="dFechaIngreso" readonly />
                                             </div>
@@ -370,10 +525,17 @@ if (isset($_SESSION['user_id'])) {
                                                 }
                                             });
                                         </script>
+=======
+                                                <li class="campo-item" id="mostrarfechaingreso">mostrar fecha de ingreso
+                                                </li>
+                                            </div>
+                                        </div>
+>>>>>>> job
 
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">ESTATUS:</label>
                                             <div class="col-sm-9">
+<<<<<<< HEAD
                                                 <input type="text" class="form-control" placeholder="ESTATUS"
                                                     id="iIdEstatusEmpleado" readonly />
                                             </div>
@@ -387,10 +549,16 @@ if (isset($_SESSION['user_id'])) {
                                                 }
                                             });
                                         </script>
+=======
+                                                <li class="campo-item" id="mostrarEstatus">mostrar Estatus</li>
+                                            </div>
+                                        </div>
+>>>>>>> job
 
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">NSS</label>
                                             <div class="col-sm-9">
+<<<<<<< HEAD
                                                 <input type="text" class="form-control" placeholder="NSS" id="vchNSS"
                                                     readonly />
                                             </div>
@@ -404,10 +572,16 @@ if (isset($_SESSION['user_id'])) {
                                                 }
                                             });
                                         </script>
+=======
+                                                <li class="campo-item" id="mostrarNSS">mostrar NSS</li>
+                                            </div>
+                                        </div>
+>>>>>>> job
 
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">FECHA ULTIMA PROMOCION:</label>
                                             <div class="col-sm-9">
+<<<<<<< HEAD
                                                 <input type="text" class="form-control"
                                                     placeholder="FECHA DE ULTIMA PROMOCION" id="dtFechaUltPromocion"
                                                     readonly />
@@ -422,10 +596,17 @@ if (isset($_SESSION['user_id'])) {
                                                 }
                                             });
                                         </script>
+=======
+                                                <li class="campo-item" id="mostrarfechUltimaPromocion">mostrar ultima promo
+                                                </li>
+                                            </div>
+                                        </div>
+>>>>>>> job
 
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">SEDE</label>
                                             <div class="col-sm-9">
+<<<<<<< HEAD
                                                 <input type="text" class="form-control" placeholder="SEDE" id="iIdSede"
                                                     readonly />
                                             </div>
@@ -439,10 +620,16 @@ if (isset($_SESSION['user_id'])) {
                                                 }
                                             });
                                         </script>
+=======
+                                                <li class="campo-item" id="mostrarSede">mostrar SEDE</li>
+                                            </div>
+                                        </div>
+>>>>>>> job
 
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">FECHA BAJA:</label>
                                             <div class="col-sm-9">
+<<<<<<< HEAD
                                                 <input type="text" class="form-control" placeholder="FECHA DE BAJA"
                                                     id="dtFechaBaja" readonly />
                                             </div>
@@ -456,10 +643,16 @@ if (isset($_SESSION['user_id'])) {
                                                 }
                                             });
                                         </script>
+=======
+                                                <li class="campo-item" id="mostrarfechaBaja">mostrar fecha de baja</li>
+                                            </div>
+                                        </div>
+>>>>>>> job
 
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">USUARIO ULTIMA MODIFICACION:</label>
                                             <div class="col-sm-9">
+<<<<<<< HEAD
                                                 <input type="text" class="form-control"
                                                     placeholder="USUARIO DE ULTIMA MODIFICACION"
                                                     id="vchUsuarioUltModificacion" readonly />
@@ -474,10 +667,18 @@ if (isset($_SESSION['user_id'])) {
                                                 }
                                             });
                                         </script>
+=======
+                                                <li class="campo-item" id="mostrarUsuariUltimaModificacion">mostrar usuario
+                                                    de ultima modificacion
+                                                </li>
+                                            </div>
+                                        </div>
+>>>>>>> job
 
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">FECHA ULTIMA MODIFICACION:</label>
                                             <div class="col-sm-9">
+<<<<<<< HEAD
                                                 <input type="text" class="form-control"
                                                     placeholder="FECHA DE ULTIMA MODIFICACION" id="dtFechaUltModificacion"
                                                     readonly />
@@ -492,11 +693,18 @@ if (isset($_SESSION['user_id'])) {
                                                 }
                                             });
                                         </script>
+=======
+                                                <li class="campo-item" id="mostrarfechUltimaModificacion">mostrar fecha de
+                                                    ultima</li>
+                                            </div>
+                                        </div>
+>>>>>>> job
 
                                         <h3><i data-feather="user-check"></i>DATOS DE LA PERSONA</h3>
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">RFC:</label>
                                             <div class="col-sm-9">
+<<<<<<< HEAD
                                                 <input type="text" class="form-control" placeholder="RFC" id="vchRFC"
                                                     readonly />
                                             </div>
@@ -510,10 +718,16 @@ if (isset($_SESSION['user_id'])) {
                                                 }
                                             });
                                         </script>
+=======
+                                                <li class="campo-item" id="mostrarRFC">mostrar RFC</li>
+                                            </div>
+                                        </div>
+>>>>>>> job
 
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">CURP:</label>
                                             <div class="col-sm-9">
+<<<<<<< HEAD
                                                 <input type="text" class="form-control" placeholder="CURP" id="vchCURP"
                                                     readonly />
                                             </div>
@@ -527,10 +741,16 @@ if (isset($_SESSION['user_id'])) {
                                                 }
                                             });
                                         </script>
+=======
+                                                <li class="campo-item" id="mostrarCURP">mostrar CURP</li>
+                                            </div>
+                                        </div>
+>>>>>>> job
 
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">FECHA NACIMIENTO:</label>
                                             <div class="col-sm-9">
+<<<<<<< HEAD
                                                 <input type="text" class="form-control" placeholder="FECHA DE NACIMIENTO"
                                                     id="dFechaNacimiento" readonly />
                                             </div>
@@ -544,10 +764,17 @@ if (isset($_SESSION['user_id'])) {
                                                 }
                                             });
                                         </script>
+=======
+                                                <li class="campo-item" id="mostrarFechNacimineto">mostrar fecha de
+                                                    nacimiento</li>
+                                            </div>
+                                        </div>
+>>>>>>> job
 
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">GENERO:</label>
                                             <div class="col-sm-9">
+<<<<<<< HEAD
                                                 <input type="text" class="form-control" placeholder="GENERO" id="iIdGenero"
                                                     readonly />
                                             </div>
@@ -561,10 +788,16 @@ if (isset($_SESSION['user_id'])) {
                                                 }
                                             });
                                         </script>
+=======
+                                                <li class="campo-item" id="mostraGenero">mostrar genero</li>
+                                            </div>
+                                        </div>
+>>>>>>> job
 
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">NACIONALIDAD:</label>
                                             <div class="col-sm-9">
+<<<<<<< HEAD
                                                 <input type="text" class="form-control" placeholder="NACIONALIDAD"
                                                     id="iIdNacionalidad" readonly />
                                             </div>
@@ -578,11 +811,17 @@ if (isset($_SESSION['user_id'])) {
                                                 }
                                             });
                                         </script>
+=======
+                                                <li class="campo-item" id="mostraNacionalidad">mostrar nacionalidad</li>
+                                            </div>
+                                        </div>
+>>>>>>> job
 
                                         <h3><i data-feather="user-check"></i>DATOS FISCALES</h3>
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">TIPO DE PERSONA:</label>
                                             <div class="col-sm-9">
+<<<<<<< HEAD
                                                 <input type="text" class="form-control" placeholder="TIPO DE PERSONA"
                                                     id="iIdTipoPersona" readonly />
                                             </div>
@@ -596,10 +835,17 @@ if (isset($_SESSION['user_id'])) {
                                                 }
                                             });
                                         </script>
+=======
+                                                <li class="campo-item" id="mostradatosTipoPersona">mostrar tipo de persona
+                                                </li>
+                                            </div>
+                                        </div>
+>>>>>>> job
 
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">REGIMEN FISCAL:</label>
                                             <div class="col-sm-9">
+<<<<<<< HEAD
                                                 <input type="text" class="form-control" placeholder="REGIMEN FISCAL"
                                                     id="vchRegimen" readonly />
                                             </div>
@@ -613,10 +859,16 @@ if (isset($_SESSION['user_id'])) {
                                                 }
                                             });
                                         </script>
+=======
+                                                <li class="campo-item" id="mostrarRegimen">mostrar regimen fiscal</li>
+                                            </div>
+                                        </div>
+>>>>>>> job
 
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">USO FISCAL:</label>
                                             <div class="col-sm-9">
+<<<<<<< HEAD
                                                 <input type="text" class="form-control" placeholder="USO FISCAL"
                                                     id="vchUsoFiscal" readonly />
                                             </div>
@@ -630,10 +882,16 @@ if (isset($_SESSION['user_id'])) {
                                                 }
                                             });
                                         </script>
+=======
+                                                <li class="campo-item" id="mostraUsoFiscal">mostrar uso fiscal</li>
+                                            </div>
+                                        </div>
+>>>>>>> job
 
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">C.P. FISCAL:</label>
                                             <div class="col-sm-9">
+<<<<<<< HEAD
                                                 <input type="text" class="form-control" placeholder="C. P. FISCAL"
                                                     id="iCodigoPostalFiscal" readonly />
                                             </div>
@@ -655,6 +913,21 @@ if (isset($_SESSION['user_id'])) {
                                                             href="../consultaDomicilio.php">DOMICILIO</button>
                                                 <button class="button"
                                                             href="../consultaContacto.php">CONTACTO</button>
+=======
+                                                <li class="campo-item" id="mosrtarCPFiscal">mostrar C.P. fiscal</li>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="dashboard-section basic-info-input">
+                                        <div class="row">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label"></label>
+                                                <div class="col-sm-9">
+                                                    <button class="button"
+                                                        href="../consultaDomicilio.php">DOMICILIO</button>
+                                                </div>
+>>>>>>> job
                                             </div>
                                         </div>
                                     </div>
@@ -682,6 +955,7 @@ if (isset($_SESSION['user_id'])) {
                     <div class="col">
                         <div class="footer-bottom border-top">
                             <div class="row">
+<<<<<<< HEAD
                                 <div class="col-lg-6">
                                     <a href="#">
                                         <img src="images/footer-logo.png" class="img-fluid" alt="">
@@ -702,6 +976,21 @@ if (isset($_SESSION['user_id'])) {
                                         <li><a href="#"><i data-feather="instagram"></i></a></li>
                                         <li><a href="#"><i data-feather="youtube"></i></a></li>
                                     </ul>
+=======
+                                <div class="col-xl-4 col-lg-5 order-lg-2">
+                                </div>
+                                <div class="col-xl-4 col-lg-4 order-lg-1">
+                                    <a href="#">
+                                        <img src="images/footer-logo.png" class="img-fluid" alt="">
+                                    </a>
+                                    <p class="copyright-text">Copyright <a href="#">Intecproof</a> 2024, All right
+                                        reserved</p>
+                                </div>
+                                <div class="col-xl-4 col-lg-3 order-lg-3">
+                                    <div class="back-to-top">
+                                        <a href="#">Back to top<i class="fas fa-angle-up"></i></a>
+                                    </div>
+>>>>>>> job
                                 </div>
                             </div>
                         </div>
