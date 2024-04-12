@@ -59,4 +59,4 @@ $olvideContraTxt ="Olvidé mi contraseña";
 
 
 
-?>
+?>;

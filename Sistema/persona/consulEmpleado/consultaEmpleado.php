@@ -565,7 +565,7 @@ if (isset($_SESSION['user_id'])) { ?>
 
                               datosConsultaEmpleado.onload = function (){
                                   if (datosConsultaEmpleado.status === 200){
-                                      localStorage.clear();
+                                      //localStorage.clear();
                                       var empleadoIndividual = JSON.parse(datosConsultaEmpleado.responseText);
                                       if (empleadoIndividual.bResultado == 1){
                                           console.log(empleadoIndividual.bResultado);
