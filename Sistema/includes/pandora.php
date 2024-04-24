@@ -9,6 +9,8 @@
 $inicioTxt = "INICIO";
 $altaPersonaTxt ="ALTA PERSONA PARA EMPLEADO";
 $consultaPersonaEmpleadotxt = "CONSULTA DE PERSONA PARA EMPLEADO";
+$consultaEmpleadotxt = "CONSULTA DE EMPLEADOS";
+$consultaEmpleadoLabeltxt = "CONSULTA EMPLEADOS";
 
 
 /*submenus*/
@@ -59,4 +61,4 @@ $olvideContraTxt ="Olvidé mi contraseña";
 
 
 
-?>;
+?>

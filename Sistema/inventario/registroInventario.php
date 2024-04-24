@@ -3,7 +3,7 @@ require_once ('../includes/pandora.php');
 require_once ('../includes/load.php');
 require_once ('../includes/functions.php');
 
-//session_start();
+session_start();
 function ObtenerTipoContratacion()
 {
   if (isset($_SESSION['CatConstante'])) {
@@ -109,20 +109,29 @@ $resultadoNiveles = ObtenerNivel();
 
 <body>
 
-  <header class="header-2">
+<header class="header-2">
     <div class="container">
       <div class="row">
         <div class="col">
           <div class="header-top">
             <div class="logo-area">
-              <a href="../../inicio.php"><img src="../../images/logo-2.png" alt=""></a>
+              <a href="../../index.html"><img src="../../images/logo-2.png" alt=""></a>
             </div>
             <div class="header-top-toggler">
               <div class="header-top-toggler-button"></div>
             </div>
+            <?php
+
+            $user = obtenerUsuario($_SESSION['user_id']);
+            $row = $GLOBALS['rowObtenerNombre'];
+            $nombrePersona = $row['nombrePersona'];
+            $emailPersona = $row['contacto'];
+
+            ?>
+
             <div class="top-nav">
               <div class="dropdown header-top-notification">
-                <a href="#" class="notification-button">Notification</a>
+                <a href="#" class="notification-button"><?php echo $notificacionesTxt; ?></a>
                 <div class="notification-card">
                   <div class="notification-head">
                     <span>Notifications</span>
@@ -160,59 +169,42 @@ $resultadoNiveles = ObtenerNivel();
                   </div>
                 </div>
               </div>
-
-              <?php
-
-              $user = obtenerUsuario($_SESSION['user_id']);
-              $row = $GLOBALS['rowObtenerNombre'];
-              $nombrePersona = $row['nombrePersona'];
-              $emailPersona = $row['contacto'];
-
-              ?>
-
               <div class="dropdown header-top-account">
-                <a href="#" class="account-button">My Account</a>
+                <a href="#" class="account-button"><?php echo $miCuentaTxt; ?></a>
                 <div class="account-card">
                   <div class="header-top-account-info">
                     <a href="#" class="account-thumb">
                       <img src="../../images/account/thumb-1.jpg" class="img-fluid" alt="">
                     </a>
                     <div class="account-body">
-                      <h5><a href="#">
-                          <?php echo $nombrePersona; ?>
-                        </a></h5>
-                      <span class="mail">
-                        <?php echo $emailPersona; ?>
-                      </span>
+                      <?php if (isset($nombrePersona) && isset($emailPersona)): ?>
+                        <h5><a href="#"><?php echo $nombrePersona; ?></a></h5>
+                        <span class="mail"><?php echo $emailPersona; ?></span>
+                      <?php endif; ?>
                     </div>
                   </div>
                   <ul class="account-item-list">
-                    <li><a href="#"><span class="ti-user"></span>Account</a></li>
-                    <li><a href="#"><span class="ti-settings"></span>Settings</a></li>
-                    <li><a href="../../includes/logout.php"><span class="ti-power-off"></span>Log Out</a></li>
+                    <li><a href="#"><span class="ti-user"></span><?php echo $Perfil; ?></a></li>
+                    <li><a href="#"><span class="ti-settings"></span><?php echo $herramientas; ?></a></li>
+                    <li><a href="../../includes/logout.php"><span class="ti-power-off"></span><?php echo $logout; ?></a>
+                    </li>
+
                   </ul>
                 </div>
               </div>
-
             </div>
           </div>
-          <nav class="navbar navbar-expand-lg cp-nav-2">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav">
-                <li class="menu-item active"><a title="PERSONA" href="consultaPuesto.php">PUESTO</a></li>
-                <li class="menu-item active"><a title="DOMICILIO" href="consultaDomicilio.php">DOMICILIO</a>
-                </li>
-                <li class="menu-item active"><a title="CONTACTO" href="consultaContacto.php">CONTACTO</a>
-                </li>
-                <li class="menu-item active"><a title="CONTACTO" href="consultaEmpleado.php">EMPLEADO</a>
-                </li>
-              </ul>
+          <!-- pestañas de navegación-->
+          <div class="skill-and-profile">
+            <div class="skill" style="display: flex; justify-content: center;">
+              <label style="align-self: flex-end;"><a href="DatosEmpleado.php">EMPLEADO</a></label>
+              <label style="align-self: flex-end;"><a href="../consulEmpleado/consultaPuesto.php ">PUESTO</a></label>
+              <label style="align-self: flex-end;" class="selected"><a
+                  href="consultaDomicilio.php">DOMICILIO</a></label>
+              <label style="align-self: flex-end;"><a href="consultaContacto.php">CONTACTO</a></label>
             </div>
-          </nav>
+          </div>
+          <!-- fin de pestañas de navegación-->
         </div>
       </div>
     </div>
@@ -246,6 +238,7 @@ $resultadoNiveles = ObtenerNivel();
   </div>
   <!-- Breadcrumb End -->
 
+  <!-- Contenido de la página -->
   <div class="alice-bg section-padding-bottom">
     <div class="container no-gliters">
       <div class="row no-gliters">

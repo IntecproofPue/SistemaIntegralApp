@@ -2,34 +2,31 @@
 require_once('../../includes/pandora.php');
 require_once('../../includes/load.php');
 
-//session_start();
+session_start();
 
 
 function ObtenerPuesto(){
     $datosPuesto = array (
-        'iOpcion' => 4,
+        'iOpcion' => 2,
         'iIdPuesto' => 0 ,
         'vchPuesto' => '',
         'iIdTipoContratacion' => 0,
-        'iCveContratacion' => 0,
-        'iAgruContratacion' => 0
+        'iIdUsuarioUltModificacion' => $_SESSION['user_id']
     );
 
-    $procedureName = "EXEC prcConsultaPuesto    @iOpcion = ?,
-                                                        @iIdPuesto = ?, 
+    $procedureName = "EXEC prcConsultaPuesto            @iIdPuesto = ?, 
                                                         @vchPuesto = ?, 
-                                                        @iIdTipoContratacion = ?,
-                                                        @iCveContratacion = ? ,
-                                                        @iAgruContratacion = ? 
+                                                        @iIdTipoContratacion = ?, 
+                                                        @iIdUsuarioUltModificacion = ?, 
+                                                        @iOpcion = ?
                                                     ";
 
     $params = array(
-        $datosPuesto['iOpcion'],
         $datosPuesto['iIdPuesto'],
         $datosPuesto['vchPuesto'],
         $datosPuesto['iIdTipoContratacion'],
-        $datosPuesto['iCveContratacion'],
-        $datosPuesto['iAgruContratacion']
+        $datosPuesto['iIdUsuarioUltModificacion'],
+        $datosPuesto['iOpcion']
     );
 
     $result = sqlsrv_query($GLOBALS['conn'], $procedureName, $params);
@@ -351,158 +348,6 @@ if (isset($_SESSION['user_id'])) { ?>
                   <div style="background-color: #c82333; text-align: center">
                     <?php echo "<i><span style='color: #ededee' size='-2'> $busquedaNoEncontradaTxt</span></i><br />"; ?>
                   </div>
-
-                  <!--
-                  <form class="dashboard-form" id="FormResultadoConsulta">
-
-                      <div class="dashboard-section basic-info-input">
-                      <h3><i data-feather="user-check"></i>DATOS DE EMPLEADO</h3>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">ID</label>
-                        <div class="col-sm-9">
-                          <input id="idInput" type="text" class="form-control" placeholder="ID" "/>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">NOMBRES (s)</label>
-                        <div class="col-sm-9">
-                          <li class="campo-item" id="mostrarnombre"></li>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Primer Apellido:</label>
-                        <div class="col-sm-9">
-                          <li class="campo-item" id="mostrarprimerApellido">mostrar prim apellido</li>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Segundo Apellido:</label>
-                        <div class="col-sm-9">
-                          <li class="campo-item" id="mostrarsegApellido">mostrar seg apellido</li>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">PUESTO</label>
-                        <div class="col-sm-9">
-                          <li class="campo-item" id="mostrarPuesto">mostrar puesto</li>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">FECHA DE INGRESO:</label>
-                        <div class="col-sm-9">
-                          <li class="campo-item" id="mostrarfechaingreso">mostrar fecha de ingreso</li>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">ESTATUS:</label>
-                        <div class="col-sm-9">
-                          <li class="campo-item" id="mostrarEstatus">mostrar Estatus</li>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">NSS</label>
-                        <div class="col-sm-9">
-                          <li class="campo-item" id="mostrarNSS">mostrar NSS</li>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">FECHA ULTIMA PROMOCION:</label>
-                        <div class="col-sm-9">
-                          <li class="campo-item" id="mostrarfechUltimaPromocion">mostrar ultima promo</li>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">SEDE</label>
-                        <div class="col-sm-9">
-                          <li class="campo-item" id="mostrarSede">mostrar SEDE</li>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">FECHA BAJA:</label>
-                        <div class="col-sm-9">
-                          <li class="campo-item" id="mostrarfechaBaja">mostrar fecha de baja</li>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">USUARIO ULTIMA MODIFICACION:</label>
-                        <div class="col-sm-9">
-                          <li class="campo-item" id="mostrarUsuariUltimaModificacion">mostrar usuario de ultima modificacion
-                          </li>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">FECHA ULTIMA MODIFICACION:</label>
-                        <div class="col-sm-9">
-                          <li class="campo-item" id="mostrarfechUltimaModificacion">mostrar fecha de ultima</li>
-                        </div>
-                      </div>
-                      <h3><i data-feather="user-check"></i>DATOS DE LA PERSONA</h3>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">RFC:</label>
-                        <div class="col-sm-9">
-                          <li class="campo-item" id="mostrarRFC">mostrar RFC</li>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">CURP:</label>
-                        <div class="col-sm-9">
-                          <li class="campo-item" id="mostrarCURP">mostrar CURP</li>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">FECHA NACIMIENTO:</label>
-                        <div class="col-sm-9">
-                          <li class="campo-item" id="mostrarFechNacimineto">mostrar fecha de nacimiento</li>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">GENERO:</label>
-                        <div class="col-sm-9">
-                          <li class="campo-item" id="mostraGenero">mostrar genero</li>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">NACIONALIDAD:</label>
-                        <div class="col-sm-9">
-                          <li class="campo-item" id="mostraNacionalidad">mostrar nacionalidad</li>
-                        </div>
-                      </div>
-                      <h3><i data-feather="user-check"></i>DATOS FISCALES</h3>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">TIPO DE PERSONA:</label>
-                        <div class="col-sm-9">
-                          <li class="campo-item" id="mostradatosTipoPersona">mostrar tipo de persona</li>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">REGIMEN FISCAL:</label>
-                        <div class="col-sm-9">
-                          <li class="campo-item" id="mostrarRegimen">mostrar regimen fiscal</li>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">USO FISCAL:</label>
-                        <div class="col-sm-9">
-                          <li class="campo-item" id="mostraUsoFiscal">mostrar uso fiscal</li>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">C.P. FISCAL:</label>
-                        <div class="col-sm-9">
-                          <li class="campo-item" id="mosrtarCPFiscal">mostrar C.P. fiscal</li>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="dashboard-section basic-info-input">
-                      <div class="row">
-                        <div class="form-group row">
-                          <label class="col-sm-3 col-form-label"></label>
-                          <div class="col-sm-9">
-                            <button class="button" href="../consultaDomicilio.php">DOMICILIO</button>
-                          </div>
-                        </div>
-                      </div>
-                  </form>-->
                 <?php }
                 ?>
                 <?php
@@ -511,33 +356,12 @@ if (isset($_SESSION['user_id'])) { ?>
                   <script>
                       console.log ("A punto de entrar al proceso");
                       function consultarEmpleado (){
-                          //Obtener los valores de los elementos en el formulario para sede
-                          var iIdConstanteSede = 0;
-                          var iClaveSede = 0;
-
-                          console.log('Esta es una prueba de funcionalidad');
-                          var SedeSeleccionada = document.getElementById('iIdSede');
-
-                          if (SedeSeleccionada){
-                              var SedePartes = SedeSeleccionada.value.split('-');
-                              var iIdConstanteSede = SedePartes[0];
-                              var iClaveSede = SedePartes[1];
-
-                          } else {
-                              console.error('El elemento con ID "iIdSede" no se encontró en el DOM.');
-                          }
-
-                          //Asignar los valores a los campos ocultos
-                          document.getElementById('iIdConstanteSede').value = iIdConstanteSede;
-                          document.getElementById('iClaveSede').value = iClaveSede;
-
 
                           var FormularioConsultaEmpleado = {
                               idEmpleado : document.getElementById('iDBuscar').value,
                               rfc: document.getElementById('RFCBuscar').value,
                               iIdPuesto: document.getElementById('PUESTOBuscar').value,
-                              iIdConstanteSede: iIdConstanteSede,
-                              iClaveSede: iClaveSede,
+                              iIdSede: document.getElementById('iIdSede').value,
                               nombre: document.getElementById('nombreaBuscar').value
                           };
 
@@ -553,7 +377,9 @@ if (isset($_SESSION['user_id'])) { ?>
                               console.log("Está entrando en las pruebas masivas del proceso");
                           }
                           function consultaIndivual(){
-                              datosConsultaEmpleado.open('POST', 'consultaIndividual.php',true);
+                            var datosConsultaEmpleado = new XMLHttpRequest();
+                            
+                              datosConsultaEmpleado.open('POST', 'prcConsultaIndividual.php',true);
                               datosConsultaEmpleado.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
                               var formDataIndividual = new URLSearchParams(FormularioConsultaEmpleado).toString();
@@ -565,7 +391,7 @@ if (isset($_SESSION['user_id'])) { ?>
 
                               datosConsultaEmpleado.onload = function (){
                                   if (datosConsultaEmpleado.status === 200){
-                                      //localStorage.clear();
+                                      localStorage.clear();
                                       var empleadoIndividual = JSON.parse(datosConsultaEmpleado.responseText);
                                       if (empleadoIndividual.bResultado == 1){
                                           console.log(empleadoIndividual.bResultado);
@@ -589,7 +415,7 @@ if (isset($_SESSION['user_id'])) { ?>
                           }
 
                           function consultaMasiva(){
-                              datosConsultaEmpleado.open('POST', 'consultaMasiva.php', true);
+                              datosConsultaEmpleado.open('POST', 'prcConsultaMasiva.php', true);
                               datosConsultaEmpleado.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
                               var formDataMasiva = new URLSearchParams(FormularioConsultaEmpleado).toString();
@@ -687,7 +513,7 @@ if (isset($_SESSION['user_id'])) { ?>
                           <select class="form-control" placeholder="iIdSede" name="iIdSede" id="iIdSede">
                               <option value = "" selected> SELECCIONE UNA SEDE</option>
                               <?php foreach ($resultadoSede as $sede): ?>
-                                <option value ="<?=$sede['iIdConstante'].'-'.$sede['iClaveCatalogo']?>">
+                                <option value ="<?=$sede['iIdConstante']?>">
                                     [<?=$sede['iClaveCatalogo']?>] - <?=$sede['vchDescripcion']?>
                                 </option>
                               <?php endforeach;?>
