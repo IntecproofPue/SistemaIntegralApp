@@ -204,53 +204,88 @@ $estadoProcedencia = json_encode($resultadoEstado);
   </header>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      var datosDomicilio = localStorage.getItem('datosDomicilio');
-      if (datosDomicilio) {
-        var respuesta = JSON.parse(datosDomicilio);
-        var iIdPersonaDomicilio = datosEmpleado.iIdPersona;
-        var datosDomicilioRequest = new XMLHttpRequest();
-        datosDomicilioRequest.open('POST', 'prcConsultaDomicilio.php', true);
-        var formData = new FormData();
-        formData.append('iIdPersonaDomicilio', iIdPersonaDomicilio);
-        datosDomicilioRequest.onload = function () {
-          if (datosDomicilioRequest.status === 200) {
-            var respuesta = JSON.parse(datosDomicilioRequest.responseText);
-            if (respuesta.length > 0 && respuesta[0].bResultado === 1) {
-              localStorage.setItem('datosDomicilio', JSON.stringify(respuesta));
-              mostrarDatos(respuesta);
-            } else {
-              console.error("Mensaje Error: " + respuesta[0].vchMensaje);
-              alert(respuesta[0].vchMensaje);
-            }
-          } else {
-            console.error("Error en la solicitud al servidor");
-          }
-        };
-        datosDomicilioRequest.send(formData);
-      } else {
-        console.error("No se encontraron datos en localStorage");
-      }
-    });
+      document.addEventListener('DOMContentLoaded', function (){
 
-    function mostrarDatos(datos) {
-      for (var i = 0; i < datos.length; i++) {
-        var domicilio = datos[i];
-        document.getElementById('vchEntidad').value = domicilio.vchEntidadFederativa || '';
-        document.getElementById('vchMunicipio').value = domicilio.vchMunicipio || '';
-        document.getElementById('vchLocalidad').value = domicilio.vchLocalidad || '';
-        document.getElementById('iIdCodigoPostal').value = domicilio.iCodigoPostal || '';
-        document.getElementById('vchColonia').value = domicilio.vchColonia || '';
-        document.getElementById('vchCalle').value = domicilio.vchCalle || '';
-        document.getElementById('vchLetra').value = domicilio.vchLetra || '';
-        document.getElementById('vchNoExt').value = domicilio.vchNumeroExterior || '';
-        document.getElementById('vchNoInt').value = domicilio.vchNumeroInterior || '';
-      }
-    }
+          console.log ("Está en los datos del domicilio");
+
+          var DatosEmpleado = localStorage.getItem('datosConsultaIndividual');
+
+          var bResultadoEmpleado = JSON.parse(DatosEmpleado);
+          var iIdPersonaDomicilio = bResultadoEmpleado.iIdPersona;
+
+          // console.log(iIdPersonaDomicilio);
+
+          var datosDomicilio = new XMLHttpRequest();
+
+          datosDomicilio.open('POST', 'prcConsultaDomicilio.php', true);
+
+          var formData = new URLSearchParams();
+          formData.append('iIdPersonaDomicilio', iIdPersonaDomicilio);
+
+          //console.log(formData);
+
+          // Enviar la solicitud
+          datosDomicilio.send(formData);
+
+          // Manejar la respuesta
+          datosDomicilio.onload = function() {
+              if (datosDomicilio.status === 200) {
+                  console.log ('Respuesta exitosa');
+                  var respuesta = JSON.parse(datosDomicilio.responseText);
+                  console.log(respuesta);
+
+                  if (respuesta[0].bResultado === 1) {
+                      //alert(respuesta[0].vchMensaje);
+                      localStorage.setItem('datosConsultaDomicilio',JSON.stringify(respuesta));
+
+                      var datosDomicilioConsulta = localStorage.getItem('datosConsultaDomicilio',JSON.stringify(respuesta))
+                      //console.log (datosDomicilioConsulta);
+
+                      if (datosDomicilioConsulta){
+                          var bResultado = JSON.parse(datosDomicilioConsulta);
+                          console.log('Objeto parseado: ', bResultado);
+
+                          for (var i= 0; i<bResultado.length; i++){
+                              var vchEntidad = document.getElementById('vchEntidad');
+                              vchEntidad.value = bResultado[i].vchEntidadFederativa || '';
+
+                              var vchMunicipio = document.getElementById('vchMunicipio');
+                              vchMunicipio.value = bResultado[i].vchMunicipio || '';
+
+                              var vchLocalidad = document.getElementById('vchLocalidad');
+                              vchLocalidad.value = bResultado[i].vchLocalidad || '';
+
+                              var iIdCodigoPostal = document.getElementById('iIdCodigoPostal');
+                              iIdCodigoPostal.value = bResultado[i].iCodigoPostal || '';
+
+                              var vchColonia = document.getElementById('vchColonia');
+                              vchColonia.value = bResultado[i].vchColonia|| '';
+
+                              var vchCalle = document.getElementById('vchCalle');
+                              vchCalle.value = bResultado[i].vchCalle || '';
+
+                              var vchLetra = document.getElementById('vchLetra');
+                              vchLetra.value = bResultado[i].vchLetra || '';
+
+                              var vchNoExt = document.getElementById('vchNoExt');
+                              vchNoExt.value = bResultado[i].vchNumeroExterior || '';
+
+                              var vchNoInt = document.getElementById('vchNoInt');
+                              vchNoInt.value = bResultado[i].vchNumeroInterior || '';
+
+                          }
+                      }
+
+                  } else {
+                      console.error("Mensaje Error: " + respuesta.vchMensaje);
+                      alert(respuesta.vchMensaje)
+                  }
+              } else {
+                  console.error("Error en la solicitud al servidor");
+              }
+          };
+      });
   </script>
-
-
-
 
   <!-- Contenido de la página -->
   <div class="alice-bg section-padding-bottom">
@@ -269,7 +304,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
                     <div class="col-md-4">
                       <div class="form-group">
                         <label class="col-form-label">ENTIDAD:</label>
-                        <input id="iAgruEntidad" type="text" class="form-control" placeholder="ENTIDAD FEDERATIVA"
+                        <input id="vchEntidad" type="text" class="form-control" placeholder="ENTIDAD FEDERATIVA"
                           readonly>
                       </div>
                     </div>
@@ -289,7 +324,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
                     <div class="col-sm-4">
                       <div class="form-group">
                         <label class="col-form-label">C.P.: </label>
-                        <input id="iCodigoPostal" type="text" class="form-control" placeholder="CÓDIGO POSTAL" readonly>
+                        <input id="iIdCodigoPostal" type="text" class="form-control" placeholder="CÓDIGO POSTAL" readonly>
                       </div>
                     </div>
                     <div class="col-sm-4">
@@ -313,17 +348,18 @@ $estadoProcedencia = json_encode($resultadoEstado);
                     <div class="col-sm-4">
                       <div class="form-group">
                         <label class="col-form-label">No. EXTERIOR: </label>
-                        <input id="vchNumeroExterior" type="text" class="form-control" placeholder="NÚMERO EXTERIOR"
+                        <input id="vchNoExt" type="text" class="form-control" placeholder="NÚMERO EXTERIOR"
                           readonly>
                       </div>
                     </div>
                     <div class="col-sm-4">
                       <div class="form-group">
                         <label class="col-form-label">No. INTERIOR: </label>
-                        <input id="vchNumeroInterior" type="text" class="form-control" placeholder="NÚMERO INTERIOR"
+                        <input id="vchNoInt" type="text" class="form-control" placeholder="NÚMERO INTERIOR"
                           readonly />
                       </div>
                     </div>
+                      <!--
                     <script>
 
                       document.getElementById('buttonEditar').addEventListener('click', function () {
@@ -370,7 +406,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
                         }
                       });
 
-                    </script>
+                    </script>-->
                   </div>
                 </div>
               </div>
@@ -781,71 +817,6 @@ $estadoProcedencia = json_encode($resultadoEstado);
 
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
   <script src="../../js/map.js"></script>
-  <script>
-    // Llamada AJAX para obtener los datos del domicilio
-    var datosDomicilioRequest = new XMLHttpRequest();
-    datosDomicilioRequest.open('POST', 'prcConsultaDomicilio.php', true);
-    var formData = new FormData();
-    formData.append('iIdPersonaDomicilio', iIdPersonaDomicilio);
-    datosDomicilioRequest.onload = function () {
-        if (datosDomicilioRequest.status === 200) {
-            // Parsea la respuesta JSON y almacénala en el localStorage
-            <?php echo $codigo_php_para_almacenar_localstorage; ?>
-        } else {
-            console.error("Error en la solicitud al servidor");
-        }
-    };
-    datosDomicilioRequest.send(formData);
-</script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      // Obtener los datos del localStorage
-      var datosDomicilioJSON = localStorage.getItem("datosDomicilio");
-      if (datosDomicilioJSON) {
-        // Convertir los datos de JSON a un objeto JavaScript
-        var datosDomicilio = JSON.parse(datosDomicilioJSON);
-        // Mostrar los datos en la interfaz de usuario
-        mostrarDatos(datosDomicilio);
-      } else {
-        // Si no hay datos en el localStorage, mostrar un mensaje
-        document.getElementById("datosDomicilioContainer").innerText = "No hay datos de domicilio almacenados.";
-      }
-    });
-
-    function mostrarDatos(bResultado) {
-      var iIdConstanteEstado = document.getElementById('iIdConstanteEstado');
-      idInput.value = dResultado.iIdConstanteEstado || '';
-      var iClaveEstado = document.getElementById('iClaveEstado');
-      iClaveEstado.value = bResultado.iClaveEstado || '';
-      var vchMunicipio = document.getElementById('vchMunicipio');
-      vchMunicipio.value = bResultado.vchMunicipio || '';
-      var vchLocalidad = document.getElementById('vchLocalidad');
-      vchLocalidad.value = bResultado.vchLocalidad || '';
-      var codigoPostal = document.getElementById('codigoPostal');
-      codigoPostal.value = bResultado.codigoPostal || '';
-      var vchColonia = document.getElementById('vchColonia');
-      vchColonia.value = bResultado.vchColonia || '';
-      var vchCalle = document.getElementById('vchCalle');
-      vchCalle.value = bResultado.vchCalle || '';
-      var vchLetra = document.getElementById('vchLetra');
-      vchLetra.value = bResultado.vchLetra || '';
-      var vchNoExt = document.getElementById('vchNoExt');
-      vchNoExt.value = bResultado.vchNoExt || '';
-      var vchNoInt = document.getElementById('vchNoInt');
-      vchNoInt.value = bResultado.vchNoInt || '';
-    };
-      // Crear un elemento para mostrar cada dato
-      for (var clave in datosDomicilio) {
-        if (datosDomicilio.hasOwnProperty(clave)) {
-          var datoElement = document.createElement("p");
-          datoElement.innerText = clave + ": " + datosDomicilio[clave];
-          // Agregar el elemento al contenedor
-          document.getElementById("datosDomicilioContainer").appendChild(datoElement);
-        }
-      }
-    }
-  </script>
-
 
 </body>
 

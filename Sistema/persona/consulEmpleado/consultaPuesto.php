@@ -237,6 +237,90 @@ $resultadoEstado = ObtenerEstadoProcedencia();
         </div>
     </header>
 
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function (){
+
+            console.log ("Está en los datos del puesto");
+
+            var DatosPuesto = localStorage.getItem('datosConsultaIndividual');
+
+            var bResultadoPuesto = JSON.parse(DatosPuesto);
+            var iIdEmpleadoPuesto = bResultadoPuesto.iIdPuesto;
+
+            // console.log(iIdPersonaDomicilio);
+
+            var datosPuesto = new XMLHttpRequest();
+
+            datosPuesto.open('POST', 'prcConsultaPuesto.php', true);
+
+            var formData = new URLSearchParams();
+            formData.append('iIdPuesto', iIdEmpleadoPuesto);
+
+            //console.log(formData);
+
+            // Enviar la solicitud
+            datosPuesto.send(formData);
+
+            // Manejar la respuesta
+            datosPuesto.onload = function() {
+                if (datosPuesto.status === 200) {
+                    console.log ('Respuesta exitosa');
+                    var respuesta = JSON.parse(datosPuesto.responseText);
+                    console.log(respuesta);
+
+                    if (respuesta.bResultado === 1) {
+                        //alert(respuesta[0].vchMensaje);
+                        localStorage.setItem('datosConsultaPuesto',JSON.stringify(respuesta));
+
+                        var datosPuestoConsulta = localStorage.getItem('datosConsultaPuesto',JSON.stringify(respuesta))
+                        //console.log (datosDomicilioConsulta);
+
+                        if (datosPuestoConsulta){
+                            var bResultado = JSON.parse(datosPuestoConsulta);
+                            console.log('Objeto parseado: ', bResultado);
+
+                            var vchPuesto = document.getElementById('vchPuesto');
+                            vchPuesto.value = bResultado.vchPuesto || '';
+
+                            var vchDescripcionPuesto = document.getElementById('vchDescripcionPuesto');
+                            vchDescripcionPuesto.value = bResultado.vchDescripcion || '';
+
+                            var vchTipoContratacion = document.getElementById('vchTipoContratacion');
+                            vchTipoContratacion.value = bResultado.vchTipoContratacion || '';
+
+                            var vchHorasLaborales = document.getElementById('vchHorasLaborales');
+                            vchHorasLaborales.value = bResultado.vchHorasLaborales || '';
+
+
+                            const pesoFinal = new Intl.NumberFormat('es-MX', {
+                                style: 'currency',
+                                currency: 'MXN',
+                                minimumFractionDigits: 2
+                            });
+
+                            var mSalarioNeto = document.getElementById('mSalarioNeto');
+                            mSalarioNeto.value = pesoFinal.format(bResultado.mSalarioNeto) || 0;
+
+                            var mSalarioFiscal = document.getElementById('mSalarioFiscal');
+                            mSalarioFiscal.value = pesoFinal.format(bResultado.mSalarioFiscal) || 0;
+
+                            var mSalarioComplementario = document.getElementById('mSalarioComplementario');
+                            mSalarioComplementario.value = pesoFinal.format(bResultado.mSalarioComplemento) || 0;
+                        }
+
+                    } else {
+                        console.error("Mensaje Error: " + respuesta.vchMensaje);
+                        alert(respuesta.vchMensaje)
+                    }
+                } else {
+                    console.error("Error en la solicitud al servidor");
+                }
+            };
+        });
+    </script>
+
+
     <!-- Contenido de la página -->
     <div class="alice-bg section-padding-bottom">
         <div class="container no-gliters">

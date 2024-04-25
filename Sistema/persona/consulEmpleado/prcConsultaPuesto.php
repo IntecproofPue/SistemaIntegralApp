@@ -3,47 +3,33 @@
 require_once ('../../includes/load.php');
 session_start();
 
-var_dump($_POST);
-
-$datos = json_decode('datosPuesto', true);
-function limpiarCaracteresEspeciales($datos) {
-    if (is_array($datos)) {
-        foreach ($datos as $key => $value) {
-            $datos[$key] = limpiarCaracteresEspeciales($value);
-        }
-    } elseif (is_string($datos)) {
-        // Aquí puedes aplicar cualquier lógica para limpiar los caracteres especiales
-        // Por ejemplo, utilizando una expresión regular para eliminar las secuencias de escape
-        $datos = preg_replace('/\\\\([\'"\\/bfnrt])/', '', $datos);
-    }
-    return $datos;
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $iIdPuesto = $_POST['iIdPuesto'];
 }
 
-$datosLimpio = limpiarCaracteresEspeciales($datos);
-
-$jsonLimpio = json_encode($datosLimpio);
-
-var_dump($jsonLimpio);
+$iIdPuesto = is_numeric($iIdPuesto) ?$iIdPuesto :  0;
 
 $datosConsulta = array(
-    'iIdPuesto' => $jsonLimpio['iIdPuesto'],
+    'iIdPuesto' => $_POST['iIdPuesto'],
     'vchPuesto' => '',
     'iIdTipoContratacion' => 0,
-    'iIdUsuarioUltModificacion' => $_SESSION['user_id']
+    'iIdUsuarioUltModificacion' => $_SESSION['user_id'],
+    'iOpcion' => 1
 );
 
 
 $procedureName = "EXEC prcConsultaPuesto     @iIdPuesto = ?,
                                              @vchPuesto = ? , 
                                              @iIdTipoContratacion = ?, 
-                                             @iIdUsuarioUltModificacion = ?
+                                             @iIdUsuarioUltModificacion = ?, 
+                                             @iOpcion = ?
                                                    ";
-
 $params = array(
     $datosConsulta['iIdPuesto'],
     $datosConsulta['vchPuesto'],
     $datosConsulta['iIdTipoContratacion'],
-    $datosConsulta['iIdUsuarioUltModificacion']
+    $datosConsulta['iIdUsuarioUltModificacion'],
+    $datosConsulta['iOpcion']
 );
 
 
@@ -60,15 +46,11 @@ if ($result === false) {
     exit;
 
 } else {
-    $DatosDomicilioPuesto = array();
-    do{
         while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
-            $DatosDomicilioPuesto[] = $row;
+            $DatosDomicilioConsulta = $row;
         }
 
-    }while (sqlsrv_next_result($result));
-
-    echo json_encode($DatosDomicilioPuesto);
+    echo json_encode($DatosDomicilioConsulta);
 }
 
 sqlsrv_free_stmt($result);
