@@ -58,6 +58,48 @@ if (isset($_SESSION['user_id'])) {
             /* O cualquier otro estilo que desees */
             /* Otros estilos de resaltado */
         }
+
+
+        .row .col-md-4 {
+            margin-top: -13px;
+            margin-bottom: -13px;
+
+        }
+
+        .boton-intec {
+            /* border: none;
+            color: black;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 7px;*/
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: solid;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .boton-intec:hover {
+            background-color: #0b7dda;
+        }
+
+        .boton-intec:active {
+            background-color: #3e8e41;
+        }
+
+        /* width: 10%;
+            background-color: navy;
+            padding: 3px ;
+            border-radius: 7px;
+            color: navy;
+            text-decoration: none;
+            color: white;*/
+        .update-photo {
+            float: right;
+
+        }
     </style>
 </head>
 
@@ -68,8 +110,8 @@ if (isset($_SESSION['user_id'])) {
             <div class="row">
                 <div class="col">
                     <div class="header-top">
-                        <div class="logo-area">
-                            <a href="../../inicio.php"><img src="../../images/logo-2.png" alt=""></a>
+                        <div class="header-top">
+                            <img class="image" src="Sistema/dashboard/images/user-1.jpg" alt="">
                         </div>
                         <div class="header-top-toggler">
                             <div class="header-top-toggler-button"></div>
@@ -132,9 +174,9 @@ if (isset($_SESSION['user_id'])) {
                                 </a>
                                 <div class="account-card">
                                     <div class="header-top-account-info">
-                                        <a href="#" class="account-thumb">
-                                            <img src="../../images/account/thumb-1.jpg" class="img-fluid" alt="">
-                                        </a>
+                                        <div class="update-photo">
+                                            <img class="image" src="../../user-1.jpg" alt="">
+                                        </div>
                                         <div class="account-body">
                                             <h5><a href="#">
                                                     <?php echo $nombrePersona; ?>
@@ -175,29 +217,6 @@ if (isset($_SESSION['user_id'])) {
             </div>
         </div>
     </header>
-
-    <!-- Breadcrumb
-    <div class="alice-bg padding-top-60 padding-bottom-60">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="breadcrumb-area">
-                        <a>
-                            <h1>CONSULTA EMPLEADO</h1>
-                        </a>
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">CONSULTA EMPLEADO&nbsp;&nbsp;
-                                </li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    Breadcrumb End -->
 
     <!-- Contenido de la página -->
     <div class="alice-bg section-padding-bottom">
@@ -292,7 +311,6 @@ if (isset($_SESSION['user_id'])) {
                                             month: '2-digit',
                                             year: 'numeric'
                                         });
-
                                         var dFechaIngreso = document.getElementById('dFechaIngreso');
                                         dFechaIngreso.value = fechaIngresoFinal;
                                         var vchEstatusEmpleado = document.getElementById('iIdEstatusEmpleado');
@@ -306,11 +324,12 @@ if (isset($_SESSION['user_id'])) {
                                             month: '2-digit',
                                             year: 'numeric'
                                         });
-
                                         var dFechaPromocion = document.getElementById('dtFechaUltPromocion');
                                         dFechaPromocion.value = fechaIPromocionFinal || '';
+
                                         var vchSede = document.getElementById('iIdSede');
                                         vchSede.value = bResultado.vchSede || '';
+
                                         var dFechaBajaOriginal = bResultado.dtFechaBaja.date;
                                         var fechaBaja = new Date(dFechaBajaOriginal);
                                         var fechaBajaFinal = fechaBaja.toLocaleDateString('es-ES', {
@@ -318,7 +337,6 @@ if (isset($_SESSION['user_id'])) {
                                             month: '2-digit',
                                             year: 'numeric'
                                         });
-
                                         var dFechBaja = document.getElementById('dtFechaBaja');
                                         dFechBaja.value = fechaBajaFinal === '01/01/1900' ? '' : fechaBajaFinal;
                                         var vchUsuario = document.getElementById('vchUsuarioUltModificacion');
@@ -330,7 +348,6 @@ if (isset($_SESSION['user_id'])) {
                                             month: '2-digit',
                                             year: 'numeric'
                                         });
-
                                         var dFechaModificacion = document.getElementById('dtFechaUltModificacion');
                                         dFechaModificacion.value = fechaModifFinal === '01/01/1900' ? '' : fechaModifFinal;
 
@@ -346,16 +363,13 @@ if (isset($_SESSION['user_id'])) {
                                             month: '2-digit',
                                             year: 'numeric'
                                         });
-
                                         var dFechaNacimiento = document.getElementById('dFechaNacimiento');
                                         dFechaNacimiento.value = fechaNacimientoFinal === '01/01/1900' ? '' : fechaNacimientoFinal;
                                         var vchGenero = document.getElementById('iIdGenero');
                                         vchGenero.value = bResultado.vchGenero || '';
                                         var vchNacionalidad = document.getElementById('iIdNacionalidad');
                                         vchNacionalidad.value = bResultado.vchNacionalidad || '';
-
                                         //Datos Fiscales
-
                                         var vchTipoPersona = document.getElementById('iIdTipoPersona');
                                         vchTipoPersona.value = bResultado.vchTipoPersona || '';
                                         var vchRegimen = document.getElementById('vchRegimen');
@@ -377,70 +391,141 @@ if (isset($_SESSION['user_id'])) {
                                         <label class="col-form-label"><i data-feather="user-check"></i>
                                             <h6>DATOS DE EMPLEADO</h6>
                                         </label>
+                                        <div class="update-photo">
+                                            <img class="image" src="../../user-1.jpg" alt="">
+                                        </div>
                                         <div class="row">
-
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label class="col-form-label"> ID EMPLEADO: </label>
+                                                    <label class="col-form-label"> EXPEDIENTE EMPLEADO </label>
                                                     <input id="idInput" type="text" class="form-control" placeholder="ID"
                                                         disabled>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label class="col-form-label"> NOMBRE (S): </label>
+                                                    <label class="col-form-label"> NOMBRE (S) </label>
                                                     <input type="text" class="form-control" placeholder="NOMBRE"
                                                         id="vchNombre" disabled />
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label class="col-form-label"> PRIMER APELLIDO: </label>
+                                                    <label class="col-form-label"> PRIMER APELLIDO </label>
                                                     <input type="text" class="form-control" placeholder="PRIMER APELLIDO"
                                                         id="vchPrimerApellido" disabled>
                                                 </div>
                                             </div>
-
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label class="col-form-label"> SEGUNDO APELLIDO: </label>
+                                                    <label class="col-form-label"> SEGUNDO APELLIDO </label>
                                                     <input type="text" class="form-control" placeholder="SEGUNDO APELLIDO"
                                                         id="vchSegundoApellido" disabled>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label class="col-form-label"> PUESTO: </label>
+                                                    <label class=" col-form-label">CURP
+                                                    </label>
+                                                    <input type="text" class="form-control" placeholder="CURP" id="vchCURP"
+                                                        disabled />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="col-form-label">RFC</label>
+                                                    <input type="text" class="form-control" placeholder="RFC" id="vchRFC"
+                                                        disabled />
+                                                </div>
+                                            </div>
+                                            <!--<div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="col-form-label">TIPO
+                                                        DE
+                                                        PERSONA </label>
+                                                    <input type="text" class="form-control" placeholder="TIPO DE PERSONA"
+                                                        id="iIdTipoPersona" disabled />
+                                                </div>
+                                            </div>-->
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="col-form-label">FECHA
+                                                        NACIMIENTO </label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="FECHA DE NACIMIENTO" id="dFechaNacimiento" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="col-form-label">GENERO
+                                                    </label>
+                                                    <input type="text" class="form-control" placeholder="GENERO"
+                                                        id="iIdGenero" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="col-form-label">NACIONALIDAD
+                                                    </label>
+                                                    <input type="text" class="form-control" placeholder="NACIONALIDAD"
+                                                        id="iIdNacionalidad" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="col-form-label">REGIMEN
+                                                        FISCAL </label>
+                                                    <input type="text" class="form-control" placeholder="REGIMEN FISCAL"
+                                                        id="vchRegimen" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class=" col-form-label">USO
+                                                        FISCAL </label>
+                                                    <input type="text" class="form-control" placeholder="USO FISCAL"
+                                                        id="vchUsoFiscal" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="col-form-label">C.P.
+                                                        FISCAL </label>
+                                                    <input type="text" class="form-control" placeholder="C. P. FISCAL"
+                                                        id="iCodigoPostalFiscal" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="col-form-label"> PUESTO </label>
                                                     <input type="text" class="form-control" placeholder="PUESTO"
                                                         id="vchPuesto" disabled>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label class="col-form-label"> FECHA DE INGRESO: </label>
+                                                    <label class="col-form-label"> FECHA DE INGRESO </label>
                                                     <input type="text" class="form-control" placeholder="FECHA DE INGRESO"
                                                         id="dFechaIngreso" disabled>
                                                 </div>
                                             </div>
-
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label class="col-form-label"> ESTATUS: </label>
+                                                    <label class="col-form-label"> ESTATUS DE EMPLEADO </label>
                                                     <input type="text" class="form-control" placeholder="ESTATUS"
                                                         id="iIdEstatusEmpleado" disabled>
                                                 </div>
                                             </div>
-
                                             <div class="col-md-4">
                                                 <div class="form-group ">
-                                                    <label class="col-form-label"> NSS: </label>
+                                                    <label class="col-form-label"> NSS </label>
                                                     <input type="text" class="form-control" placeholder="NSS" id="vchNSS"
                                                         disabled>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group ">
-                                                    <label class="col-form-label">FECHA ULTIMA PROMO.:
+                                                    <label class="col-form-label">FECHA ULTIMA PROMOCION
                                                     </label>
                                                     <input type="text" class="form-control" placeholder="FECHA ULTIMA PROM."
                                                         id="dtFechaUltPromocion" disabled>
@@ -448,21 +533,21 @@ if (isset($_SESSION['user_id'])) {
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label class="col-form-label">SEDE: </label>
+                                                    <label class="col-form-label">SEDE </label>
                                                     <input type="text" class="form-control" placeholder="SEDE" id="iIdSede"
                                                         disabled>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group ">
-                                                    <label class="col-form-label">FECHA BAJA: </label>
+                                                    <label class="col-form-label">FECHA BAJA </label>
                                                     <input type="text" class="form-control" id="dtFechaBaja" disabled>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label class="col-form-label">USUARIO ULTIMA
-                                                        MOD.:</label>
+                                                        MODIFICACION</label>
                                                     <input type="text" class="form-control"
                                                         placeholder="USUARIO ULTIMA MOD." id="vchUsuarioUltModificacion"
                                                         disabled />
@@ -471,126 +556,26 @@ if (isset($_SESSION['user_id'])) {
                                             <div class="col-md-4">
                                                 <div class="form-group ">
                                                     <label class="col-form-label">FECHA ULTIMA
-                                                        MOD.:</label>
+                                                        MODIFICACION</label>
                                                     <input type="text" class="form-control" placeholder="FECHA ULTIMA MOD."
                                                         id="dtFechaUltModificacion" disabled />
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
 
-                            <form action="#" method="post" class="dashboard-form">
-                                <div id="information" class="row justify-content-center">
-                                    <div class="col-md-10">
-                                        <div class="col-form-label">
-                                            <label class="col-form-label"><i data-feather="user-check"></i>
-                                                <h6>DATOS FISCALES</h6>
-                                            </label>
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label class="col-form-label">RFC:</label>
-                                                        <input type="text" class="form-control" placeholder="RFC"
-                                                            id="vchRFC" disabled />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label class=" col-form-label">CURP:
-                                                        </label>
-                                                        <input type="text" class="form-control" placeholder="CURP"
-                                                            id="vchCURP" disabled />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label class="col-form-label">FECHA
-                                                            NACIMIENTO: </label>
-                                                        <input type="text" class="form-control"
-                                                            placeholder="FECHA DE NACIMIENTO" id="dFechaNacimiento"
-                                                            disabled />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label class="col-form-label">GENERO:
-                                                        </label>
-                                                        <input type="text" class="form-control" placeholder="GENERO"
-                                                            id="iIdGenero" disabled />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label class="col-form-label">NACIONALIDAD:
-                                                        </label>
-                                                        <input type="text" class="form-control" placeholder="NACIONALIDAD"
-                                                            id="iIdNacionalidad" disabled />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label class="col-form-label">TIPO
-                                                            DE
-                                                            PERSONA: </label>
-                                                        <input type="text" class="form-control"
-                                                            placeholder="TIPO DE PERSONA" id="iIdTipoPersona" disabled />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label class="col-form-label">REGIMEN
-                                                            FISCAL: </label>
-                                                        <input type="text" class="form-control" placeholder="REGIMEN FISCAL"
-                                                            id="vchRegimen" disabled />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label class=" col-form-label">USO
-                                                            FISCAL: </label>
-                                                        <input type="text" class="form-control" placeholder="USO FISCAL"
-                                                            id="vchUsoFiscal" disabled />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label class="col-form-label">C.P.
-                                                            FISCAL: </label>
-                                                        <input type="text" class="form-control" placeholder="C. P. FISCAL"
-                                                            id="iCodigoPostalFiscal" disabled />
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </form>
-
-                            <form action="#" method="post" class="dashboard-form">
-                                <div class="dashboard-section basic-info-input">
-                                    <div class="row">
-                                        <div class="job-apply-buttons">
-                                            <a href="#" class="apply" data-toggle="modal"
+                                        <div class="row-left">
+                                            <a href="#" class="boton-intec" data-toggle="modal"
                                                 data-target="#apply-popup-id-1">MODIFICAR</a>
-                                        </div>
-                                        <div class="job-apply-buttons">
-                                            <a href="#" class="apply" data-toggle="modal"
+                                            <a href="#" class="boton-intec" data-toggle="modal"
                                                 data-target="#apply-popup-id-2">BAJA</a>
-                                        </div>
-                                        <div class="job-apply-buttons">
-                                            <a href="#" class="apply" data-toggle="modal"
+                                            <a href="#" class="boton-intec" data-toggle="modal"
                                                 data-target="#apply-popup-id-3">REACTIVACION</a>
-                                        </div>
-                                        <div class="job-apply-buttons">
-                                            <a href="#" class="apply" data-toggle="modal"
+                                            <a href="#" class="boton-intec" data-toggle="modal"
                                                 data-target="#apply-popup-id-4">PROMOCION</a>
                                         </div>
                                     </div>
                                 </div>
                             </form>
-
                             <?php
                         }
                         ?>
@@ -607,7 +592,7 @@ if (isset($_SESSION['user_id'])) {
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h5 class="modal-title"><i data-feather="edit"></i>APLICAR CAMBIOS</h5>
+                        <h5 class="modal-title"><i data-feather="edit"></i>CAMBIOS DATOS GENERALES</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -633,7 +618,7 @@ if (isset($_SESSION['user_id'])) {
                             $fechaLimiteInferior = '1900-01-01';
                             ?>
                             <div class="form-group">
-                            <option value="">FECHA DE INGRESO</option>
+                                <option value="">FECHA DE INGRESO</option>
                                 <input type="date" class="form-control" placeholder="FECHA DE INGRESO"
                                     name="fechaIngreso" id="dFechaIngreso" pattern="\d{4}-\d{2}-\d{2}"
                                     title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required
@@ -684,7 +669,7 @@ if (isset($_SESSION['user_id'])) {
                             $fechaLimiteInferior = '1900-01-01';
                             ?>
                             <div class="form-group">
-                            <option value="">FECHA DE BAJA</option>
+                                <option value="">FECHA DE BAJA</option>
                                 <input type="date" class="form-control" placeholder="FECHA DE BAJA" name="fechaIngreso"
                                     id="dFechaIngreso" pattern="\d{4}-\d{2}-\d{2}"
                                     title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required
@@ -716,7 +701,7 @@ if (isset($_SESSION['user_id'])) {
                                     pattern="^[0-9]{10,}$" title="NSS INCORRECTO" style="text-transform: uppercase"
                                     placeholder="Ingrese su NSS" required>
                             </div>
-                            
+
                             <?php
                             // Calcular la fecha actual
                             $fechaActual = date('Y-m-d');
@@ -731,7 +716,7 @@ if (isset($_SESSION['user_id'])) {
                             $fechaLimiteInferior = '1900-01-01';
                             ?>
                             <div class="form-group">
-                            <option value="">FECHA DE INGRESO</option>
+                                <option value="">FECHA DE INGRESO</option>
                                 <input type="date" class="form-control" placeholder="FECHA DE BAJA" name="fechaIngreso"
                                     id="dFechaIngreso" pattern="\d{4}-\d{2}-\d{2}"
                                     title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required
@@ -756,12 +741,12 @@ if (isset($_SESSION['user_id'])) {
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" name="ilContratadoPor" id="ilContratadoPor"
-                                 style="text-transform: uppercase" placeholder="QUIEN CONTRATO" required>
+                                    style="text-transform: uppercase" placeholder="QUIEN CONTRATO" required>
                             </div>
                             <div class="form-group">
-                            <option value="">FECHA DE REINGRESO</option>
-                                <input type="date" class="form-control" placeholder="FECHA DE REINGRESO" name="dFechaReingreso"
-                                    id="dFechaReingreso" pattern="\d{4}-\d{2}-\d{2}"
+                                <option value="">FECHA DE REINGRESO</option>
+                                <input type="date" class="form-control" placeholder="FECHA DE REINGRESO"
+                                    name="dFechaReingreso" id="dFechaReingreso" pattern="\d{4}-\d{2}-\d{2}"
                                     title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required
                                     min="<?php echo $fechaMinima; ?>" max="<?php echo $fechaMaxima; ?>" maxlength="10">
                             </div>
@@ -786,19 +771,19 @@ if (isset($_SESSION['user_id'])) {
                     </div>
                     <div class="modal-body">
                         <form action="#">
-                        <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">*PUESTO:</label>
-                                        <div class="col-sm-9">
-                                            <select class="form-control" Name="iIdPuesto"  id = "iIdPuesto" required>
-                                                <option value="" selected>SELECCIONE UN PUESTO</option>
-                                                <?php foreach ($resultadoPuesto as $puesto): ?>
-                                                    <option value="<?= $puesto['iIdPuesto'] ?>">
-                                                        <?= $puesto['vchPuesto'] ?>
-                                                    </option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                        </div>
-                                    </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">*PUESTO:</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" Name="iIdPuesto" id="iIdPuesto" required>
+                                        <option value="" selected>SELECCIONE UN PUESTO</option>
+                                        <?php foreach ($resultadoPuesto as $puesto): ?>
+                                            <option value="<?= $puesto['iIdPuesto'] ?>">
+                                                <?= $puesto['vchPuesto'] ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <input type="tel" class="form-control" name="vchNSS" id="vchNSS" maxlength="10"
                                     pattern="^[0-9]{10,}$" title="NSS INCORRECTO" style="text-transform: uppercase"
@@ -818,7 +803,7 @@ if (isset($_SESSION['user_id'])) {
                             $fechaLimiteInferior = '1900-01-01';
                             ?>
                             <div class="form-group">
-                            <option value="">FECHA DE INGRESO</option>
+                                <option value="">FECHA DE INGRESO</option>
                                 <input type="date" class="form-control" placeholder="FECHA DE INGRESO"
                                     name="fechaIngreso" id="dFechaIngreso" pattern="\d{4}-\d{2}-\d{2}"
                                     title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required
@@ -906,6 +891,21 @@ if (isset($_SESSION['user_id'])) {
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
     <script src="../../js/map.js"></script>
+
+    <script>
+        // Recuperar los datos almacenados en localStorage
+        var datosConsultaIndividual = JSON.parse(localStorage.getItem("datosConsultaIndividual"));
+
+        // Verificar si existen datos almacenados en localStorage
+        if (datosConsultaIndividual) {
+            // Asignar los datos a los campos correspondientes de la modal
+            document.addEventListener("DOMContentLoaded", function () {
+                document.getElementById("vchNSS").value = datosConsultaIndividual.vchNSS;
+                document.getElementById("dFechaIngreso").value = datosConsultaIndividual.fechaIngreso;
+                document.getElementById("iIdSede").value = datosConsultaIndividual.iIdSede;
+            });
+        }
+    </script>
 
 </body>
 
