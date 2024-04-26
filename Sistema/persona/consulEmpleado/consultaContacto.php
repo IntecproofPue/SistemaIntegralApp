@@ -356,6 +356,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
               <label style="align-self: flex-end;"><a href="../consulEmpleado/consultaPuesto.php ">PUESTO</a></label>
               <label style="align-self: flex-end;"><a href="consultaDomicilio.php">DOMICILIO</a></label>
               <label style="align-self: flex-end;" class="selected"><a href="consultaContacto.php">CONTACTO</a></label>
+              <label style="align-self: flex-end;"><a href="consultaDocumentos.php">DOCUMENTOS</a></label>
             </div>
           </div>
           <!-- fin de pestañas de navegación-->
@@ -393,57 +394,74 @@ $estadoProcedencia = json_encode($resultadoEstado);
               });
             </script>
 
-
-
-
-
-
             <form action="altaPersona" method="post" class="dashboard-form">
               <div id="information" class="row justify-content-center">
                 <div class="col-md-10">
                   <label class="col-form-label">
                     <h6><i data-feather="user-check"></i>INFORMACION DE CONTACTO</h6>
                   </label>
-                  <div class="row">
 
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label class="col-form-label">TIPO DE CONTACTO: </label>
-                        <input id="ildTipoContacto" type="text" class="form-control" placeholder="TIPO DE CONTACTO"
-                          readonly>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label class="col-form-label">CONTACTO:</label>
-                        <input id="vchContacto" type="text" class="form-control" placeholder="TIPO DE CONTACTO"
-                          readonly>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label class="col-form-label">ACTIVO:</label>
-                        <input id="bActivo" type="text" class="form-control" placeholder="ACTIVO" readonly>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label class="col-form-label">USER ULT MODIF: </label>
-                        <input id="ilUsuarioUltModificacion" type="text" class="form-control"
-                          placeholder="USUA DE ULT MODIF." readonly>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label class="col-form-label">FECHA ULT MODIF: </label>
-                        <input id="dtFechaUltModificacion" type="text" class="form-control"
-                          placeholder="FECHA DE ULT MODIF." readonly>
+                  <div class="alice-bg section-padding-bottom">
+                    <div class="container">
+                      <div class="col">
+                        <div class="filtered-employer-wrapper">
+                          <div class="employer">
+                            <div class="body">
+                              <div class="row">
+                                <h4><a href="#">TIPO DE CONTACTO</a></h4>
+                                <div class="row">
+
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <input id="tipoContacto" type="text" class="form-control"
+                                        placeholder="TIPO CONTACTO" readonly>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <input id="tipoContacto" class="form-control" name="tipoContacto"
+                                        onchange="validarTipoContacto" placeholder="CONTACTO" readonly>
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </div>
+                              
+                              <div class="button-area">
+                                <a href="#" data-toggle="modal" data-target="#apply-popup-id-1">SELECCIONAR</a>
+                              </div>
+
+                            </div>
+                          </div>
+                          <!--
+
+
+                            ////////aqui se agregarian los demas contactos /////////
+                          
+                          
+                          -->
+                        </div>
+                        <!--<div class="pagination-list text-center">
+                          <nav class="navigation pagination">
+                            <div class="nav-links">
+                              <a class="prev page-numbers" href="#"><i class="fas fa-angle-left"></i></a>
+                              <a class="page-numbers" href="#">1</a>
+                              <span aria-current="page" class="page-numbers current">2</span>
+                              <a class="page-numbers" href="#">3</a>
+                              <a class="page-numbers" href="#">4</a>
+                              <a class="next page-numbers" href="#"><i class="fas fa-angle-right"></i></a>
+                            </div>
+                          </nav>
+                        </div>-->
                       </div>
                     </div>
                   </div>
+
                   <div class="row-left">
-                    <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-1">MODIFICAR</a>
+                    <a href="#" class="boton-intec" data-toggle="modal" data-target="#">AGREGAR</a>
                   </div>
+
                 </div>
               </div>
             </form>
@@ -452,204 +470,67 @@ $estadoProcedencia = json_encode($resultadoEstado);
       </div>
     </div>
   </div>
+
   <!-- inicio de modales -->
   <div class="apply-popup">
     <div class="modal fade" id="apply-popup-id-1" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title"><i data-feather="edit"></i>APLICAR CAMBIOS</h5>
+            <h5 class="modal-title"><i data-feather="edit"></i>INFORMACION DE CONTACTO</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
             <form action="#">
-              <div class="form-group">
-                <select class="form-control" name="tipoContacto" id="tipoContacto" onchange="validarTipoContacto()">
-                  <option value="">SELECCIONE UN TIPO DE CONTACTO</option>
-                  <?php foreach ($resultadoContacto as $contacto): ?>
-                    <option value="<?= $contacto['iIdConstante'] . '-' . $contacto['iClaveCatalogo'] ?>">
-                      [<?= $contacto['iClaveCatalogo'] ?>] -
-                      <?= $contacto['vchDescripcion'] ?>
-                    </option>
-                  <?php endforeach; ?>
-                </select>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="dActivo" name="dActivo" placeholder="activo"
-                    style="text-transform: uppercase" pattern="[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+"
-                    title="SOLO SE PERMITEN LETRAS">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="ilUsuarioUltModificacion" name="ilUsuarioUltModificacion"
-                    placeholder="USER ULT MODIF." style="text-transform: uppercase">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="fecha ultima " id="dtFechaUltModificacion"
-                    name="dtFechaUltModificacion" style="text-transform: uppercase">
-                </div>
-              </div>
-              <button class="button primary-bg btn-block">APLICAR</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+              <div class="row">
 
-  <div class="apply-popup">
-    <div class="modal fade" id="apply-popup-id-2" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title"><i data-feather="edit"></i>APLICAR CAMBIOS</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form action="#">
-              <div class="form-group">
-                <select class="form-control" name="tipoContacto" id="tipoContacto" onchange="validarTipoContacto()">
-                  <option value="">SELECCIONE UN TIPO DE CONTACTO</option>
-                  <?php foreach ($resultadoContacto as $contacto): ?>
-                    <option value="<?= $contacto['iIdConstante'] . '-' . $contacto['iClaveCatalogo'] ?>">
-                      [<?= $contacto['iClaveCatalogo'] ?>] -
-                      <?= $contacto['vchDescripcion'] ?>
-                    </option>
-                  <?php endforeach; ?>
-                </select>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="dActivo" name="dActivo" placeholder="activo"
-                    style="text-transform: uppercase" pattern="[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+"
-                    title="SOLO SE PERMITEN LETRAS">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input id="tipoContacto" type="text" class="form-control" placeholder="TIPO CONTACTO" readonly>
+                  </div>
                 </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="ilUsuarioUltModificacion" name="ilUsuarioUltModificacion"
-                    placeholder="USER ULT MODIF." style="text-transform: uppercase">
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input id="tipoContacto" class="form-control" name="tipoContacto" onchange="validarTipoContacto"
+                      placeholder="CONTACTO" readonly>
+                  </div>
                 </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="fecha ultima " id="dtFechaUltModificacion"
-                    name="dtFechaUltModificacion" style="text-transform: uppercase">
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="dActivo" name="dActivo" placeholder="activo"
+                      style="text-transform: uppercase" pattern="[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+"
+                      title="SOLO SE PERMITEN LETRAS" readonly>
+                  </div>
                 </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="ilUsuarioUltModificacion"
+                      name="ilUsuarioUltModificacion" placeholder="USER ULT MODIF." style="text-transform: uppercase"
+                      readonly>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="fecha ultima " id="dtFechaUltModificacion"
+                      name="dtFechaUltModificacion" style="text-transform: uppercase" readonly>
+                  </div>
+                </div>
+
               </div>
-              <button class="button primary-bg btn-block">APLICAR</button>
+              <button class="boton-intec">MODIFICAR</button>
             </form>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="apply-popup">
-    <div class="modal fade" id="apply-popup-id-3" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title"><i data-feather="edit"></i>APLICAR CAMBIOS</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form action="#">
-              <div class="form-group">
-                <select class="form-control" name="tipoContacto" id="tipoContacto" onchange="validarTipoContacto()">
-                  <option value="">SELECCIONE UN TIPO DE CONTACTO</option>
-                  <?php foreach ($resultadoContacto as $contacto): ?>
-                    <option value="<?= $contacto['iIdConstante'] . '-' . $contacto['iClaveCatalogo'] ?>">
-                      [<?= $contacto['iClaveCatalogo'] ?>] -
-                      <?= $contacto['vchDescripcion'] ?>
-                    </option>
-                  <?php endforeach; ?>
-                </select>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="dActivo" name="dActivo" placeholder="activo"
-                    style="text-transform: uppercase" pattern="[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+"
-                    title="SOLO SE PERMITEN LETRAS">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="ilUsuarioUltModificacion" name="ilUsuarioUltModificacion"
-                    placeholder="USER ULT MODIF." style="text-transform: uppercase">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="fecha ultima " id="dtFechaUltModificacion"
-                    name="dtFechaUltModificacion" style="text-transform: uppercase">
-                </div>
-              </div>
-              <button class="button primary-bg btn-block">APLICAR</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="apply-popup">
-    <div class="modal fade" id="apply-popup-id-4" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title"><i data-feather="edit"></i>APLICAR CAMBIOS</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form action="#">
-              <div class="form-group">
-                <select class="form-control" name="tipoContacto" id="tipoContacto" onchange="validarTipoContacto()">
-                  <option value="">SELECCIONE UN TIPO DE CONTACTO</option>
-                  <?php foreach ($resultadoContacto as $contacto): ?>
-                    <option value="<?= $contacto['iIdConstante'] . '-' . $contacto['iClaveCatalogo'] ?>">
-                      [<?= $contacto['iClaveCatalogo'] ?>] -
-                      <?= $contacto['vchDescripcion'] ?>
-                    </option>
-                  <?php endforeach; ?>
-                </select>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="dActivo" name="dActivo" placeholder="activo"
-                    style="text-transform: uppercase" pattern="[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+"
-                    title="SOLO SE PERMITEN LETRAS">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="ilUsuarioUltModificacion" name="ilUsuarioUltModificacion"
-                    placeholder="USER ULT MODIF." style="text-transform: uppercase">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="fecha ultima " id="dtFechaUltModificacion"
-                    name="dtFechaUltModificacion" style="text-transform: uppercase">
-                </div>
-              </div>
-              <button class="button primary-bg btn-block">APLICAR</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- fianal de modales -->
 
   <!-- Footer -->
   <footer class="footer-bg">
