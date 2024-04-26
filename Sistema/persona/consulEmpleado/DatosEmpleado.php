@@ -5,8 +5,6 @@ require_once ('../../includes/load.php');
 session_start();
 
 
-
-
 if (isset($_SESSION['user_id'])) {
     // Si el usuario está autenticado, no se hace nada
 } else {
@@ -235,7 +233,7 @@ if (isset($_SESSION['user_id'])) {
                                     href="../consulEmpleado/consultaPuesto.php ">PUESTO</a></label>
                             <label style="align-self: flex-end;"><a href="consultaDomicilio.php">DOMICILIO</a></label>
                             <label style="align-self: flex-end;"><a href="consultaContacto.php">CONTACTO</a></label>
-                            <label style="align-self: flex-end;"><a href="consultaPersona.php">DOCUMENTOS</a></label>
+                            <label style="align-self: flex-end;"><a href="consultaDocumentos.php">DOCUMENTOS</a></label>
                         </div>
                     </div>
                     <!-- fin de pestañas de navegación-->
@@ -322,14 +320,19 @@ if (isset($_SESSION['user_id'])) {
                                     function MostrarDatos(bResultado) {
                                         var idInput = document.getElementById('idInput');
                                         idInput.value = bResultado.iIdEmpleado || '';
+
                                         var nombreInput = document.getElementById('vchNombre');
                                         nombreInput.value = bResultado.vchNombre || '';
+
                                         var vchPrimerApellido = document.getElementById('vchPrimerApellido');
                                         vchPrimerApellido.value = bResultado.vchPrimerApellido || '';
+
                                         var vchSegundoApellido = document.getElementById('vchSegundoApellido');
                                         vchSegundoApellido.value = bResultado.vchSegundoApellido || '';
+
                                         var vchPuesto = document.getElementById('vchPuesto');
                                         vchPuesto.value = bResultado.vchPuesto || '';
+
                                         var dFechaIngresoOriginal = bResultado.dFechaIngreso.date;
                                         var fechaIngreso = new Date(dFechaIngresoOriginal);
                                         var fechaIngresoFinal = fechaIngreso.toLocaleDateString('es-ES', {
@@ -337,12 +340,15 @@ if (isset($_SESSION['user_id'])) {
                                             month: '2-digit',
                                             year: 'numeric'
                                         });
-                                        var dFechaIngreso = document.getElementById('dFechaIngreso');
-                                        dFechaIngreso.value = fechaIngresoFinal;
+                                        var dFechaIngresoUlt = document.getElementById('dtFechaIngreso');
+                                        dFechaIngresoUlt.value = fechaIngresoFinal;
+
                                         var vchEstatusEmpleado = document.getElementById('iIdEstatusEmpleado');
                                         vchEstatusEmpleado.value = bResultado.vchEstatusEmpleado || '';
+
                                         var vchNSS = document.getElementById('vchNSS');
                                         vchNSS.value = bResultado.vchNSS || '';
+
                                         var dFechaPromocionOriginal = bResultado.dtFechaUltPromocion.date;
                                         var fechaPromocion = new Date(dFechaPromocionOriginal);
                                         var fechaIPromocionFinal = fechaPromocion.toLocaleDateString('es-ES', {
@@ -353,7 +359,7 @@ if (isset($_SESSION['user_id'])) {
                                         var dFechaPromocion = document.getElementById('dtFechaUltPromocion');
                                         dFechaPromocion.value = fechaIPromocionFinal || '';
 
-                                        var vchSede = document.getElementById('iIdSede');
+                                        var vchSede = document.getElementById('iIdSedeForm');
                                         vchSede.value = bResultado.vchSede || '';
 
                                         var dFechaBajaOriginal = bResultado.dtFechaBaja.date;
@@ -365,14 +371,20 @@ if (isset($_SESSION['user_id'])) {
                                         });
                                         var dFechBaja = document.getElementById('dtFechaBaja');
                                         dFechBaja.value = fechaBajaFinal === '01/01/1900' ? '' : fechaBajaFinal;
+
                                         var vchUsuario = document.getElementById('vchUsuarioUltModificacion');
                                         vchUsuario.value = bResultado.vchUsuarioUltModificacion || '';
+
                                         var dFechaUltModifOriginal = bResultado.dtFechaUltModificacion.date;
                                         var fechaModif = new Date(dFechaUltModifOriginal);
-                                        var fechaModifFinal = fechaModif.toLocaleDateString('es-ES', {
+                                        var fechaModifFinal = fechaModif.toLocaleString('es-ES', {
                                             day: '2-digit',
                                             month: '2-digit',
-                                            year: 'numeric'
+                                            year: 'numeric',
+                                            hour: '2-digit',
+                                            minute: '2-digit',
+                                            second: '2-digit',
+                                            hour12: false
                                         });
                                         var dFechaModificacion = document.getElementById('dtFechaUltModificacion');
                                         dFechaModificacion.value = fechaModifFinal === '01/01/1900' ? '' : fechaModifFinal;
@@ -380,8 +392,10 @@ if (isset($_SESSION['user_id'])) {
                                         //Datos Persona
                                         var vchRFC = document.getElementById('vchRFC');
                                         vchRFC.value = bResultado.vchRFC || '';
+
                                         var vchCURP = document.getElementById('vchCURP');
                                         vchCURP.value = bResultado.vchCURP || '';
+
                                         var dFechaNacimientoOriginal = bResultado.dFechaNacimiento.date;
                                         var fechaNacimiento = new Date(dFechaNacimientoOriginal);
                                         var fechaNacimientoFinal = fechaNacimiento.toLocaleDateString('es-ES', {
@@ -391,17 +405,23 @@ if (isset($_SESSION['user_id'])) {
                                         });
                                         var dFechaNacimiento = document.getElementById('dFechaNacimiento');
                                         dFechaNacimiento.value = fechaNacimientoFinal === '01/01/1900' ? '' : fechaNacimientoFinal;
+
                                         var vchGenero = document.getElementById('iIdGenero');
                                         vchGenero.value = bResultado.vchGenero || '';
+
                                         var vchNacionalidad = document.getElementById('iIdNacionalidad');
                                         vchNacionalidad.value = bResultado.vchNacionalidad || '';
+
                                         //Datos Fiscales
                                         var vchTipoPersona = document.getElementById('iIdTipoPersona');
                                         vchTipoPersona.value = bResultado.vchTipoPersona || '';
+
                                         var vchRegimen = document.getElementById('vchRegimen');
                                         vchRegimen.value = bResultado.vchDescripcionRegimen;
+
                                         var vchUsoFiscal = document.getElementById('vchUsoFiscal');
                                         vchUsoFiscal.value = bResultado.vchDescripcionUso;
+
                                         var iCodigoPostalFiscal = document.getElementById('iCodigoPostalFiscal');
                                         iCodigoPostalFiscal.value = bResultado.iCodigoPostalFiscal;
 
@@ -465,15 +485,6 @@ if (isset($_SESSION['user_id'])) {
                                                         disabled />
                                                 </div>
                                             </div>
-                                            <!--<div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label class="col-form-label">TIPO
-                                                        DE
-                                                        PERSONA </label>
-                                                    <input type="text" class="form-control" placeholder="TIPO DE PERSONA"
-                                                        id="iIdTipoPersona" disabled />
-                                                </div>
-                                            </div>-->
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label class="col-form-label">FECHA
@@ -502,7 +513,7 @@ if (isset($_SESSION['user_id'])) {
                                                 <div class="form-group">
                                                     <label class="col-form-label">REGIMEN
                                                         FISCAL </label>
-                                                    <input type="text" class="form-control" placeholder="REGIMEN FISCAL"
+                                                    <input type="text" class="form-control" placeholder=""
                                                         id="vchRegimen" disabled />
                                                 </div>
                                             </div>
@@ -510,7 +521,7 @@ if (isset($_SESSION['user_id'])) {
                                                 <div class="form-group">
                                                     <label class=" col-form-label">USO
                                                         FISCAL </label>
-                                                    <input type="text" class="form-control" placeholder="USO FISCAL"
+                                                    <input type="text" class="form-control" placeholder=""
                                                         id="vchUsoFiscal" disabled />
                                                 </div>
                                             </div>
@@ -518,7 +529,7 @@ if (isset($_SESSION['user_id'])) {
                                                 <div class="form-group">
                                                     <label class="col-form-label">C.P.
                                                         FISCAL </label>
-                                                    <input type="text" class="form-control" placeholder="C. P. FISCAL"
+                                                    <input type="text" class="form-control" placeholder=""
                                                         id="iCodigoPostalFiscal" disabled />
                                                 </div>
                                             </div>
@@ -533,7 +544,7 @@ if (isset($_SESSION['user_id'])) {
                                                 <div class="form-group">
                                                     <label class="col-form-label"> FECHA DE INGRESO </label>
                                                     <input type="text" class="form-control" placeholder="FECHA DE INGRESO"
-                                                        id="dFechaIngreso" disabled>
+                                                        id="dtFechaIngreso" disabled>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -561,7 +572,7 @@ if (isset($_SESSION['user_id'])) {
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label class="col-form-label">SEDE </label>
-                                                    <input type="text" class="form-control" placeholder="SEDE" id="iIdSede"
+                                                    <input type="text" class="form-control" placeholder="SEDE" id="iIdSedeForm"
                                                         disabled>
                                                 </div>
                                             </div>
@@ -757,13 +768,13 @@ if (isset($_SESSION['user_id'])) {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="#">
+                        <form class="dashboard-form" id="BajaEmpleado">
                             <?php
                             // Calcular la fecha actual
                             $fechaActual = date('Y-m-d');
 
                             // Restar 18 años a la fecha actual
-                            $fechaMinima = date('Y-m-d', strtotime('-18 years', strtotime($fechaActual)));
+                            $fechaMinima = date('Y-m-d', strtotime('-2 years', strtotime($fechaActual)));
 
                             // Establecer la fecha máxima como la fecha actual  
                             $fechaMaxima = $fechaActual;
@@ -774,11 +785,51 @@ if (isset($_SESSION['user_id'])) {
                             <div class="form-group">
                                 <option value="">FECHA DE BAJA</option>
                                 <input type="date" class="form-control" placeholder="FECHA DE BAJA" name="fechaIngreso"
-                                    id="dFechaIngreso" pattern="\d{4}-\d{2}-\d{2}"
+                                    id="dtFechaBajaModificacion" pattern="\d{4}-\d{2}-\d{2}"
                                     title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required
-                                    min="<?php echo $fechaMinima; ?>" max="<?php echo $fechaMaxima; ?>" maxlength="10">
+                                    min="<?php echo $fechaMinima; ?>" max="<?php echo $fechaMaxima; ?>" maxlength="10"
+                                       value = "<?php echo date ('Y-m-d');?>">
                             </div>
-                            <button class="button primary-bg btn-block">APLICAR</button>
+
+                            <script>
+                                function ValidarBaja(){
+                                    localStorage.clear();
+
+                                    var datosBajaEmpleado = {
+                                        fechaBaja : document.getElementById('dtFechaBajaModificacion'),
+                                        proceso : 3 //baja de empleado
+                                    };
+
+                                    var datosBaja = new XMLHttpRequest();
+
+                                    datosBaja.open('POST', 'prcActualizaEmpleado.php', true);
+                                    datosBaja.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                                    var formData = new URLSearchParams(datosBajaEmpleado).toString();
+
+                                    datosBaja.send(formData);
+
+                                    datosBaja.onload = function(){
+                                        if (datosBaja.status === 200){
+                                            var respuesta = JSON.parse(datosBaja.responseText);
+                                            if (respuesta.bResultado === 1){
+                                                console.log(respuesta);
+                                                localStorage.setItem('datosBaja', JSON.stringify(datosBajaEmpleado));
+                                                window.location.href = "consultaEmpleado.php";
+                                            }else {
+                                                console.error("Mensaje de error: "+respuesta.vchMensaje);
+                                                alert(respuesta.vchMensaje);
+                                            }
+                                        }else {
+                                            console.error("Error en la solicitud al servidor");
+                                        }
+                                    }
+                                }
+                            </script>
+                            <button class="button primary-bg btn-block" id = "botonAplicar" >APLICAR</button>
+                            <script>
+                                document.getElementById('botonAplicar').addEventListener('click', ValidarBaja)
+                            </script>
                         </form>
                     </div>
                 </div>

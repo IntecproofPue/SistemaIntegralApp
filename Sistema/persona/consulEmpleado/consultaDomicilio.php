@@ -347,6 +347,24 @@ $estadoProcedencia = json_encode($resultadoEstado);
                 var vchNoInt = document.getElementById('vchNoInt');
                 vchNoInt.value = bResultado[i].vchNumeroInterior || '';
 
+                var iIdUsuarioUltModificacion = document.getElementById('vchUsuarioUltModificacion');
+                iIdUsuarioUltModificacion.value = bResultado[i].vchUsuarioUltModif   || '';
+
+
+                var dFechaUltModifOriginal = bResultado[i].dtFechaUltModificacion.date;
+                var fechaModif = new Date(dFechaUltModifOriginal);
+                var fechaModifFinal = fechaModif.toLocaleString('es-ES', {
+                      day: '2-digit',
+                      month: '2-digit',
+                      year: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      second: '2-digit',
+                      hour12: false
+                });
+                var dFechaModificacion = document.getElementById('dtFechaUltModificacion');
+                dFechaModificacion.value = fechaModifFinal || '';
+
               }
             }
 
@@ -386,56 +404,49 @@ $estadoProcedencia = json_encode($resultadoEstado);
                     <div class="col-sm-4">
                       <div class="form-group">
                         <label class="col-form-label">MUNICIPIO </label>
-                        <input id="vchMunicipio" type="text" class="form-control" placeholder="MUNICIPIO" readonly>
+                        <input id="vchMunicipio" type="text" class="form-control" placeholder="MUNICIPIO" disabled>
                       </div>
                     </div>
                     <div class="col-sm-4">
                       <div class="form-group">
                         <label class="col-form-label">LOCALIDAD </label>
-                        <input id="vchLocalidad" type="text" class="form-control" placeholder="LOCALIDAD" readonly>
+                        <input id="vchLocalidad" type="text" class="form-control" placeholder="LOCALIDAD" disabled>
                       </div>
                     </div>
                     <div class="col-sm-4">
                       <div class="form-group">
                         <label class="col-form-label">COLONIA </label>
-                        <input id="vchColonia" type="text" class="form-control" placeholder="COLONIA" readonly>
+                        <input id="vchColonia" type="text" class="form-control" placeholder="COLONIA" disabled>
                       </div>
                     </div>
                     <div class="col-sm-4">
                       <div class="form-group">
                         <label class="col-form-label">C.P.</label>
-                        <input id="iIdCodigoPostal" type="text" class="form-control" placeholder="CÓDIGO POSTAL"
-                          readonly>
+                        <input id="iIdCodigoPostal" type="text" class="form-control" placeholder="CÓDIGO POSTAL" disabled>
                       </div>
                     </div>
                     <div class="col-sm-4">
                       <div class="form-group">
                         <label class="col-form-label">CALLE </label>
-                        <input id="vchCalle" type="text" class="form-control" placeholder="CALLE" readonly>
+                        <input id="vchCalle" type="text" class="form-control" placeholder="CALLE" disabled>
                       </div>
                     </div>
                     <div class="col-sm-4">
                       <div class="form-group">
                         <label class="col-form-label">No. EXTERIOR </label>
-                        <input id="vchNoExt" type="text" class="form-control" placeholder="NÚMERO EXTERIOR" readonly>
+                        <input id="vchNoExt" type="text" class="form-control" placeholder="NÚMERO EXTERIOR" disabled>
                       </div>
                     </div>
                     <div class="col-sm-4">
                       <div class="form-group">
                         <label class="col-form-label">No. INTERIOR </label>
-                        <input id="vchNoInt" type="text" class="form-control" placeholder="NÚMERO INTERIOR" readonly />
+                        <input id="vchNoInt" type="text" class="form-control" placeholder="NÚMERO INTERIOR" disabled />
                       </div>
                     </div>
                     <div class="col-sm-4">
                       <div class="form-group">
                         <label class="col-form-label">LETRA </label>
-                        <input id="vchLetra" class="form-control" placeholder="LETRA" readonly>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label class="col-form-label"> ESTATUS DE DOMICILIO </label>
-                        <input type="text" class="form-control" placeholder="ESTATUS" id="iIdEstatusEmpleado" disabled>
+                        <input id="vchLetra" class="form-control" placeholder="LETRA" disabled>
                       </div>
                     </div>
                     <div class="col-md-4">
@@ -454,9 +465,6 @@ $estadoProcedencia = json_encode($resultadoEstado);
                           id="dtFechaUltModificacion" disabled />
                       </div>
                     </div>
-                    <div class="row-left">
-                    <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-1">MODIFICAR</a>
-                  </div>
                     <!--
                     <script>
 
@@ -507,6 +515,9 @@ $estadoProcedencia = json_encode($resultadoEstado);
                     </script>-->
                     
                   </div>
+                    <div class="row-left">
+                        <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-1">MODIFICAR</a>
+                    </div>
                 </div>
               </div>
             </form>
