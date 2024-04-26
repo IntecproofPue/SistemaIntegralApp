@@ -389,37 +389,6 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                 </div>
                             </div>
                         </form>
-                        <form action="#" method="post" class="dashboard-form">
-                            <div class="dashboard-section basic-info-input">
-                                <div class="row">
-                                    <div class="form-group">
-                                        <label class="col-sm-4 col-form-label"></label>
-                                        <div class="col-sm-4">
-                                            <button class="button">MODIFICACION</button>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4 col-form-label"></label>
-                                        <div class="col-sm-4">
-                                            <button class="button">BAJA</button>
-                                        </div>
-                                    </div>
-                                    <div class="form-group ">
-                                        <label class="col-sm-4 col-form-label"></label>
-                                        <div class="col-sm-4">
-                                            <button class="button">REACTIVACION</button>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-4 col-form-label"></label>
-                                        <div class="col-sm-4">
-                                            <button class="button">PROMOCION</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <!-- </div>-->
                     </div>
                 </div>
             </div>

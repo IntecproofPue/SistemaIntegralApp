@@ -52,14 +52,10 @@ if (isset($_SESSION['user_id'])) {
 
     <style>
         .selected {
-            color: #007bff;
-            /* Cambia este color por el que desees */
-            font-weight: bold;
-            /* O cualquier otro estilo que desees */
-            /* Otros estilos de resaltado */
+            color: #007bff;             /* Cambia este color por el que desees */
+            font-weight: bold;          /* O cualquier otro estilo que desees */
+            
         }
-
-
         .row .col-md-4 {
             margin-top: -13px;
             margin-bottom: -13px;
@@ -97,8 +93,40 @@ if (isset($_SESSION['user_id'])) {
             text-decoration: none;
             color: white;*/
         .update-photo {
-            float: right;
+            float: center;
 
+        }
+
+        .update-photo {
+            position: relative;
+            display: inline-block;
+        }
+
+        .edit-text {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1;                             /* asegura que el texto esté sobre la imagen */
+            
+        }
+
+        .image {
+            display: block;
+            max-width: 100%;
+        }
+
+        input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -111,7 +139,7 @@ if (isset($_SESSION['user_id'])) {
                 <div class="col">
                     <div class="header-top">
                         <div class="header-top">
-                            <img class="image" src="Sistema/dashboard/images/user-1.jpg" alt="">
+                            <img src="../../images/logo-2.png" alt="">
                         </div>
                         <div class="header-top-toggler">
                             <div class="header-top-toggler-button"></div>
@@ -174,9 +202,6 @@ if (isset($_SESSION['user_id'])) {
                                 </a>
                                 <div class="account-card">
                                     <div class="header-top-account-info">
-                                        <div class="update-photo">
-                                            <img class="image" src="../../user-1.jpg" alt="">
-                                        </div>
                                         <div class="account-body">
                                             <h5><a href="#">
                                                     <?php echo $nombrePersona; ?>
@@ -389,11 +414,12 @@ if (isset($_SESSION['user_id'])) {
                                 <div id="information" class="row justify-content-center">
                                     <div class="col-md-10">
                                         <label class="col-form-label"><i data-feather="user-check"></i>
-                                            <h6>DATOS DE EMPLEADO</h6>
-                                        </label>
+                                        
                                         <div class="update-photo">
                                             <img class="image" src="../../user-1.jpg" alt="">
                                         </div>
+                                            <h6>DATOS DE EMPLEADO</h6>
+                                        </label>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
@@ -592,7 +618,7 @@ if (isset($_SESSION['user_id'])) {
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h5 class="modal-title"><i data-feather="edit"></i>CAMBIOS DATOS GENERALES</h5>
+                        <h5 class="modal-title"><i data-feather="edit"></i>CAMBIOS DATOS GENERALES DE EMPLEADO</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -621,11 +647,11 @@ if (isset($_SESSION['user_id'])) {
                                 <option value="">FECHA DE INGRESO</option>
                                 <input type="date" class="form-control" placeholder="FECHA DE INGRESO"
                                     name="fechaIngreso" id="dFechaIngreso" pattern="\d{4}-\d{2}-\d{2}"
-                                    title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required
+                                    title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" 
                                     min="<?php echo $fechaMinima; ?>" max="<?php echo $fechaMaxima; ?>" maxlength="10">
                             </div>
                             <div class="form-group">
-                                <select class="form-control" Name="iIdSede" id="iIdSede" required>
+                                <select class="form-control" Name="iIdSede" id="iIdSede" >
                                     <option value="">SELECCIONE UNA SEDE</option>
                                     <?php foreach ($resultadoSede as $sede): ?>
                                         <option value="<?= $sede['iIdConstante'] . '-' . $sede['iClaveCatalogo'] ?>">
@@ -634,7 +660,17 @@ if (isset($_SESSION['user_id'])) {
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-                            <button class="button primary-bg btn-block">APLICAR</button>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="vchNSS" id="vchNSS" title="CONTRATADO POR"
+                                    style="text-transform: uppercase" placeholder="CONTRATADO POR">
+                            </div>
+                            <div class="update-photo" style="position: relative;">
+                            <label><img class="image" src="../../user-1.jpg" alt="">
+                                <span class="edit-text">EDITAR AVATAR</span>
+                                <input for="up-cv" type="file" class="upload-input" id="up-cv" accept="image/*" style="display: none;" onchange="updateImage(this)">
+                                </label>
+                            </div>
+                            <button class="boton-intec">APLICAR</button>
                         </form>
                     </div>
                 </div>
@@ -906,6 +942,7 @@ if (isset($_SESSION['user_id'])) {
             });
         }
     </script>
+
 
 </body>
 
