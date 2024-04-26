@@ -112,7 +112,81 @@ $estadoProcedencia = json_encode($resultadoEstado);
       /* Cambia este color por el que desees */
       font-weight: bold;
       /* O cualquier otro estilo que desees */
-      /* Otros estilos de resaltado */
+
+    }
+
+    .row .col-md-4 {
+      margin-top: -13px;
+      margin-bottom: -13px;
+
+    }
+
+    .boton-intec {
+      /* border: none;
+            color: black;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 7px;*/
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: solid;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .boton-intec:hover {
+      background-color: #0b7dda;
+    }
+
+    .boton-intec:active {
+      background-color: #3e8e41;
+    }
+
+    /* width: 10%;
+            background-color: navy;
+            padding: 3px ;
+            border-radius: 7px;
+            color: navy;
+            text-decoration: none;
+            color: white;*/
+    .update-photo {
+      float: center;
+
+    }
+
+    .update-photo {
+      position: relative;
+      display: inline-block;
+    }
+
+    .edit-text {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      background-color: rgba(255, 255, 255, 0.7);
+      padding: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 1;
+      /* asegura que el texto esté sobre la imagen */
+
+    }
+
+    .image {
+      display: block;
+      max-width: 100%;
+    }
+
+    input[type="file"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
     }
   </style>
 
@@ -367,23 +441,8 @@ $estadoProcedencia = json_encode($resultadoEstado);
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </form>
-            <form action="#" method="post" class="dashboard-form">
-              <div class="dashboard-section basic-info-input">
-                <div class="row">
-                  <div class="job-apply-buttons">
-                    <a href="#" class="apply" data-toggle="modal" data-target="#apply-popup-id-1">MODIFICAR</a>
-                  </div>
-                  <div class="job-apply-buttons">
-                    <a href="#" class="apply" data-toggle="modal" data-target="#apply-popup-id-2">BAJA</a>
-                  </div>
-                  <div class="job-apply-buttons">
-                    <a href="#" class="apply" data-toggle="modal" data-target="#apply-popup-id-3">REACTIVACION</a>
-                  </div>
-                  <div class="job-apply-buttons">
-                    <a href="#" class="apply" data-toggle="modal" data-target="#apply-popup-id-4">PROMOCION</a>
+                  <div class="row-left">
+                    <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-1">MODIFICAR</a>
                   </div>
                 </div>
               </div>
@@ -456,7 +515,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
           </div>
           <div class="modal-body">
             <form action="#">
-            <div class="form-group">
+              <div class="form-group">
                 <select class="form-control" name="tipoContacto" id="tipoContacto" onchange="validarTipoContacto()">
                   <option value="">SELECCIONE UN TIPO DE CONTACTO</option>
                   <?php foreach ($resultadoContacto as $contacto): ?>
@@ -505,7 +564,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
           </div>
           <div class="modal-body">
             <form action="#">
-            <div class="form-group">
+              <div class="form-group">
                 <select class="form-control" name="tipoContacto" id="tipoContacto" onchange="validarTipoContacto()">
                   <option value="">SELECCIONE UN TIPO DE CONTACTO</option>
                   <?php foreach ($resultadoContacto as $contacto): ?>
@@ -554,7 +613,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
           </div>
           <div class="modal-body">
             <form action="#">
-            <div class="form-group">
+              <div class="form-group">
                 <select class="form-control" name="tipoContacto" id="tipoContacto" onchange="validarTipoContacto()">
                   <option value="">SELECCIONE UN TIPO DE CONTACTO</option>
                   <?php foreach ($resultadoContacto as $contacto): ?>

@@ -89,7 +89,81 @@ $estadoProcedencia = json_encode($resultadoEstado);
       /* Cambia este color por el que desees */
       font-weight: bold;
       /* O cualquier otro estilo que desees */
-      /* Otros estilos de resaltado */
+
+    }
+
+    .row .col-md-4 {
+      margin-top: -13px;
+      margin-bottom: -13px;
+
+    }
+
+    .boton-intec {
+      /* border: none;
+            color: black;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 7px;*/
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: solid;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .boton-intec:hover {
+      background-color: #0b7dda;
+    }
+
+    .boton-intec:active {
+      background-color: #3e8e41;
+    }
+
+    /* width: 10%;
+            background-color: navy;
+            padding: 3px ;
+            border-radius: 7px;
+            color: navy;
+            text-decoration: none;
+            color: white;*/
+    .update-photo {
+      float: center;
+
+    }
+
+    .update-photo {
+      position: relative;
+      display: inline-block;
+    }
+
+    .edit-text {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      background-color: rgba(255, 255, 255, 0.7);
+      padding: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 1;
+      /* asegura que el texto esté sobre la imagen */
+
+    }
+
+    .image {
+      display: block;
+      max-width: 100%;
+    }
+
+    input[type="file"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
     }
   </style>
 
@@ -204,87 +278,87 @@ $estadoProcedencia = json_encode($resultadoEstado);
   </header>
 
   <script>
-      document.addEventListener('DOMContentLoaded', function (){
+    document.addEventListener('DOMContentLoaded', function () {
 
-          console.log ("Está en los datos del domicilio");
+      console.log("Está en los datos del domicilio");
 
-          var DatosEmpleado = localStorage.getItem('datosConsultaIndividual');
+      var DatosEmpleado = localStorage.getItem('datosConsultaIndividual');
 
-          var bResultadoEmpleado = JSON.parse(DatosEmpleado);
-          var iIdPersonaDomicilio = bResultadoEmpleado.iIdPersona;
+      var bResultadoEmpleado = JSON.parse(DatosEmpleado);
+      var iIdPersonaDomicilio = bResultadoEmpleado.iIdPersona;
 
-          // console.log(iIdPersonaDomicilio);
+      // console.log(iIdPersonaDomicilio);
 
-          var datosDomicilio = new XMLHttpRequest();
+      var datosDomicilio = new XMLHttpRequest();
 
-          datosDomicilio.open('POST', 'prcConsultaDomicilio.php', true);
+      datosDomicilio.open('POST', 'prcConsultaDomicilio.php', true);
 
-          var formData = new URLSearchParams();
-          formData.append('iIdPersonaDomicilio', iIdPersonaDomicilio);
+      var formData = new URLSearchParams();
+      formData.append('iIdPersonaDomicilio', iIdPersonaDomicilio);
 
-          //console.log(formData);
+      //console.log(formData);
 
-          // Enviar la solicitud
-          datosDomicilio.send(formData);
+      // Enviar la solicitud
+      datosDomicilio.send(formData);
 
-          // Manejar la respuesta
-          datosDomicilio.onload = function() {
-              if (datosDomicilio.status === 200) {
-                  console.log ('Respuesta exitosa');
-                  var respuesta = JSON.parse(datosDomicilio.responseText);
-                  console.log(respuesta);
+      // Manejar la respuesta
+      datosDomicilio.onload = function () {
+        if (datosDomicilio.status === 200) {
+          console.log('Respuesta exitosa');
+          var respuesta = JSON.parse(datosDomicilio.responseText);
+          console.log(respuesta);
 
-                  if (respuesta[0].bResultado === 1) {
-                      //alert(respuesta[0].vchMensaje);
-                      localStorage.setItem('datosConsultaDomicilio',JSON.stringify(respuesta));
+          if (respuesta[0].bResultado === 1) {
+            //alert(respuesta[0].vchMensaje);
+            localStorage.setItem('datosConsultaDomicilio', JSON.stringify(respuesta));
 
-                      var datosDomicilioConsulta = localStorage.getItem('datosConsultaDomicilio',JSON.stringify(respuesta))
-                      //console.log (datosDomicilioConsulta);
+            var datosDomicilioConsulta = localStorage.getItem('datosConsultaDomicilio', JSON.stringify(respuesta))
+            //console.log (datosDomicilioConsulta);
 
-                      if (datosDomicilioConsulta){
-                          var bResultado = JSON.parse(datosDomicilioConsulta);
-                          console.log('Objeto parseado: ', bResultado);
+            if (datosDomicilioConsulta) {
+              var bResultado = JSON.parse(datosDomicilioConsulta);
+              console.log('Objeto parseado: ', bResultado);
 
-                          for (var i= 0; i<bResultado.length; i++){
-                              var vchEntidad = document.getElementById('vchEntidad');
-                              vchEntidad.value = bResultado[i].vchEntidadFederativa || '';
+              for (var i = 0; i < bResultado.length; i++) {
+                var vchEntidad = document.getElementById('vchEntidad');
+                vchEntidad.value = bResultado[i].vchEntidadFederativa || '';
 
-                              var vchMunicipio = document.getElementById('vchMunicipio');
-                              vchMunicipio.value = bResultado[i].vchMunicipio || '';
+                var vchMunicipio = document.getElementById('vchMunicipio');
+                vchMunicipio.value = bResultado[i].vchMunicipio || '';
 
-                              var vchLocalidad = document.getElementById('vchLocalidad');
-                              vchLocalidad.value = bResultado[i].vchLocalidad || '';
+                var vchLocalidad = document.getElementById('vchLocalidad');
+                vchLocalidad.value = bResultado[i].vchLocalidad || '';
 
-                              var iIdCodigoPostal = document.getElementById('iIdCodigoPostal');
-                              iIdCodigoPostal.value = bResultado[i].iCodigoPostal || '';
+                var iIdCodigoPostal = document.getElementById('iIdCodigoPostal');
+                iIdCodigoPostal.value = bResultado[i].iCodigoPostal || '';
 
-                              var vchColonia = document.getElementById('vchColonia');
-                              vchColonia.value = bResultado[i].vchColonia|| '';
+                var vchColonia = document.getElementById('vchColonia');
+                vchColonia.value = bResultado[i].vchColonia || '';
 
-                              var vchCalle = document.getElementById('vchCalle');
-                              vchCalle.value = bResultado[i].vchCalle || '';
+                var vchCalle = document.getElementById('vchCalle');
+                vchCalle.value = bResultado[i].vchCalle || '';
 
-                              var vchLetra = document.getElementById('vchLetra');
-                              vchLetra.value = bResultado[i].vchLetra || '';
+                var vchLetra = document.getElementById('vchLetra');
+                vchLetra.value = bResultado[i].vchLetra || '';
 
-                              var vchNoExt = document.getElementById('vchNoExt');
-                              vchNoExt.value = bResultado[i].vchNumeroExterior || '';
+                var vchNoExt = document.getElementById('vchNoExt');
+                vchNoExt.value = bResultado[i].vchNumeroExterior || '';
 
-                              var vchNoInt = document.getElementById('vchNoInt');
-                              vchNoInt.value = bResultado[i].vchNumeroInterior || '';
+                var vchNoInt = document.getElementById('vchNoInt');
+                vchNoInt.value = bResultado[i].vchNumeroInterior || '';
 
-                          }
-                      }
-
-                  } else {
-                      console.error("Mensaje Error: " + respuesta.vchMensaje);
-                      alert(respuesta.vchMensaje)
-                  }
-              } else {
-                  console.error("Error en la solicitud al servidor");
               }
-          };
-      });
+            }
+
+          } else {
+            console.error("Mensaje Error: " + respuesta.vchMensaje);
+            alert(respuesta.vchMensaje)
+          }
+        } else {
+          console.error("Error en la solicitud al servidor");
+        }
+      };
+    });
   </script>
 
   <!-- Contenido de la página -->
@@ -293,7 +367,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
       <div class="row jsutify-content-center">
         <div class="col">
           <div class="post-content-wrapper">
-          <form action="#" method="post" class="dashboard-form">
+            <form action="#" method="post" class="dashboard-form">
               <div id="information" class="row -justify-content-center">
                 <div class="col-md-10">
                   <label class="col-form-label">
@@ -303,7 +377,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
 
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label class="col-form-label">ENTIDAD:</label>
+                        <label class="col-form-label">ENTIDAD</label>
                         <input id="vchEntidad" type="text" class="form-control" placeholder="ENTIDAD FEDERATIVA"
                           readonly>
                       </div>
@@ -311,55 +385,79 @@ $estadoProcedencia = json_encode($resultadoEstado);
 
                     <div class="col-sm-4">
                       <div class="form-group">
-                        <label class="col-form-label">MUNICIPIO: </label>
+                        <label class="col-form-label">MUNICIPIO </label>
                         <input id="vchMunicipio" type="text" class="form-control" placeholder="MUNICIPIO" readonly>
                       </div>
                     </div>
                     <div class="col-sm-4">
                       <div class="form-group">
-                        <label class="col-form-label">LOCALIDAD: </label>
+                        <label class="col-form-label">LOCALIDAD </label>
                         <input id="vchLocalidad" type="text" class="form-control" placeholder="LOCALIDAD" readonly>
                       </div>
                     </div>
                     <div class="col-sm-4">
                       <div class="form-group">
-                        <label class="col-form-label">C.P.: </label>
-                        <input id="iIdCodigoPostal" type="text" class="form-control" placeholder="CÓDIGO POSTAL" readonly>
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <div class="form-group">
-                        <label class="col-form-label">COLONIA: </label>
+                        <label class="col-form-label">COLONIA </label>
                         <input id="vchColonia" type="text" class="form-control" placeholder="COLONIA" readonly>
                       </div>
                     </div>
                     <div class="col-sm-4">
                       <div class="form-group">
-                        <label class="col-form-label">CALLE: </label>
-                        <input id="vchCalle" type="text" class="form-control" placeholder="CALLE" readonly>
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <div class="form-group">
-                        <label class="col-form-label">LETRA: </label>
-                        <input id="vchLetra" class="form-control" placeholder="LETRA" readonly>
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <div class="form-group">
-                        <label class="col-form-label">No. EXTERIOR: </label>
-                        <input id="vchNoExt" type="text" class="form-control" placeholder="NÚMERO EXTERIOR"
+                        <label class="col-form-label">C.P.</label>
+                        <input id="iIdCodigoPostal" type="text" class="form-control" placeholder="CÓDIGO POSTAL"
                           readonly>
                       </div>
                     </div>
                     <div class="col-sm-4">
                       <div class="form-group">
-                        <label class="col-form-label">No. INTERIOR: </label>
-                        <input id="vchNoInt" type="text" class="form-control" placeholder="NÚMERO INTERIOR"
-                          readonly />
+                        <label class="col-form-label">CALLE </label>
+                        <input id="vchCalle" type="text" class="form-control" placeholder="CALLE" readonly>
                       </div>
                     </div>
-                      <!--
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <label class="col-form-label">No. EXTERIOR </label>
+                        <input id="vchNoExt" type="text" class="form-control" placeholder="NÚMERO EXTERIOR" readonly>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <label class="col-form-label">No. INTERIOR </label>
+                        <input id="vchNoInt" type="text" class="form-control" placeholder="NÚMERO INTERIOR" readonly />
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <label class="col-form-label">LETRA </label>
+                        <input id="vchLetra" class="form-control" placeholder="LETRA" readonly>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="col-form-label"> ESTATUS DE DOMICILIO </label>
+                        <input type="text" class="form-control" placeholder="ESTATUS" id="iIdEstatusEmpleado" disabled>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="col-form-label">USUARIO ULTIMA
+                          MODIFICACION</label>
+                        <input type="text" class="form-control" placeholder="USUARIO ULTIMA MOD."
+                          id="vchUsuarioUltModificacion" disabled />
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group ">
+                        <label class="col-form-label">FECHA ULTIMA
+                          MODIFICACION</label>
+                        <input type="text" class="form-control" placeholder="FECHA ULTIMA MOD."
+                          id="dtFechaUltModificacion" disabled />
+                      </div>
+                    </div>
+                    <div class="row-left">
+                    <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-1">MODIFICAR</a>
+                  </div>
+                    <!--
                     <script>
 
                       document.getElementById('buttonEditar').addEventListener('click', function () {
@@ -407,24 +505,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
                       });
 
                     </script>-->
-                  </div>
-                </div>
-              </div>
-            </form>
-            <form action="#" method="post" class="dashboard-form">
-              <div class="dashboard-section basic-info-input">
-                <div class="row">
-                  <div class="job-apply-buttons">
-                    <a href="#" class="apply" data-toggle="modal" data-target="#apply-popup-id-1">MODIFICAR</a>
-                  </div>
-                  <div class="job-apply-buttons">
-                    <a href="#" class="apply" data-toggle="modal" data-target="#apply-popup-id-2">BAJA</a>
-                  </div>
-                  <div class="job-apply-buttons">
-                    <a href="#" class="apply" data-toggle="modal" data-target="#apply-popup-id-3">REACTIVACION</a>
-                  </div>
-                  <div class="job-apply-buttons">
-                    <a href="#" class="apply" data-toggle="modal" data-target="#apply-popup-id-4">PROMOCION</a>
+                    
                   </div>
                 </div>
               </div>
@@ -463,51 +544,115 @@ $estadoProcedencia = json_encode($resultadoEstado);
                 <div class="col-sm-9">
                   <input type="text" class="form-control" id="vchMunicipio" name="vchMunicipio" placeholder="MUNICIPIO"
                     style="text-transform: uppercase" pattern="[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+"
-                    title="SOLO SE PERMITEN LETRAS" required>
+                    title="SOLO SE PERMITEN LETRAS" >
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
                   <input type="text" class="form-control" id="vchLocalidad" name="vchLocalidad" placeholder="LOCALIDAD"
-                    min="2" name="apeUnoEsccrito" style="text-transform: uppercase" style="text-transform: uppercase"
-                    required>
+                    min="2" name="apeUnoEsccrito" style="text-transform: uppercase" style="text-transform: uppercase">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
                   <input type="text" class="form-control" placeholder="CÓDIGO POSTAL" id="iCodigoPostal"
                     name="codigoPostal" onkeypress="return event.charCode">
-
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
                   <input type="text" class="form-control" placeholder="COLONIA" id="vchColonia" name="vchColonia"
-                    style="text-transform: uppercase" required>
+                    style="text-transform: uppercase" >
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
                   <input type="text" class="form-control" placeholder="CALLE" id="vchCalle" name="vchCalle"
-                    style="text-transform: uppercase" required>
+                    style="text-transform: uppercase" >
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
                   <input type="text" class="form-control" placeholder="No EXT" id="vchNumeroExterior"
-                    name="vchNumeroExterior" style="text-transform: uppercase" required>
+                    name="vchNumeroExterior" style="text-transform: uppercase" >
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
                   <input type="text" class="form-control" placeholder="No INT" id="vchNumeroInterior"
-                    name="vchNumeroInterior" style="text-transform: uppercase" required>
+                    name="vchNumeroInterior" style="text-transform: uppercase" >
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
                   <input type="text" class="form-control" placeholder="LETRA" id="vchLetra" name="vchLetra"
-                    style="text-transform: uppercase" required>
+                    style="text-transform: uppercase" >
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="NOMBRE" id="vchNombre" name="vchNombre"
+                    style="text-transform: uppercase" >
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="PRIMER APELLIDO" id="vchPrimerApellido" name="vchPrimerApellido"
+                    style="text-transform: uppercase" >
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="SEGUNDO APELLIDO" id="vchSegundoApellido" name="vchSegundoApellido"
+                    style="text-transform: uppercase" >
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="RFC" id="vchRFC" name="vchRFC"
+                    style="text-transform: uppercase" >
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="CURP" id="vchCURP" name="vchCURP"
+                    style="text-transform: uppercase" >
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="FECHA DE NACIMIENTO" id="dFechaNacimiento" name="dFechaNacimiento"
+                    style="text-transform: uppercase" >
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="GENERO" id="iIdGenero" name="iIdGenero"
+                    style="text-transform: uppercase" >
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="NACIONALIDAD" id="iIdNacionalidad" name="iIdNacionalidad"
+                    style="text-transform: uppercase" >
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="REGIMEN FISCAL" id="iIdRegimenFiscal" name="iIdRegimenFiscal"
+                    style="text-transform: uppercase" >
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="USO FISCAL" id="iIdUsoFiscal" name="iIdUsoFiscal"
+                    style="text-transform: uppercase" >
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="C.P. FISCAL" id="iCodigoPostalFiscal" name="iCodigoPostalFiscal"
+                    style="text-transform: uppercase" >
                 </div>
               </div>
               <button class="button primary-bg btn-block" id="botonAplicar">APLICAR</button>

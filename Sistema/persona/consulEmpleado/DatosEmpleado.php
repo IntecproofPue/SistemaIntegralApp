@@ -230,11 +230,12 @@ if (isset($_SESSION['user_id'])) {
                     <div class="skill-and-profile">
                         <div class="skill" style="display: flex; justify-content: center;">
                             <label style="align-self: flex-end;" class="selected"><a
-                                    href="DatosEmpleado.php">EMPLEADO</a></label>
-                            <label style="align-self: flex-end;"><a
+                                    href="DatosEmpleado.php">EMPLEADO</a></label>                                    
+                                    <label style="align-self: flex-end;"><a
                                     href="../consulEmpleado/consultaPuesto.php ">PUESTO</a></label>
                             <label style="align-self: flex-end;"><a href="consultaDomicilio.php">DOMICILIO</a></label>
                             <label style="align-self: flex-end;"><a href="consultaContacto.php">CONTACTO</a></label>
+                            <label style="align-self: flex-end;"><a href="consultaPersona.php">DOCUMENTOS</a></label>
                         </div>
                     </div>
                     <!-- fin de pestañas de navegación-->
@@ -664,7 +665,73 @@ if (isset($_SESSION['user_id'])) {
                                 <input type="text" class="form-control" name="vchNSS" id="vchNSS" title="CONTRATADO POR"
                                     style="text-transform: uppercase" placeholder="CONTRATADO POR">
                             </div>
-                            <div class="update-photo" style="position: relative;">
+                            <div class="form-group">
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="NOMBRE" id="vchNombre" name="vchNombre"
+                    style="text-transform: uppercase" >
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="PRIMER APELLIDO" id="vchPrimerApellido" name="vchPrimerApellido"
+                    style="text-transform: uppercase" >
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="SEGUNDO APELLIDO" id="vchSegundoApellido" name="vchSegundoApellido"
+                    style="text-transform: uppercase" >
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="RFC" id="vchRFC" name="vchRFC"
+                    style="text-transform: uppercase" >
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="CURP" id="vchCURP" name="vchCURP"
+                    style="text-transform: uppercase" >
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="FECHA DE NACIMIENTO" id="dFechaNacimiento" name="dFechaNacimiento"
+                    style="text-transform: uppercase" >
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="GENERO" id="iIdGenero" name="iIdGenero"
+                    style="text-transform: uppercase" >
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="NACIONALIDAD" id="iIdNacionalidad" name="iIdNacionalidad"
+                    style="text-transform: uppercase" >
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="REGIMEN FISCAL" id="iIdRegimenFiscal" name="iIdRegimenFiscal"
+                    style="text-transform: uppercase" >
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="USO FISCAL" id="iIdUsoFiscal" name="iIdUsoFiscal"
+                    style="text-transform: uppercase" >
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="C.P. FISCAL" id="iCodigoPostalFiscal" name="iCodigoPostalFiscal"
+                    style="text-transform: uppercase" >
+                </div>
+              </div>
+              <div class="update-photo" style="position: relative;">
                             <label><img class="image" src="../../user-1.jpg" alt="">
                                 <span class="edit-text">EDITAR AVATAR</span>
                                 <input for="up-cv" type="file" class="upload-input" id="up-cv" accept="image/*" style="display: none;" onchange="updateImage(this)">
