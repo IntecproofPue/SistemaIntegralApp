@@ -269,6 +269,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
               <label style="align-self: flex-end;" class="selected"><a
                   href="consultaDomicilio.php">DOMICILIO</a></label>
               <label style="align-self: flex-end;"><a href="consultaContacto.php">CONTACTO</a></label>
+              <label style="align-self: flex-end;"><a href="consultaDocumentos.php">DOCUMENTOS</a></label>
             </div>
           </div>
           <!-- fin de pestañas de navegación-->

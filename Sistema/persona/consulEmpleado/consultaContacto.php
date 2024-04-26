@@ -408,11 +408,11 @@ $estadoProcedencia = json_encode($resultadoEstado);
                           <div class="employer">
                             <div class="body">
                               <div class="row">
-                                <h4><a href="#">TIPO DE CONTACTO</a></h4>
                                 <div class="row">
 
                                   <div class="col-md-6">
                                     <div class="form-group">
+                                    <label class="col-form-label">TIPO DE CONTACTO</label>
                                       <input id="tipoContacto" type="text" class="form-control"
                                         placeholder="TIPO CONTACTO" readonly>
                                     </div>
@@ -420,6 +420,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
 
                                   <div class="col-md-6">
                                     <div class="form-group">
+                                    <label class="col-form-label">CONTACTO</label>
                                       <input id="tipoContacto" class="form-control" name="tipoContacto"
                                         onchange="validarTipoContacto" placeholder="CONTACTO" readonly>
                                     </div>
@@ -442,18 +443,6 @@ $estadoProcedencia = json_encode($resultadoEstado);
                           
                           -->
                         </div>
-                        <!--<div class="pagination-list text-center">
-                          <nav class="navigation pagination">
-                            <div class="nav-links">
-                              <a class="prev page-numbers" href="#"><i class="fas fa-angle-left"></i></a>
-                              <a class="page-numbers" href="#">1</a>
-                              <span aria-current="page" class="page-numbers current">2</span>
-                              <a class="page-numbers" href="#">3</a>
-                              <a class="page-numbers" href="#">4</a>
-                              <a class="next page-numbers" href="#"><i class="fas fa-angle-right"></i></a>
-                            </div>
-                          </nav>
-                        </div>-->
                       </div>
                     </div>
                   </div>
@@ -488,12 +477,14 @@ $estadoProcedencia = json_encode($resultadoEstado);
 
                 <div class="col-md-4">
                   <div class="form-group">
+                  <label class="col-form-label">TIPO CONTACTO</label>
                     <input id="tipoContacto" type="text" class="form-control" placeholder="TIPO CONTACTO" readonly>
                   </div>
                 </div>
 
                 <div class="col-md-4">
                   <div class="form-group">
+                  <label class="col-form-label">CONTACTO</label>
                     <input id="tipoContacto" class="form-control" name="tipoContacto" onchange="validarTipoContacto"
                       placeholder="CONTACTO" readonly>
                   </div>
@@ -501,6 +492,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
 
                 <div class="col-md-4">
                   <div class="form-group">
+                  <label class="col-form-label">ESTATUS</label>
                     <input type="text" class="form-control" id="dActivo" name="dActivo" placeholder="activo"
                       style="text-transform: uppercase" pattern="[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+"
                       title="SOLO SE PERMITEN LETRAS" readonly>
@@ -509,6 +501,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
 
                 <div class="col-md-4">
                   <div class="form-group">
+                  <label class="col-form-label">USUARIO ULTIMA MODIFICACION</label>
                     <input type="text" class="form-control" id="ilUsuarioUltModificacion"
                       name="ilUsuarioUltModificacion" placeholder="USER ULT MODIF." style="text-transform: uppercase"
                       readonly>
@@ -517,6 +510,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
 
                 <div class="col-md-4">
                   <div class="form-group">
+                  <label class="col-form-label">FECHA ULTIMA MODIFICACION</label>
                     <input type="text" class="form-control" placeholder="fecha ultima " id="dtFechaUltModificacion"
                       name="dtFechaUltModificacion" style="text-transform: uppercase" readonly>
                   </div>

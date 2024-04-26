@@ -289,6 +289,7 @@ if (isset($_SESSION['user_id'])) { ?>
                 </li>
                 <li class="menu-item active"><a title="CONTACTO" href="consultaEmpleado.php">EMPLEADO</a>
                 </li>
+                <label style="align-self: flex-end;"><a href="consultaDocumentos.php">DOCUMENTOS</a></label>
               </ul>
             </div>
           </nav>
