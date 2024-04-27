@@ -3,21 +3,28 @@
 require_once ('../../includes/load.php');
 session_start();
 
-$datosContacto = json_decode(isset($_POST['datosConsultaIndividual'])? $_POST['datosConsultaIndividual']:'', true);
+
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $iIdPersonaContacto = $_POST['iIdPersonaContacto'];
+}
+
+$iIdPersonaContacto = is_numeric($iIdPersonaContacto) ?$iIdPersonaContacto :  0;
+
 
 
 $datosConsulta = array(
-    'vchNombre' => $datosContacto['iIdPersona'],
+    'iIdPersonaContacto' => $_POST['iIdPersonaContacto'],
     'iIdUsuarioUltModificacion' => $_SESSION['user_id']
 );
 
 
-$procedureName = "EXEC prcConsultaContactos     @iIdPersona = ?,
+$procedureName = "EXEC prcConsultaContactos	    @iIdPersona = ?,
                                                 @iIdUsuarioUltModificacion = ?
                                                    ";
 
 $params = array(
-    $datosConsulta['iIdPersona'],
+    $datosConsulta['iIdPersonaContacto'],
     $datosConsulta['iIdUsuarioUltModificacion']
 );
 
@@ -35,7 +42,7 @@ if ($result === false) {
     exit;
 
 } else {
-    $DatosContactoConsulta = array();
+    $DatosDomicilioConsulta = array();
     do{
         while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
             $DatosContactoConsulta[] = $row;

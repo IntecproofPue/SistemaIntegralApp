@@ -365,35 +365,67 @@ $estadoProcedencia = json_encode($resultadoEstado);
     </div>
   </header>
 
+
+  <script>
+      document.addEventListener('DOMContentLoaded', function(){
+          console.log("Esta en los datos del contacto");
+
+          var datosContacto = localStorage.getItem('datosConsultaIndividual');
+          var bResultadoContacto = JSON.parse(datosContacto);
+          var iIdPersonaContacto = bResultadoContacto.iIdPersona;
+
+          var datosContactos = new XMLHttpRequest();
+
+          datosContactos.open('POST', 'prcConsultaContacto.php', true);
+
+          var formData = new URLSearchParams();
+          formData.append('iIdPersonaContacto', iIdPersonaContacto);
+
+          datosContactos.send(formData);
+
+          datosContactos.onload = function (){
+              if (datosContactos.status === 200){
+                  console.log ("Respuesta exitosa");
+                  var respuesta = JSON.parse(datosContactos.responseText);
+                  console.log(respuesta);
+
+
+                  if (respuesta[0].bResultado === 1){
+                      localStorage.setItem('datosConsultaContacto', JSON.stringify(respuesta));
+
+                      var datosContactoConsulta = localStorage.getItem('datosConsultaContacto', JSON.stringify(respuesta));
+
+
+                      if (datosContactoConsulta){
+                          var bResultado = JSON.parse(datosContactoConsulta);
+                          console.log('Objeto parseado: ', bResultado);
+
+                          for (var i = 0; i<bResultado.length; i++){
+
+                              var vchTipoContacto = document.getElementById('vchTipoContacto');
+                              vchTipoContacto.value = bResultado[i].vchTipoContacto || '';
+
+                              var vchContacto = document.getElementById('vchContacto');
+                              vchContacto.value = bResultado[i].vchContacto;
+
+                          }
+
+                      }
+
+                  }
+              }
+          }
+
+      });
+  </script>
+
+
   <!-- Contenido de la página -->
   <div class="alice-bg section-padding-bottom">
     <div class="container no-gliters">
       <div class="row justify-content-center">
         <div class="col">
           <div class="post-content-wrapper">
-            <script>
-              document.addEventListener('DOMContentLoaded', function () {
-                var consultaIndivual = localStorage.getItem('datosConsultaIndividual');
-                console.log('Consulta individual:', consultaIndivual);
-
-                if (consultaIndivual) {
-                  var bResultado = JSON.parse(consultaIndivual);
-                  console.log('Resultado individual:', bResultado);
-                  MostrarDatos(bResultado);
-                }
-
-                function MostrarDatos(bResultado) {
-                  console.log('Mostrando datos:', bResultado);
-
-                  var ildTipoContacto = document.getElementById('ildTipoContacto');
-                  ildTipoContacto.value = bResultado.ildTipoContacto || '';
-
-                  var vchContacto = document.getElementById('vchContacto');
-                  vchContacto.value = bResultado.vchContacto || '';
-                }
-              });
-            </script>
-
             <form action="altaPersona" method="post" class="dashboard-form">
               <div id="information" class="row justify-content-center">
                 <div class="col-md-10">
@@ -408,21 +440,20 @@ $estadoProcedencia = json_encode($resultadoEstado);
                           <div class="employer">
                             <div class="body">
                               <div class="row">
-                                <div class="row">
-
-                                  <div class="col-md-6">
+                                <div class="body">
+                                  <div class="col-md-10">
                                     <div class="form-group">
                                     <label class="col-form-label">TIPO DE CONTACTO</label>
-                                      <input id="tipoContacto" type="text" class="form-control"
-                                        placeholder="TIPO CONTACTO" readonly>
+                                      <input id="vchTipoContacto" type="text" class="form-control"
+                                        placeholder="TIPO CONTACTO" disabled>
                                     </div>
                                   </div>
 
-                                  <div class="col-md-6">
+                                  <div class="col-md-10">
                                     <div class="form-group">
                                     <label class="col-form-label">CONTACTO</label>
-                                      <input id="tipoContacto" class="form-control" name="tipoContacto"
-                                        onchange="validarTipoContacto" placeholder="CONTACTO" readonly>
+                                      <input id="vchContacto" class="form-control" name="tipoContacto"
+                                             placeholder="CONTACTO" disabled>
                                     </div>
                                   </div>
 
