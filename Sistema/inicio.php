@@ -1,8 +1,26 @@
 <?php
-ob_start();
-require_once('includes/pandora.php');
+//require_once ('../../includes/pandora.php');
+//require_once ('../../includes/load.php');
 
+session_start();
+function ObtenerEstadoProcedencia()
+{
+    if (isset($_SESSION['CatConstante'])) {
+        $datosEdoProcedencia = $_SESSION['CatConstante'];
+        $estadoEncontrado = array();
 
+        foreach ($datosEdoProcedencia as $valorEstado) {
+            if ($valorEstado['iAgrupador'] == 4) {
+                $estadoEncontrado[] = $valorEstado;
+            }
+        }
+        return $estadoEncontrado;
+    } else {
+        echo ("No hay datos del Estado de Procedencia");
+    }
+}
+
+$resultadoEstado = ObtenerEstadoProcedencia();
 
 
 ?>
@@ -63,46 +81,63 @@ require_once('includes/pandora.php');
                         </div>
                         <div class="top-nav">
                             <div class="dropdown header-top-notification">
-                                <a href="#" class="notification-button">Notification</a>
+                                <a href="#" class="notification-button">Notificaciones</a>
                                 <div class="notification-card">
                                     <div class="notification-head">
-                                        <span>Notifications</span>
-                                        <a href="#">Mark all as read</a>
+                                        <span>Notificaciones</span>
+                                        <a href="#">Marcar todo como leido</a>
                                     </div>
                                     <div class="notification-body">
-                                        <a href="home-2.html" class="notification-list">
+                                        <a href="../../home-2.html" class="notification-list">
                                             <i class="fas fa-bolt"></i>
-                                            <p>Your Resume Updated!</p>
+                                            <p>Tu CV actualizado</p>
                                             <span class="time">5 hours ago</span>
                                         </a>
                                         <a href="#" class="notification-list">
                                             <i class="fas fa-arrow-circle-down"></i>
-                                            <p>Someone downloaded resume</p>
+                                            <p>Alguien descargo tu CV</p>
                                             <span class="time">11 hours ago</span>
                                         </a>
                                         <a href="#" class="notification-list">
                                             <i class="fas fa-check-square"></i>
-                                            <p>You applied for Project Manager <span>@homeland</span></p>
+                                            <p>solicitaste un puesto de.... <span>@homeland</span></p>
                                             <span class="time">11 hours ago</span>
                                         </a>
                                         <a href="#" class="notification-list">
                                             <i class="fas fa-user"></i>
-                                            <p>You changed password</p>
+                                            <p>Cambiaste la contraseña</p>
                                             <span class="time">5 hours ago</span>
                                         </a>
                                         <a href="#" class="notification-list">
                                             <i class="fas fa-arrow-circle-down"></i>
-                                            <p>Someone downloaded resume</p>
+                                            <p>Alguien descargo tu CV</p>
                                             <span class="time">11 hours ago</span>
                                         </a>
                                     </div>
                                     <div class="notification-footer">
-                                        <a href="#">See all notification</a>
+                                        <a href="#">Ver Notificaciones</a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="dropdown header-top-account login-modals">
-                                <li><a href="includes/logout.php"><span class="ti-power-off"></span>Log Out</a></li>
+                            <div class="dropdown header-top-account">
+                                <a href="#" class="account-button">MI CUENTA</a>
+                                <div class="account-card">
+                                    <div class="header-top-account-info">
+                                        <a href="#" class="account-thumb">
+                                            <img src="../../images/account/thumb-1.jpg" class="img-fluid" alt="">
+                                        </a>
+                                        <div class="account-body">
+                                            <h5><a href="#">Mostrar Empleado</a></h5>
+                                            <span class="mail">empleado@intecproof.com</span>
+                                        </div>
+                                    </div>
+                                    <ul class="account-item-list">
+                                        <li><a href="#"><span class="ti-user"></span>CUENTA</a></li>
+                                        <li><a href="#"><span class="ti-settings"></span>AJUSTES</a></li>
+                                        <li><a href="../../includes/logout.php"><span
+                                                    class="ti-power-off"></span>LogOut</a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
