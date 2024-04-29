@@ -131,60 +131,57 @@ if (isset($_SESSION['user_id'])) {
 
 <body>
 
-    <header class="header-2">
+<header class="header-2">
         <div class="container">
             <div class="row">
                 <div class="col">
                     <div class="header-top">
-                        <div class="header-top">
-                        <a href="../../inicio.php"><img src="../../images/logo-2.png" alt=""></a>
+                        <div class="logo-area">
+                            <a href="../../inicio.php"><img src="../../images/logo-2.png" alt=""></a>
                         </div>
                         <div class="header-top-toggler">
                             <div class="header-top-toggler-button"></div>
                         </div>
                         <div class="top-nav">
                             <div class="dropdown header-top-notification">
-                                <a href="#" class="notification-button">
-                                    <?php echo $notificacionesTxt; ?>
-                                </a>
+                                <a href="#" class="notification-button"><?php echo $notificacionesTxt; ?></a>
                                 <div class="notification-card">
                                     <div class="notification-head">
-                                        <span>Notifications</span>
-                                        <a href="#">Mark all as read</a>
+                                        <span>Notificaciones</span>
+                                        <a href="#">Marcar todo como leido</a>
                                     </div>
                                     <div class="notification-body">
                                         <a href="../../home-2.html" class="notification-list">
                                             <i class="fas fa-bolt"></i>
-                                            <p>Your Resume Updated!</p>
+                                            <p>Tu CV actualizado</p>
                                             <span class="time">5 hours ago</span>
                                         </a>
                                         <a href="#" class="notification-list">
                                             <i class="fas fa-arrow-circle-down"></i>
-                                            <p>Someone downloaded resume</p>
+                                            <p>Alguien descargo tu CV</p>
                                             <span class="time">11 hours ago</span>
                                         </a>
                                         <a href="#" class="notification-list">
                                             <i class="fas fa-check-square"></i>
-                                            <p>You applied for Project Manager <span>@homeland</span></p>
+                                            <p>solicitaste un puesto de.... <span>@homeland</span></p>
                                             <span class="time">11 hours ago</span>
                                         </a>
                                         <a href="#" class="notification-list">
                                             <i class="fas fa-user"></i>
-                                            <p>You changed password</p>
+                                            <p>Cambiaste la contraseña</p>
                                             <span class="time">5 hours ago</span>
                                         </a>
                                         <a href="#" class="notification-list">
                                             <i class="fas fa-arrow-circle-down"></i>
-                                            <p>Someone downloaded resume</p>
+                                            <p>Alguien descargo tu CV</p>
                                             <span class="time">11 hours ago</span>
                                         </a>
                                     </div>
                                     <div class="notification-footer">
-                                        <a href="#">See all notification</a>
+                                        <a href="#">Ver Notificaciones</a>
                                     </div>
                                 </div>
                             </div>
-
                             <?php
 
                             $user = obtenerUsuario($_SESSION['user_id']);
@@ -193,32 +190,23 @@ if (isset($_SESSION['user_id'])) {
                             $emailPersona = $row['contacto'];
 
                             ?>
-
                             <div class="dropdown header-top-account">
-                                <a href="#" class="account-button">
-                                    <?php echo $miCuentaTxt; ?>
-                                </a>
+                                <a href="#" class="account-button"><?php echo $miCuentaTxt; ?></a>
                                 <div class="account-card">
                                     <div class="header-top-account-info">
+                                        <a href="#" class="account-thumb">
+                                            <img src="../../images/account/thumb-1.jpg" class="img-fluid" alt="">
+                                        </a>
                                         <div class="account-body">
-                                            <h5><a href="#">
-                                                    <?php echo $nombrePersona; ?>
-                                                </a></h5>
-                                            <span class="mail">
-                                                <?php echo $emailPersona; ?>
-                                            </span>
+                                            <h5><a href="#"><?php echo $nombrePersona; ?></a></h5>
+                                            <span class="mail"><?php echo $emailPersona; ?></span>
                                         </div>
                                     </div>
                                     <ul class="account-item-list">
-                                        <li><a href="#"><span class="ti-user"></span>
-                                                <?php echo $Perfil; ?>
-                                            </a></li>
-                                        <li><a href="#"><span class="ti-settings"></span>
-                                                <?php echo $herramientas; ?>
-                                            </a></li>
-                                        <li><a href="../../includes/logout.php"><span class="ti-power-off"></span>
-                                                <?php echo $logout; ?>
-                                            </a></li>
+                                        <li><a href="#"><span class="ti-user"></span><?php echo $Perfil; ?></a></li>
+                                        <li><a href="#"><span class="ti-settings"></span><?php echo $herramientas; ?></a></li>
+                                        <li><a href="../../includes/logout.php"><span
+                                                    class="ti-power-off"></span><?php echo $logout; ?></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -227,13 +215,11 @@ if (isset($_SESSION['user_id'])) {
                     <!-- pestañas de navegación-->
                     <div class="skill-and-profile">
                         <div class="skill" style="display: flex; justify-content: center;">
-                            <label style="align-self: flex-end;" class="selected"><a
-                                    href="DatosEmpleado.php">EMPLEADO</a></label>                                    
-                                    <label style="align-self: flex-end;"><a
-                                    href="../consulEmpleado/consultaPuesto.php ">PUESTO</a></label>
+                            <label style="align-self: flex-end;" class="selected"><a href="DatosEmpleado.php">EMPLEADO</a></label>
+                            <label style="align-self: flex-end;"><a href="../consulEmpleado/consultaPuesto.php ">PUESTO</a></label>
                             <label style="align-self: flex-end;"><a href="consultaDomicilio.php">DOMICILIO</a></label>
                             <label style="align-self: flex-end;"><a href="consultaContacto.php">CONTACTO</a></label>
-                            <label style="align-self: flex-end;"><a href="consultaDocumentos.php">DOCUMENTOS</a></label>
+                            <label style="align-self: flex-end;"><a href="../consulEmpleado/cunsultaDoctos.php">DOCUMENTOS</a></label>
                         </div>
                     </div>
                     <!-- fin de pestañas de navegación-->
@@ -434,12 +420,12 @@ if (isset($_SESSION['user_id'])) {
                             <form action="#" method="post" class="dashboard-form">
                                 <div id="information" class="row justify-content-center">
                                     <div class="col-md-10">
-                                        <label class="col-form-label"><i data-feather="user-check"></i>
+                                        <label class="col-form-label"><i ></i>
                                         
                                         <div class="update-photo">
                                             <img class="image" src="../../user-1.jpg" alt="">
                                         </div>
-                                            <h6>DATOS DE EMPLEADO</h6>
+                                            <h6><i data-feather="user-check"></i>DATOS DE EMPLEADO</h6>
                                         </label>
                                         <div class="row">
                                             <div class="col-md-4">
@@ -599,10 +585,13 @@ if (isset($_SESSION['user_id'])) {
                                                         id="dtFechaUltModificacion" disabled />
                                                 </div>
                                             </div>
-
                                         </div>
-                                        <div class="row-left">
-                                            <a href="#" class="boton-intec" data-toggle="modal"
+
+                    <div class="candidate">
+                    <div class="body">
+                      <div class="row">
+                        <div class="row-left">
+                        <a href="#" class="boton-intec" data-toggle="modal"
                                                 data-target="#apply-popup-id-1">MODIFICAR</a>
                                             <a href="#" class="boton-intec" data-toggle="modal"
                                                 data-target="#apply-popup-id-2">BAJA</a>
@@ -610,7 +599,13 @@ if (isset($_SESSION['user_id'])) {
                                                 data-target="#apply-popup-id-3">REACTIVACION</a>
                                             <a href="#" class="boton-intec" data-toggle="modal"
                                                 data-target="#apply-popup-id-4">PROMOCION</a>
-                                        </div>
+                        </div>
+                      </div>
+                      <a href="#" class="boton-intec" class="thumb">GUARDAR</a>
+                      
+                    </div>
+                  </div>
+
                                     </div>
                                 </div>
                             </form>

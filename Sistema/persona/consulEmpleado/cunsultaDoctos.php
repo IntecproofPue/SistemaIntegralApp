@@ -70,6 +70,7 @@ $resultadoEstado = ObtenerEstadoProcedencia();
             font-weight: bold;
             /* O cualquier otro estilo que desees */
 
+
         }
 
         .row .col-md-4 {
@@ -219,7 +220,7 @@ $resultadoEstado = ObtenerEstadoProcedencia();
 
 <body>
 
-<header class="header-2">
+    <header class="header-2">
         <div class="container">
             <div class="row">
                 <div class="col">
@@ -292,7 +293,8 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                     </div>
                                     <ul class="account-item-list">
                                         <li><a href="#"><span class="ti-user"></span><?php echo $Perfil; ?></a></li>
-                                        <li><a href="#"><span class="ti-settings"></span><?php echo $herramientas; ?></a></li>
+                                        <li><a href="#"><span
+                                                    class="ti-settings"></span><?php echo $herramientas; ?></a></li>
                                         <li><a href="../../includes/logout.php"><span
                                                     class="ti-power-off"></span><?php echo $logout; ?></a></li>
                                     </ul>
@@ -304,10 +306,12 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                     <div class="skill-and-profile">
                         <div class="skill" style="display: flex; justify-content: center;">
                             <label style="align-self: flex-end;"><a href="DatosEmpleado.php">EMPLEADO</a></label>
-                            <label style="align-self: flex-end;"  class="selected"><a href="../consulEmpleado/consultaPuesto.php ">PUESTO</a></label>
+                            <label style="align-self: flex-end;"><a
+                                    href="../consulEmpleado/consultaPuesto.php ">PUESTO</a></label>
                             <label style="align-self: flex-end;"><a href="consultaDomicilio.php">DOMICILIO</a></label>
                             <label style="align-self: flex-end;"><a href="consultaContacto.php">CONTACTO</a></label>
-                            <label style="align-self: flex-end;"><a href="cunsultaDoctos.php">DOCUMENTOS</a></label>
+                            <label style="align-self: flex-end;" class="selected"><a
+                                    href="consultaDoctos.php">DOCUMENTOS</a></label>
                         </div>
                     </div>
                     <!-- fin de pestañas de navegación-->
@@ -316,155 +320,96 @@ $resultadoEstado = ObtenerEstadoProcedencia();
         </div>
     </header>
 
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-
-            console.log("Está en los datos del puesto");
-
-            var DatosPuesto = localStorage.getItem('datosConsultaIndividual');
-
-            var bResultadoPuesto = JSON.parse(DatosPuesto);
-            var iIdEmpleadoPuesto = bResultadoPuesto.iIdPuesto;
-
-            // console.log(iIdPersonaDomicilio);
-
-            var datosPuesto = new XMLHttpRequest();
-
-            datosPuesto.open('POST', 'prcConsultaPuesto.php', true);
-
-            var formData = new URLSearchParams();
-            formData.append('iIdPuesto', iIdEmpleadoPuesto);
-
-            //console.log(formData);
-
-            // Enviar la solicitud
-            datosPuesto.send(formData);
-
-            // Manejar la respuesta
-            datosPuesto.onload = function () {
-                if (datosPuesto.status === 200) {
-                    console.log('Respuesta exitosa');
-                    var respuesta = JSON.parse(datosPuesto.responseText);
-                    console.log(respuesta);
-
-                    if (respuesta.bResultado === 1) {
-                        //alert(respuesta[0].vchMensaje);
-                        localStorage.setItem('datosConsultaPuesto', JSON.stringify(respuesta));
-
-                        var datosPuestoConsulta = localStorage.getItem('datosConsultaPuesto', JSON.stringify(respuesta))
-                        //console.log (datosDomicilioConsulta);
-
-                        if (datosPuestoConsulta) {
-                            var bResultado = JSON.parse(datosPuestoConsulta);
-                            console.log('Objeto parseado: ', bResultado);
-
-                            var vchPuesto = document.getElementById('vchPuesto');
-                            vchPuesto.value = bResultado.vchPuesto || '';
-
-                            var vchDescripcionPuesto = document.getElementById('vchDescripcionPuesto');
-                            vchDescripcionPuesto.value = bResultado.vchDescripcion || '';
-
-                            var vchTipoContratacion = document.getElementById('vchTipoContratacion');
-                            vchTipoContratacion.value = bResultado.vchTipoContratacion || '';
-
-                            var vchHorasLaborales = document.getElementById('vchHorasLaborales');
-                            vchHorasLaborales.value = bResultado.vchHorasLaborales || '';
-
-
-                            const pesoFinal = new Intl.NumberFormat('es-MX', {
-                                style: 'currency',
-                                currency: 'MXN',
-                                minimumFractionDigits: 2
-                            });
-
-                            var mSalarioNeto = document.getElementById('mSalarioNeto');
-                            mSalarioNeto.value = pesoFinal.format(bResultado.mSalarioNeto) || 0;
-
-                            var mSalarioFiscal = document.getElementById('mSalarioFiscal');
-                            mSalarioFiscal.value = pesoFinal.format(bResultado.mSalarioFiscal) || 0;
-
-                            var mSalarioComplementario = document.getElementById('mSalarioComplementario');
-                            mSalarioComplementario.value = pesoFinal.format(bResultado.mSalarioComplemento) || 0;
-                        }
-
-                    } else {
-                        console.error("Mensaje Error: " + respuesta.vchMensaje);
-                        alert(respuesta.vchMensaje)
-                    }
-                } else {
-                    console.error("Error en la solicitud al servidor");
-                }
-            };
-        });
-    </script>
-
-
     <!-- Contenido de la página -->
     <div class="alice-bg section-padding-bottom">
         <div class="container no-gliters">
             <div class="row justify-content-center">
                 <div class="col">
                     <div class="post-content-wrapper">
-                        <!--<div class="dashboard-content-wrapper">-->
                         <form action="altaPersona" method="post" class="dashboard-form">
                             <div id="information" class="row justify-content-center">
-                                <div class="col-md-10">
-                                    <label class="col-form-label">
-                                        <h6><i data-feather="user-check"></i>INFORMACION DE PUESTO</h6>
-                                    </label>
-                                    <div class="row">
+                                <div class="col-md-12">
 
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="col-form-label">NOMBRE PUESTO: </label>
-                                                <input id="vchPuesto" type="text" class="form-control"
-                                                    placeholder="NOMBRE DE PUESTO" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="col-form-label">DESCRIPCION DE PUESTO: </label>
-                                                <input id="vchDescripcionPuesto" type="text" class="form-control"
-                                                    placeholder="DESCRIPCION DEL PUESTO" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="col-form-label">TIPO DE CONTRATACIÓN: </label>
-                                                <input id="vchTipoContratacion" type="text" class="form-control"
-                                                    placeholder="DESCRIPCION DEL PUESTO" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="col-form-label"> HORAS LABORALES: </label>
-                                                <input id="vchHorasLaborales" type="text" class="form-control"
-                                                    placeholder="HORAS LABORALES" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="col-form-label"> SALARIO NETO: </label>
-                                                <input id="mSalarioNeto" type="text" class="form-control"
-                                                    placeholder="SALARIO NETO" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="col-form-label"> SALARIO FISCAL: </label>
-                                                <input id="mSalarioFiscal" type="text" class="form-control"
-                                                    placeholder="SALARIO FISCAL" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="col-form-label"> SALARIO COMPLEMENTARIO: </label>
-                                                <input id="mSalarioComplementario" type="text" class="form-control"
-                                                    placeholder="SALARIO COMPLEMENTARIO" disabled>
-                                            </div>
+                                    <div class="candidate">
+                                        <div class="body">
+                                            <label class="col-form-label">
+                                                <h6><i data-feather="user-check"></i>INFORMACION DE DOCUMENTOS
+                                                </h6>
+                                            </label>
+                                            <a href="#" id="agregarDoctos" class="boton-intec" class="thumb"
+                                                data-toggle="modal" data-target="#">AGREGAR</a>
                                         </div>
                                     </div>
+
+
+                                    <div class="employer">
+                                        <div class="body">
+                                            <div class="row">
+                                                <div class="body">
+
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label class="col-form-label">TIPO DE
+                                                                DOCUMENTO</label>
+                                                            <input id="vchTipoContacto" type="text" class="form-control"
+                                                                placeholder="TIPO CONTACTO" disabled>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label class="col-form-label"> ESTATUS DE EMPLEADO </label>
+                                                            <input type="text" class="form-control"
+                                                                placeholder="ESTATUS" id="iIdEstatusEmpleado" disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label class="col-form-label">USUARIO ULTIMA
+                                                                MOD.</label>
+                                                            <input type="text" class="form-control"
+                                                                placeholder="USUARIO ULTIMA MOD."
+                                                                id="vchUsuarioUltModificacion" disabled />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group ">
+                                                            <label class="col-form-label">FECHA ULTIMA
+                                                                MODIFICACION</label>
+                                                            <input type="text" class="form-control"
+                                                                placeholder="FECHA ULTIMA MOD."
+                                                                id="dtFechaUltModificacion" disabled />
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <ul>
+                                                <a href="#"><i data-feather="check-square"></i></a>
+                                            </ul>
+
+                                            <ul>
+                                                <a href="#"><i data-feather="edit-3"></i></a>
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                    <script>
+                                        // Función para crear un nuevo div de empleado
+                                        function agregarDoctos() {
+                                            // Clonamos el div de empleado existente
+                                            var nuevoDocumento = document.querySelector('.document').cloneNode(true);
+
+                                            // Agregamos el nuevo div después del último div de empleado
+                                            document.querySelector('.employer:last-of-type').insertAdjacentElement('afterend', nuevoEmpleado);
+                                        }
+
+                                        // Agregamos un evento de clic al botón "AGREGAR"
+                                        document.getElementById('agregarEmpleado').addEventListener('click', function (e) {
+                                            e.preventDefault(); // Evitamos que el enlace se comporte como un enlace normal
+                                            agregarEmpleado(); // Llamamos a la función para crear un nuevo div de empleado
+                                        });
+                                    </script>
                                 </div>
                             </div>
                         </form>
@@ -473,7 +418,6 @@ $resultadoEstado = ObtenerEstadoProcedencia();
             </div>
         </div>
     </div>
-    <!-- fin de Contenido de página -->
 
     <!-- Footer -->
     <footer class="footer-bg">
