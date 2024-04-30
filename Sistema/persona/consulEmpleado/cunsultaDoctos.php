@@ -127,6 +127,11 @@ session_start();
             opacity: 0;
             cursor: pointer;
         }
+
+        .employer {
+            margin-bottom: -30px;
+            padding: 5px 20px;
+        }
     </style>
 
     <!--[if lt IE 9]>
@@ -244,19 +249,25 @@ session_start();
         <div class="container no-gliters">
             <div class="row justify-content-center">
                 <div class="col">
-                    <div class="post-content-wrapper" >
+                    <div class="post-content-wrapper">
                         <form action="altaDocumentos" method="post" class="dashboard-form">
                             <div id="information" class="row justify-content-center">
-                                <div class="col-md-12" id="agregarDocumentos">
-                                    <div class="candidate" >
+                                <div class="col-md-12">
+
+                                    <div class="candidate">
                                         <div class="body">
                                             <label class="col-form-label">
                                                 <h6><i data-feather="user-check"></i>INFORMACION DE DOCUMENTOS
                                                 </h6>
                                             </label>
-                                            <a href="#" id="agregarDocumento" class="boton-intec" class="thumb" data-toggle="modal" data-target="#">AGREGAR</a>
+                                            <div class="row-left">
+                                                <a href="#" id="agregarDocumento" class="boton-intec" class="thumb"
+                                                    data-toggle="modal" data-target="#">AGREGAR</a>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="filtered-employer-wrapper" id="agregarDocumentos"></div>
+
                                 </div>
                             </div>
                         </form>
@@ -324,13 +335,13 @@ session_start();
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function (){
+        document.addEventListener('DOMContentLoaded', function () {
             console.log("Está en los datos del empleado");
 
             var datosDocumentos = localStorage.getItem('datosConsultaIndividual');
             var bResultadoDocumentos = JSON.parse(datosDocumentos);
 
-            console.log ("Esto es bResultadoDocumentos:", bResultadoDocumentos);
+            console.log("Esto es bResultadoDocumentos:", bResultadoDocumentos);
 
             var iIdEmpleadoDoctos = bResultadoDocumentos.iIdEmpleado;
 
@@ -338,37 +349,37 @@ session_start();
             datosDocumentos.open('POST', 'prcConsultaDocumentos', true);
 
             var formData = new URLSearchParams();
-            formData.append('iIdEmpleadoDocumento',iIdEmpleadoDoctos );
+            formData.append('iIdEmpleadoDocumento', iIdEmpleadoDoctos);
 
             datosDocumentos.send(formData);
 
-            datosDocumentos.onload = function (){
-                if (datosDocumentos.status === 200){
+            datosDocumentos.onload = function () {
+                if (datosDocumentos.status === 200) {
                     console.log("Respuesta existosa");
 
                     var respuesta = JSON.parse(datosDocumentos.responseText);
 
                     console.log(respuesta);
 
-                    if (respuesta[0].bResultado === 1){
+                    if (respuesta[0].bResultado === 1) {
                         localStorage.setItem('datosConsultaDocumentos', JSON.stringify(respuesta));
 
                         var datosDocumentosConsulta = localStorage.getItem('datosConsultaDocumentos');
 
-                        if (datosDocumentosConsulta){
+                        if (datosDocumentosConsulta) {
                             var bResultado = JSON.parse(datosDocumentosConsulta);
                             console.log('Objeto parseado: ', bResultado);
 
                             let longitudDocumentos = bResultado.length;
 
-                            console.log ("Esta es la longitud de bResultado:", longitudDocumentos);
+                            console.log("Esta es la longitud de bResultado:", longitudDocumentos);
 
                             insertarDocumentos(longitudDocumentos);
 
-                            for (var i= 0; i<longitudDocumentos; i++){
+                            for (var i = 0; i < longitudDocumentos; i++) {
                                 var iIdTipoDocumento = 'vchTipoDocumento' + i;
-                                var iIdEstatusDocumento = 'vchEstatusDocumento' +i;
-                                var iIdUsuarioUltModificacion = 'iIdUsuarioUltModificacion' +i;
+                                var iIdEstatusDocumento = 'vchEstatusDocumento' + i;
+                                var iIdUsuarioUltModificacion = 'iIdUsuarioUltModificacion' + i;
                                 var dFechaModificacion = 'dtFechaUltModificacion' + i;
 
 
@@ -403,15 +414,15 @@ session_start();
             }
         });
 
-        function insertarDocumentos(longitudDocumentos){
+        function insertarDocumentos(longitudDocumentos) {
             var contenedor = document.getElementById('agregarDocumentos');
             contenedor.innerHTML = agregarListaDocumentos(longitudDocumentos);
         }
 
-        function agregarListaDocumentos(longitudDocumentos){
+        function agregarListaDocumentos(longitudDocumentos) {
             var documento = '';
 
-            for (var i=0; i<longitudDocumentos; i++){
+            for (var i = 0; i < longitudDocumentos; i++) {
                 documento += `
                         <div class="employer">
                             <div class="body">
@@ -460,7 +471,8 @@ session_start();
                                     </a>
                                 </ul>
                                 <ul>
-                                    <a href="#"><i data-feather="edit-3" style="width: 35px; height: auto;"></i></a>
+                                <ahref="Sistema/3121.png" target="_blank">
+                                        <img src="../../3121.png" id="#" style="width: 50px; height: auto;">
                                 </ul>
 
                             </div>

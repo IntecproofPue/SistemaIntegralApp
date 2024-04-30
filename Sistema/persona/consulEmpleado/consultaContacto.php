@@ -194,11 +194,11 @@ $estadoProcedencia = json_encode($resultadoEstado);
       padding: 5px 20px;
     }
 
-    .body-intec {
+    .body {
       margin-bottom: -30px;
       padding: 5px 20px;
       margin-bottom: -10px;
-    transform: scale(0.8); /* Puedes ajustar el valor (0.8 en este caso) según sea necesario */
+    /*transform: scale(0.8); */
 }
 
     .candidate {
@@ -401,7 +401,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
           <div class="post-content-wrapper">
             <form action="consultaContacto" method="post" class="dashboard-form">
               <div id="information" class="row justify-content-center">
-                <div class="col-md-11">
+                <div class="col-md-12">
 
                   <div class="candidate">
                     <div class="body">
