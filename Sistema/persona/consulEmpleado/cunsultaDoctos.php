@@ -3,25 +3,6 @@ require_once ('../../includes/pandora.php');
 require_once ('../../includes/load.php');
 
 session_start();
-function ObtenerEstadoProcedencia()
-{
-    if (isset($_SESSION['CatConstante'])) {
-        $datosEdoProcedencia = $_SESSION['CatConstante'];
-        $estadoEncontrado = array();
-
-        foreach ($datosEdoProcedencia as $valorEstado) {
-            if ($valorEstado['iAgrupador'] == 4) {
-                $estadoEncontrado[] = $valorEstado;
-            }
-        }
-        return $estadoEncontrado;
-    } else {
-        echo ("No hay datos del Estado de Procedencia");
-    }
-}
-
-$resultadoEstado = ObtenerEstadoProcedencia();
-
 
 ?>
 <!doctype html>
@@ -154,68 +135,6 @@ $resultadoEstado = ObtenerEstadoProcedencia();
     <![endif]-->
 
 
-    <script>
-        function soloLetras(e) {
-            tecla = (document.all) ? e.keyCode : e.which;
-
-
-            if (tecla == 8) {
-                return true;
-            }
-
-
-            patronAceptado = /[A-Z]/;
-            tecla_final = String.fromCharCode(tecla);
-            return patronAceptado.test(tecla_final);
-        }
-
-        function soloNumeros(e) {
-            tecla = (document.all) ? e.keyCode : e.which;
-
-
-            if (tecla == 8) {
-                return true;
-            }
-
-
-            patronAceptado = /[0-9]/;
-            tecla_final = String.fromCharCode(tecla);
-            return patronAceptado.test(tecla_final);
-        }
-
-        function soloRfc(e) {
-
-            tecla = (document.all) ? e.keyCode : e.which;
-
-
-            if (tecla == 8) {
-                return true;
-            }
-
-
-            patronAceptado = /[A-Za-z0-9]/;
-            tecla_final = String.fromCharCode(tecla);
-            return patronAceptado.test(tecla_final);
-        }
-
-
-        function soloNombre(e) {
-
-            tecla = (document.all) ? e.keyCode : e.which;
-
-
-            if (tecla == 8) {
-                return true;
-            }
-
-
-            patronAceptado = /[a-zA-Z áéíóúñÁÉÍÓÚÑ]+/;
-            tecla_final = String.fromCharCode(tecla);
-            return patronAceptado.test(tecla_final);
-        }
-    </script>
-    <!--<input class="tf w-input" id="txtCurp" name="txtCurp" maxlength="150" onkeypress="return quitarEspeciales(event)" placeholder="No. de CURP" type="text">-->
-
 </head>
 
 <body>
@@ -325,77 +244,19 @@ $resultadoEstado = ObtenerEstadoProcedencia();
         <div class="container no-gliters">
             <div class="row justify-content-center">
                 <div class="col">
-                    <div class="post-content-wrapper">
-                        <form action="altaPersona" method="post" class="dashboard-form">
+                    <div class="post-content-wrapper" >
+                        <form action="altaDocumentos" method="post" class="dashboard-form">
                             <div id="information" class="row justify-content-center">
-                                <div class="col-md-12">
-
-                                    <div class="candidate">
+                                <div class="col-md-12" id="agregarDocumentos">
+                                    <div class="candidate" >
                                         <div class="body">
                                             <label class="col-form-label">
                                                 <h6><i data-feather="user-check"></i>INFORMACION DE DOCUMENTOS
                                                 </h6>
                                             </label>
-                                            <a href="#" id="agregarDocumento" class="boton-intec" class="thumb"
-                                                data-toggle="modal" data-target="#">AGREGAR</a>
+                                            <a href="#" id="agregarDocumento" class="boton-intec" class="thumb" data-toggle="modal" data-target="#">AGREGAR</a>
                                         </div>
                                     </div>
-
-
-                                    <div class="employer">
-                                        <div class="body">
-                                            <div class="row">
-                                                <div class="body">
-
-                                                    <div class="col-md-3">
-                                                        <div class="form-group">
-                                                            <label class="col-form-label">TIPO DE
-                                                                DOCUMENTO</label>
-                                                            <input id="vchTipoContacto" type="text" class="form-control"
-                                                                placeholder="TIPO CONTACTO" disabled>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-3">
-                                                        <div class="form-group">
-                                                            <label class="col-form-label"> ESTATUS DE DOCUMENTO </label>
-                                                            <input type="text" class="form-control"
-                                                                placeholder="ESTATUS" id="iIdEstatusEmpleado" disabled>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <div class="form-group">
-                                                            <label class="col-form-label">USUARIO ULTIMA
-                                                                MODIFICACION</label>
-                                                            <input type="text" class="form-control"
-                                                                placeholder="USUARIO ULTIMA MOD."
-                                                                id="vchUsuarioUltModificacion" disabled />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <div class="form-group ">
-                                                            <label class="col-form-label">FECHA ULTIMA
-                                                                MODIFICACION</label>
-                                                            <input type="text" class="form-control"
-                                                                placeholder="FECHA ULTIMA MOD."
-                                                                id="dtFechaUltModificacion" disabled />
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <ul>
-                                                <a href="Sistema/pngwing.com.png" target="_blank">
-                                                    <img src="../../pngwing.com.png" id="#" style="width: 70px; height: auto;">
-                                                </a>
-                                            </ul>
-                                            <ul>
-                                                <a href="#"><i data-feather="edit-3" style="width: 35px; height: auto;"></i></a>
-                                            </ul>
-
-                                        </div>
-                                    </div>
-
                                 </div>
                             </div>
                         </form>
@@ -462,6 +323,154 @@ $resultadoEstado = ObtenerEstadoProcedencia();
     <!-- Tu contenido HTML -->
 
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function (){
+            console.log("Está en los datos del empleado");
+
+            var datosDocumentos = localStorage.getItem('datosConsultaIndividual');
+            var bResultadoDocumentos = JSON.parse(datosDocumentos);
+
+            console.log ("Esto es bResultadoDocumentos:", bResultadoDocumentos);
+
+            var iIdEmpleadoDoctos = bResultadoDocumentos.iIdEmpleado;
+
+            var datosDocumentos = new XMLHttpRequest();
+            datosDocumentos.open('POST', 'prcConsultaDocumentos', true);
+
+            var formData = new URLSearchParams();
+            formData.append('iIdEmpleadoDocumento',iIdEmpleadoDoctos );
+
+            datosDocumentos.send(formData);
+
+            datosDocumentos.onload = function (){
+                if (datosDocumentos.status === 200){
+                    console.log("Respuesta existosa");
+
+                    var respuesta = JSON.parse(datosDocumentos.responseText);
+
+                    console.log(respuesta);
+
+                    if (respuesta[0].bResultado === 1){
+                        localStorage.setItem('datosConsultaDocumentos', JSON.stringify(respuesta));
+
+                        var datosDocumentosConsulta = localStorage.getItem('datosConsultaDocumentos');
+
+                        if (datosDocumentosConsulta){
+                            var bResultado = JSON.parse(datosDocumentosConsulta);
+                            console.log('Objeto parseado: ', bResultado);
+
+                            let longitudDocumentos = bResultado.length;
+
+                            console.log ("Esta es la longitud de bResultado:", longitudDocumentos);
+
+                            insertarDocumentos(longitudDocumentos);
+
+                            for (var i= 0; i<longitudDocumentos; i++){
+                                var iIdTipoDocumento = 'vchTipoDocumento' + i;
+                                var iIdEstatusDocumento = 'vchEstatusDocumento' +i;
+                                var iIdUsuarioUltModificacion = 'iIdUsuarioUltModificacion' +i;
+                                var dFechaModificacion = 'dtFechaUltModificacion' + i;
+
+
+                                var vchTipoDocumentoForm = document.getElementById(iIdTipoDocumento);
+                                vchTipoDocumentoForm.value = bResultado[i].vchTipoDocto;
+
+                                var vchEstatusForm = document.getElementById(iIdEstatusDocumento);
+                                vchEstatusForm.value = bResultado[i].vchActivo;
+
+                                var vchUsuarioForm = document.getElementById(iIdUsuarioUltModificacion);
+                                vchUsuarioForm.value = bResultado[i].vchUsuarioUltModificacion;
+
+                                var dFechaUltModifForm = bResultado[i].dtFechaUltModificacion.date;
+                                var fechaModif = new Date(dFechaUltModifForm);
+
+                                var fechaModifFinal = fechaModif.toLocaleString('es-ES', {
+                                    day: '2-digit',
+                                    month: '2-digit',
+                                    year: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    second: '2-digit',
+                                    hour12: false
+                                });
+
+                                var dFechaModificacionForm = document.getElementById(dFechaModificacion);
+                                dFechaModificacionForm.value = fechaModifFinal
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        function insertarDocumentos(longitudDocumentos){
+            var contenedor = document.getElementById('agregarDocumentos');
+            contenedor.innerHTML = agregarListaDocumentos(longitudDocumentos);
+        }
+
+        function agregarListaDocumentos(longitudDocumentos){
+            var documento = '';
+
+            for (var i=0; i<longitudDocumentos; i++){
+                documento += `
+                        <div class="employer">
+                            <div class="body">
+                                <div class="row">
+                                    <div class="body">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label class="col-form-label">TIPO DE
+                                                    DOCUMENTO</label>
+                                                <input id="vchTipoDocumento${i}" type="text" class="form-control"
+                                                    placeholder="TIPO CONTACTO" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label class="col-form-label"> ESTATUS DE DOCUMENTO </label>
+                                                <input type="text" class="form-control"
+                                                    placeholder="ESTATUS" id="vchEstatusDocumento${i}" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label class="col-form-label">USUARIO ULTIMA
+                                                    MODIFICACION</label>
+                                                <input type="text" class="form-control"
+                                                    placeholder="USUARIO ULTIMA MOD."
+                                                    id="iIdUsuarioUltModificacion${i}" disabled />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group ">
+                                                <label class="col-form-label">FECHA ULTIMA
+                                                    MODIFICACION</label>
+                                                <input type="text" class="form-control"
+                                                    placeholder="FECHA ULTIMA MOD."
+                                                    id="dtFechaUltModificacion${i}" disabled />
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <ul>
+                                    <a href="Sistema/pngwing.com.png" target="_blank">
+                                        <img src="../../pngwing.com.png" id="#" style="width: 70px; height: auto;">
+                                    </a>
+                                </ul>
+                                <ul>
+                                    <a href="#"><i data-feather="edit-3" style="width: 35px; height: auto;"></i></a>
+                                </ul>
+
+                            </div>
+                        </div>
+                `;
+            }
+            return documento;
+        }
+
+    </script>
 
 </body>
 
