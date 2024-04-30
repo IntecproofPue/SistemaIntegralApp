@@ -356,7 +356,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
               <label style="align-self: flex-end;"><a href="../consulEmpleado/consultaPuesto.php ">PUESTO</a></label>
               <label style="align-self: flex-end;"><a href="consultaDomicilio.php">DOMICILIO</a></label>
               <label style="align-self: flex-end;" class="selected"><a href="consultaContacto.php">CONTACTO</a></label>
-              <label style="align-self: flex-end;"><a href="consultaDocumentos.php">DOCUMENTOS</a></label>
+              <label style="align-self: flex-end;"><a href="../consulEmpleado/cunsultaDoctos.php">DOCUMENTOS</a></label>
             </div>
           </div>
           <!-- fin de pestañas de navegación-->
@@ -366,9 +366,9 @@ $estadoProcedencia = json_encode($resultadoEstado);
   </header>
 
   <script>
-      document.addEventListener('DOMContentLoaded', function(){
+    document.addEventListener('DOMContentLoaded', function () {
 
-      });
+    });
 
   </script>
 
@@ -389,7 +389,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
                     <div class="container">
                       <div class="col">
                         <div class="filtered-employer-wrapper">
-                            <div class="employer" id = "agregaContacto"> </div>
+                          <div class="employer" id="agregaContacto"> </div>
                         </div>
                       </div>
                     </div>
@@ -423,22 +423,21 @@ $estadoProcedencia = json_encode($resultadoEstado);
 
                 <div class="col-md-4">
                   <div class="form-group">
-                  <label class="col-form-label">TIPO CONTACTO</label>
+                    <label class="col-form-label">TIPO CONTACTO</label>
                     <input id="tipoContacto" type="text" class="form-control" placeholder="TIPO CONTACTO" disabled>
                   </div>
                 </div>
 
                 <div class="col-md-4">
                   <div class="form-group">
-                  <label class="col-form-label">CONTACTO</label>
-                    <input id="tipoContacto" class="form-control" name="tipoContacto"
-                      placeholder="CONTACTO" disabled>
+                    <label class="col-form-label">CONTACTO</label>
+                    <input id="tipoContacto" class="form-control" name="tipoContacto" placeholder="CONTACTO" disabled>
                   </div>
                 </div>
 
                 <div class="col-md-4">
                   <div class="form-group">
-                  <label class="col-form-label">ESTATUS</label>
+                    <label class="col-form-label">ESTATUS</label>
                     <input type="text" class="form-control" id="dActivo" name="dActivo" placeholder="activo"
                       style="text-transform: uppercase" pattern="[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+"
                       title="SOLO SE PERMITEN LETRAS" disabled>
@@ -447,7 +446,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
 
                 <div class="col-md-4">
                   <div class="form-group">
-                  <label class="col-form-label">USUARIO ULTIMA MODIFICACION</label>
+                    <label class="col-form-label">USUARIO ULTIMA MODIFICACION</label>
                     <input type="text" class="form-control" id="ilUsuarioUltModificacion"
                       name="ilUsuarioUltModificacion" placeholder="USER ULT MODIF." style="text-transform: uppercase"
                       disabled>
@@ -456,7 +455,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
 
                 <div class="col-md-4">
                   <div class="form-group">
-                  <label class="col-form-label">FECHA ULTIMA MODIFICACION</label>
+                    <label class="col-form-label">FECHA ULTIMA MODIFICACION</label>
                     <input type="text" class="form-control" placeholder="fecha ultima " id="dtFechaUltModificacion"
                       name="dtFechaUltModificacion" style="text-transform: uppercase" disabled>
                   </div>
@@ -528,105 +527,103 @@ $estadoProcedencia = json_encode($resultadoEstado);
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
   <script src="../../js/map.js"></script>
 
-    <script>
+  <script>
 
-        document.addEventListener('DOMContentLoaded', function(){
-            console.log("Esta en los datos del contacto");
+    document.addEventListener('DOMContentLoaded', function () {
+      console.log("Esta en los datos del contacto");
 
-            var datosContacto = localStorage.getItem('datosConsultaIndividual');
-            var bResultadoContacto = JSON.parse(datosContacto);
-            var iIdPersonaContacto = bResultadoContacto.iIdPersona;
+      var datosContacto = localStorage.getItem('datosConsultaIndividual');
+      var bResultadoContacto = JSON.parse(datosContacto);
+      var iIdPersonaContacto = bResultadoContacto.iIdPersona;
 
-            var datosContactos = new XMLHttpRequest();
+      var datosContactos = new XMLHttpRequest();
 
-            datosContactos.open('POST', 'prcConsultaContacto.php', true);
+      datosContactos.open('POST', 'prcConsultaContacto.php', true);
 
-            var formData = new URLSearchParams();
-            formData.append('iIdPersonaContacto', iIdPersonaContacto);
+      var formData = new URLSearchParams();
+      formData.append('iIdPersonaContacto', iIdPersonaContacto);
 
-            datosContactos.send(formData);
+      datosContactos.send(formData);
 
-            datosContactos.onload = function (){
-                if (datosContactos.status === 200){
-                    console.log ("Respuesta exitosa");
-                    var respuesta = JSON.parse(datosContactos.responseText);
-                    console.log(respuesta);
+      datosContactos.onload = function () {
+        if (datosContactos.status === 200) {
+          console.log("Respuesta exitosa");
+          var respuesta = JSON.parse(datosContactos.responseText);
+          console.log(respuesta);
 
-                    if (respuesta[0].bResultado === 1){
-                        localStorage.setItem('datosConsultaContacto', JSON.stringify(respuesta));
+          if (respuesta[0].bResultado === 1) {
+            localStorage.setItem('datosConsultaContacto', JSON.stringify(respuesta));
 
-                        var datosContactoConsulta = localStorage.getItem('datosConsultaContacto');
+            var datosContactoConsulta = localStorage.getItem('datosConsultaContacto');
 
-                        if (datosContactoConsulta){
-                            var bResultado = JSON.parse(datosContactoConsulta);
-                            console.log('Objeto parseado: ', bResultado);
+            if (datosContactoConsulta) {
+              var bResultado = JSON.parse(datosContactoConsulta);
+              console.log('Objeto parseado: ', bResultado);
 
-                            let longitudContacto = bResultado.length;
+              let longitudContacto = bResultado.length;
 
-                            insertarContactos(longitudContacto);
+              insertarContactos(longitudContacto);
 
-                            for (var i = 0; i<bResultado.length; i++){
-                                var iIdTipoContacto = 'vchTipoContacto' + i;
-                                var iIdContacto = 'vchContacto' + i;
+              for (var i = 0; i < bResultado.length; i++) {
+                var iIdTipoContacto = 'vchTipoContacto' + i;
+                var iIdContacto = 'vchContacto' + i;
 
-                                var vchTipoContactoForm = document.getElementById(iIdTipoContacto);
-                                vchTipoContactoForm.value = bResultado[i].vchTipoContacto || '';
+                var vchTipoContactoForm = document.getElementById(iIdTipoContacto);
+                vchTipoContactoForm.value = bResultado[i].vchTipoContacto || '';
 
-                                var vchContactoForm = document.getElementById(iIdContacto);
-                                vchContactoForm.value = bResultado[i].vchContacto;
-                            }
+                var vchContactoForm = document.getElementById(iIdContacto);
+                vchContactoForm.value = bResultado[i].vchContacto;
+              }
 
-                            //insertarContactos(longitudContacto);
-                        }
-                    }
-                }
+              //insertarContactos(longitudContacto);
             }
-        });
-
-        function insertarContactos (longitudContacto){
-            var contenedor = document.getElementById('agregaContacto');
-            contenedor.innerHTML = agregarListaContactos(longitudContacto);
+          }
         }
+      }
+    });
 
-        function agregarListaContactos(longitudContacto){
-            var contacto = '';
-            for (var i= 0; i<longitudContacto; i++){
-                contacto += `
-            <div class="employer">
-                <div class="body">
-                 <div class="row">
-                    <div class="body">
-                      <div class="col-md-10">
-                        <div class="form-group">
-                        <label class="col-form-label">TIPO DE CONTACTO</label>
-                          <input id="vchTipoContacto${i}" type="text" class="form-control"
-                            placeholder="TIPO CONTACTO" disabled>
-                        </div>
-                      </div>
+    function insertarContactos(longitudContacto) {
+      var contenedor = document.getElementById('agregaContacto');
+      contenedor.innerHTML = agregarListaContactos(longitudContacto);
+    }
 
-                      <div class="col-md-10">
-                        <div class="form-group">
-                        <label class="col-form-label">CONTACTO</label>
-                          <input id="vchContacto${i}" class="form-control" name="tipoContacto"
-                                 placeholder="CONTACTO" disabled>
-                        </div>
-                      </div>
-
-                    </div>
-                 </div>
-                 <div class="button-area">
-                    <a href="#" data-toggle="modal" data-target="#apply-popup-id-${i+1}">SELECCIONAR</a>
-                 </div>
+    function agregarListaContactos(longitudContacto) {
+      var contacto = '';
+      for (var i = 0; i < longitudContacto; i++) {
+        contacto += `
+        <div class="employer">
+    <div class="body">
+      <div class="row">
+        <div class="body">
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label class="col-form-label">TIPO DE CONTACTO</label>
+                  <input id="vchTipoContacto${i}" type="text" class="form-control" placeholder="TIPO CONTACTO" disabled>
                 </div>
               </div>
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label class="col-form-label">CONTACTO</label>
+                  <input id="vchContacto${i}" class="form-control" name="tipoContacto" placeholder="CONTACTO" disabled>
+                </div>
+              </div>
+          <div class="boton-intec">
+            <a href="#" data-toggle="modal" data-target="#apply-popup-id-${i + 1}">SELECCIONAR</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
                                  `;
-            }
-            return contacto;
-        }
+      }
+      return contacto;
+    }
 
-        
 
-    </script>
+
+  </script>
+
+  
 
 
 </body>
