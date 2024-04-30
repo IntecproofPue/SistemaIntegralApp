@@ -574,8 +574,6 @@ $estadoProcedencia = json_encode($resultadoEstado);
                 var vchContactoForm = document.getElementById(iIdContacto);
                 vchContactoForm.value = bResultado[i].vchContacto;
               }
-
-              //insertarContactos(longitudContacto);
             }
           }
         }
@@ -588,45 +586,96 @@ $estadoProcedencia = json_encode($resultadoEstado);
     }
 
     function agregarListaContactos(longitudContacto) {
-      var contacto = '';
-      for (var i = 0; i < longitudContacto; i++) {
-        contacto += `
-        <div class="employer">
-    <div class="body">
-      <div class="row">
+        var contacto = '';
+        for (var i = 0; i < longitudContacto; i++) {
+            contacto += `
+    <div class="employer">
         <div class="body">
-              <div class="col-md-10">
-                <div class="form-group">
-                  <label class="col-form-label">TIPO DE CONTACTO</label>
-                  <input id="vchTipoContacto${i}" type="text" class="form-control" placeholder="TIPO CONTACTO" disabled>
+          <div class="row">
+            <div class="body">
+                 <div class="col-md-10">
+                    <div class="form-group">
+                      <label class="col-form-label">TIPO DE CONTACTO</label>
+                      <input id="vchTipoContacto${i}" type="text" class="form-control" placeholder="TIPO CONTACTO" disabled>
+                    </div>
+                 </div>
+                 <div class="col-md-10">
+                    <div class="form-group">
+                      <label class="col-form-label">CONTACTO</label>
+                      <input id="vchContacto${i}" class="form-control" name="tipoContacto" placeholder="CONTACTO" disabled>
+                    </div>
+                 </div>
+              <div class="boton-intec">
+                <a href="#" data-toggle="modal" data-target="#apply-popup-id-${i + 1}">SELECCIONAR</a>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="modal fade" id="apply-popup-id-${i + 1}" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title"><i data-feather="edit"></i>INFORMACION DE CONTACTO</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="#">
+              <div class="row">
+                <!-- Aquí irían los campos del formulario del modal -->
+ <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="col-form-label">TIPO CONTACTO</label>
+                    <input id="tipoContacto" type="text" class="form-control" placeholder="TIPO CONTACTO" disabled>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="col-form-label">CONTACTO</label>
+                    <input id="tipoContacto" class="form-control" name="tipoContacto" placeholder="CONTACTO" disabled>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="col-form-label">ESTATUS</label>
+                    <input type="text" class="form-control" id="dActivo" name="dActivo" placeholder="activo"
+                      style="text-transform: uppercase" pattern="[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+"
+                      title="SOLO SE PERMITEN LETRAS" disabled>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="col-form-label">USUARIO ULTIMA MODIFICACION</label>
+                    <input type="text" class="form-control" id="ilUsuarioUltModificacion"
+                      name="ilUsuarioUltModificacion" placeholder="USER ULT MODIF." style="text-transform: uppercase"
+                      disabled>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="col-form-label">FECHA ULTIMA MODIFICACION</label>
+                    <input type="text" class="form-control" placeholder="fecha ultima " id="dtFechaUltModificacion"
+                      name="dtFechaUltModificacion" style="text-transform: uppercase" disabled>
+                  </div>
                 </div>
               </div>
-              <div class="col-md-10">
-                <div class="form-group">
-                  <label class="col-form-label">CONTACTO</label>
-                  <input id="vchContacto${i}" class="form-control" name="tipoContacto" placeholder="CONTACTO" disabled>
-                </div>
-              </div>
-          <div class="boton-intec">
-            <a href="#" data-toggle="modal" data-target="#apply-popup-id-${i + 1}">SELECCIONAR</a>
+              <button class="boton-intec">MODIFICAR</button>
+            </form>
           </div>
         </div>
       </div>
     </div>
-  </div>
-                                 `;
-      }
+                 `;
+        }
       return contacto;
     }
-
-
-
   </script>
-
-  
-
-
 </body>
-
 
 </html>
