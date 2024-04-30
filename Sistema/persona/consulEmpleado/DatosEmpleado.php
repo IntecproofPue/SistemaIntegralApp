@@ -13,6 +13,110 @@ if (isset($_SESSION['user_id'])) {
     echo 'setTimeout(function () { window.location.href = "../../index.php"; }, 0);';
     echo '</script>';
 }
+
+function ObtenerSede(){
+    if (isset ($_SESSION['CatConstante'])){
+        $datosSede = $_SESSION['CatConstante'];
+        $sedeEncontrado = array();
+
+        foreach ($datosSede as $valorSede) {
+            if ($valorSede['iAgrupador'] == 4) {
+                $sedeEncontrado [] = $valorSede;
+            }
+        }
+        return $sedeEncontrado;
+    } else {
+        echo ("No hay datos del Estado de Procedencia");
+    }
+}
+
+$resultadoSede = ObtenerSede();
+
+function ObtenerPuesto(){
+    $datosPuesto = array (
+        'iIdPuesto' => 0 ,
+        'vchPuesto' => '',
+        'iIdTipoContratacion' => 0,
+        'iIdUsuarioUltModificacion' => $_SESSION['user_id'],
+        'iOpcion' => 2
+    );
+
+    $procedureName = "EXEC prcConsultaPuesto    @iIdPuesto = ?, 
+                                                        @vchPuesto = ?, 
+                                                        @iIdTipoContratacion = ?,
+                                                        @iIdUsuarioUltModificacion  = ?,
+                                                        @iOpcion = ?                                                       
+                                                    ";
+
+    $params = array(
+
+        $datosPuesto['iIdPuesto'],
+        $datosPuesto['vchPuesto'],
+        $datosPuesto['iIdTipoContratacion'],
+        $datosPuesto['iIdUsuarioUltModificacion'],
+        $datosPuesto['iOpcion']
+    );
+
+    $result = sqlsrv_query($GLOBALS['conn'], $procedureName, $params);
+
+    $CatPuestos = array();
+
+    if ($result === false){
+        die(print_r(sqlsrv_errors(), true));
+
+    } else{
+        do{
+            while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+                $CatPuestos[] = $row;
+            }
+        }while (sqlsrv_next_result($result));
+    }
+    return $CatPuestos;
+
+    sqlsrv_close($GLOBALS['conn']);
+
+}
+$resultadoPuesto = ObtenerPuesto();
+
+function ObtenerAutorizacionContratante(){
+    $datosConsulta = array (
+        'iIdEmpleado' => 0,
+        'iIdUsuarioUltModificacion' => $_SESSION['user_id'],
+        'iOpcion' => 2
+    );
+
+    $procedureName = "EXEC prcConsultaEmpleado      @iIdEmpleado = ?,
+                                                        @iIdUsuarioUltModificacion = ?,
+                                                        @iOpcion = ? 
+                                                        ";
+    $params = array(
+        $datosConsulta['iIdEmpleado'],
+        $datosConsulta['iIdUsuarioUltModificacion'],
+        $datosConsulta['iOpcion']
+    );
+    $result = sqlsrv_query($GLOBALS['conn'], $procedureName, $params);
+
+    $Contratantes = array();
+
+    if ($result === false){
+        die(print_r(sqlsrv_errors(), true));
+
+    } else{
+        do{
+            while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+                $Contratantes[] = $row;
+            }
+        }while (sqlsrv_next_result($result));
+    }
+    return $Contratantes;
+
+    sqlsrv_close($GLOBALS['conn']);
+
+}
+$resultadoContratantes = ObtenerAutorizacionContratante();
+
+
+
 ?>
 
 <!doctype html>
@@ -739,7 +843,7 @@ if (isset($_SESSION['user_id'])) {
               </div>
               <div class="update-photo" style="position: relative;">
                             <label><img class="image" src="../../user-1.jpg" alt="">
-                                <span class="edit-text">EDITAR AVATAR</span>
+                                <span class="edit-text">EDITAR IMAGEN</span>
                                 <input for="up-cv" type="file" class="upload-input" id="up-cv" accept="image/*" style="display: none;" onchange="updateImage(this)">
                                 </label>
                             </div>
@@ -856,7 +960,7 @@ if (isset($_SESSION['user_id'])) {
                             $fechaActual = date('Y-m-d');
 
                             // Restar 18 años a la fecha actual
-                            $fechaMinima = date('Y-m-d', strtotime('-18 years', strtotime($fechaActual)));
+                            $fechaMinima = date('Y-m-d', strtotime('-2 years', strtotime($fechaActual)));
 
                             // Establecer la fecha máxima como la fecha actual  
                             $fechaMaxima = $fechaActual;
@@ -869,35 +973,31 @@ if (isset($_SESSION['user_id'])) {
                                 <input type="date" class="form-control" placeholder="FECHA DE BAJA" name="fechaIngreso"
                                     id="dFechaIngreso" pattern="\d{4}-\d{2}-\d{2}"
                                     title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required
-                                    min="<?php echo $fechaMinima; ?>" max="<?php echo $fechaMaxima; ?>" maxlength="10">
+                                    min="<?php echo $fechaMinima; ?>" max="<?php echo $fechaMaxima; ?>"  maxlength="10" value = "<?php echo date ('Y-m-d');?>">
                             </div>
+
+
                             <div class="form-group">
                                 <select id="iIdPuesto" name="iIdPuesto" class="form-control"
                                     placeholder="INGRESE SU PUESTO" style="text-transform: uppercase">
-                                    <?php
-                                    if (is_array($resultadoPuesto) || is_object($resultadoPuesto)) {
-                                        foreach ($resultadoPuesto as $puesto) {
-                                            ?>
-                                            <option value="<?= $puesto['iIdPuesto'] ?>">
-                                                <?= $puesto['vchPuesto'] ?>
-                                            </option>
-                                            <?php
-                                        }
-                                    }
-                                    ?>
                                     <option value="">SELECCIONE UN PUESTO</option>
+                                    <?php foreach ($resultadoPuesto as $puesto): ?>
+                                        <option value="<?= $puesto['iIdPuesto'] ?>">
+                                            <?= $puesto['vchPuesto'] ?>
+                                        </option>
+                                    <?php endforeach; ?>
+
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="ilContratadoPor" id="ilContratadoPor"
-                                    style="text-transform: uppercase" placeholder="QUIEN CONTRATO" required>
-                            </div>
-                            <div class="form-group">
-                                <option value="">FECHA DE REINGRESO</option>
-                                <input type="date" class="form-control" placeholder="FECHA DE REINGRESO"
-                                    name="dFechaReingreso" id="dFechaReingreso" pattern="\d{4}-\d{2}-\d{2}"
-                                    title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required
-                                    min="<?php echo $fechaMinima; ?>" max="<?php echo $fechaMaxima; ?>" maxlength="10">
+                             <div class="form-group">
+                                <select class="form-control" Name="iIdPersonaContratante"  id = "iIdPersonaContratante" >
+                                    <option value="" selected>PERSONA QUE AUTORIZA CONTRATACIÓN </option>
+                                    <?php foreach ($resultadoContratantes as $contratante): ?>
+                                        <option value="<?= $contratante['iIdPersona'] ?>">
+                                            [<?= $contratante['iIdPersona']?>] - <?= $contratante['vchPrimerApellido'].' '. $contratante['vchSegundoApellido'].' '.$contratante['vchNombre'] ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                             <button class="button primary-bg btn-block">APLICAR</button>
                         </form>
@@ -921,10 +1021,9 @@ if (isset($_SESSION['user_id'])) {
                     <div class="modal-body">
                         <form action="#">
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">*PUESTO:</label>
                                 <div class="col-sm-9">
                                     <select class="form-control" Name="iIdPuesto" id="iIdPuesto" required>
-                                        <option value="" selected>SELECCIONE UN PUESTO</option>
+                                        <option value="" selected>SELECCIONE NUEVO PUESTO</option>
                                         <?php foreach ($resultadoPuesto as $puesto): ?>
                                             <option value="<?= $puesto['iIdPuesto'] ?>">
                                                 <?= $puesto['vchPuesto'] ?>
@@ -936,14 +1035,14 @@ if (isset($_SESSION['user_id'])) {
                             <div class="form-group">
                                 <input type="tel" class="form-control" name="vchNSS" id="vchNSS" maxlength="10"
                                     pattern="^[0-9]{10,}$" title="NSS INCORRECTO" style="text-transform: uppercase"
-                                    placeholder="Ingrese su NSS" required>
+                                    placeholder="Ingrese su NSS">
                             </div>
                             <?php
                             // Calcular la fecha actual
                             $fechaActual = date('Y-m-d');
 
                             // Restar 18 años a la fecha actual
-                            $fechaMinima = date('Y-m-d', strtotime('-18 years', strtotime($fechaActual)));
+                            $fechaMinima = date('Y-m-d', strtotime('-2 years', strtotime($fechaActual)));
 
                             // Establecer la fecha máxima como la fecha actual  
                             $fechaMaxima = $fechaActual;
@@ -955,11 +1054,11 @@ if (isset($_SESSION['user_id'])) {
                                 <option value="">FECHA DE INGRESO</option>
                                 <input type="date" class="form-control" placeholder="FECHA DE INGRESO"
                                     name="fechaIngreso" id="dFechaIngreso" pattern="\d{4}-\d{2}-\d{2}"
-                                    title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required
-                                    min="<?php echo $fechaMinima; ?>" max="<?php echo $fechaMaxima; ?>" maxlength="10">
+                                    title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)"
+                                    min="<?php echo $fechaMinima; ?>" max="<?php echo $fechaMaxima; ?>" maxlength="10" value = "<?php echo date ('Y-m-d');?>">
                             </div>
                             <div class="form-group">
-                                <select class="form-control" Name="iIdSede" id="iIdSede" required>
+                                <select class="form-control" Name="iIdSede" id="iIdSede" >
                                     <option value="">SELECCIONE UNA SEDE</option>
                                     <?php foreach ($resultadoSede as $sede): ?>
                                         <option value="<?= $sede['iIdConstante'] . '-' . $sede['iClaveCatalogo'] ?>">
