@@ -194,12 +194,20 @@ $estadoProcedencia = json_encode($resultadoEstado);
       padding: 5px 20px;
     }
 
-    .body {
+    .body-intec {
+      margin-bottom: -30px;
+      padding: 5px 20px;
       margin-bottom: -10px;
+    transform: scale(0.8); /* Puedes ajustar el valor (0.8 en este caso) según sea necesario */
+}
+
+    .candidate {
+      padding: 5px;
+  
     }
 
     .filtered-employer-wrapper .employer {
-      margin-bottom: 5px;
+      margin-bottom: -5px;
     }
   </style>
 
@@ -394,6 +402,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
             <form action="consultaContacto" method="post" class="dashboard-form">
               <div id="information" class="row justify-content-center">
                 <div class="col-md-11">
+
                   <div class="candidate">
                     <div class="body">
                       <label class="col-form-label">
@@ -404,16 +413,10 @@ $estadoProcedencia = json_encode($resultadoEstado);
                       </div>
                     </div>
                   </div>
+                  
+                        <div class="filtered-employer-wrapper" id="agregaContacto"></div>
+                      
 
-
-
-                  <div class="container">
-                    <div class="col">
-                      <div class="filtered-employer-wrapper" id="agregaContacto">
-                      </div>
-                    </div>
-
-                  </div>
                 </div>
             </form>
           </div>
@@ -566,22 +569,22 @@ $estadoProcedencia = json_encode($resultadoEstado);
                 vchContactoForm.value = bResultado[i].vchContacto;
 
                 var vchUsuarioForm = document.getElementById(iIdUsuarioUlt);
-                  vchUsuarioForm.value = bResultado[i].vchUsuarioUltModif;
+                vchUsuarioForm.value = bResultado[i].vchUsuarioUltModif;
 
 
-                  var dFechaUltModifOriginal = bResultado[i].dtFechaUltModificacion.date;
-                  var fechaModif = new Date(dFechaUltModifOriginal);
-                  var fechaModifFinal = fechaModif.toLocaleString('es-ES', {
-                      day: '2-digit',
-                      month: '2-digit',
-                      year: 'numeric',
-                      hour: '2-digit',
-                      minute: '2-digit',
-                      second: '2-digit',
-                      hour12: false
-                  });
-                  var dFechaModificacion = document.getElementById(fechaUltModif);
-                  dFechaModificacion.value = fechaModifFinal
+                var dFechaUltModifOriginal = bResultado[i].dtFechaUltModificacion.date;
+                var fechaModif = new Date(dFechaUltModifOriginal);
+                var fechaModifFinal = fechaModif.toLocaleString('es-ES', {
+                  day: '2-digit',
+                  month: '2-digit',
+                  year: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  second: '2-digit',
+                  hour12: false
+                });
+                var dFechaModificacion = document.getElementById(fechaUltModif);
+                dFechaModificacion.value = fechaModifFinal
 
               }
             }
@@ -599,17 +602,18 @@ $estadoProcedencia = json_encode($resultadoEstado);
       var contacto = '';
       for (var i = 0; i < longitudContacto; i++) {
         contacto += `
-        <div class="employer">
-    <div class="body">
-      <div class="row">
-        <div class="body">
-              <div class="col-md-4">
+        <div class="candidate">
+          <div class="employer">
+              <div class="body">              
+
+              <div class="col-md-3">
                 <div class="form-group">
                   <label class="col-form-label">TIPO DE CONTACTO</label>
                   <input id="vchTipoContacto${i}" type="text" class="form-control" placeholder="TIPO CONTACTO" disabled>
                 </div>
               </div>
-              <div class="col-md-4">
+
+              <div class="col-md-3">
                 <div class="form-group">
                   <label class="col-form-label">CONTACTO</label>
                   <input id="vchContacto${i}" class="form-control" name="tipoContacto" placeholder="CONTACTO" disabled>
@@ -625,17 +629,19 @@ $estadoProcedencia = json_encode($resultadoEstado);
                   </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
                     <label class="col-form-label">ULTIMA MODIFICACION</label>
                     <input type="text" class="form-control" placeholder="##/##/####" id="dtFechaUltModificacion${i}"
                       name="dtFechaUltModificacion" style="text-transform: uppercase" disabled>
                   </div>
                 </div>
+
           <div class="boton-intec">
             <a href="#" data-toggle="modal" data-target="#apply-popup-id-${i + 1}" style="width: 40px; height: 25px; padding: 2px;">BAJA</a>
           </div>
-        </div>
+
+        
       </div>
     </div>
   </div>
