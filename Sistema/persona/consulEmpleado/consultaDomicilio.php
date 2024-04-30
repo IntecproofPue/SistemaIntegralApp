@@ -349,19 +349,19 @@ $estadoProcedencia = json_encode($resultadoEstado);
                 vchNoInt.value = bResultado[i].vchNumeroInterior || '';
 
                 var iIdUsuarioUltModificacion = document.getElementById('vchUsuarioUltModificacion');
-                iIdUsuarioUltModificacion.value = bResultado[i].vchUsuarioUltModif   || '';
+                iIdUsuarioUltModificacion.value = bResultado[i].vchUsuarioUltModif || '';
 
 
                 var dFechaUltModifOriginal = bResultado[i].dtFechaUltModificacion.date;
                 var fechaModif = new Date(dFechaUltModifOriginal);
                 var fechaModifFinal = fechaModif.toLocaleString('es-ES', {
-                      day: '2-digit',
-                      month: '2-digit',
-                      year: 'numeric',
-                      hour: '2-digit',
-                      minute: '2-digit',
-                      second: '2-digit',
-                      hour12: false
+                  day: '2-digit',
+                  month: '2-digit',
+                  year: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  second: '2-digit',
+                  hour12: false
                 });
                 var dFechaModificacion = document.getElementById('dtFechaUltModificacion');
                 dFechaModificacion.value = fechaModifFinal || '';
@@ -383,12 +383,12 @@ $estadoProcedencia = json_encode($resultadoEstado);
   <!-- Contenido de la página -->
   <div class="alice-bg section-padding-bottom">
     <div class="container no-gliters">
-      <div class="row jsutify-content-center">
+      <div class="row justify-content-center">
         <div class="col">
           <div class="post-content-wrapper">
             <form action="#" method="post" class="dashboard-form">
-              <div id="information" class="row -justify-content-center">
-                <div class="col-md-10">
+            <div id="information" class="row justify-content-center">
+                                <div class="col-md-10">
                   <label class="col-form-label">
                     <h6><i data-feather="user-check"></i>INFORMACION DOMICILIO</h6>
                   </label>
@@ -402,49 +402,50 @@ $estadoProcedencia = json_encode($resultadoEstado);
                       </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-md-4">
                       <div class="form-group">
                         <label class="col-form-label">MUNICIPIO </label>
                         <input id="vchMunicipio" type="text" class="form-control" placeholder="MUNICIPIO" disabled>
                       </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-md-4">
                       <div class="form-group">
                         <label class="col-form-label">LOCALIDAD </label>
                         <input id="vchLocalidad" type="text" class="form-control" placeholder="LOCALIDAD" disabled>
                       </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-md-4">
                       <div class="form-group">
                         <label class="col-form-label">COLONIA </label>
                         <input id="vchColonia" type="text" class="form-control" placeholder="COLONIA" disabled>
                       </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-md-4">
                       <div class="form-group">
                         <label class="col-form-label">C.P.</label>
-                        <input id="iIdCodigoPostal" type="text" class="form-control" placeholder="CÓDIGO POSTAL" disabled>
+                        <input id="iIdCodigoPostal" type="text" class="form-control" placeholder="CÓDIGO POSTAL"
+                          disabled>
                       </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-md-4">
                       <div class="form-group">
                         <label class="col-form-label">CALLE </label>
                         <input id="vchCalle" type="text" class="form-control" placeholder="CALLE" disabled>
                       </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-md-4">
                       <div class="form-group">
                         <label class="col-form-label">No. EXTERIOR </label>
                         <input id="vchNoExt" type="text" class="form-control" placeholder="NÚMERO EXTERIOR" disabled>
                       </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-md-4">
                       <div class="form-group">
                         <label class="col-form-label">No. INTERIOR </label>
                         <input id="vchNoInt" type="text" class="form-control" placeholder="NÚMERO INTERIOR" disabled />
                       </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-md-4">
                       <div class="form-group">
                         <label class="col-form-label">LETRA </label>
                         <input id="vchLetra" class="form-control" placeholder="LETRA" disabled>
@@ -466,59 +467,11 @@ $estadoProcedencia = json_encode($resultadoEstado);
                           id="dtFechaUltModificacion" disabled />
                       </div>
                     </div>
-                    <!--
-                    <script>
 
-                      document.getElementById('buttonEditar').addEventListener('click', function () {
-                        var inputs = document.getElementById('datosDomicilio').getElementsByTagName('input');
-                        for (var i = 0; i < inputs.length; i++) {
-                          inputs[i].disabled = false;
-                        }
-                        var inputElement = document.getElementById('vchEntidad');
-                        var selectElement = document.createElement('select');
-                        selectElement.id = 'vchEntidad';
-                        selectElement.className = 'form-control';
-                        selectElement.setAttribute('placeholder', 'SELECCIONE UNA ENTIDAD FEDERATIVA');
-                        var defaultOption = document.createElement('option');
-                        defaultOption.value = "";
-                        defaultOption.text = "SELECCIONE UN ESTADO";
-                        defaultOption.selected = true;
-                        selectElement.appendChild(defaultOption);
-                        console.log(parseEstadoProcedencia);
-                        // Iterar sobre los resultados y agregar opciones al select
-                        for (var i = 0; i < parseEstadoProcedencia.length; i++) {
-                          var option = document.createElement('option');
-                          option.value = parseEstadoProcedencia[i].iIdConstante + '-' + parseEstadoProcedencia[i].iClaveCatalogo;
-                          option.text = '[' + parseEstadoProcedencia[i].iClaveCatalogo + '] - ' + parseEstadoProcedencia[i].vchDescripcion;
-                          selectElement.appendChild(option);
-                        }
-                        inputElement.parentNode.replaceChild(selectElement, inputElement);
-                        // verifica si la variable datosActualizaDomicilio está definida
-                        if (typeof datosActualizaDomicilio !== 'undefined') {
-                          // Actualizar la variable datosConsultaDomicilio
-                          var datosDomicilio = datosActualizaDomicilio;
-                          console.log("Datos actualizados:", datosDomicilio);
-                        } else {
-                          console.log("La variable datosDomicilio no está definida.");
-                        }
-                      });
-                      document.addEventListener("DOMContentLoaded", function () {
-                        // Agrega el event listener después de que el DOM esté completamente cargado
-                        var modificarButton = document.querySelector('.apply[data-target="#apply-popup-id-1"]');
-                        if (modificarButton) {
-                          modificarButton.addEventListener('click', function (event) {
-                            // Tu lógica aquí
-                            console.log("Se hizo clic en el botón 'MODIFICAR'");
-                          });
-                        }
-                      });
-
-                    </script>-->
-                    
                   </div>
-                    <div class="row-left">
-                        <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-1">MODIFICAR</a>
-                    </div>
+                  <div class="row-left">
+                    <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-1">MODIFICAR</a>
+                  </div>
                 </div>
               </div>
             </form>
@@ -542,21 +495,24 @@ $estadoProcedencia = json_encode($resultadoEstado);
           </div>
           <div class="modal-body">
             <form action="#">
+
               <div class="form-group">
-                <select class="form-control" id="iAgruEntidad" name="iAgruEntidad" required>
-                  <option value="" selected>SELECCIONE UN ESTADO</option>
-                  <?php foreach ($resultadoEstado as $estado): ?>
-                    <option value="<?= $estado['iIdConstante'] . '-' . $estado['iClaveCatalogo'] ?>">
-                      [<?= $estado['iClaveCatalogo'] ?>] - <?= $estado['vchDescripcion'] ?>
-                    </option>
-                  <?php endforeach; ?>
-                </select>
+                <div class="col-sm-9">
+                  <select class="form-control" id="iAgruEntidad" name="iAgruEntidad" required>
+                    <option value="" selected>SELECCIONE UN ESTADO</option>
+                    <?php foreach ($resultadoEstado as $estado): ?>
+                      <option value="<?= $estado['iIdConstante'] . '-' . $estado['iClaveCatalogo'] ?>">
+                        [<?= $estado['iClaveCatalogo'] ?>] - <?= $estado['vchDescripcion'] ?>
+                      </option>
+                    <?php endforeach; ?>
+                  </select>
+                </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
                   <input type="text" class="form-control" id="vchMunicipio" name="vchMunicipio" placeholder="MUNICIPIO"
                     style="text-transform: uppercase" pattern="[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+"
-                    title="SOLO SE PERMITEN LETRAS" >
+                    title="SOLO SE PERMITEN LETRAS">
                 </div>
               </div>
               <div class="form-group">
@@ -574,344 +530,101 @@ $estadoProcedencia = json_encode($resultadoEstado);
               <div class="form-group">
                 <div class="col-sm-9">
                   <input type="text" class="form-control" placeholder="COLONIA" id="vchColonia" name="vchColonia"
-                    style="text-transform: uppercase" >
+                    style="text-transform: uppercase">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
                   <input type="text" class="form-control" placeholder="CALLE" id="vchCalle" name="vchCalle"
-                    style="text-transform: uppercase" >
+                    style="text-transform: uppercase">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
                   <input type="text" class="form-control" placeholder="No EXT" id="vchNumeroExterior"
-                    name="vchNumeroExterior" style="text-transform: uppercase" >
+                    name="vchNumeroExterior" style="text-transform: uppercase">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
                   <input type="text" class="form-control" placeholder="No INT" id="vchNumeroInterior"
-                    name="vchNumeroInterior" style="text-transform: uppercase" >
+                    name="vchNumeroInterior" style="text-transform: uppercase">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
                   <input type="text" class="form-control" placeholder="LETRA" id="vchLetra" name="vchLetra"
-                    style="text-transform: uppercase" >
+                    style="text-transform: uppercase">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
                   <input type="text" class="form-control" placeholder="NOMBRE" id="vchNombre" name="vchNombre"
-                    style="text-transform: uppercase" >
+                    style="text-transform: uppercase">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="PRIMER APELLIDO" id="vchPrimerApellido" name="vchPrimerApellido"
-                    style="text-transform: uppercase" >
+                  <input type="text" class="form-control" placeholder="PRIMER APELLIDO" id="vchPrimerApellido"
+                    name="vchPrimerApellido" style="text-transform: uppercase">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="SEGUNDO APELLIDO" id="vchSegundoApellido" name="vchSegundoApellido"
-                    style="text-transform: uppercase" >
+                  <input type="text" class="form-control" placeholder="SEGUNDO APELLIDO" id="vchSegundoApellido"
+                    name="vchSegundoApellido" style="text-transform: uppercase">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
                   <input type="text" class="form-control" placeholder="RFC" id="vchRFC" name="vchRFC"
-                    style="text-transform: uppercase" >
+                    style="text-transform: uppercase">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
                   <input type="text" class="form-control" placeholder="CURP" id="vchCURP" name="vchCURP"
-                    style="text-transform: uppercase" >
+                    style="text-transform: uppercase">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="FECHA DE NACIMIENTO" id="dFechaNacimiento" name="dFechaNacimiento"
-                    style="text-transform: uppercase" >
+                  <input type="text" class="form-control" placeholder="FECHA DE NACIMIENTO" id="dFechaNacimiento"
+                    name="dFechaNacimiento" style="text-transform: uppercase">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
                   <input type="text" class="form-control" placeholder="GENERO" id="iIdGenero" name="iIdGenero"
-                    style="text-transform: uppercase" >
+                    style="text-transform: uppercase">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="NACIONALIDAD" id="iIdNacionalidad" name="iIdNacionalidad"
-                    style="text-transform: uppercase" >
+                  <input type="text" class="form-control" placeholder="NACIONALIDAD" id="iIdNacionalidad"
+                    name="iIdNacionalidad" style="text-transform: uppercase">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="REGIMEN FISCAL" id="iIdRegimenFiscal" name="iIdRegimenFiscal"
-                    style="text-transform: uppercase" >
+                  <input type="text" class="form-control" placeholder="REGIMEN FISCAL" id="iIdRegimenFiscal"
+                    name="iIdRegimenFiscal" style="text-transform: uppercase">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
                   <input type="text" class="form-control" placeholder="USO FISCAL" id="iIdUsoFiscal" name="iIdUsoFiscal"
-                    style="text-transform: uppercase" >
+                    style="text-transform: uppercase">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="C.P. FISCAL" id="iCodigoPostalFiscal" name="iCodigoPostalFiscal"
-                    style="text-transform: uppercase" >
+                  <input type="text" class="form-control" placeholder="C.P. FISCAL" id="iCodigoPostalFiscal"
+                    name="iCodigoPostalFiscal" style="text-transform: uppercase">
                 </div>
               </div>
               <button class="button primary-bg btn-block" id="botonAplicar">APLICAR</button>
 
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="apply-popup">
-    <div class="modal fade" id="apply-popup-id-2" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-
-          <div class="modal-header">
-            <h5 class="modal-title"><i data-feather="edit"></i>APLICAR CAMBIOS</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form action="#">
-              <div class="form-group">
-                <select class="form-control" id="estadoLista" name="estadoLista" required>
-                  <option value="" selected>SELECCIONE UN ESTADO</option>
-                  <?php foreach ($resultadoEstado as $estado): ?>
-                    <option value="<?= $estado['iIdConstante'] . '-' . $estado['iClaveCatalogo'] ?>">
-                      [<?= $estado['iClaveCatalogo'] ?>] - <?= $estado['vchDescripcion'] ?>
-                    </option>
-                  <?php endforeach; ?>
-                </select>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="vchMunicipio" name="vchMunicipio" placeholder="MUNICIPIO"
-                    style="text-transform: uppercase" pattern="[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+"
-                    title="SOLO SE PERMITEN LETRAS" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="vchLocalidad" name="vchLocalidad" placeholder="LOCALIDAD"
-                    min="2" name="apeUnoEsccrito" style="text-transform: uppercase" style="text-transform: uppercase"
-                    required>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="CODIGO POSTAL" id="codigoPostal"
-                    name="codigoPostal" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="5">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="COLONIA" id="vchColonia" name="vchColonia"
-                    style="text-transform: uppercase" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="CALLE" id="vchCalle" name="vchCalle"
-                    style="text-transform: uppercase" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="No EXT" id="vchNoExt" name="vchNoExt"
-                    style="text-transform: uppercase" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="No INT" id="vchNoInt" name="vchNoInt"
-                    style="text-transform: uppercase" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="LETRA" id="vchLetra" name="vchLetra"
-                    style="text-transform: uppercase" required>
-                </div>
-              </div>
-              <button class="button primary-bg btn-block">APLICAR</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="apply-popup">
-    <div class="modal fade" id="apply-popup-id-3" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-
-          <div class="modal-header">
-            <h5 class="modal-title"><i data-feather="edit"></i>APLICAR CAMBIOS</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form action="#">
-              <div class="form-group">
-                <select class="form-control" id="estadoLista" name="estadoLista" required>
-                  <option value="" selected>SELECCIONE UN ESTADO</option>
-                  <?php foreach ($resultadoEstado as $estado): ?>
-                    <option value="<?= $estado['iIdConstante'] . '-' . $estado['iClaveCatalogo'] ?>">
-                      [<?= $estado['iClaveCatalogo'] ?>] - <?= $estado['vchDescripcion'] ?>
-                    </option>
-                  <?php endforeach; ?>
-                </select>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="vchMunicipio" name="vchMunicipio" placeholder="MUNICIPIO"
-                    style="text-transform: uppercase" pattern="[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+"
-                    title="SOLO SE PERMITEN LETRAS" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="vchLocalidad" name="vchLocalidad" placeholder="LOCALIDAD"
-                    min="2" name="apeUnoEsccrito" style="text-transform: uppercase" style="text-transform: uppercase"
-                    required>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="CODIGO POSTAL" id="codigoPostal"
-                    name="codigoPostal" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="5">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="COLONIA" id="vchColonia" name="vchColonia"
-                    style="text-transform: uppercase" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="CALLE" id="vchCalle" name="vchCalle"
-                    style="text-transform: uppercase" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="No EXT" id="vchNoExt" name="vchNoExt"
-                    style="text-transform: uppercase" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="No INT" id="vchNoInt" name="vchNoInt"
-                    style="text-transform: uppercase" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="LETRA" id="vchLetra" name="vchLetra"
-                    style="text-transform: uppercase" required>
-                </div>
-              </div>
-              <button class="button primary-bg btn-block">APLICAR</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="apply-popup">
-    <div class="modal fade" id="apply-popup-id-4" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-
-          <div class="modal-header">
-            <h5 class="modal-title"><i data-feather="edit"></i>APLICAR CAMBIOS</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form action="#">
-              <div class="form-group">
-                <select class="form-control" id="estadoLista" name="estadoLista" required>
-                  <option value="" selected>SELECCIONE UN ESTADO</option>
-                  <?php foreach ($resultadoEstado as $estado): ?>
-                    <option value="<?= $estado['iIdConstante'] . '-' . $estado['iClaveCatalogo'] ?>">
-                      [<?= $estado['iClaveCatalogo'] ?>] - <?= $estado['vchDescripcion'] ?>
-                    </option>
-                  <?php endforeach; ?>
-                </select>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="vchMunicipio" name="vchMunicipio" placeholder="MUNICIPIO"
-                    style="text-transform: uppercase" pattern="[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+"
-                    title="SOLO SE PERMITEN LETRAS" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="vchLocalidad" name="vchLocalidad" placeholder="LOCALIDAD"
-                    min="2" name="apeUnoEsccrito" style="text-transform: uppercase" style="text-transform: uppercase"
-                    required>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="CODIGO POSTAL" id="codigoPostal"
-                    name="codigoPostal" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="5">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="COLONIA" id="vchColonia" name="vchColonia"
-                    style="text-transform: uppercase" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="CALLE" id="vchCalle" name="vchCalle"
-                    style="text-transform: uppercase" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="No EXT" id="vchNoExt" name="vchNoExt"
-                    style="text-transform: uppercase" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="No INT" id="vchNoInt" name="vchNoInt"
-                    style="text-transform: uppercase" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="LETRA" id="vchLetra" name="vchLetra"
-                    style="text-transform: uppercase" required>
-                </div>
-              </div>
-              <button class="button primary-bg btn-block">APLICAR</button>
             </form>
           </div>
         </div>

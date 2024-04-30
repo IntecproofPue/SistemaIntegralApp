@@ -358,7 +358,7 @@ $resultadoEstado = ObtenerEstadoProcedencia();
 
                                                     <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label class="col-form-label"> ESTATUS DE EMPLEADO </label>
+                                                            <label class="col-form-label"> ESTATUS DE DOCUMENTO </label>
                                                             <input type="text" class="form-control"
                                                                 placeholder="ESTATUS" id="iIdEstatusEmpleado" disabled>
                                                         </div>
@@ -366,7 +366,7 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label class="col-form-label">USUARIO ULTIMA
-                                                                MOD.</label>
+                                                                MODIFICACION</label>
                                                             <input type="text" class="form-control"
                                                                 placeholder="USUARIO ULTIMA MOD."
                                                                 id="vchUsuarioUltModificacion" disabled />
@@ -385,11 +385,12 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                                 </div>
                                             </div>
                                             <ul>
-                                                <a href="#"><i data-feather="check-square"></i></a>
+                                                <a href="Sistema/pngwing.com.png" target="_blank">
+                                                    <img src="../../pngwing.com.png" id="#" style="width: 70px; height: auto;">
+                                                </a>
                                             </ul>
-
                                             <ul>
-                                                <a href="#"><i data-feather="edit-3"></i></a>
+                                                <a href="#"><i data-feather="edit-3" style="width: 35px; height: auto;"></i></a>
                                             </ul>
 
                                         </div>
@@ -455,51 +456,12 @@ $resultadoEstado = ObtenerEstadoProcedencia();
     <script src="../../dashboard/js/dashboard.js"></script>
     <script src="../../dashboard/js/datePicker.js"></script>
     <script src="../../dashboard/js/upload-input.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
     <script src="../../js/map.js"></script>
     <!-- Tu contenido HTML -->
 
-    <script>
-        // función para crear un nuevo div de documento
-        function agregarDocumento() {
-            var elementoClonable = document.querySelector('.document');
-            if (elementoClonable) {
-                var nuevoDocumento = elementoClonable.cloneNode(true);
-                var ultimoDocumento = document.querySelector('.document:last-of-type');
-                if (ultimoDocumento) {
-                    ultimoDocumento.insertAdjacentElement('afterend', nuevoDocumento);
-                } else {
-                    console.error('NO SE ENCONTRO EL ULTIMO DIV DE DOCUMENTO');
-                }
-            } else {
-                console.error('NO SE ENCONTRO EL ELEMENTO QUE DESEAS CLONAR.');
-            }
-        }
 
-        // evento al botón "AGREGAR"
-        var botonAgregar = document.getElementById('agregarDocumento');
-        if (botonAgregar) {
-            botonAgregar.addEventListener('click', function (e) {
-                e.preventDefault();
-                agregarDocumento();
-            });
-        } else {
-            console.error('NO SE ENCONTRO EL BOTON "AGREGAR".');
-        }
-        var botonAgregar = document.getElementById('agregarDocumento');
-    if (botonAgregar) {
-        botonAgregar.addEventListener('click', function (e) {
-            e.preventDefault();
-            agregarDocumento();
-        });
-    } else {
-        console.error('NO SE ENCONTRO EL BOTON "AGREGAR".');
-    }
-
-        
-    </script>
 
 </body>
 

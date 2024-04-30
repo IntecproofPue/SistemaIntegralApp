@@ -219,7 +219,7 @@ $resultadoEstado = ObtenerEstadoProcedencia();
 
 <body>
 
-<header class="header-2">
+    <header class="header-2">
         <div class="container">
             <div class="row">
                 <div class="col">
@@ -292,7 +292,8 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                     </div>
                                     <ul class="account-item-list">
                                         <li><a href="#"><span class="ti-user"></span><?php echo $Perfil; ?></a></li>
-                                        <li><a href="#"><span class="ti-settings"></span><?php echo $herramientas; ?></a></li>
+                                        <li><a href="#"><span
+                                                    class="ti-settings"></span><?php echo $herramientas; ?></a></li>
                                         <li><a href="../../includes/logout.php"><span
                                                     class="ti-power-off"></span><?php echo $logout; ?></a></li>
                                     </ul>
@@ -304,7 +305,8 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                     <div class="skill-and-profile">
                         <div class="skill" style="display: flex; justify-content: center;">
                             <label style="align-self: flex-end;"><a href="DatosEmpleado.php">EMPLEADO</a></label>
-                            <label style="align-self: flex-end;"  class="selected"><a href="../consulEmpleado/consultaPuesto.php ">PUESTO</a></label>
+                            <label style="align-self: flex-end;" class="selected"><a
+                                    href="../consulEmpleado/consultaPuesto.php ">PUESTO</a></label>
                             <label style="align-self: flex-end;"><a href="consultaDomicilio.php">DOMICILIO</a></label>
                             <label style="align-self: flex-end;"><a href="consultaContacto.php">CONTACTO</a></label>
                             <label style="align-self: flex-end;"><a href="cunsultaDoctos.php">DOCUMENTOS</a></label>
@@ -406,7 +408,6 @@ $resultadoEstado = ObtenerEstadoProcedencia();
             <div class="row justify-content-center">
                 <div class="col">
                     <div class="post-content-wrapper">
-                        <!--<div class="dashboard-content-wrapper">-->
                         <form action="altaPersona" method="post" class="dashboard-form">
                             <div id="information" class="row justify-content-center">
                                 <div class="col-md-10">
@@ -464,6 +465,7 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                                     placeholder="SALARIO COMPLEMENTARIO" disabled>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
