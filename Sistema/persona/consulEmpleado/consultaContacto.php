@@ -556,15 +556,34 @@ $estadoProcedencia = json_encode($resultadoEstado);
               for (var i = 0; i < bResultado.length; i++) {
                 var iIdTipoContacto = 'vchTipoContacto' + i;
                 var iIdContacto = 'vchContacto' + i;
+                var iIdUsuarioUlt = 'ilUsuarioUltModificacion' + i;
+                var fechaUltModif = 'dtFechaUltModificacion' + i;
 
                 var vchTipoContactoForm = document.getElementById(iIdTipoContacto);
                 vchTipoContactoForm.value = bResultado[i].vchTipoContacto || '';
 
                 var vchContactoForm = document.getElementById(iIdContacto);
                 vchContactoForm.value = bResultado[i].vchContacto;
-              }
 
-              //insertarContactos(longitudContacto);
+                var vchUsuarioForm = document.getElementById(iIdUsuarioUlt);
+                  vchUsuarioForm.value = bResultado[i].vchUsuarioUltModif;
+
+
+                  var dFechaUltModifOriginal = bResultado[i].dtFechaUltModificacion.date;
+                  var fechaModif = new Date(dFechaUltModifOriginal);
+                  var fechaModifFinal = fechaModif.toLocaleString('es-ES', {
+                      day: '2-digit',
+                      month: '2-digit',
+                      year: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      second: '2-digit',
+                      hour12: false
+                  });
+                  var dFechaModificacion = document.getElementById(fechaUltModif);
+                  dFechaModificacion.value = fechaModifFinal
+
+              }
             }
           }
         }
@@ -600,8 +619,8 @@ $estadoProcedencia = json_encode($resultadoEstado);
                 <div class="col-md-4">
                   <div class="form-group">
                     <label class="col-form-label">USUARIO MODIFICACION</label>
-                    <input type="text" class="form-control" id="ilUsuarioUltModificacion"
-                      name="ilUsuarioUltModificacion${i}" placeholder="USER ULT MODIF." style="text-transform: uppercase"
+                    <input type="text" class="form-control" id="ilUsuarioUltModificacion${i}"
+                      name="ilUsuarioUltModificacion" placeholder="USER ULT MODIF." style="text-transform: uppercase"
                       disabled>
                   </div>
                 </div>
