@@ -3792,7 +3792,7 @@ a:focus {
 }
 
 .candidate .thumb {
-  width: 80px;
+  width: 110px;
   border-radius: 3px;
   overflow: hidden;
 }
@@ -7267,7 +7267,7 @@ header .absolute-nav {
 .footer-widget.widget-about .description {
   font-size: 1.4rem;
   margin-bottom: 20px;
-  color: #6f7484;
+  color: #6f748style4;
 }
 
 .footer-widget.widget-about .about-contact {

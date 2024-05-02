@@ -3,7 +3,7 @@ require_once ('../includes/pandora.php');
 require_once ('../includes/load.php');
 require_once ('../includes/functions.php');
 
-//session_start();
+session_start();
 function ObtenerTipoContratacion()
 {
     if (isset($_SESSION['CatConstante'])) {
