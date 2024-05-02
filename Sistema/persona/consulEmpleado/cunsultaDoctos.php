@@ -262,7 +262,7 @@ session_start();
                                             </label>
                                             <div class="row-left">
                                                 <a href="#" id="agregarDocumento" class="boton-intec" class="thumb"
-                                                    data-toggle="modal" data-target="#">AGREGAR</a>
+                                                    data-toggle="modal" data-target="#" style="display:none;" >AGREGAR</a>
                                             </div>
                                         </div>
                                     </div>
@@ -467,12 +467,13 @@ session_start();
                                 </div>
                                 <ul>
                                     <a href="Sistema/pngwing.com.png" target="_blank">
-                                        <img src="../../pngwing.com.png" id="#" style="width: 70px; height: auto;">
+                                        <img src="../../pngwing.com.png" id="" style="width: 70px; height: auto;">
                                     </a>
                                 </ul>
                                 <ul>
-                                <ahref="Sistema/3121.png" target="_blank">
-                                        <img src="../../3121.png" id="#" style="width: 50px; height: auto;">
+                                    <a href="Sistema/3121.png" target="_blank">
+                                        <img id="iconoModificar" src="../../3121.png"  style="width: 50px; height: auto; display: none;" >
+                                    </a>
                                 </ul>
 
                             </div>
@@ -483,6 +484,32 @@ session_start();
         }
 
     </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function (){
+            console.log(localStorage.getItem('habilitarBotones'));
+            if (localStorage.getItem('habilitarBotones') === 'true'){
+                const habilitarBotonDomicilio = document.querySelectorAll('.boton-intec');
+                habilitarBotonDomicilio.forEach(boton => {
+                    boton.disabled = false;
+                    boton.style.display = 'block';
+                } );
+
+                const habilitarIconoModificar = document.getElementById('iconoModificar');
+                console.log(localStorage.getItem('habilitarBotones'));
+                console.log(habilitarIconoModificar);
+
+                if (habilitarIconoModificar && habilitarIconoModificar.style.display === 'none') {
+                    habilitarIconoModificar.style.display = 'block';
+                } else {
+                    console.error("No se puede habilitar el icono");
+                }
+            }
+
+        });
+    </script>
+
 
 </body>
 

@@ -470,7 +470,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
 
                   </div>
                   <div class="row-left">
-                    <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-1">MODIFICAR</a>
+                    <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-1" style="display:none;" >MODIFICAR DOMICILIO</a>
                   </div>
                 </div>
               </div>
@@ -480,6 +480,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
       </div>
     </div>
   </div>
+
 
   <!-- inicio de modales -->
   <div class="apply-popup">
@@ -687,6 +688,21 @@ $estadoProcedencia = json_encode($resultadoEstado);
 
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
   <script src="../../js/map.js"></script>
+
+  <script>
+      document.addEventListener('DOMContentLoaded', function (){
+          console.log(localStorage.getItem('habilitarBotones'));
+          if (localStorage.getItem('habilitarBotones') === 'true'){
+              const habilitarBotonDomicilio = document.querySelectorAll('.boton-intec');
+              habilitarBotonDomicilio.forEach(boton => {
+                  boton.disabled = false;
+                  boton.style.display = 'block';
+              } );
+          }
+      });
+  </script>
+
+
 
 </body>
 

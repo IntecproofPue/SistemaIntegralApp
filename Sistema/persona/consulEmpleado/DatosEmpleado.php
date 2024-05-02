@@ -406,6 +406,7 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                                             }
                                         }
                                     }
+                                    return bResultado;
 
                                     function MostrarDatos(bResultado) {
                                         var idInput = document.getElementById('idInput');
@@ -503,9 +504,6 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                                         vchNacionalidad.value = bResultado.vchNacionalidad || '';
 
                                         //Datos Fiscales
-                                        var vchTipoPersona = document.getElementById('iIdTipoPersona');
-                                        vchTipoPersona.value = bResultado.vchTipoPersona || '';
-
                                         var vchRegimen = document.getElementById('vchRegimen');
                                         vchRegimen.value = bResultado.vchDescripcionRegimen;
 
@@ -518,6 +516,25 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                                     }
 
                                 });
+
+                                function MostrarDatosPromocion(bResultado) {
+
+                                    var vchPuestoPromocion = document.getElementById('vchPuestoPromocion');
+                                    vchPuestoPromocion.value = bResultado.vcPuesto;
+
+                                    console.log(vchPuestoPromocion);
+
+                                    console.log(bResultado);
+
+
+
+                                    var vchNSSPromocion = document.getElementById('vchNSSPromocion');
+                                    vchNSSPromocion.value = bResultado.vchNSS;
+
+                                    var vchSedePromocion = document.getElementById('vchSedePromocion');
+                                    vchSedePromocion.value = bResultado.vchSede;
+
+                                }
 
                             </script>
 
@@ -691,26 +708,30 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                                             </div>
                                         </div>
 
-                    <div class="candidate">
-                    <div class="body">
-                      <div class="row">
-                        <div class="row-left">
-                        <a href="#" class="boton-intec" data-toggle="modal"
-                                                data-target="#apply-popup-id-1">MODIFICAR</a>
-                                            <a href="#" class="boton-intec" data-toggle="modal"
-                                                data-target="#apply-popup-id-2">BAJA</a>
-                                            <a href="#" class="boton-intec" data-toggle="modal"
-                                                data-target="#apply-popup-id-3">REACTIVACION</a>
-                                            <a href="#" class="boton-intec" data-toggle="modal"
-                                                data-target="#apply-popup-id-4">PROMOCION</a>
-                        </div>
-                      </div>
-                      <a href="#" class="boton-intec" class="thumb">GUARDAR</a>
-                      
-                    </div>
-                  </div>
+                                        <div class="candidate">
+                                        <div class="body">
+                                          <div class="row">
+                                            <div class="row-left">
+                                                <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-1" id = "buttonModificarEmpleado">MODIFICAR</a>
+                                                <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-2">BAJA</a>
+                                                <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-3">REACTIVACION</a>
+                                                <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-4" id="buttonPromocion">PROMOCION</a>
+                                            </div>
+                                          </div>
+                                            <script>
 
-                                    </div>
+                                                document.getElementById('buttonPromocion').addEventListener('click', function (){
+                                                    var datosPromocion = localStorage.getItem('datosConsultaIndividual');
+                                                    if (datosPromocion){
+                                                        var bResultadoPromocion = JSON.parse(datosPromocion);
+                                                        MostrarDatosPromocion(bResultadoPromocion);
+                                                    }
+                                                });
+                                            </script>
+
+                                          <a href="#" class="boton-intec" class="thumb">GUARDAR</a>
+                                        </div>
+                                 </div>
                                 </div>
                             </form>
                             <?php
@@ -722,9 +743,35 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
         </div>
     </div>
 
+<script>
+    document.getElementById('buttonModificarEmpleado').addEventListener('click', function (){
+        const habilitarBotones = document.querySelectorAll('.boton-intec');
+        habilitarBotones.forEach(boton => boton.disabled = false);
+
+        localStorage.setItem('habilitarBotones', 'true');
+    });
+</script>
+
+
+
+<script>
+    function deshabilitarBotones(){
+        const botonesEmpleado = document.querySelectorAll('.boton-intec');
+
+        botonesEmpleado.forEach(boton => boton.disabled = true);
+
+        $('$apply-popup-id-2').on('hidden.bs.modal', function (){
+            deshabilitarBotones();
+        });
+    }
+</script>
+
+
+
+
     <!-- inicio de modales -->
     <div class="apply-popup">
-        <div class="modal fade" id="apply-popup-id-1" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal fade" id="apply-popup-id-1" tabindex="-1" role="dialog" aria-hidden="true" >
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
 
@@ -739,7 +786,7 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                             <div class="form-group">
                                 <input type="tel" class="form-control" name="vchNSS" id="vchNSS" maxlength="10"
                                     pattern="^[0-9]{10,}$" title="NSS INCORRECTO" style="text-transform: uppercase"
-                                    placeholder="Ingrese su NSS" required>
+                                    placeholder="Ingrese su NSS" >
                             </div>
                             <?php
                             // Calcular la fecha actual
@@ -925,10 +972,11 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                                     }
                                 }
                             </script>
-                            <button class="button primary-bg btn-block" id = "botonAplicar" >APLICAR</button>
+                            <button class="button primary-bg btn-block" id = "botonAplicarBaja" >APLICAR</button>
+                            <!--
                             <script>
-                                document.getElementById('botonAplicar').addEventListener('click', ValidarBaja)
-                            </script>
+                                document.getElementById('botonAplicarBaja').addEventListener('click', ValidarBaja)
+                            </script> -->
                         </form>
                     </div>
                 </div>
@@ -936,8 +984,9 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
         </div>
     </div>
 
+<!--Modal de reactivación-->
     <div class="apply-popup">
-        <div class="modal fade" id="apply-popup-id-3" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal fade" id="apply-popup-id-3" tabindex="-1" role="dialog" aria-hidden="true" >
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
 
@@ -950,9 +999,9 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                     <div class="modal-body">
                         <form action="#">
                             <div class="form-group">
-                                <input type="tel" class="form-control" name="vchNSS" id="vchNSS" maxlength="10"
+                                <input type="tel" class="form-control" name="vchNSS" id="vchNSSReactivacion" maxlength="10"
                                     pattern="^[0-9]{10,}$" title="NSS INCORRECTO" style="text-transform: uppercase"
-                                    placeholder="Ingrese su NSS" required>
+                                    placeholder="Ingrese su NSS" >
                             </div>
 
                             <?php
@@ -972,7 +1021,7 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                                 <option value="">FECHA DE INGRESO</option>
                                 <input type="date" class="form-control" placeholder="FECHA DE BAJA" name="fechaIngreso"
                                     id="dFechaIngreso" pattern="\d{4}-\d{2}-\d{2}"
-                                    title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required
+                                    title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)"
                                     min="<?php echo $fechaMinima; ?>" max="<?php echo $fechaMaxima; ?>"  maxlength="10" value = "<?php echo date ('Y-m-d');?>">
                             </div>
 
@@ -1007,8 +1056,10 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
         </div>
     </div>
 
+
+<!--Modal de promoción--->
     <div class="apply-popup">
-        <div class="modal fade" id="apply-popup-id-4" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal fade" id="apply-popup-id-4" tabindex="-1" role="dialog" aria-hidden="true" >
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
 
@@ -1022,8 +1073,8 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                         <form action="#">
                             <div class="form-group row">
                                 <div class="col-sm-9">
-                                    <select class="form-control" Name="iIdPuesto" id="iIdPuesto" required>
-                                        <option value="" selected>SELECCIONE NUEVO PUESTO</option>
+                                    <select class="form-control" Name="iIdPuesto" >
+                                        <option value="" id="vchPuestoPromocion" selected>SELECCIONE NUEVO PUESTO</option>
                                         <?php foreach ($resultadoPuesto as $puesto): ?>
                                             <option value="<?= $puesto['iIdPuesto'] ?>">
                                                 <?= $puesto['vchPuesto'] ?>
@@ -1033,7 +1084,7 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input type="tel" class="form-control" name="vchNSS" id="vchNSS" maxlength="10"
+                                <input type="tel" class="form-control" name="vchNSS" id="vchNSSPromocion" maxlength="10"
                                     pattern="^[0-9]{10,}$" title="NSS INCORRECTO" style="text-transform: uppercase"
                                     placeholder="Ingrese su NSS">
                             </div>
@@ -1051,14 +1102,14 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                             $fechaLimiteInferior = '1900-01-01';
                             ?>
                             <div class="form-group">
-                                <option value="">FECHA DE INGRESO</option>
+                                <option value="">FECHA DE REINGRESO</option>
                                 <input type="date" class="form-control" placeholder="FECHA DE INGRESO"
                                     name="fechaIngreso" id="dFechaIngreso" pattern="\d{4}-\d{2}-\d{2}"
                                     title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)"
                                     min="<?php echo $fechaMinima; ?>" max="<?php echo $fechaMaxima; ?>" maxlength="10" value = "<?php echo date ('Y-m-d');?>">
                             </div>
                             <div class="form-group">
-                                <select class="form-control" Name="iIdSede" id="iIdSede" >
+                                <select class="form-control" Name="iIdSede" id="vchSedePromocion" >
                                     <option value="">SELECCIONE UNA SEDE</option>
                                     <?php foreach ($resultadoSede as $sede): ?>
                                         <option value="<?= $sede['iIdConstante'] . '-' . $sede['iClaveCatalogo'] ?>">
@@ -1067,7 +1118,7 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-                            <button class="button primary-bg btn-block">APLICAR</button>
+                            <button class="button primary-bg btn-block" id="aplicarPromocion"  >APLICAR</button>
                         </form>
                     </div>
                 </div>
@@ -1139,21 +1190,6 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
     <script src="../../js/map.js"></script>
-
-    <script>
-        // Recuperar los datos almacenados en localStorage
-        var datosConsultaIndividual = JSON.parse(localStorage.getItem("datosConsultaIndividual"));
-
-        // Verificar si existen datos almacenados en localStorage
-        if (datosConsultaIndividual) {
-            // Asignar los datos a los campos correspondientes de la modal
-            document.addEventListener("DOMContentLoaded", function () {
-                document.getElementById("vchNSS").value = datosConsultaIndividual.vchNSS;
-                document.getElementById("dFechaIngreso").value = datosConsultaIndividual.fechaIngreso;
-                document.getElementById("iIdSede").value = datosConsultaIndividual.iIdSede;
-            });
-        }
-    </script>
 
 
 </body>

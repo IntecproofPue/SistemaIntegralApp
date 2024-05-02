@@ -409,7 +409,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
                         <h6><i data-feather="user-check"></i>INFORMACION DE CONTACTO</h6>
                       </label>
                       <div class="row-left">
-                        <a href="#" class="boton-intec" data-toggle="modal" data-target="#">AGREGAR</a>
+                        <a href="#" class="boton-intec" data-toggle="modal" data-target="#" style="display:none;" >AGREGAR</a>
                       </div>
                     </div>
                   </div>
@@ -638,7 +638,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
                 </div>
 
           <div class="boton-intec">
-            <a href="#" data-toggle="modal" data-target="#apply-popup-id-${i + 1}" style="width: 40px; height: 25px; padding: 2px;">BAJA</a>
+            <a href="#" data-toggle="modal" data-target="#apply-popup-id-${i + 1}" style="width: 40px; height: 25px; padding: 2px; display:none;">BAJA</a>
           </div>
 
         
@@ -651,7 +651,19 @@ $estadoProcedencia = json_encode($resultadoEstado);
     }
 
 
+  </script>
 
+  <script>
+      document.addEventListener('DOMContentLoaded', function (){
+          console.log(localStorage.getItem('habilitarBotones'));
+          if (localStorage.getItem('habilitarBotones') === 'true'){
+              const habilitarBotonDomicilio = document.querySelectorAll('.boton-intec');
+              habilitarBotonDomicilio.forEach(boton => {
+                  boton.disabled = false;
+                  boton.style.display = 'block';
+              } );
+          }
+      });
   </script>
 
 
