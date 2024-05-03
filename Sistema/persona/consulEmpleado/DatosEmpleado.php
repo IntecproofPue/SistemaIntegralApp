@@ -116,6 +116,102 @@ function ObtenerAutorizacionContratante(){
 $resultadoContratantes = ObtenerAutorizacionContratante();
 
 
+function ObtenerIdGenero()
+{
+    if (isset($_SESSION['CatConstante'])) {
+        $datosGenero = $_SESSION['CatConstante'];
+        $generoEncontrado = array();
+
+        foreach ($datosGenero as $valorGenero) {
+            if ($valorGenero['iAgrupador'] == 3) {
+                $generoEncontrado[] = $valorGenero;
+            }
+        }
+        return $generoEncontrado;
+    } else {
+        echo ("No hay datos del género");
+    }
+}
+
+$resultadoGenero = ObtenerIdGenero();
+
+
+
+function obtenerIdNacionalidad()
+{
+    if (isset($_SESSION['CatConstante'])) {
+        $datosNacionalidad = $_SESSION['CatConstante'];
+        $nacionalidadEncontrada = array();
+
+        foreach ($datosNacionalidad as $valorNacionalidad) {
+            if ($valorNacionalidad['iAgrupador'] == 6) {
+                $nacionalidadEncontrada[] = $valorNacionalidad;
+            }
+        }
+        return $nacionalidadEncontrada;
+    } else {
+        echo ("No hay datos de la nacionalidad");
+    }
+}
+$resultadoNacionalidad = obtenerIdNacionalidad();
+
+
+function EjecutarRegimenUso()
+{
+
+    $datosRegimenUso = array(
+        'iOpcion' => 1,
+        'iIdTipoPersona' => 61
+    );
+
+    $procedureName = "EXEC prcConsultaRegimenUso    @iOpcion = ?,
+                                                        @iIdTipoPersona = ?
+                                                        ";
+
+    $params = array(
+        $datosRegimenUso['iOpcion'],
+        $datosRegimenUso['iIdTipoPersona']
+    );
+
+    $result = sqlsrv_query($GLOBALS['conn'], $procedureName, $params);
+
+    $RegimenUso = array();
+
+    if ($result === false) {
+        die(print_r(sqlsrv_errors(), true));
+
+    } else {
+        do {
+            while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+                $RegimenUso[] = $row;
+            }
+        } while (sqlsrv_next_result($result));
+    }
+
+    return $RegimenUso;
+
+    sqlsrv_close($conn);
+}
+
+$_SESSION['RegimenUso'] = EjecutarRegimenUso();
+
+
+function ObtenerIdRegimen()
+{
+    $datosRegimen = $_SESSION['RegimenUso'];
+    $RegimenEncontrado = array();
+
+    foreach ($datosRegimen as $valorRegimen) {
+        $idRegimen = $valorRegimen['iIdRegimenFiscal'];
+        $RegimenEncontrado[$idRegimen] = $valorRegimen;
+    }
+
+
+    return array_values($RegimenEncontrado);
+}
+
+$resultadoRegimen = ObtenerIdRegimen();
+
 
 ?>
 
@@ -156,7 +252,7 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
         .selected {
             color: #007bff;             /* Cambia este color por el que desees */
             font-weight: bold;          /* O cualquier otro estilo que desees */
-            
+
         }
         .row .col-md-4 {
             margin-top: -13px;
@@ -213,7 +309,7 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
             border-radius: 5px;
             cursor: pointer;
             z-index: 1;                             /* asegura que el texto esté sobre la imagen */
-            
+
         }
 
         .image {
@@ -517,32 +613,13 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
 
                                 });
 
-                                function MostrarDatosPromocion(bResultado) {
-
-                                    var vchPuestoPromocion = document.getElementById('vchPuestoPromocion');
-                                    vchPuestoPromocion.value = bResultado.vcPuesto;
-
-                                    console.log(vchPuestoPromocion);
-
-                                    console.log(bResultado);
-
-
-
-                                    var vchNSSPromocion = document.getElementById('vchNSSPromocion');
-                                    vchNSSPromocion.value = bResultado.vchNSS;
-
-                                    var vchSedePromocion = document.getElementById('vchSedePromocion');
-                                    vchSedePromocion.value = bResultado.vchSede;
-
-                                }
-
                             </script>
 
                             <form action="#" method="post" class="dashboard-form">
                                 <div id="information" class="row justify-content-center">
                                     <div class="col-md-10">
                                         <label class="col-form-label"><i ></i>
-                                        
+
                                         <div class="update-photo">
                                             <img class="image" src="../../user-1.jpg" alt="">
                                         </div>
@@ -720,6 +797,15 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                                           </div>
                                             <script>
 
+                                                document.getElementById('buttonModificarEmpleado').addEventListener('click', function (){
+                                                   var datosModificarEmpleado = localStorage.getItem('datosConsultaIndividual');
+                                                   if (datosModificarEmpleado){
+                                                       var bResultadoModificar = JSON.parse(datosModificarEmpleado);
+                                                       MostrarDatosEmpleado(bResultadoModificar);
+                                                   }
+                                                });
+
+
                                                 document.getElementById('buttonPromocion').addEventListener('click', function (){
                                                     var datosPromocion = localStorage.getItem('datosConsultaIndividual');
                                                     if (datosPromocion){
@@ -771,6 +857,7 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
 
     <!-- inicio de modales -->
     <div class="apply-popup">
+        <!-- Botón Modificar -->
         <div class="modal fade" id="apply-popup-id-1" tabindex="-1" role="dialog" aria-hidden="true" >
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -784,7 +871,7 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                     <div class="modal-body">
                         <form action="#">
                             <div class="form-group">
-                                <input type="tel" class="form-control" name="vchNSS" id="vchNSS" maxlength="10"
+                                <input type="tel" class="form-control" name="vchNSS" id="vchNSSModificar" maxlength="10"
                                     pattern="^[0-9]{10,}$" title="NSS INCORRECTO" style="text-transform: uppercase"
                                     placeholder="Ingrese su NSS" >
                             </div>
@@ -793,9 +880,9 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                             $fechaActual = date('Y-m-d');
 
                             // Restar 18 años a la fecha actual
-                            $fechaMinima = date('Y-m-d', strtotime('-18 years', strtotime($fechaActual)));
+                            $fechaMinima = date('Y-m-d', strtotime('-2 years', strtotime($fechaActual)));
 
-                            // Establecer la fecha máxima como la fecha actual  
+                            // Establecer la fecha máxima como la fecha actual
                             $fechaMaxima = $fechaActual;
 
                             // Establecer la fecha mínima como 1900-01-01 (opcional)
@@ -804,13 +891,12 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                             <div class="form-group">
                                 <option value="">FECHA DE INGRESO</option>
                                 <input type="date" class="form-control" placeholder="FECHA DE INGRESO"
-                                    name="fechaIngreso" id="dFechaIngreso" pattern="\d{4}-\d{2}-\d{2}"
-                                    title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" 
+                                    name="fechaIngreso" id="dtFechaIngresoModificacion" pattern="\d{4}-\d{2}-\d{2}"
+                                    title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)"
                                     min="<?php echo $fechaMinima; ?>" max="<?php echo $fechaMaxima; ?>" maxlength="10">
                             </div>
                             <div class="form-group">
-                                <select class="form-control" Name="iIdSede" id="iIdSede" >
-                                    <option value="">SELECCIONE UNA SEDE</option>
+                                <select class="form-control" Name="iIdSede" id="iIdSedeModificar" >
                                     <?php foreach ($resultadoSede as $sede): ?>
                                         <option value="<?= $sede['iIdConstante'] . '-' . $sede['iClaveCatalogo'] ?>">
                                             [<?= $sede['iClaveCatalogo'] ?>] - <?= $sede['vchDescripcion'] ?>
@@ -819,36 +905,41 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                                 </select>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" name="vchNSS" id="vchNSS" title="CONTRATADO POR"
-                                    style="text-transform: uppercase" placeholder="CONTRATADO POR">
+                                <select class="form-control" Name="iIdPersonaContratante"  id = "iIdPersonaContratanteModificar" required>
+                                    <?php foreach ($resultadoContratantes as $contratante): ?>
+                                        <option value="<?= $contratante['iIdPersona'] ?>">
+                                            [<?= $contratante['iIdPersona']?>] - <?= $contratante['vchPrimerApellido'].' '. $contratante['vchSegundoApellido'].' '.$contratante['vchNombre'] ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                             <div class="form-group">
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="NOMBRE" id="vchNombre" name="vchNombre"
+                  <input type="text" class="form-control" placeholder="NOMBRE" id="vchNombreEmpleadoModificar" name="vchNombre"
                     style="text-transform: uppercase" >
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="PRIMER APELLIDO" id="vchPrimerApellido" name="vchPrimerApellido"
+                  <input type="text" class="form-control" placeholder="PRIMER APELLIDO" id="vchPrimerApellidoModificar" name="vchPrimerApellido"
                     style="text-transform: uppercase" >
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="SEGUNDO APELLIDO" id="vchSegundoApellido" name="vchSegundoApellido"
+                  <input type="text" class="form-control" placeholder="SEGUNDO APELLIDO" id="vchSegundoApellidoModificar" name="vchSegundoApellido"
                     style="text-transform: uppercase" >
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="RFC" id="vchRFC" name="vchRFC"
+                  <input type="text" class="form-control" placeholder="RFC" id="vchRFCModificar" name="vchRFC"
                     style="text-transform: uppercase" >
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="CURP" id="vchCURP" name="vchCURP"
+                  <input type="text" class="form-control" placeholder="CURP" id="vchCURPModificar" name="vchCURP"
                     style="text-transform: uppercase" >
                 </div>
               </div>
@@ -860,31 +951,97 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="GENERO" id="iIdGenero" name="iIdGenero"
-                    style="text-transform: uppercase" >
+                    <select class="form-control" name="genero" id="iIdGeneroModificar" >
+                        <?php foreach ($resultadoGenero as $genero): ?>
+                            <option value="<?= $genero['iIdConstante'].'-'.$genero['iClaveCatalogo'] ?>">
+                                [<?= $genero['iClaveCatalogo'] ?>] - <?= $genero['vchDescripcion'] ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="NACIONALIDAD" id="iIdNacionalidad" name="iIdNacionalidad"
-                    style="text-transform: uppercase" >
+                    <select class="form-control" name="nacionalidad" id = "iIdNacionalidadModificar" >
+                        <?php foreach ($resultadoNacionalidad as $nacionalidad): ?>
+                            <option value="<?= $nacionalidad['iIdConstante'].'-'.$nacionalidad['iClaveCatalogo'] ?>">
+                                [<?= $nacionalidad['iClaveCatalogo'] ?>] - <?= $nacionalidad['vchDescripcion'] ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="REGIMEN FISCAL" id="iIdRegimenFiscal" name="iIdRegimenFiscal"
-                    style="text-transform: uppercase" >
+                    <select class="form-control" name="regimenFiscal" id="regimenFiscalModificar"
+                            onchange="cargarUsoFiscal()">
+                        <?php foreach ($resultadoRegimen as $regimen): ?>
+                            <option value="<?=$regimen['iRegimen'] ?>">
+                                [<?= $regimen['iRegimen'] ?>] - <?= $regimen['vchDescripcionRegimen'] ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="USO FISCAL" id="iIdUsoFiscal" name="iIdUsoFiscal"
-                    style="text-transform: uppercase" >
+                    <select class="form-control" name="usoFiscal" id="usoFiscalModificar">
+                        <option value="" selected class="form-control">SELECCIONA UN USO
+                            FISCAL</option>
+                    </select>
+                    <script>
+                        function cargarUsoFiscal() {
+                            var regimenSeleccionado = document.getElementById("regimenFiscalModificar").value;
+
+                            var usoFiscalSeleccionado = document.getElementById("usoFiscalModificar");
+
+                            usoFiscalSeleccionado.innerHTML = '';
+
+                            var vchUsoFiscalModificacion = bResultado.vchUsoFiscal;
+
+                            for (var i= 0; i<usoFiscalSeleccionado.options.length; i++){
+                                var optionUsoFiscal = usoFiscalSeleccionado.options[i];
+                                if (optionUsoFiscal.value === vchUsoFiscalModificacion){
+                                    optionUsoFiscal.selected = true;
+
+                                    break;
+                                }
+                            }
+
+                            var opcionesUsos = ObtenerUsosFiscales(regimenSeleccionado);
+
+                            for (var i = 0; i < opcionesUsos.length; i++) {
+                                var opcionUsoFiscal = document.createElement("option");
+                                opcionUsoFiscal.value = opcionesUsos[i].uso;
+                                opcionUsoFiscal.textContent = '[' + opcionesUsos[i].uso + '] - ' + opcionesUsos[i].descripcion;
+                                usoFiscalSeleccionado.add(opcionUsoFiscal);
+                            }
+                        }
+
+                        function ObtenerUsosFiscales(regimenSeleccionado) {
+
+                            var datosUsosFiscales = <?php echo json_encode($_SESSION['RegimenUso']); ?>;
+                            console.log('El script se está ejecutando.');
+                            console.log("Datos fiscales: ", datosUsosFiscales);
+                            var usosFiscales = [];
+
+                            for (var i = 0; i < datosUsosFiscales.length; i++) {
+                                if (datosUsosFiscales[i].iRegimen == regimenSeleccionado) {
+                                    usosFiscales.push({
+                                        uso: datosUsosFiscales[i].vchClaveUso,
+                                        descripcion: datosUsosFiscales[i].vchDescripcionUso
+                                    });
+                                }
+                            }
+                            console.log("Usos fiscales: ", usosFiscales);
+                            return usosFiscales;
+                        }
+                    </script>
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="C.P. FISCAL" id="iCodigoPostalFiscal" name="iCodigoPostalFiscal"
+                  <input type="text" class="form-control" placeholder="C.P. FISCAL" id="iIdCodigoPostalModificar" name="iCodigoPostalFiscal"
                     style="text-transform: uppercase" >
                 </div>
               </div>
@@ -922,7 +1079,7 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                             // Restar 18 años a la fecha actual
                             $fechaMinima = date('Y-m-d', strtotime('-2 years', strtotime($fechaActual)));
 
-                            // Establecer la fecha máxima como la fecha actual  
+                            // Establecer la fecha máxima como la fecha actual
                             $fechaMaxima = $fechaActual;
 
                             // Establecer la fecha mínima como 1900-01-01 (opcional)
@@ -1011,7 +1168,7 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                             // Restar 18 años a la fecha actual
                             $fechaMinima = date('Y-m-d', strtotime('-2 years', strtotime($fechaActual)));
 
-                            // Establecer la fecha máxima como la fecha actual  
+                            // Establecer la fecha máxima como la fecha actual
                             $fechaMaxima = $fechaActual;
 
                             // Establecer la fecha mínima como 1900-01-01 (opcional)
@@ -1095,7 +1252,7 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
                             // Restar 18 años a la fecha actual
                             $fechaMinima = date('Y-m-d', strtotime('-2 years', strtotime($fechaActual)));
 
-                            // Establecer la fecha máxima como la fecha actual  
+                            // Establecer la fecha máxima como la fecha actual
                             $fechaMaxima = $fechaActual;
 
                             // Establecer la fecha mínima como 1900-01-01 (opcional)
@@ -1190,6 +1347,151 @@ $resultadoContratantes = ObtenerAutorizacionContratante();
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
     <script src="../../js/map.js"></script>
+
+    <script>
+        function MostrarDatosEmpleado(bResultado){
+            var vchNSSEmpleado = document.getElementById('vchNSSModificar');
+            vchNSSEmpleado.value = bResultado.vchNSS;
+
+            var dFechaIngresModif = bResultado.dFechaIngreso.date;
+            var fechaIngresoModif = new Date(dFechaIngresModif);
+            var fechaIngresoFinalModif = fechaIngresoModif.toLocaleDateString('es-ES', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+            var dFechaIngresoModificacion = document.getElementById('dtFechaIngresoModificacion');
+            dFechaIngresoModificacion.value = fechaIngresoFinalModif || '';
+
+            //Sede
+            var iIdSedeModificacion = bResultado.iIdSede;
+            var selectElementSede = document.getElementById('iIdSedeModificar');
+
+            for (var i = 0; i < selectElementSede.options.length; i++) {
+                var optionSede = selectElementSede.options[i];
+                var optionIdSede = parseInt(optionSede.value.split('-')[0]);
+
+                if (optionIdSede === iIdSedeModificacion) {
+                    optionSede.selected = true;
+                    break;
+                }
+            }
+
+
+            //Contratado por
+            var iIdContratanteModificacion = bResultado.iIdContratadoPor;
+            var selectElementSede = document.getElementById('iIdPersonaContratanteModificar');
+
+            for (var i = 0; i < selectElementSede.options.length; i++) {
+                var optionContratado = selectElementSede.options[i];
+                if (optionContratado === iIdContratanteModificacion) {
+                    optionContratado.selected = true;
+                    break;
+                }
+            }
+
+            var vchNombreEmpleado = document.getElementById('vchNombreEmpleadoModificar');
+            vchNombreEmpleado.value = bResultado.vchNombre
+
+            var vchPrimerApellidoEmpleado = document.getElementById('vchPrimerApellidoModificar');
+            vchPrimerApellidoEmpleado.value = bResultado.vchPrimerApellido;
+
+            var vchSegundoApellidoEmpleado = document.getElementById('vchSegundoApellidoModificar');
+            vchSegundoApellidoEmpleado.value = bResultado.vchSegundoApellido;
+
+            var vchRFCEmpleado = document.getElementById('vchRFCModificar');
+            vchRFCEmpleado.value = bResultado.vchRFC;
+
+            var vchCURPEmpleado = document.getElementById('vchCURPModificar');
+            vchCURPEmpleado.value = bResultado.vchCURP;
+
+            //Fecha de nacimiento
+
+            //Genero
+            var iIdGeneroModificacion = bResultado.iIdGenero;
+            var selectElementGenero = document.getElementById('iIdGeneroModificar');
+
+            for (var i = 0; i < selectElementGenero.options.length; i++) {
+                var optionGenero = selectElementGenero.options[i];
+
+                var optionIdGenero = parseInt(optionGenero.value.split('-')[0]);
+
+                if (optionIdGenero === iIdGeneroModificacion) {
+                    optionGenero.selected = true;
+                    break;
+                }
+            }
+
+            //Nacionalidad
+            var iIdNacionalidadModificacion = bResultado.iIdNacionalidad;
+            var selectElementNacionalidad = document.getElementById('iIdNacionalidadModificar');
+
+            for (var i = 0; i < selectElementNacionalidad.options.length; i++) {
+                var optionNacionalidad = selectElementNacionalidad.options[i];
+
+                var optionIdNacionalidad = parseInt(optionNacionalidad.value.split('-')[0]);
+
+                if (optionIdNacionalidad === iIdNacionalidadModificacion) {
+                    optionNacionalidad.selected = true;
+                    break;
+                }
+            }
+
+            //Regimen fiscal
+            var iIdRegimenModificacion = bResultado.iIdRegimen;
+            var selectElementRegimen = document.getElementById('regimenFiscalModificar');
+
+            for (var i = 0; i < selectElementRegimen.options.length; i++) {
+                var optionRegimen = selectElementRegimen.options[i];
+                if (optionRegimen === iIdRegimenModificacion) {
+                    optionRegimen.selected = true;
+                    break;
+                }
+            }
+
+
+            //Uso fiscal
+            var vchUsoFiscalModificacion = bResultado.vchUsoFiscal;
+            console.log(vchUsoFiscalModificacion);
+            var selectElementUsoFiscal = document.getElementById('usoFiscalModificar');
+
+            for (var i = 0; i < selectElementUsoFiscal.options.length; i++) {
+                var optionUsoFiscal = selectElementUsoFiscal.options[i];
+
+                if (optionUsoFiscal === vchUsoFiscalModificacion) {
+                    optionUsoFiscal.selected = true;
+                    break;
+                }
+            }
+
+
+            //Codigo Fiscal
+            var iIdCodigoFiscalEmpleado = document.getElementById('iIdCodigoPostalModificar');
+            iIdCodigoFiscalEmpleado.value = bResultado.iCodigoPostalFiscal;
+
+
+        }
+
+
+        function MostrarDatosPromocion(bResultado) {
+
+            var vchPuestoPromocion = document.getElementById('vchPuestoPromocion');
+            vchPuestoPromocion.value = bResultado.vcPuesto;
+
+            console.log(vchPuestoPromocion);
+
+            console.log(bResultado);
+
+
+
+            var vchNSSPromocion = document.getElementById('vchNSSPromocion');
+            vchNSSPromocion.value = bResultado.vchNSS;
+
+            var vchSedePromocion = document.getElementById('vchSedePromocion');
+            vchSedePromocion.value = bResultado.vchSede;
+
+        }
+    </script>
 
 
 </body>
