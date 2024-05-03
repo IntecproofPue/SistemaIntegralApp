@@ -586,36 +586,62 @@ if (isset($_SESSION['user_id'])) { ?>
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer class="footer-bg">
-    <div class="footer-bottom-area">
-      <div class="container">
-        <div class="row">
-          <div class="col">
-            <div class="footer-bottom border-top">
-              <div class="row">
-                <div class="col-xl-4 col-lg-5 order-lg-2">
+<!-- Footer -->
+<footer class="footer-bg">
+        <div class="footer-top border-bottom section-padding-top padding-bottom-40">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="footer-logo">
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                    </div>
                 </div>
-                <div class="col-xl-4 col-lg-4 order-lg-1">
-                  <a href="#">
-                    <img src="images/footer-logo.png" class="img-fluid" alt="">
-                  </a>
-                  <p class="copyright-text">Copyright <a href="#">Intecproof</a> 2024, All right
-                    reserved</p>
-                </div>
-                <div class="col-xl-4 col-lg-3 order-lg-3">
-                  <div class="back-to-top">
-                    <a href="#">Back to top<i class="fas fa-angle-up"></i></a>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </footer>
-  <!-- Footer End -->
+        <div class="footer-widget-wrapper padding-bottom-60 padding-top-80">
+            <div class="container">
+                <div class="row">
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="footer-bottom border-top">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <a href="#">
+                                        <img src="images/footer-logo.png" class="img-fluid" alt="">
+                                    </a>
+                                    <p class="copyright-text">DERECHOS DE AUTOR <a href="#">INTECPROOF</a> 2024, RESERVADOS</p>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="back-to-top">
+                                        <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
+                                    </div>
+                                </div>
+                                <!--<div class="footer-social">
+                                    <ul class="social-icons">
+                                        <li><a href="#"><i data-feather="facebook"></i></a></li>
+                                        <li><a href="#"><i data-feather="twitter"></i></a></li>
+                                        <li><a href="#"><i data-feather="linkedin"></i></a></li>
+                                        <li><a href="#"><i data-feather="instagram"></i></a></li>
+                                        <li><a href="#"><i data-feather="youtube"></i></a></li>
+                                    </ul>
+                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer End -->
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->

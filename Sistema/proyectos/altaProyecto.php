@@ -109,60 +109,57 @@ $resultadoNiveles = ObtenerNivel();
 
 <body>
 
-    <header class="header-2">
+<header class="header-2">
         <div class="container">
             <div class="row">
                 <div class="col">
                     <div class="header-top">
                         <div class="logo-area">
-                            <a href="../../inicio.php"><img src="../../images/logo-2.png" alt=""></a>
+                            <a href="../inicio.php"><img src="../images/logo-2.png" alt=""></a>
                         </div>
                         <div class="header-top-toggler">
                             <div class="header-top-toggler-button"></div>
                         </div>
                         <div class="top-nav">
                             <div class="dropdown header-top-notification">
-                                <a href="#" class="notification-button">
-                                    <?php echo $notificacionesTxt; ?>
-                                </a>
+                                <a href="#" class="notification-button"><?php echo $notificacionesTxt; ?></a>
                                 <div class="notification-card">
                                     <div class="notification-head">
-                                        <span>Notifications</span>
-                                        <a href="#">Mark all as read</a>
+                                        <span>Notificaciones</span>
+                                        <a href="#">Marcar todo como leido</a>
                                     </div>
                                     <div class="notification-body">
                                         <a href="../../home-2.html" class="notification-list">
                                             <i class="fas fa-bolt"></i>
-                                            <p>Your Resume Updated!</p>
+                                            <p>Tu CV actualizado</p>
                                             <span class="time">5 hours ago</span>
                                         </a>
                                         <a href="#" class="notification-list">
                                             <i class="fas fa-arrow-circle-down"></i>
-                                            <p>Someone downloaded resume</p>
+                                            <p>Alguien descargo tu CV</p>
                                             <span class="time">11 hours ago</span>
                                         </a>
                                         <a href="#" class="notification-list">
                                             <i class="fas fa-check-square"></i>
-                                            <p>You applied for Project Manager <span>@homeland</span></p>
+                                            <p>solicitaste un puesto de.... <span>@homeland</span></p>
                                             <span class="time">11 hours ago</span>
                                         </a>
                                         <a href="#" class="notification-list">
                                             <i class="fas fa-user"></i>
-                                            <p>You changed password</p>
+                                            <p>Cambiaste la contraseña</p>
                                             <span class="time">5 hours ago</span>
                                         </a>
                                         <a href="#" class="notification-list">
                                             <i class="fas fa-arrow-circle-down"></i>
-                                            <p>Someone downloaded resume</p>
+                                            <p>Alguien descargo tu CV</p>
                                             <span class="time">11 hours ago</span>
                                         </a>
                                     </div>
                                     <div class="notification-footer">
-                                        <a href="#">See all notification</a>
+                                        <a href="#">Ver Notificaciones</a>
                                     </div>
                                 </div>
                             </div>
-
                             <?php
 
                             $user = obtenerUsuario($_SESSION['user_id']);
@@ -171,62 +168,39 @@ $resultadoNiveles = ObtenerNivel();
                             $emailPersona = $row['contacto'];
 
                             ?>
-
                             <div class="dropdown header-top-account">
-                                <a href="#" class="account-button">
-                                    <?php echo $miCuentaTxt; ?>
-                                </a>
+                                <a href="#" class="account-button"><?php echo $miCuentaTxt; ?></a>
                                 <div class="account-card">
                                     <div class="header-top-account-info">
                                         <a href="#" class="account-thumb">
                                             <img src="../images/account/thumb-1.jpg" class="img-fluid" alt="">
                                         </a>
                                         <div class="account-body">
-                                            <h5><a href="#">
-                                                    <?php echo $nombrePersona; ?>
-                                                </a></h5>
-                                            <span class="mail">
-                                                <?php echo $emailPersona; ?>
-                                            </span>
+                                            <h5><a href="#"><?php echo $nombrePersona; ?></a></h5>
+                                            <span class="mail"><?php echo $emailPersona; ?></span>
                                         </div>
                                     </div>
                                     <ul class="account-item-list">
-                                        <li><a href="#"><span class="ti-user"></span>
-                                                <?php echo $Perfil; ?>
-                                            </a></li>
-                                        <li><a href="#"><span class="ti-settings"></span>
-                                                <?php echo $herramientas; ?>
-                                            </a></li>
-                                        <li><a href="../../includes/logout.php"><span class="ti-power-off"></span>
-                                                <?php echo $logout; ?>
-                                            </a></li>
+                                        <li><a href="#"><span class="ti-user"></span><?php echo $Perfil; ?></a></li>
+                                        <li><a href="#"><span class="ti-settings"></span><?php echo $herramientas; ?></a></li>
+                                        <li><a href="../../includes/logout.php"><span
+                                                    class="ti-power-off"></span><?php echo $logout; ?></a></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <nav class="navbar navbar-expand-lg cp-nav-2">
-                        <button class="navbar-toggler" type="button" data-toggle="collapse"
-                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav">
-                                <li class="menu-item active"><a title="PERSONA"
-                                        href="../consulEmpleado/consultaPuesto.php ">PUESTO</a></li>
-                                <li class="menu-item active"><a title="DOMICILIO"
-                                        href="consultaDomicilio.php">DOMICILIO</a>
-                                </li>
-                                <li class="menu-item active"><a title="CONTACTO"
-                                        href="consultaContacto.php">CONTACTO</a>
-                                </li>
-                                <li class="menu-item active"><a title="CONTACTO"
-                                        href="consultaEmpleado.php">EMPLEADO</a>
-                                </li>
-                            </ul>
+                    <!-- pestañas de navegación
+                    <div class="skill-and-profile">
+                        <div class="skill" style="display: flex; justify-content: center;">
+                            <label style="align-self: flex-end;" class="selected"><a href="DatosEmpleado.php">EMPLEADO</a></label>
+                            <label style="align-self: flex-end;"><a href="../consulEmpleado/consultaPuesto.php ">PUESTO</a></label>
+                            <label style="align-self: flex-end;"><a href="consultaDomicilio.php">DOMICILIO</a></label>
+                            <label style="align-self: flex-end;"><a href="consultaContacto.php">CONTACTO</a></label>
+                            <label style="align-self: flex-end;"><a href="../consulEmpleado/cunsultaDoctos.php">DOCUMENTOS</a></label>
                         </div>
-                    </nav>
+                    </div>
+                    fin de pestañas de navegación-->
                 </div>
             </div>
         </div>
@@ -446,28 +420,48 @@ $resultadoNiveles = ObtenerNivel();
     </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer-bg">
+   <!-- Footer -->
+   <footer class="footer-bg">
+        <div class="footer-top border-bottom section-padding-top padding-bottom-40">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="footer-logo">
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="footer-bottom-area">
             <div class="container">
                 <div class="row">
                     <div class="col">
                         <div class="footer-bottom border-top">
                             <div class="row">
-                                <div class="col-xl-4 col-lg-5 order-lg-2">
-                                </div>
-                                <div class="col-xl-4 col-lg-4 order-lg-1">
+                                <div class="col-lg-6">
                                     <a href="#">
                                         <img src="images/footer-logo.png" class="img-fluid" alt="">
                                     </a>
-                                    <p class="copyright-text">Copyright <a href="#">Intecproof</a> 2024, All right
-                                        reserved</p>
+                                    <p class="copyright-text">DERECHOS DE AUTOR <a href="#">INTECPROOF</a> 2024, RESERVADOS</p>
                                 </div>
-                                <div class="col-xl-4 col-lg-3 order-lg-3">
+                                <div class="col-lg-6">
                                     <div class="back-to-top">
-                                        <a href="#">Back to top<i class="fas fa-angle-up"></i></a>
+                                        <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
                                     </div>
                                 </div>
+                                <!--<div class="footer-social">
+                                    <ul class="social-icons">
+                                        <li><a href="#"><i data-feather="facebook"></i></a></li>
+                                        <li><a href="#"><i data-feather="twitter"></i></a></li>
+                                        <li><a href="#"><i data-feather="linkedin"></i></a></li>
+                                        <li><a href="#"><i data-feather="instagram"></i></a></li>
+                                        <li><a href="#"><i data-feather="youtube"></i></a></li>
+                                    </ul>
+                                </div>-->
                             </div>
                         </div>
                     </div>

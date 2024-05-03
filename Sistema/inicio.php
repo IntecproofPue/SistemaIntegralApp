@@ -1,26 +1,17 @@
 <?php
-//require_once ('../../includes/pandora.php');
-//require_once ('../../includes/load.php');
+require_once ('includes/pandora.php');
+require_once ('includes/load.php');
 
 session_start();
-function ObtenerEstadoProcedencia()
-{
-    if (isset($_SESSION['CatConstante'])) {
-        $datosEdoProcedencia = $_SESSION['CatConstante'];
-        $estadoEncontrado = array();
 
-        foreach ($datosEdoProcedencia as $valorEstado) {
-            if ($valorEstado['iAgrupador'] == 4) {
-                $estadoEncontrado[] = $valorEstado;
-            }
-        }
-        return $estadoEncontrado;
-    } else {
-        echo ("No hay datos del Estado de Procedencia");
-    }
+if (isset($_SESSION['user_id'])) {
+    // Si el usuario está autenticado, no se hace nada
+} else {
+    // Si el usuario no está autenticado, redireccionarlo a la página de inicio después de 0 segundos
+    echo '<script type="text/javascript">';
+    echo 'setTimeout(function () { window.location.href = "../index.php"; }, 0);';
+    echo '</script>';
 }
-
-$resultadoEstado = ObtenerEstadoProcedencia();
 
 
 ?>
@@ -134,7 +125,7 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                     <ul class="account-item-list">
                                         <li><a href="#"><span class="ti-user"></span>CUENTA</a></li>
                                         <li><a href="#"><span class="ti-settings"></span>AJUSTES</a></li>
-                                        <li><a href="../../includes/logout.php"><span
+                                        <li><a href="../Sistema/index.php"><span
                                                     class="ti-power-off"></span>LogOut</a></li>
                                     </ul>
                                 </div>
@@ -151,50 +142,82 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                             <ul class="navbar-nav">
 
                                 <li class="menu-item dropdown">
-                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">ADMINISTRACION DEL SISTEMA</a>
+                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true"
+                                        aria-expanded="false">ADMINISTRACION DEL SISTEMA</a>
                                     <ul class="dropdown-menu">
                                         <li class="menu-item dropdown">
-                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">PERSONA</a>
+                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"
+                                                aria-haspopup="true" aria-expanded="false">PERSONA</a>
                                             <ul class="dropdown-menu">
-                                                <li class="menu-item"><a href="persona/altaPersona/altaUsuario.php">ALTA DE USUARIO</a></li>
-                                                <li class="menu-item"><a href="persona/consulEmpleado/consultaUsuario.php">CONSULTA DE USUARIO</a></li>
-                                                <li class="menu-item"><a href="persona/modifiPersona/modificaUsuario.php">MODIFICACION DE USUARIO</a></li>
+                                                <li class="menu-item"><a href="persona/altaPersona/altaUsuario.php">ALTA
+                                                        DE USUARIO</a></li>
+                                                <li class="menu-item"><a
+                                                        href="persona/consulEmpleado/consultaUsuario.php">CONSULTA DE
+                                                        USUARIO</a></li>
+                                                <li class="menu-item"><a
+                                                        href="persona/modifiPersona/modificaUsuario.php">MODIFICACION DE
+                                                        USUARIO</a></li>
                                             </ul>
                                         </li>
 
                                         <li class="menu-item dropdown">
-                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">ROLES</a>
+                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"
+                                                aria-haspopup="true" aria-expanded="false">ROLES</a>
                                             <ul class="dropdown-menu">
-                                                <li class="menu-item"><a href="persona/altaPersona/altaRol.php">ALTA DE ROLES</a></li>
-                                                <li class="menu-item"><a href="persona/consulEmpleado/consultaRol.php">CONSULTA DE ROLES</a></li>
-                                                <li class="menu-item"><a href="persona/modifiPersona/modificaRol.php">MODIFICACION DE ROLES</a></li>
+                                                <li class="menu-item"><a href="persona/altaPersona/altaRol.php">ALTA DE
+                                                        ROLES</a></li>
+                                                <li class="menu-item"><a
+                                                        href="persona/consulEmpleado/consultaRol.php">CONSULTA DE
+                                                        ROLES</a></li>
+                                                <li class="menu-item"><a
+                                                        href="persona/modifiPersona/modificaRol.php">MODIFICACION DE
+                                                        ROLES</a></li>
                                             </ul>
                                         </li>
 
                                         <li class="menu-item dropdown">
-                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">FUNCIONALIDADES</a>
+                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"
+                                                aria-haspopup="true" aria-expanded="false">FUNCIONALIDADES</a>
                                             <ul class="dropdown-menu">
-                                                <li class="menu-item"><a href="persona/altaPersona/altaFuncionalidad.php">ALTA DE FUNCIONALIDAD</a></li>
-                                                <li class="menu-item"><a href="persona/consulEmpleado/consultaFuncionalidad.php">CONSULTA DE FUNCIONALIDAD</a></li>
-                                                <li class="menu-item"><a href="persona/modifiPersona/modificaFuncionalidad.php">MODIFICACION DE FUNCIONALIDAD</a></li>
+                                                <li class="menu-item"><a
+                                                        href="persona/altaPersona/altaFuncionalidad.php">ALTA DE
+                                                        FUNCIONALIDAD</a></li>
+                                                <li class="menu-item"><a
+                                                        href="persona/consulEmpleado/consultaFuncionalidad.php">CONSULTA
+                                                        DE FUNCIONALIDAD</a></li>
+                                                <li class="menu-item"><a
+                                                        href="persona/modifiPersona/modificaFuncionalidad.php">MODIFICACION
+                                                        DE FUNCIONALIDAD</a></li>
                                             </ul>
                                         </li>
 
                                         <li class="menu-item dropdown">
-                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">ROLES-FUNCIONALIDAD</a>
+                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"
+                                                aria-haspopup="true" aria-expanded="false">ROLES-FUNCIONALIDAD</a>
                                             <ul class="dropdown-menu">
-                                                <li class="menu-item"><a href="persona/altaPersona/altaUsuario.php">ALTA DE ROL-FUNCIONALIDAD</a></li>
-                                                <li class="menu-item"><a href="persona/consulEmpleado/consultaUsuario.php">CONSULTA DE ROL-FUNCIONALIDAD</a></li>
-                                                <li class="menu-item"><a href="persona/modifiPersona/modificaUsuario.php">MODIFICACION DE ROL-FUNCIONALIDAD</a></li>
+                                                <li class="menu-item"><a href="persona/altaPersona/altaUsuario.php">ALTA
+                                                        DE ROL-FUNCIONALIDAD</a></li>
+                                                <li class="menu-item"><a
+                                                        href="persona/consulEmpleado/consultaUsuario.php">CONSULTA DE
+                                                        ROL-FUNCIONALIDAD</a></li>
+                                                <li class="menu-item"><a
+                                                        href="persona/modifiPersona/modificaUsuario.php">MODIFICACION DE
+                                                        ROL-FUNCIONALIDAD</a></li>
                                             </ul>
                                         </li>
 
                                         <li class="menu-item dropdown">
-                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">USUARIOS-ROLES</a>
+                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"
+                                                aria-haspopup="true" aria-expanded="false">USUARIOS-ROLES</a>
                                             <ul class="dropdown-menu">
-                                                <li class="menu-item"><a href="persona/altaPersona/altaUsuario.php">ALTA DE USUARIO-ROL</a></li>
-                                                <li class="menu-item"><a href="persona/consulEmpleado/consultaUsuario.php">CONSULTA DE USUARIO-ROL</a></li>
-                                                <li class="menu-item"><a href="persona/modifiPersona/modificaUsuario.php">MODIFICACION DE USUARIO-ROL</a></li>
+                                                <li class="menu-item"><a href="persona/altaPersona/altaUsuario.php">ALTA
+                                                        DE USUARIO-ROL</a></li>
+                                                <li class="menu-item"><a
+                                                        href="persona/consulEmpleado/consultaUsuario.php">CONSULTA DE
+                                                        USUARIO-ROL</a></li>
+                                                <li class="menu-item"><a
+                                                        href="persona/modifiPersona/modificaUsuario.php">MODIFICACION DE
+                                                        USUARIO-ROL</a></li>
                                             </ul>
                                         </li>
 
@@ -202,57 +225,94 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                 </li>
 
                                 <li class="menu-item dropdown">
-                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">RECURSOS HUMANOS</a>
+                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true"
+                                        aria-expanded="false">RECURSOS HUMANOS</a>
                                     <ul class="dropdown-menu">
                                         <li class="menu-item dropdown">
-                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">PERSONA</a>
+                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"
+                                                aria-haspopup="true" aria-expanded="false">PERSONA</a>
                                             <ul class="dropdown-menu">
-                                                <li class="menu-item"><a href="persona/altaPersona/altaPersona.php">ALTA DE PERSONA</a></li>
-                                                <li class="menu-item"><a href="persona/consulEmpleado/consultaPersona.php">CONSULTA DE PERSONA</a></li>
-                                                <li class="menu-item"><a href="persona/modifiPersona/modificaPersona.php">MODIFICACION DE PERSONA</a></li>
+                                                <li class="menu-item"><a href="persona/altaPersona/altaPersona.php">ALTA
+                                                        DE PERSONA</a></li>
+                                                <li class="menu-item"><a
+                                                        href="persona/consulEmpleado/consultaPersona.php">CONSULTA DE
+                                                        PERSONA</a></li>
+                                                <li class="menu-item"><a
+                                                        href="persona/modifiPersona/modificaPersona.php">MODIFICACION DE
+                                                        PERSONA</a></li>
                                             </ul>
                                         </li>
 
                                         <li class="menu-item dropdown">
-                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">EMPLEADO</a>
+                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"
+                                                aria-haspopup="true" aria-expanded="false">EMPLEADO</a>
                                             <ul class="dropdown-menu">
-                                                <li class="menu-item"><a href="persona/altaPersona/altaEmpleado.php">ALTA DE EMPLEADO</a></li>
-                                                <li class="menu-item"><a href="persona/consulEmpleado/consultaEmpleado.php">CONSULTA DE EMPLEADO</a></li>
-                                                <li class="menu-item"><a href="persona/modifiPersona/modificaEmpleado.php">MODIFICACION DE EMPLEADO</a></li>
+                                                <li class="menu-item"><a
+                                                        href="persona/altaPersona/altaEmpleado.php">ALTA DE EMPLEADO</a>
+                                                </li>
+                                                <li class="menu-item"><a
+                                                        href="persona/consulEmpleado/consultaEmpleado.php">CONSULTA DE
+                                                        EMPLEADO</a></li>
+                                                <li class="menu-item"><a
+                                                        href="persona/modifiPersona/modificaEmpleado.php">MODIFICACION
+                                                        DE EMPLEADO</a></li>
                                             </ul>
                                         </li>
 
                                         <li class="menu-item dropdown">
-                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">PUESTOS</a>
+                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"
+                                                aria-haspopup="true" aria-expanded="false">PUESTOS</a>
                                             <ul class="dropdown-menu">
-                                                <li class="menu-item"><a href="persona/altaPuesto/altaPuesto.php">ALTA DE PUESTO</a></li>
-                                                <li class="menu-item"><a href="persona/consulEmpleado/consultaPuesto.php">CONSULTA DE PUESTO</a></li>
-                                                <li class="menu-item"><a href="persona/modifiPersona/modificaPuesto.php">MODIFICACION DE PUESTO</a></li>
+                                                <li class="menu-item"><a href="persona/altaPuesto/altaPuesto.php">ALTA
+                                                        DE PUESTO</a></li>
+                                                <li class="menu-item"><a
+                                                        href="persona/consulEmpleado/consultaPuesto.php">CONSULTA DE
+                                                        PUESTO</a></li>
+                                                <li class="menu-item"><a
+                                                        href="persona/modifiPersona/modificaPuesto.php">MODIFICACION DE
+                                                        PUESTO</a></li>
                                             </ul>
                                         </li>
 
                                         <li class="menu-item dropdown">
-                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">INCIDENCIAS</a>
+                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"
+                                                aria-haspopup="true" aria-expanded="false">INCIDENCIAS</a>
                                             <ul class="dropdown-menu">
-                                                <li class="menu-item"><a href="persona/altaPersona/altaIncidencia.php">REGISTRO DE INCIDENCIA</a></li>
-                                                <li class="menu-item"><a href="persona/consulEmpleado/consultaIncidencia.php">SEGUIMIENTO DE INCIDENCIA</a></li>
+                                                <li class="menu-item"><a
+                                                        href="persona/altaPersona/altaIncidencia.php">REGISTRO DE
+                                                        INCIDENCIA</a></li>
+                                                <li class="menu-item"><a
+                                                        href="persona/consulEmpleado/consultaIncidencia.php">SEGUIMIENTO
+                                                        DE INCIDENCIA</a></li>
                                             </ul>
                                         </li>
 
                                         <li class="menu-item dropdown">
-                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">PERMISOS</a>
+                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"
+                                                aria-haspopup="true" aria-expanded="false">PERMISOS</a>
                                             <ul class="dropdown-menu">
-                                                <li class="menu-item"><a href="persona/altaPersona/altaUsuario.php">SOLICITUD DE PERMISO</a></li>
-                                                <li class="menu-item"><a href="persona/consulEmpleado/consultaUsuario.php">SEGUIMIENTO DE PERMISO</a></li>
+                                                <li class="menu-item"><a
+                                                        href="persona/altaPersona/altaUsuario.php">SOLICITUD DE
+                                                        PERMISO</a></li>
+                                                <li class="menu-item"><a
+                                                        href="persona/consulEmpleado/consultaUsuario.php">SEGUIMIENTO DE
+                                                        PERMISO</a></li>
                                             </ul>
                                         </li>
 
                                         <li class="menu-item dropdown">
-                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">VACACIONES</a>
+                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"
+                                                aria-haspopup="true" aria-expanded="false">VACACIONES</a>
                                             <ul class="dropdown-menu">
-                                                <li class="menu-item"><a href="persona/altaPersona/altaUsuario.php">SOLICITUD DE VACACIONES</a></li>
-                                                <li class="menu-item"><a href="persona/consulEmpleado/consultaUsuario.php">SEGUIMIENTO DE VACACIONES</a></li>
-                                                <li class="menu-item"><a href="persona/consulEmpleado/consultaUsuario.php">GESTION DE VACACIONES</a></li>
+                                                <li class="menu-item"><a
+                                                        href="persona/altaPersona/altaUsuario.php">SOLICITUD DE
+                                                        VACACIONES</a></li>
+                                                <li class="menu-item"><a
+                                                        href="persona/consulEmpleado/consultaUsuario.php">SEGUIMIENTO DE
+                                                        VACACIONES</a></li>
+                                                <li class="menu-item"><a
+                                                        href="persona/consulEmpleado/consultaUsuario.php">GESTION DE
+                                                        VACACIONES</a></li>
                                             </ul>
                                         </li>
 
@@ -260,10 +320,12 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                 </li>
 
                                 <li class="menu-item dropdown">
-                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">NOMINA</a>
+                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true"
+                                        aria-expanded="false">NOMINA</a>
                                     <ul class="dropdown-menu">
                                         <li class="menu-item dropdown">
-                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">MORE INFO</a>
+                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"
+                                                aria-haspopup="true" aria-expanded="false">MORE INFO</a>
                                             <ul class="dropdown-menu">
                                                 <li class="menu-item"><a href="#">MORE INFO</a></li>
                                                 <li class="menu-item"><a href="#">MORE INFO</a></li>
@@ -275,10 +337,12 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                 </li>
 
                                 <li class="menu-item dropdown">
-                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">INGRESOS</a>
+                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true"
+                                        aria-expanded="false">INGRESOS</a>
                                     <ul class="dropdown-menu">
                                         <li class="menu-item dropdown">
-                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">MORE INFO</a>
+                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"
+                                                aria-haspopup="true" aria-expanded="false">MORE INFO</a>
                                             <ul class="dropdown-menu">
                                                 <li class="menu-item"><a href="#">MORE INFO</a></li>
                                                 <li class="menu-item"><a href="#">MORE INFO</a></li>
@@ -289,10 +353,12 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                 </li>
 
                                 <li class="menu-item dropdown">
-                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">EGRESOS</a>
+                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true"
+                                        aria-expanded="false">EGRESOS</a>
                                     <ul class="dropdown-menu">
                                         <li class="menu-item dropdown">
-                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">MORE INFO</a>
+                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"
+                                                aria-haspopup="true" aria-expanded="false">MORE INFO</a>
                                             <ul class="dropdown-menu">
                                                 <li class="menu-item"><a href="#">MORE INFO</a></li>
                                                 <li class="menu-item"><a href="#">MORE INFO</a></li>
@@ -303,24 +369,39 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                 </li>
 
                                 <li class="menu-item dropdown">
-                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">CONTROL DE OFICIOS</a>
+                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true"
+                                        aria-expanded="false">CONTROL DE OFICIOS</a>
                                     <ul class="dropdown-menu">
                                         <li class="menu-item dropdown">
-                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">MORE INFO</a>
+                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"
+                                                aria-haspopup="true" aria-expanded="false">MORE INFO</a>
                                             <ul class="dropdown-menu">
                                                 <li class="menu-item"><a href="#">MORE INFO</a></li>
                                                 <li class="menu-item"><a href="#">MORE INFO</a></li>
                                                 <li class="menu-item"><a href="#">MORE INFO</a></li>
                                             </ul>
                                         </li>
-                                        </ul>
+                                    </ul>
                                 </li>
 
                                 <li class="menu-item dropdown">
-                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">INVENTARIO</a>
+                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true"
+                                        aria-expanded="false">INVENTARIO</a>
                                     <ul class="dropdown-menu">
                                         <li class="menu-item dropdown">
-                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">REGISTRO DE INVENTARIO</a>
+                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"
+                                                aria-haspopup="true" aria-expanded="false">REGISTRO DE INVENTARIO</a>
+                                            <ul class="dropdown-menu">
+                                                <li class="menu-item"><a href="../Sistema/inventario/altaInventario.php">ALTA
+                                                        DE INVENTARIO</a></li>
+                                                <li class="menu-item"><a href="#">MORE INFO</a></li>
+                                                <li class="menu-item"><a href="#">MORE INFO</a></li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="menu-item dropdown">
+                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"
+                                                aria-haspopup="true" aria-expanded="false">CONSULTA DE INVENTARIO</a>
                                             <ul class="dropdown-menu">
                                                 <li class="menu-item"><a href="#">MORE INFO</a></li>
                                                 <li class="menu-item"><a href="#">MORE INFO</a></li>
@@ -329,30 +410,35 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                         </li>
 
                                         <li class="menu-item dropdown">
-                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">CONSULTA DE INVENTARIO</a>
+                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"
+                                                aria-haspopup="true" aria-expanded="false">ACTUALIZACION DE
+                                                INVENTARIO</a>
                                             <ul class="dropdown-menu">
                                                 <li class="menu-item"><a href="#">MORE INFO</a></li>
                                                 <li class="menu-item"><a href="#">MORE INFO</a></li>
                                                 <li class="menu-item"><a href="#">MORE INFO</a></li>
                                             </ul>
                                         </li>
-
-                                        <li class="menu-item dropdown">
-                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">ACTUALIZACION DE INVENTARIO</a>
-                                            <ul class="dropdown-menu">
-                                                <li class="menu-item"><a href="#">MORE INFO</a></li>
-                                                <li class="menu-item"><a href="#">MORE INFO</a></li>
-                                                <li class="menu-item"><a href="#">MORE INFO</a></li>
-                                            </ul>
-                                        </li>
-                                        </ul>
+                                    </ul>
                                 </li>
 
                                 <li class="menu-item dropdown">
-                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">PROYECTOS</a>
+                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true"
+                                        aria-expanded="false">PROYECTOS</a>
                                     <ul class="dropdown-menu">
                                         <li class="menu-item dropdown">
-                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">ALTA DE PROYECTOS</a>
+                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"
+                                                aria-haspopup="true" aria-expanded="false">ALTA DE PROYECTOS</a>
+                                            <ul class="dropdown-menu">
+                                                <li class="menu-item"><a href="proyectos/altaProyecto.php">ALTA DE PROYECTO</a></li>
+                                                <li class="menu-item"><a href="#">MORE INFO</a></li>
+                                                <li class="menu-item"><a href="#">MORE INFO</a></li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="menu-item dropdown">
+                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"
+                                                aria-haspopup="true" aria-expanded="false">CONSULTA DE PROYECTOS</a>
                                             <ul class="dropdown-menu">
                                                 <li class="menu-item"><a href="#">MORE INFO</a></li>
                                                 <li class="menu-item"><a href="#">MORE INFO</a></li>
@@ -361,23 +447,16 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                         </li>
 
                                         <li class="menu-item dropdown">
-                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">CONSULTA DE PROYECTOS</a>
+                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"
+                                                aria-haspopup="true" aria-expanded="false">ACTUALIZACION DE
+                                                PROYECTOS</a>
                                             <ul class="dropdown-menu">
                                                 <li class="menu-item"><a href="#">MORE INFO</a></li>
                                                 <li class="menu-item"><a href="#">MORE INFO</a></li>
                                                 <li class="menu-item"><a href="#">MORE INFO</a></li>
                                             </ul>
                                         </li>
-
-                                        <li class="menu-item dropdown">
-                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">ACTUALIZACION DE PROYECTOS</a>
-                                            <ul class="dropdown-menu">
-                                                <li class="menu-item"><a href="#">MORE INFO</a></li>
-                                                <li class="menu-item"><a href="#">MORE INFO</a></li>
-                                                <li class="menu-item"><a href="#">MORE INFO</a></li>
-                                            </ul>
-                                        </li>
-                                        </ul>
+                                    </ul>
                                 </li>
 
                             </ul>
@@ -387,102 +466,6 @@ $resultadoEstado = ObtenerEstadoProcedencia();
             </div>
         </div>
     </header>
-
-    <!-- Modal -->
-    <div class="account-entry">
-        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"><i data-feather="user"></i>Login</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="#">
-                            <div class="form-group">
-                                <input type="email" placeholder="Email Address" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <input type="password" placeholder="Password" class="form-control">
-                            </div>
-                            <div class="more-option">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                    <label class="form-check-label" for="defaultCheck1">
-                                        Remember Me
-                                    </label>
-                                </div>
-                                <a href="#">Forget Password?</a>
-                            </div>
-                            <button class="button primary-bg btn-block">Login</button>
-                        </form>
-                        <div class="shortcut-login">
-                            <span>Or connect with</span>
-                            <div class="buttons">
-                                <a href="#" class="facebook"><i class="fab fa-facebook-f"></i>Facebook</a>
-                                <a href="#" class="google"><i class="fab fa-google"></i>Google</a>
-                            </div>
-                            <p>Don't have an account? <a href="#">Register</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="exampleModalLong2" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"><i data-feather="edit"></i>Registration</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="account-type">
-                            <label for="idRegisterCan">
-                                <input id="idRegisterCan" type="radio" name="register">
-                                <span>Candidate</span>
-                            </label>
-                            <label for="idRegisterEmp">
-                                <input id="idRegisterEmp" type="radio" name="register">
-                                <span>Employer</span>
-                            </label>
-                        </div>
-                        <form action="#">
-                            <div class="form-group">
-                                <input type="text" placeholder="Username" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <input type="email" placeholder="Email Address" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <input type="password" placeholder="Password" class="form-control">
-                            </div>
-                            <div class="more-option terms">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
-                                    <label class="form-check-label" for="defaultCheck2">
-                                        I accept the <a href="#">terms & conditions</a>
-                                    </label>
-                                </div>
-                            </div>
-                            <button class="button primary-bg btn-block">Register</button>
-                        </form>
-                        <div class="shortcut-login">
-                            <span>Or connect with</span>
-                            <div class="buttons">
-                                <a href="#" class="facebook"><i class="fab fa-facebook-f"></i>Facebook</a>
-                                <a href="#" class="google"><i class="fab fa-google"></i>Google</a>
-                            </div>
-                            <p>Already have an account? <a href="#">Login</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Banner -->
     <div class="banner banner-2 banner-2-bg">
@@ -495,11 +478,11 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                         <div class="short-infos">
                             <div class="info">
                                 <h4>5,862</h4>
-                                <span>Jobs Posted</span>
+                                <span>TRABAJOS AL CORRIENTE</span>
                             </div>
                             <div class="info">
                                 <h4>240</h4>
-                                <span>Companies</span>
+                                <span>COMPAÑIAS</span>
                             </div>
                         </div>
                     </div>
@@ -516,18 +499,12 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                 <div class="row">
                     <div class="col-md-6">
                         <div class="footer-logo">
-                            
+
                         </div>
                     </div>
                     <div class="col-md-6">
-                        
+
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="footer-widget-wrapper padding-bottom-60 padding-top-80">
-            <div class="container">
-                <div class="row">
                 </div>
             </div>
         </div>
@@ -538,26 +515,25 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                         <div class="footer-bottom border-top">
                             <div class="row">
                                 <div class="col-lg-6">
-                                <a href="#">
-                                <img src="images/footer-logo.png" class="img-fluid" alt="">
-                                </a>
-                                    <p class="copyright-text">Copyright <a href="#">Oficiona</a> 2020, All right
-                                        reserved</p>
+                                    <a href="#">
+                                        <img src="images/footer-logo.png" class="img-fluid" alt="">
+                                    </a>
+                                    <p class="copyright-text">DERECHOS DE AUTOR <a href="#">INTECPROOF</a> 2024, RESERVADOS</p>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="back-to-top">
-                                        <a href="#">Back to top<i class="fas fa-angle-up"></i></a>
+                                        <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
                                     </div>
                                 </div>
-                                <div class="footer-social">
-                            <ul class="social-icons">
-                                <li><a href="#"><i data-feather="facebook"></i></a></li>
-                                <li><a href="#"><i data-feather="twitter"></i></a></li>
-                                <li><a href="#"><i data-feather="linkedin"></i></a></li>
-                                <li><a href="#"><i data-feather="instagram"></i></a></li>
-                                <li><a href="#"><i data-feather="youtube"></i></a></li>
-                            </ul>
-                        </div>
+                                <!--<div class="footer-social">
+                                    <ul class="social-icons">
+                                        <li><a href="#"><i data-feather="facebook"></i></a></li>
+                                        <li><a href="#"><i data-feather="twitter"></i></a></li>
+                                        <li><a href="#"><i data-feather="linkedin"></i></a></li>
+                                        <li><a href="#"><i data-feather="instagram"></i></a></li>
+                                        <li><a href="#"><i data-feather="youtube"></i></a></li>
+                                    </ul>
+                                </div>-->
                             </div>
                         </div>
                     </div>

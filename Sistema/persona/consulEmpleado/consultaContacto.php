@@ -198,12 +198,12 @@ $estadoProcedencia = json_encode($resultadoEstado);
       margin-bottom: -30px;
       padding: 5px 20px;
       margin-bottom: -10px;
-    /*transform: scale(0.8); */
-}
+      /*transform: scale(0.8); */
+    }
 
     .candidate {
       padding: 5px;
-  
+
     }
 
     .filtered-employer-wrapper .employer {
@@ -293,7 +293,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
         <div class="col">
           <div class="header-top">
             <div class="logo-area">
-              <a href="../../index.html"><img src="../../images/logo-2.png" alt=""></a>
+              <a href="../../inicio.php"><img src="../../images/logo-2.png" alt=""></a>
             </div>
             <div class="header-top-toggler">
               <div class="header-top-toggler-button"></div>
@@ -409,13 +409,14 @@ $estadoProcedencia = json_encode($resultadoEstado);
                         <h6><i data-feather="user-check"></i>INFORMACION DE CONTACTO</h6>
                       </label>
                       <div class="row-left">
-                        <a href="#" class="boton-intec" data-toggle="modal" data-target="#" style="display:none;" >AGREGAR</a>
+                        <a href="#" class="boton-intec" data-toggle="modal" data-target="#"
+                          style="display:none;">AGREGAR</a>
                       </div>
                     </div>
                   </div>
-                  
-                        <div class="filtered-employer-wrapper" id="agregaContacto"></div>
-                      
+
+                  <div class="filtered-employer-wrapper" id="agregaContacto"></div>
+
 
                 </div>
             </form>
@@ -454,7 +455,9 @@ $estadoProcedencia = json_encode($resultadoEstado);
                   </div>
                 </div>
               </div>
-              <button class="boton-intec">BAJA</button>
+              <div class="boton-intec">
+            <a href="#" data-toggle="modal" data-target="#apply-popup-id-1" style="width: 40px; height: 25px; padding: 2px; display:none;" >BAJA</a>
+          </div>
             </form>
           </div>
         </div>
@@ -465,26 +468,52 @@ $estadoProcedencia = json_encode($resultadoEstado);
 
   <!-- Footer -->
   <footer class="footer-bg">
+    <div class="footer-top border-bottom section-padding-top padding-bottom-40">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="footer-logo">
+
+            </div>
+          </div>
+          <div class="col-md-6">
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-widget-wrapper padding-bottom-60 padding-top-80">
+      <div class="container">
+        <div class="row">
+        </div>
+      </div>
+    </div>
     <div class="footer-bottom-area">
       <div class="container">
         <div class="row">
           <div class="col">
             <div class="footer-bottom border-top">
               <div class="row">
-                <div class="col-xl-4 col-lg-5 order-lg-2">
-                </div>
-                <div class="col-xl-4 col-lg-4 order-lg-1">
+                <div class="col-lg-6">
                   <a href="#">
                     <img src="images/footer-logo.png" class="img-fluid" alt="">
                   </a>
-                  <p class="copyright-text">Copyright <a href="#">Intecproof</a> 2024, All right
-                    reserved</p>
+                  <p class="copyright-text">DERECHOS DE AUTOR <a href="#">INTECPROOF</a> 2024, RESERVADOS</p>
                 </div>
-                <div class="col-xl-4 col-lg-3 order-lg-3">
+                <div class="col-lg-6">
                   <div class="back-to-top">
-                    <a href="#">Back to top<i class="fas fa-angle-up"></i></a>
+                    <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
                   </div>
                 </div>
+                <!--<div class="footer-social">
+                                    <ul class="social-icons">
+                                        <li><a href="#"><i data-feather="facebook"></i></a></li>
+                                        <li><a href="#"><i data-feather="twitter"></i></a></li>
+                                        <li><a href="#"><i data-feather="linkedin"></i></a></li>
+                                        <li><a href="#"><i data-feather="instagram"></i></a></li>
+                                        <li><a href="#"><i data-feather="youtube"></i></a></li>
+                                    </ul>
+                                </div>-->
               </div>
             </div>
           </div>
@@ -593,6 +622,9 @@ $estadoProcedencia = json_encode($resultadoEstado);
       }
     });
 
+    
+    
+
     function insertarContactos(longitudContacto) {
       var contenedor = document.getElementById('agregaContacto');
       contenedor.innerHTML = agregarListaContactos(longitudContacto);
@@ -638,7 +670,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
                 </div>
 
           <div class="boton-intec">
-            <a href="#" data-toggle="modal" data-target="#apply-popup-id-${i + 1}" style="width: 40px; height: 25px; padding: 2px; display:none;">BAJA</a>
+            <a href="#" data-toggle="modal" data-target="#apply-popup-id-${i + 1}" style="width: 40px; height: 25px; padding: 2px; display:none;" >BAJA</a>
           </div>
 
         
@@ -654,16 +686,16 @@ $estadoProcedencia = json_encode($resultadoEstado);
   </script>
 
   <script>
-      document.addEventListener('DOMContentLoaded', function (){
-          console.log(localStorage.getItem('habilitarBotones'));
-          if (localStorage.getItem('habilitarBotones') === 'true'){
-              const habilitarBotonDomicilio = document.querySelectorAll('.boton-intec');
-              habilitarBotonDomicilio.forEach(boton => {
-                  boton.disabled = false;
-                  boton.style.display = 'block';
-              } );
-          }
-      });
+   document.addEventListener('DOMContentLoaded', function () {
+      console.log(localStorage.getItem('habilitarBotones'));
+      if (localStorage.getItem('habilitarBotones') === 'true') {
+        const habilitarBotonDomicilio = document.querySelectorAll('.boton-intec');
+        habilitarBotonDomicilio.forEach(boton => {
+          boton.disabled = false;
+          boton.style.display = 'block';
+        });
+      }
+    });
   </script>
 
 
