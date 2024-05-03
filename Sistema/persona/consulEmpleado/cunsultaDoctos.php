@@ -267,7 +267,41 @@ session_start();
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="filtered-employer-wrapper" id="agregarDocumentos"></div>
+
+                                    <!-- INICIO DE TITULOS -->
+                                    <div class="employer">
+                                        <div class="body">
+                                            <div class="row">
+                                                <div class="body">
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label class="col-form-label">TIPO DE
+                                                                DOCUMENTO</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label class="col-form-label"> ESTATUS DE DOCUMENTO </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label class="col-form-label">USUARIO ULTIMA
+                                                                MODIFICACION</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group ">
+                                                            <label class="col-form-label">FECHA ULTIMA
+                                                                MODIFICACION</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="employer" id="agregarDocumentos"></div>
 
                                 </div>
                             </div>
@@ -280,26 +314,6 @@ session_start();
 
     <!-- Footer -->
     <footer class="footer-bg">
-        <div class="footer-top border-bottom section-padding-top padding-bottom-40">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="footer-logo">
-
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="footer-widget-wrapper padding-bottom-60 padding-top-80">
-            <div class="container">
-                <div class="row">
-                </div>
-            </div>
-        </div>
         <div class="footer-bottom-area">
             <div class="container">
                 <div class="row">
@@ -308,7 +322,7 @@ session_start();
                             <div class="row">
                                 <div class="col-lg-6">
                                     <a href="#">
-                                        <img src="images/footer-logo.png" class="img-fluid" alt="">
+                                        <img src="../../images/footer-logo.png" class="img-fluid" alt="">
                                     </a>
                                     <p class="copyright-text">DERECHOS DE AUTOR <a href="#">INTECPROOF</a> 2024,
                                         RESERVADOS</p>
@@ -459,8 +473,6 @@ session_start();
                                     <div class="body">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label class="col-form-label">TIPO DE
-                                                    DOCUMENTO</label>
                                                 <input id="vchTipoDocumento${i}" type="text" class="form-control"
                                                     placeholder="TIPO CONTACTO" disabled>
                                             </div>
@@ -468,15 +480,12 @@ session_start();
 
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label class="col-form-label"> ESTATUS DE DOCUMENTO </label>
                                                 <input type="text" class="form-control"
                                                     placeholder="ESTATUS" id="vchEstatusDocumento${i}" disabled>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label class="col-form-label">USUARIO ULTIMA
-                                                    MODIFICACION</label>
                                                 <input type="text" class="form-control"
                                                     placeholder="USUARIO ULTIMA MOD."
                                                     id="iIdUsuarioUltModificacion${i}" disabled />
@@ -484,26 +493,29 @@ session_start();
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group ">
-                                                <label class="col-form-label">FECHA ULTIMA
-                                                    MODIFICACION</label>
                                                 <input type="text" class="form-control"
                                                     placeholder="FECHA ULTIMA MOD."
                                                     id="dtFechaUltModificacion${i}" disabled />
                                             </div>
                                         </div>
 
-                                    </div>
-                                </div>
-                                <ul>
+                                        <ul>
                                     <a href="Sistema/pngwing.com.png" target="_blank">
                                         <img src="../../pngwing.com.png" id="" style="width: 70px; height: auto;">
                                     </a>
-                                </ul>
+                                        </ul>
+                                
                                 <ul>
                                     <a href="Sistema/3121.png" target="_blank">
                                         <img id="iconoModificar" src="../../3121.png"  style="width: 50px; height: auto; display: none;" >
                                     </a>
                                 </ul>
+
+                                    </div>
+                                </div>
+                               
+                                      
+                                
 
                             </div>
                         </div>

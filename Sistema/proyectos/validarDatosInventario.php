@@ -125,7 +125,7 @@ $parametros = array(
                 $datosInventario['iIdInventario'],
                 $datosInventario['bResultado'],
                 $datosInventario['vchCampoError'],
-            );
+            );   //obserrvaciones pendiente por que me manden el campo  var de 300
 
 $result = sqlsrv_query($GLOBALS['conn'], $procedInventario, $parametros);
 

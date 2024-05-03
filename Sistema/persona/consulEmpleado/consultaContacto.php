@@ -455,9 +455,9 @@ $estadoProcedencia = json_encode($resultadoEstado);
                   </div>
                 </div>
               </div>
-              <div class="boton-intec">
-            <a href="#" data-toggle="modal" data-target="#apply-popup-id-1" style="width: 40px; height: 25px; padding: 2px; display:none;" >BAJA</a>
-          </div>
+              
+                <a href="#" data-toggle="modal" data-target="#apply-popup-id-1">BAJA</a>
+              
             </form>
           </div>
         </div>
@@ -468,26 +468,6 @@ $estadoProcedencia = json_encode($resultadoEstado);
 
   <!-- Footer -->
   <footer class="footer-bg">
-    <div class="footer-top border-bottom section-padding-top padding-bottom-40">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="footer-logo">
-
-            </div>
-          </div>
-          <div class="col-md-6">
-
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="footer-widget-wrapper padding-bottom-60 padding-top-80">
-      <div class="container">
-        <div class="row">
-        </div>
-      </div>
-    </div>
     <div class="footer-bottom-area">
       <div class="container">
         <div class="row">
@@ -496,9 +476,10 @@ $estadoProcedencia = json_encode($resultadoEstado);
               <div class="row">
                 <div class="col-lg-6">
                   <a href="#">
-                    <img src="images/footer-logo.png" class="img-fluid" alt="">
+                    <img src="../../images/footer-logo.png" class="img-fluid" alt="">
                   </a>
-                  <p class="copyright-text">DERECHOS DE AUTOR <a href="#">INTECPROOF</a> 2024, RESERVADOS</p>
+                  <p class="copyright-text">DERECHOS DE AUTOR <a href="#">INTECPROOF</a> 2024,
+                    RESERVADOS</p>
                 </div>
                 <div class="col-lg-6">
                   <div class="back-to-top">
@@ -622,8 +603,8 @@ $estadoProcedencia = json_encode($resultadoEstado);
       }
     });
 
-    
-    
+
+
 
     function insertarContactos(longitudContacto) {
       var contenedor = document.getElementById('agregaContacto');
@@ -669,15 +650,15 @@ $estadoProcedencia = json_encode($resultadoEstado);
                   </div>
                 </div>
 
-          <div class="boton-intec">
-            <a href="#" data-toggle="modal" data-target="#apply-popup-id-${i + 1}" style="width: 40px; height: 25px; padding: 2px; display:none;" >BAJA</a>
+             <div class="boton-intec${i}">
+            <a  href="#" data-toggle="modal" data-target="#apply-popup-id-${i + 1}" 
+            style="width: 40px; height: 25px; padding: 2px; display:none;" >BAJA</a>
           </div>
-
         
       </div>
     </div>
   </div>
-                                 `;
+          `;
       }
       return contacto;
     }
@@ -685,8 +666,10 @@ $estadoProcedencia = json_encode($resultadoEstado);
 
   </script>
 
+  
+
   <script>
-   document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
       console.log(localStorage.getItem('habilitarBotones'));
       if (localStorage.getItem('habilitarBotones') === 'true') {
         const habilitarBotonDomicilio = document.querySelectorAll('.boton-intec');

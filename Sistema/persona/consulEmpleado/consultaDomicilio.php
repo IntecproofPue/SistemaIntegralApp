@@ -505,132 +505,50 @@ $estadoProcedencia = json_encode($resultadoEstado);
             <form action="#">
 
               <div class="form-group">
-                <div class="col-sm-9">
-                  <select class="form-control" id="iAgruEntidad" name="iAgruEntidad" required>
-                    <option value="" selected>SELECCIONE UN ESTADO</option>
-                    <?php foreach ($resultadoEstado as $estado): ?>
-                      <option value="<?= $estado['iIdConstante'] . '-' . $estado['iClaveCatalogo'] ?>">
-                        [<?= $estado['iClaveCatalogo'] ?>] - <?= $estado['vchDescripcion'] ?>
-                      </option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
+              <input type="text" class="form-control" placeholder="ENTIDAD" id="#" name="#"
+                    style="text-transform: uppercase" >
               </div>
               <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="vchMunicipio" name="vchMunicipio" placeholder="MUNICIPIO"
-                    style="text-transform: uppercase" pattern="[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+"
-                    title="SOLO SE PERMITEN LETRAS">
-                </div>
+              <input type="text" class="form-control" placeholder="MUNICIPIO" id="#" name="#"
+                    style="text-transform: uppercase" >
               </div>
               <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="vchLocalidad" name="vchLocalidad" placeholder="LOCALIDAD"
-                    min="2" name="apeUnoEsccrito" style="text-transform: uppercase" style="text-transform: uppercase">
-                </div>
+              <input type="text" class="form-control" placeholder="LOCALIDAD" id="#" name="#"
+                    style="text-transform: uppercase" >
               </div>
               <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="CÓDIGO POSTAL" id="iCodigoPostal"
-                    name="codigoPostal" onkeypress="return event.charCode">
-                </div>
+              <input type="text" class="form-control" placeholder="COLONIA" id="#" name="#"
+                    style="text-transform: uppercase" >
               </div>
               <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="COLONIA" id="vchColonia" name="vchColonia"
-                    style="text-transform: uppercase">
-                </div>
+              <input type="text" class="form-control" placeholder="C.P." id="#" name="#"
+                    style="text-transform: uppercase" >
               </div>
               <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="CALLE" id="vchCalle" name="vchCalle"
-                    style="text-transform: uppercase">
-                </div>
+              <input type="text" class="form-control" placeholder="CALLE" id="#" name="#"
+                    style="text-transform: uppercase" >
               </div>
               <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="No EXT" id="vchNumeroExterior"
-                    name="vchNumeroExterior" style="text-transform: uppercase">
-                </div>
+              <input type="text" class="form-control" placeholder="No. EXTERIOR" id="#" name="#"
+                    style="text-transform: uppercase" >
               </div>
               <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="No INT" id="vchNumeroInterior"
-                    name="vchNumeroInterior" style="text-transform: uppercase">
-                </div>
+              <input type="text" class="form-control" placeholder="No. INTERIOR" id="#" name="#"
+                    style="text-transform: uppercase" >
               </div>
               <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="LETRA" id="vchLetra" name="vchLetra"
-                    style="text-transform: uppercase">
-                </div>
+              <input type="text" class="form-control" placeholder="LETRA" id="#" name="#"
+                    style="text-transform: uppercase" >
               </div>
               <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="NOMBRE" id="vchNombre" name="vchNombre"
-                    style="text-transform: uppercase">
-                </div>
+              <input type="text" class="form-control" placeholder="USUARIO ULTIMA MODIFICACION" id="#" name="#"
+                    style="text-transform: uppercase" >
               </div>
               <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="PRIMER APELLIDO" id="vchPrimerApellido"
-                    name="vchPrimerApellido" style="text-transform: uppercase">
-                </div>
+              <input type="text" class="form-control" placeholder="FECHA ULTIMA MODIFICACION" id="#" name="#"
+                    style="text-transform: uppercase" >
               </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="SEGUNDO APELLIDO" id="vchSegundoApellido"
-                    name="vchSegundoApellido" style="text-transform: uppercase">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="RFC" id="vchRFC" name="vchRFC"
-                    style="text-transform: uppercase">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="CURP" id="vchCURP" name="vchCURP"
-                    style="text-transform: uppercase">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="FECHA DE NACIMIENTO" id="dFechaNacimiento"
-                    name="dFechaNacimiento" style="text-transform: uppercase">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="GENERO" id="iIdGenero" name="iIdGenero"
-                    style="text-transform: uppercase">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="NACIONALIDAD" id="iIdNacionalidad"
-                    name="iIdNacionalidad" style="text-transform: uppercase">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="REGIMEN FISCAL" id="iIdRegimenFiscal"
-                    name="iIdRegimenFiscal" style="text-transform: uppercase">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="USO FISCAL" id="iIdUsoFiscal" name="iIdUsoFiscal"
-                    style="text-transform: uppercase">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="C.P. FISCAL" id="iCodigoPostalFiscal"
-                    name="iCodigoPostalFiscal" style="text-transform: uppercase">
-                </div>
-              </div>
+              
               <button class="button primary-bg btn-block" id="botonAplicar">APLICAR</button>
 
             </form>
@@ -642,26 +560,6 @@ $estadoProcedencia = json_encode($resultadoEstado);
 
   <!-- Footer -->
   <footer class="footer-bg">
-    <div class="footer-top border-bottom section-padding-top padding-bottom-40">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="footer-logo">
-
-            </div>
-          </div>
-          <div class="col-md-6">
-
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="footer-widget-wrapper padding-bottom-60 padding-top-80">
-      <div class="container">
-        <div class="row">
-        </div>
-      </div>
-    </div>
     <div class="footer-bottom-area">
       <div class="container">
         <div class="row">
@@ -670,7 +568,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
               <div class="row">
                 <div class="col-lg-6">
                   <a href="#">
-                    <img src="images/footer-logo.png" class="img-fluid" alt="">
+                    <img src="../../images/footer-logo.png" class="img-fluid" alt="">
                   </a>
                   <p class="copyright-text">DERECHOS DE AUTOR <a href="#">INTECPROOF</a> 2024, RESERVADOS</p>
                 </div>

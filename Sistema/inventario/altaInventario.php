@@ -410,7 +410,7 @@ $resultadoNiveles = ObtenerNivel();
 
                       <div class="COL-MD-6">
                         <div class="form-group">
-                          <label class="col-sm-3 col-form-label">* FECHA DE INGRESO:</label>
+                          <label class="col-sm-3 col-form-label">FECHA DE INGRESO:</label>
                           <div class="col-sm-9">
                             <input type="date" id="dFechaIngreso" class="form-control"
                               placeholder="FECHA DE NACIMIENTO" name="FechaIngreso" pattern="\d{4}-\d{2}-\d{2}"

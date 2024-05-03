@@ -1311,17 +1311,17 @@ $resultadoRegimen = ObtenerIdRegimen();
                             <div class="row">
                                 <div class="col-lg-6">
                                     <a href="#">
-                                        <img src="images/footer-logo.png" class="img-fluid" alt="">
+                                        <img src="../../images/footer-logo.png" class="img-fluid" alt="">
                                     </a>
-                                    <p class="copyright-text">Copyright <a href="#">Oficina</a> 2020, All right
-                                        reserved</p>
+                                    <p class="copyright-text">DERECHOS DE AUTOR <a href="#">INTECPROOF</a> 2024,
+                                        RESERVADOS</p>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="back-to-top">
-                                        <a href="#">Back to top<i class="fas fa-angle-up"></i></a>
+                                        <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
                                     </div>
                                 </div>
-                                <div class="footer-social">
+                                <!--<div class="footer-social">
                                     <ul class="social-icons">
                                         <li><a href="#"><i data-feather="facebook"></i></a></li>
                                         <li><a href="#"><i data-feather="twitter"></i></a></li>
@@ -1329,7 +1329,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                                         <li><a href="#"><i data-feather="instagram"></i></a></li>
                                         <li><a href="#"><i data-feather="youtube"></i></a></li>
                                     </ul>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>
