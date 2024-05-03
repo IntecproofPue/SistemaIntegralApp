@@ -944,10 +944,26 @@ $resultadoRegimen = ObtenerIdRegimen();
                 </div>
               </div>
               <div class="form-group">
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="FECHA DE NACIMIENTO" id="dFechaNacimiento" name="dFechaNacimiento"
-                    style="text-transform: uppercase" >
-                </div>
+                  <?php
+                  // Calcular la fecha actual
+                  $fechaActual = date('Y-m-d');
+
+                  // Restar 18 años a la fecha actual
+                  $fechaMinima = date('Y-m-d', strtotime('-2 years', strtotime($fechaActual)));
+
+                  // Establecer la fecha máxima como la fecha actual
+                  $fechaMaxima = $fechaActual;
+
+                  // Establecer la fecha mínima como 1900-01-01 (opcional)
+                  $fechaLimiteInferior = '1900-01-01';
+                  ?>
+                  <div class="form-group">
+                      <option value="">FECHA DE NACIMIENTO</option>
+                      <input type="date" class="form-control" placeholder="FECHA DE INGRESO"
+                             name="fechaIngreso" id="dtFechaNacimientoModificacion" pattern="\d{4}-\d{2}-\d{2}"
+                             title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)"
+                             min="<?php echo $fechaMinima; ?>" max="<?php echo $fechaMaxima; ?>" maxlength="10">
+                  </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
@@ -1353,13 +1369,11 @@ $resultadoRegimen = ObtenerIdRegimen();
             var vchNSSEmpleado = document.getElementById('vchNSSModificar');
             vchNSSEmpleado.value = bResultado.vchNSS;
 
+            //Fecha ingreso
             var dFechaIngresModif = bResultado.dFechaIngreso.date;
             var fechaIngresoModif = new Date(dFechaIngresModif);
-            var fechaIngresoFinalModif = fechaIngresoModif.toLocaleDateString('es-ES', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric'
-            });
+            var fechaIngresoFinalModif = fechaIngresoModif.toISOString().slice(0, 10);
+
             var dFechaIngresoModificacion = document.getElementById('dtFechaIngresoModificacion');
             dFechaIngresoModificacion.value = fechaIngresoFinalModif || '';
 
@@ -1406,6 +1420,12 @@ $resultadoRegimen = ObtenerIdRegimen();
             vchCURPEmpleado.value = bResultado.vchCURP;
 
             //Fecha de nacimiento
+            var dFechaNacimientoModif = bResultado.dFechaNacimiento.date;
+            var dFechaNacimiento= new Date(dFechaNacimientoModif);
+            var fechaNacimientoFinalModif = dFechaNacimiento.toISOString().slice(0, 10);
+
+            var dFechaNacimientoModificacion = document.getElementById('dtFechaNacimientoModificacion');
+            dFechaNacimientoModificacion.value = fechaNacimientoFinalModif || '';
 
             //Genero
             var iIdGeneroModificacion = bResultado.iIdGenero;
