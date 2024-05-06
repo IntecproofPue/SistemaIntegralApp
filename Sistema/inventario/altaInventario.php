@@ -105,6 +105,9 @@ $resultadoNiveles = ObtenerNivel();
   <link rel="apple-touch-icon" sizes="72x72" href="../images/icon-72x72.png">
   <link rel="apple-touch-icon" sizes="114x114" href="../images/icon-114x114.png">
 
+  <script type="text/JavaScript" src="../includes/pandora.js"></script>
+  <script type="text/JavaScript" src="../inventario/localstorageInventario.js"></script>
+
   <style>
     .selected {
       color: #007bff;
@@ -290,13 +293,15 @@ $resultadoNiveles = ObtenerNivel();
     </div>
   </header>
 
-  <!-- Breadcrumb
-  <div class="alice-bg padding-top-70 padding-bottom-70">
+  <!-- Breadcrumb-->
+  <div class="alice-bg padding-top-30 padding-bottom-30">
     <div class="container">
       <div class="row">
         <div class="col-md-6">
           <div class="breadcrumb-area">
-            <h1>REGISTRO DE INVENTARIO</h1>
+            <label class="col-form-label"><i></i>
+              <h4><i data-feather="plus-circle"></i>REGISTRO DE INVENTARIO</h4>
+            </label>
           </div>
         </div>
         <!--<div class="col-md-6">
@@ -306,203 +311,308 @@ $resultadoNiveles = ObtenerNivel();
               <button><i data-feather="search"></i></button>
             </form>
           </div>
-        </div>
+        </div>-->
       </div>
     </div>
   </div>
-    Breadcrumb End -->
+  <!--Breadcrumb End -->
 
+  <!-- Contenido de la página -->
   <div class="alice-bg section-padding-bottom">
     <div class="container no-gliters">
       <div class="row no-gliters">
         <div class="col">
           <div class="post-content-wrapper">
-            <form action="#" class="job-post-form" id="FormInventarioAlta">
-              <div class="basic-info-input">
-                <h4><i data-feather="plus-circle"></i>REGISTRO DE INVENTARIO</h4>
-                <div id="information" class="row">
-                  <label class="col-md-3 col-form-label">Information</label>
-                  <div class="col-md-9">
-                    <div class="row">
+            <form action="#" method="post" class="job-post-form">
+              <div id="information" class="row justify-content-center">
+                <input type="hidden" name="iIdConstanteContacto" id="iIdConstanteContacto" value="">
+                <input type="hidden" name="iClaveContacto" id="iClaveContacto" value="">
 
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="col-md-4 col-form-label">TIPO DE PRODUCTO</label>
-                          <input type="text" id="iIdtipoProducto" class="form-control" placeholder="TIPO DE PRODUCTO"
-                            min="2" maxlength="150" onkeypress="this.value = this.value.toUpperCase();return">
-                        </div>
+                <div class="col-md-10">
+                  <div class="row">
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="col-md-4 col-form-label">TIPO DE PRODUCTO:</label>
+                        <select class="form-control" Name="iIdtipoProducto" id="iIdtipoProducto" required>
+                          <option value="">SELECCIONE UN PRODUCTO</option>
+                          <?php foreach ($resultadoContacto as $contacto): ?>
+                            <option value="<?= $contacto['iIdConstante'] . '-' . $contacto['iClaveCatalogo'] ?>">
+                              [<?= $contacto['iClaveCatalogo'] ?>] -
+                              <?= $contacto['vchDescripcion'] ?>
+                            </option>
+                          <?php endforeach; ?>
+                        </select>
                       </div>
-
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="col-md-4 col-form-label">TIPO DE SUBPRODUCTO</label>
-                          <input type="text" id="iIdTipoSubproducto" class="form-control"
-                            placeholder="TIPO DE SUBPRODUCTO" min="2" maxlength="150"
-                            onkeypress="this.value = this.value.toUpperCase();return">
-                        </div>
-                      </div>
-
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="col-md-4 col-form-label">MODELO</label>
-                          <input type="text" id="vchModelo" class="form-control" placeholder="MODELO" maxlength="150"
-                            onkeypress="this.value = this.value.toUpperCase();return">
-                        </div>
-                      </div>
-
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="col-md-4 col-form-label">MARCA</label>
-                          <input type="text" id="iIdMarca" class="form-control" placeholder="MARCA" maxlength="150"
-                            onkeypress="this.value = this.value.toUpperCase();return">
-                        </div>
-                      </div>
-
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="col-md-4 col-form-label">SERIE</label>
-                          <input type="text" id="vchSerie" class="form-control" placeholder="SERIE" maxlength="150"
-                            onkeypress="this.value = this.value.toUpperCase();return">
-                        </div>
-                      </div>
-
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="col-md-4 col-form-label">ESTATUS</label>
-                          <input type="text" id="iIdEstatus" class="form-control" placeholder="ESTATUS" maxlength="150"
-                            onkeypress="this.value = this.value.toUpperCase();return">
-                        </div>
-                      </div>
-
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="col-md-4 col-form-label">TIPO DE MOVIMIENTO</label>
-                          <input type="text" id="iIdTipoMovto" class="form-control" placeholder="TIPO DE MOVIMIENTO"
-                            maxlength="150" onkeypress="this.value = this.value.toUpperCase();return">
-                        </div>
-                      </div>
-
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="col-md-4 col-form-label">TIPO DE ASIGNACION</label>
-                          <input type="text" id="iIdTipoAsignacion" class="form-control"
-                            placeholder="TIPO DE ASIGNACION" maxlength="150"
-                            onkeypress="this.value = this.value.toUpperCase();return">
-                        </div>
-                      </div>
-
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="col-md-4 col-form-label">ASIGNADO A</label>
-                          <input type="text" id="iIdAsignadoA" class="form-control" placeholder="ASIGNADO A"
-                            maxlength="150" onkeypress="this.value = this.value.toUpperCase();return">
-                        </div>
-                      </div>
-
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="col-md-4 col-form-label">PROYECTO ASIGNADO</label>
-                          <input type="text" id="iIdProyectoAsignado" class="form-control"
-                            placeholder="PROYECTO ASIGNADO" maxlength="150"
-                            onkeypress="this.value = this.value.toUpperCase();return">
-                        </div>
-                      </div>
-
-                      <div class="COL-MD-6">
-                        <div class="form-group">
-                          <label class="col-sm-3 col-form-label">FECHA DE INGRESO:</label>
-                          <div class="col-sm-9">
-                            <input type="date" id="dFechaIngreso" class="form-control"
-                              placeholder="FECHA DE NACIMIENTO" name="FechaIngreso" pattern="\d{4}-\d{2}-\d{2}"
-                              title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required
-                              min="<?php echo $fechaMinima = "1950-01-01"; ?>"
-                              max="<?php echo $fechaMaxima = "2024-01-01"; ?>" maxlength="10">
-                            <?php
-                            $fechaActual = date('Y-m-d');
-                            $fechaMinima = date('Y-m-d', strtotime('-18 years', strtotime($fechaActual)));
-                            $fechaMaxima = $fechaActual;
-                            $fechaLimiteInferior = '1950-01-01';
-                            ?>
-                          </div>
-                        </div>
-                      </div>
-
-
                     </div>
-                  </div>
-                </div>
-                <div class="signin-option">
-                  <div class="buttons">
-                    <a href="#" class="boton-intec">REGISTRAR</a>
-                    <a href="#" class="boton-intec">VOLVER</a>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="col-md-4 col-form-label">TIPO DE SUBPRODUCTO:</label>
+                        <select class="form-control" Name="iIdTipoSubproducto" id="iIdTipoSubproducto" required>
+                          <option value="">SELECCIONE UN SUBPRODUCTO</option>
+                          <?php foreach ($resultadoContacto as $contacto): ?>
+                            <option value="<?= $contacto['iIdConstante'] . '-' . $contacto['iClaveCatalogo'] ?>">
+                              [<?= $contacto['iClaveCatalogo'] ?>] -
+                              <?= $contacto['vchDescripcion'] ?>
+                            </option>
+                          <?php endforeach; ?>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="col-md-4 col-form-label">MODELO:</label>
+                        <input type="text" id="vchModelo" class="form-control" placeholder="MODELO" maxlength="150"
+                          onkeypress="this.value = this.value.toUpperCase();return">
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="col-md-4 col-form-label">MARCA:</label>
+                        <input type="text" id="iIdMarca" class="form-control" placeholder="MARCA" maxlength="150"
+                          onkeypress="this.value = this.value.toUpperCase();return">
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="col-md-4 col-form-label">SERIE:</label>
+                        <input type="text" id="vchSerie" class="form-control" placeholder="SERIE" maxlength="150"
+                          onkeypress="this.value = this.value.toUpperCase();return">
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="col-md-4 col-form-label">ESTATUS:</label>
+                        <input type="text" id="iIdEstatus" class="form-control" placeholder="ESTATUS" maxlength="150"
+                          onkeypress="this.value = this.value.toUpperCase();return">
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="col-md-4 col-form-label">TIPO DE ASIGNACION:</label>
+                        <input type="text" id="iIdTipoAsignacion" class="form-control" placeholder="TIPO DE ASIGNACION"
+                          maxlength="150" onkeypress="this.value = this.value.toUpperCase();return">
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="col-md-4 col-form-label">ASIGNADO A:</label>
+                        <input type="text" id="iIdAsignadoA" class="form-control" placeholder="ASIGNADO A"
+                          maxlength="150" onkeypress="this.value = this.value.toUpperCase();return">
+                          <a href="#" class="boton-intec" data-toggle="modal" data-target="apply-popup-id-1">NUEVO</a>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="col-md-4 col-form-label">PROYECTO ASIGNADO:</label>
+                        <input type="text" id="iIdProyectoAsignado" class="form-control" placeholder="PROYECTO ASIGNADO"
+                          maxlength="150" onkeypress="this.value = this.value.toUpperCase();return">
+                      </div>
+                    </div>
+
+                    <div class="COL-MD-6">
+                      <div class="form-group">
+                        <label class="col-md-4 col-form-label">FECHA DE INGRESO:</label>
+                        <div class="col-sm-9">
+                          <input type="date" id="dFechaIngreso" class="form-control" placeholder="FECHA DE NACIMIENTO"
+                            name="FechaIngreso" pattern="\d{4}-\d{2}-\d{2}"
+                            title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required
+                            min="<?php echo $fechaMinima = "1950-01-01"; ?>"
+                            max="<?php echo $fechaMaxima = "2024-01-01"; ?>" maxlength="10">
+                          <?php
+                          $fechaActual = date('Y-m-d');
+                          $fechaMinima = date('Y-m-d', strtotime('-18 years', strtotime($fechaActual)));
+                          $fechaMaxima = $fechaActual;
+                          $fechaLimiteInferior = '1950-01-01';
+                          ?>
+                        </div>
+                      </div>
+                    </div>
+
+
                   </div>
                 </div>
               </div>
+              <div class="signin-option">
+                <div class="buttons">
+                  <button type="submit" class="boton-intec">REGISTRAR</button>
+                  <a href="#" class="boton-intec">VOLVER</a>
+                </div>
+              </div>
+
             </form>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Footer -->
-    <footer class="footer-bg">
-      <div class="footer-bottom-area">
-        <div class="container">
-          <div class="row">
-            <div class="col">
-              <div class="footer-bottom border-top">
-                <div class="row">
-                  <div class="col-lg-6">
-                    <a href="#">
-                      <img src="../images/footer-logo.png" class="img-fluid" alt="">
-                    </a>
-                    <p class="copyright-text">DERECHOS DE AUTOR <a href="#">INTECPROOF</a> 2024, RESERVADOS</p>
-                  </div>
-                  <div class="col-lg-6">
-                    <div class="back-to-top">
-                      <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
-                    </div>
-                  </div>
-                  <!--<div class="footer-social">
-                                    <ul class="social-icons">
-                                        <li><a href="#"><i data-feather="facebook"></i></a></li>
-                                        <li><a href="#"><i data-feather="twitter"></i></a></li>
-                                        <li><a href="#"><i data-feather="linkedin"></i></a></li>
-                                        <li><a href="#"><i data-feather="instagram"></i></a></li>
-                                        <li><a href="#"><i data-feather="youtube"></i></a></li>
-                                    </ul>
-                                </div>-->
+  <!-- INICIO DE MODAL -->
+  <div class="apply-popup">
+    <div class="modal fade" id="apply-popup-id-2" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title"><i data-feather="edit"></i>ALTA PERSONA</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="dashboard-form" id="AltaPersona">
+              <?php
+              // Calcular la fecha actual
+              $fechaActual = date('Y-m-d');
+
+              // Restar 18 años a la fecha actual
+              $fechaMinima = date('Y-m-d', strtotime('-2 years', strtotime($fechaActual)));
+
+              // Establecer la fecha máxima como la fecha actual
+              $fechaMaxima = $fechaActual;
+
+              // Establecer la fecha mínima como 1900-01-01 (opcional)
+              $fechaLimiteInferior = '1900-01-01';
+              ?>
+              <div class="form-group">
+                <option value="">FECHA DE BAJA</option>
+                <input type="date" class="form-control" placeholder="FECHA DE BAJA" name="fechaIngreso"
+                  id="dtFechaBajaModificacion" pattern="\d{4}-\d{2}-\d{2}"
+                  title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required min="<?php echo $fechaMinima; ?>"
+                  max="<?php echo $fechaMaxima; ?>" maxlength="10" value="<?php echo date('Y-m-d'); ?>">
+              </div>
+              <button class="button primary-bg btn-block" id="botonAplicarBaja">APLICAR</button>
+              <!--
+                            <script>
+                                document.getElementById('botonAplicarBaja').addEventListener('click', ValidarBaja)
+                            </script> -->
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer-bg">
+    <div class="footer-bottom-area">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="footer-bottom border-top">
+              <div class="row">
+                <div class="col-lg-6">
+                  <a href="#">
+                    <img src="../images/footer-logo.png" class="img-fluid" alt="">
+                  </a>
+                  <p class="copyright-text">DERECHOS DE AUTOR <a href="#">INTECPROOF</a> 2024, RESERVADOS</p>
                 </div>
+                <div class="col-lg-6">
+                  <div class="back-to-top">
+                    <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
+                  </div>
+                </div>
+                <!--<div class="footer-social">
+                        <ul class="social-icons">
+                            <li><a href="#"><i data-feather="facebook"></i></a></li>
+                            <li><a href="#"><i data-feather="twitter"></i></a></li>
+                            <li><a href="#"><i data-feather="linkedin"></i></a></li>
+                            <li><a href="#"><i data-feather="instagram"></i></a></li>
+                            <li><a href="#"><i data-feather="youtube"></i></a></li>
+                        </ul>
+                    </div>-->
               </div>
             </div>
           </div>
         </div>
       </div>
-    </footer>
-    <!-- Footer End -->
+    </div>
+  </footer>
+  <!-- Footer End -->
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/popper.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/feather.min.js"></script>
-    <script src="assets/js/bootstrap-select.min.js"></script>
-    <script src="assets/js/jquery.nstSlider.min.js"></script>
-    <script src="assets/js/owl.carousel.min.js"></script>
-    <script src="assets/js/visible.js"></script>
-    <script src="assets/js/jquery.countTo.js"></script>
-    <script src="assets/js/chart.js"></script>
-    <script src="assets/js/plyr.js"></script>
-    <script src="assets/js/tinymce.min.js"></script>
-    <script src="assets/js/slick.min.js"></script>
-    <script src="assets/js/jquery.ajaxchimp.min.js"></script>
-    <script src="assets/js/html5-simple-date-input-polyfill.min.js"></script>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/popper.min.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
+  <script src="assets/js/feather.min.js"></script>
+  <script src="assets/js/bootstrap-select.min.js"></script>
+  <script src="assets/js/jquery.nstSlider.min.js"></script>
+  <script src="assets/js/owl.carousel.min.js"></script>
+  <script src="assets/js/visible.js"></script>
+  <script src="assets/js/jquery.countTo.js"></script>
+  <script src="assets/js/chart.js"></script>
+  <script src="assets/js/plyr.js"></script>
+  <script src="assets/js/tinymce.min.js"></script>
+  <script src="assets/js/slick.min.js"></script>
+  <script src="assets/js/jquery.ajaxchimp.min.js"></script>
+  <script src="assets/js/html5-simple-date-input-polyfill.min.js"></script>
 
-    <script src="js/custom.js"></script>
+  <script src="js/custom.js"></script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
-    <script src="js/map.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
+  <script src="js/map.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    function ValidarDatosContacto() {
+      // Obtener los valores de los elementos del formulario ocultos
+      var ContactoSeleccionado = document.getElementById('iIdtipoProducto');
+      var ContactoPartes = ContactoSeleccionado.value.split('-');
+      var iIdConstanteContacto = ContactoPartes[0];
+      var iClaveContacto = ContactoPartes[1];
+
+      // Asignar los valores a los campos ocultos
+      document.getElementById('iIdConstanteContacto').value = iIdConstanteContacto;
+      document.getElementById('iClaveContacto').value = iClaveContacto;
+
+      // Crear un objeto con los datos del formulario
+      var datosFormulario = {
+        vchTipoContacto: document.getElementById('iIdtipoProducto').value,
+        iIdConstanteContacto: iIdConstanteContacto,
+        iClaveContacto: iClaveContacto,
+        contacto: document.getElementById('Producto').value  // ADECUAR CON DATOS EXTRAS
+      };
+
+      // Crear una instancia de XMLHttpRequest
+      var datosContacto = new XMLHttpRequest();
+
+      // Configurar la solicitud
+      datosContacto.open('POST', 'validarDatosContacto.php', true);
+      datosContacto.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+      // Convertir el objeto de datos a una cadena de consulta URL
+      var formData = new URLSearchParams(datosFormulario).toString();
+
+      // Enviar la solicitud
+      datosContacto.send(formData);
+
+      // Manejar la respuesta
+      datosContacto.onload = function () {
+        if (datosContacto.status === 200) {
+          var respuesta = JSON.parse(datosContacto.responseText);
+          if (respuesta.bResultado === 1) {
+            console.log(respuesta);
+            // Guardar solo los datos necesarios en localStorage
+            localStorage.setItem('datosContacto', JSON.stringify());
+          } else {
+            console.error("Mensaje Error: " + respuesta.vchMensaje);
+            alert(respuesta.vchMensaje);
+          }
+        } else {
+          console.error("Error en la solicitud al servidor");
+        }
+      };
+    }
+  </script>
+
 
 </body>
 

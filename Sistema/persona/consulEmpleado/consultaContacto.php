@@ -409,7 +409,7 @@ $estadoProcedencia = json_encode($resultadoEstado);
                         <h6><i data-feather="user-check"></i>INFORMACION DE CONTACTO</h6>
                       </label>
                       <div class="row-left">
-                        <a href="#" class="boton-intec" data-toggle="modal" data-target="#"
+                        <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-1"
                           style="display:none;">AGREGAR</a>
                       </div>
                     </div>
@@ -455,9 +455,9 @@ $estadoProcedencia = json_encode($resultadoEstado);
                   </div>
                 </div>
               </div>
-              
-                <a href="#" data-toggle="modal" data-target="#apply-popup-id-1">BAJA</a>
-              
+              <div class="row">
+                <a class="boton-intec" href="#" data-toggle="modal" data-target="#apply-popup-id-1">GUARDAR</a>
+                </div>
             </form>
           </div>
         </div>
