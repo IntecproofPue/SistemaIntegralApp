@@ -791,7 +791,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                                             <div class="row-left">
                                                 <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-1" id = "buttonModificarEmpleado">MODIFICAR</a>
                                                 <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-2">BAJA</a>
-                                                <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-3">REACTIVACION</a>
+                                                <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-3" id="buttonReactivacion"  >REACTIVACION</a>
                                                 <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-4" id="buttonPromocion">PROMOCION</a>
                                             </div>
                                           </div>
@@ -804,7 +804,13 @@ $resultadoRegimen = ObtenerIdRegimen();
                                                        MostrarDatosEmpleado(bResultadoModificar);
                                                    }
                                                 });
-
+                                                document.getElementById('buttonReactivacion').addEventListener('click', function (){
+                                                    var datosReactivacion = localStorage.getItem('datosConsultaIndividual');
+                                                    if (datosReactivacion){
+                                                        var bResultadoReactivacion = JSON.parse(datosReactivacion);
+                                                        MostrarDatosReactivacion(bResultadoReactivacion);
+                                                    }
+                                                });
 
                                                 document.getElementById('buttonPromocion').addEventListener('click', function (){
                                                     var datosPromocion = localStorage.getItem('datosConsultaIndividual');
@@ -813,6 +819,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                                                         MostrarDatosPromocion(bResultadoPromocion);
                                                     }
                                                 });
+
                                             </script>
 
                                           <a href="#" class="boton-intec" class="thumb">GUARDAR</a>
@@ -871,6 +878,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                     <div class="modal-body">
                         <form action="#">
                             <div class="form-group">
+                                <option value="">NSS</option>
                                 <input type="tel" class="form-control" name="vchNSS" id="vchNSSModificar" maxlength="10"
                                     pattern="^[0-9]{10,}$" title="NSS INCORRECTO" style="text-transform: uppercase"
                                     placeholder="Ingrese su NSS" >
@@ -896,6 +904,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                                     min="<?php echo $fechaMinima; ?>" max="<?php echo $fechaMaxima; ?>" maxlength="10">
                             </div>
                             <div class="form-group">
+                                <option value="">SEDE</option>
                                 <select class="form-control" Name="iIdSede" id="iIdSedeModificar" >
                                     <?php foreach ($resultadoSede as $sede): ?>
                                         <option value="<?= $sede['iIdConstante'] . '-' . $sede['iClaveCatalogo'] ?>">
@@ -905,7 +914,8 @@ $resultadoRegimen = ObtenerIdRegimen();
                                 </select>
                             </div>
                             <div class="form-group">
-                                <select class="form-control" Name="iIdPersonaContratante"  id = "iIdPersonaContratanteModificar" required>
+                                <option value="">PERSONA QUE AUTORIZA CONTRATACIÓN</option>
+                                <select class="form-control" Name="iIdPersonaContratante"  id = "iIdPersonaContratanteModificar">
                                     <?php foreach ($resultadoContratantes as $contratante): ?>
                                         <option value="<?= $contratante['iIdPersona'] ?>">
                                             [<?= $contratante['iIdPersona']?>] - <?= $contratante['vchPrimerApellido'].' '. $contratante['vchSegundoApellido'].' '.$contratante['vchNombre'] ?>
@@ -915,30 +925,35 @@ $resultadoRegimen = ObtenerIdRegimen();
                             </div>
                             <div class="form-group">
                 <div class="col-sm-9">
+                    <option value="">NOMBRE (S)</option>
                   <input type="text" class="form-control" placeholder="NOMBRE" id="vchNombreEmpleadoModificar" name="vchNombre"
                     style="text-transform: uppercase" >
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
+                    <option value="">PRIMER APELLIDO</option>
                   <input type="text" class="form-control" placeholder="PRIMER APELLIDO" id="vchPrimerApellidoModificar" name="vchPrimerApellido"
                     style="text-transform: uppercase" >
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
+                    <option value="">SEGUNDO APELLIDO</option>
                   <input type="text" class="form-control" placeholder="SEGUNDO APELLIDO" id="vchSegundoApellidoModificar" name="vchSegundoApellido"
                     style="text-transform: uppercase" >
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
+                    <option value="">R.F.C</option>
                   <input type="text" class="form-control" placeholder="RFC" id="vchRFCModificar" name="vchRFC"
                     style="text-transform: uppercase" >
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
+                    <option value="">CURP</option>
                   <input type="text" class="form-control" placeholder="CURP" id="vchCURPModificar" name="vchCURP"
                     style="text-transform: uppercase" >
                 </div>
@@ -967,6 +982,7 @@ $resultadoRegimen = ObtenerIdRegimen();
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
+                    <option value="">GÉNERO</option>
                     <select class="form-control" name="genero" id="iIdGeneroModificar" >
                         <?php foreach ($resultadoGenero as $genero): ?>
                             <option value="<?= $genero['iIdConstante'].'-'.$genero['iClaveCatalogo'] ?>">
@@ -978,6 +994,7 @@ $resultadoRegimen = ObtenerIdRegimen();
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
+                    <option value="">NACIONALIDAD</option>
                     <select class="form-control" name="nacionalidad" id = "iIdNacionalidadModificar" >
                         <?php foreach ($resultadoNacionalidad as $nacionalidad): ?>
                             <option value="<?= $nacionalidad['iIdConstante'].'-'.$nacionalidad['iClaveCatalogo'] ?>">
@@ -989,6 +1006,7 @@ $resultadoRegimen = ObtenerIdRegimen();
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
+                    <option value="">RÉGIMEN FISCAL</option>
                     <select class="form-control" name="regimenFiscal" id="regimenFiscalModificar"
                             onchange="cargarUsoFiscal()">
                         <?php foreach ($resultadoRegimen as $regimen): ?>
@@ -1001,6 +1019,7 @@ $resultadoRegimen = ObtenerIdRegimen();
               </div>
               <div class="form-group">
                 <div class="col-sm-9">
+                    <option value="">USO FISCAL</option>
                     <select class="form-control" name="usoFiscal" id="usoFiscalModificar">
                         <option value="" selected class="form-control">SELECCIONA UN USO
                             FISCAL</option>
@@ -1081,7 +1100,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h5 class="modal-title"><i data-feather="edit"></i>APLICAR CAMBIOS</h5>
+                        <h5 class="modal-title"><i data-feather="edit"></i>APLICAR CAMBIOS BAJA</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -1164,7 +1183,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h5 class="modal-title"><i data-feather="edit"></i>APLICAR CAMBIOS</h5>
+                        <h5 class="modal-title"><i data-feather="edit"></i>APLICAR CAMBIOS REACTIVACIÓN</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -1172,6 +1191,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                     <div class="modal-body">
                         <form action="#">
                             <div class="form-group">
+                                <option value="">NSS</option>
                                 <input type="tel" class="form-control" name="vchNSS" id="vchNSSReactivacion" maxlength="10"
                                     pattern="^[0-9]{10,}$" title="NSS INCORRECTO" style="text-transform: uppercase"
                                     placeholder="Ingrese su NSS" >
@@ -1193,16 +1213,16 @@ $resultadoRegimen = ObtenerIdRegimen();
                             <div class="form-group">
                                 <option value="">FECHA DE INGRESO</option>
                                 <input type="date" class="form-control" placeholder="FECHA DE BAJA" name="fechaIngreso"
-                                    id="dFechaIngreso" pattern="\d{4}-\d{2}-\d{2}"
+                                    id="dFechaIngresoReactivacion" pattern="\d{4}-\d{2}-\d{2}"
                                     title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)"
                                     min="<?php echo $fechaMinima; ?>" max="<?php echo $fechaMaxima; ?>"  maxlength="10" value = "<?php echo date ('Y-m-d');?>">
                             </div>
 
 
                             <div class="form-group">
-                                <select id="iIdPuesto" name="iIdPuesto" class="form-control"
+                                <option value="">PUESTO</option>
+                                <select id="iIdPuestoReactivacion" name="iIdPuesto" class="form-control"
                                     placeholder="INGRESE SU PUESTO" style="text-transform: uppercase">
-                                    <option value="">SELECCIONE UN PUESTO</option>
                                     <?php foreach ($resultadoPuesto as $puesto): ?>
                                         <option value="<?= $puesto['iIdPuesto'] ?>">
                                             <?= $puesto['vchPuesto'] ?>
@@ -1212,8 +1232,8 @@ $resultadoRegimen = ObtenerIdRegimen();
                                 </select>
                             </div>
                              <div class="form-group">
-                                <select class="form-control" Name="iIdPersonaContratante"  id = "iIdPersonaContratante" >
-                                    <option value="" selected>PERSONA QUE AUTORIZA CONTRATACIÓN </option>
+                                 <option value="">PERSONA QUE AUTORIZA CONTRATACIÓN</option>
+                                <select class="form-control" Name="iIdPersonaContratante"  id = "iIdPersonaContratanteReactivacion" >
                                     <?php foreach ($resultadoContratantes as $contratante): ?>
                                         <option value="<?= $contratante['iIdPersona'] ?>">
                                             [<?= $contratante['iIdPersona']?>] - <?= $contratante['vchPrimerApellido'].' '. $contratante['vchSegundoApellido'].' '.$contratante['vchNombre'] ?>
@@ -1237,7 +1257,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h5 class="modal-title"><i data-feather="edit"></i>APLICAR CAMBIOS</h5>
+                        <h5 class="modal-title"><i data-feather="edit"></i>APLICAR CAMBIOS PROMOCIÓN</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -1246,8 +1266,8 @@ $resultadoRegimen = ObtenerIdRegimen();
                         <form action="#">
                             <div class="form-group row">
                                 <div class="col-sm-9">
-                                    <select class="form-control" Name="iIdPuesto" >
-                                        <option value="" id="vchPuestoPromocion" selected>SELECCIONE NUEVO PUESTO</option>
+                                    <option value="">PUESTO</option>
+                                    <select class="form-control" Name="iIdPuesto" id="iIdPuestoPromocion" >
                                         <?php foreach ($resultadoPuesto as $puesto): ?>
                                             <option value="<?= $puesto['iIdPuesto'] ?>">
                                                 <?= $puesto['vchPuesto'] ?>
@@ -1257,6 +1277,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                                 </div>
                             </div>
                             <div class="form-group">
+                                <option value="">NSS</option>
                                 <input type="tel" class="form-control" name="vchNSS" id="vchNSSPromocion" maxlength="10"
                                     pattern="^[0-9]{10,}$" title="NSS INCORRECTO" style="text-transform: uppercase"
                                     placeholder="Ingrese su NSS">
@@ -1275,15 +1296,15 @@ $resultadoRegimen = ObtenerIdRegimen();
                             $fechaLimiteInferior = '1900-01-01';
                             ?>
                             <div class="form-group">
-                                <option value="">FECHA DE REINGRESO</option>
+                                <option value="">FECHA DE PROMOCIÓN</option>
                                 <input type="date" class="form-control" placeholder="FECHA DE INGRESO"
                                     name="fechaIngreso" id="dFechaIngreso" pattern="\d{4}-\d{2}-\d{2}"
                                     title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)"
                                     min="<?php echo $fechaMinima; ?>" max="<?php echo $fechaMaxima; ?>" maxlength="10" value = "<?php echo date ('Y-m-d');?>">
                             </div>
                             <div class="form-group">
+                                <option value="">SEDE</option>
                                 <select class="form-control" Name="iIdSede" id="vchSedePromocion" >
-                                    <option value="">SELECCIONE UNA SEDE</option>
                                     <?php foreach ($resultadoSede as $sede): ?>
                                         <option value="<?= $sede['iIdConstante'] . '-' . $sede['iClaveCatalogo'] ?>">
                                             [<?= $sede['iClaveCatalogo'] ?>] - <?= $sede['vchDescripcion'] ?>
@@ -1394,11 +1415,14 @@ $resultadoRegimen = ObtenerIdRegimen();
 
             //Contratado por
             var iIdContratanteModificacion = bResultado.iIdContratadoPor;
-            var selectElementSede = document.getElementById('iIdPersonaContratanteModificar');
+            var selectElementContratante = document.getElementById('iIdPersonaContratanteModificar');
 
-            for (var i = 0; i < selectElementSede.options.length; i++) {
-                var optionContratado = selectElementSede.options[i];
-                if (optionContratado === iIdContratanteModificacion) {
+            for (var i = 0; i < selectElementContratante.options.length; i++) {
+                var optionContratado = selectElementContratante.options[i];
+                console.log(optionContratado.value);
+                console.log(iIdContratanteModificacion);
+                if (optionContratado.value == iIdContratanteModificacion.toString()) {
+                    console.log("entra en este if");
                     optionContratado.selected = true;
                     break;
                 }
@@ -1436,7 +1460,7 @@ $resultadoRegimen = ObtenerIdRegimen();
 
                 var optionIdGenero = parseInt(optionGenero.value.split('-')[0]);
 
-                if (optionIdGenero === iIdGeneroModificacion) {
+                if (optionIdGenero == iIdGeneroModificacion) {
                     optionGenero.selected = true;
                     break;
                 }
@@ -1493,24 +1517,84 @@ $resultadoRegimen = ObtenerIdRegimen();
         }
 
 
+        function MostrarDatosReactivacion(bResultado){
+
+            //NSS
+            var vchNSSReactivacion = document.getElementById('vchNSSReactivacion');
+            vchNSSReactivacion.value = bResultado.vchNSS;
+
+            //Fecha ingreso
+            var dFechaIngresModif = bResultado.dFechaIngreso.date;
+            var fechaIngresoModif = new Date(dFechaIngresModif);
+            var fechaIngresoFinalModif = fechaIngresoModif.toISOString().slice(0, 10);
+
+            var dFechaIngresoModificacion = document.getElementById('dFechaIngresoReactivacion');
+            dFechaIngresoModificacion.value = fechaIngresoFinalModif || '';
+
+            //Puesto
+
+            var iIdPuestoModificacion = bResultado.iIdPuesto;
+            var selectElementPuesto = document.getElementById('iIdPuestoReactivacion');
+
+            for (var i = 0; i < selectElementPuesto.options.length; i++) {
+                var optionPuesto = selectElementPuesto.options[i];
+                if (optionPuesto.value === iIdPuestoModificacion.toString()) {
+                    optionPuesto.selected = true;
+                    break;
+                }
+            }
+
+
+            //Contratado por
+            var iIdContratanteModificacion = bResultado.iIdContratadoPor;
+            var selectElementSede = document.getElementById('iIdPersonaContratanteReactivacion');
+
+            for (var i = 0; i < selectElementSede.options.length; i++) {
+                var optionContratado = selectElementSede.options[i];
+                if (optionContratado.value == iIdContratanteModificacion.toString()) {
+                    optionContratado.selected = true;
+                    break;
+                }
+            }
+        }
+
+
         function MostrarDatosPromocion(bResultado) {
 
-            var vchPuestoPromocion = document.getElementById('vchPuestoPromocion');
-            vchPuestoPromocion.value = bResultado.vcPuesto;
+            //Puesto
+            var iIdPuestoModificacion = bResultado.iIdPuesto;
+            var selectElementPuesto = document.getElementById('iIdPuestoPromocion');
 
-            console.log(vchPuestoPromocion);
+            for (var i = 0; i < selectElementPuesto.options.length; i++) {
+                var optionPuesto = selectElementPuesto.options[i];
+                if (optionPuesto.value === iIdPuestoModificacion.toString()) {
+                    optionPuesto.selected = true;
+                    break;
+                }
+            }
 
-            console.log(bResultado);
-
-
-
+            //NSS
             var vchNSSPromocion = document.getElementById('vchNSSPromocion');
             vchNSSPromocion.value = bResultado.vchNSS;
 
-            var vchSedePromocion = document.getElementById('vchSedePromocion');
-            vchSedePromocion.value = bResultado.vchSede;
+            //Sede
+            var iIdSedeModificacion = bResultado.iIdSede;
+            var selectElementSede = document.getElementById('vchSedePromocion');
+
+            for (var i = 0; i < selectElementSede.options.length; i++) {
+                var optionSede = selectElementSede.options[i];
+                var optionIdSede = parseInt(optionSede.value.split('-')[0]);
+
+                if (optionIdSede === iIdSedeModificacion) {
+                    optionSede.selected = true;
+                    break;
+                }
+            }
+
+
 
         }
+
     </script>
 
 
