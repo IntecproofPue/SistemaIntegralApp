@@ -19,12 +19,18 @@ if (ini_get("session.use_cookies")) {
 
 session_unset();
 // Finalmente, destruir la sesión.
+
 session_destroy();
 
 $GLOBALS['DB_LOGOUT'] = 1; //se actualiza el valor para redireccionar correctamente desde index.php
 
 
 ?>
+
+<script>
+    localStorage.clear();
+</script>
+
 <script type="text/javascript">
     //Redireccionamiento tras 5 segundos
     setTimeout( function() { window.location.href = "../index.php"; }, 0 );
