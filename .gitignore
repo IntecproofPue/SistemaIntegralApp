@@ -48,4 +48,4 @@ Thumbs.db
 *.mov
 *.wmv
 
-Sistema/persona/consulEmpleado/consultaEmpleado.php
+persona/altaPersona/obtener_uso.php

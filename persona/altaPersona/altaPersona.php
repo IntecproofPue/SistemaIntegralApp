@@ -357,15 +357,7 @@ if ( isset( $_SESSION['user_id'] ) ) {?>
                                     <div class="dashboard-section basic-info-input">
                                         <h4><i data-feather="user-check"></i>INFORMACION BASICA</h4>
 
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">* NOMBRE (S)</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" id="nombre" class="form-control" placeholder="NOMBRE"
-                                                       min="2" maxlength="150"
-                                                       onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)"
-                                                       required>
-                                            </div>
-                                        </div>
+                                         
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">* PRIMER APELLIDO:</label>
                                             <div class="col-sm-9">

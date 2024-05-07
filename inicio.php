@@ -392,7 +392,7 @@ if (isset($_SESSION['user_id'])) {
                                             <a href="#" data-toggle="dropdown" class="dropdown-toggle"
                                                 aria-haspopup="true" aria-expanded="false">REGISTRO DE INVENTARIO</a>
                                             <ul class="dropdown-menu">
-                                                <li class="menu-item"><a href="../Sistema/inventario/altaInventario.php">ALTA
+                                                <li class="menu-item"><a href="inventario/altaInventario.php">ALTA
                                                         DE INVENTARIO</a></li>
                                                 <li class="menu-item"><a href="#">MORE INFO</a></li>
                                                 <li class="menu-item"><a href="#">MORE INFO</a></li>

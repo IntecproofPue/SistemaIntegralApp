@@ -1,7 +1,6 @@
 <?php
 require_once ('../includes/pandora.php');
 require_once ('../includes/load.php');
-require_once ('../includes/functions.php');
 
 session_start();
 function ObtenerTipoContratacion()
@@ -106,7 +105,6 @@ $resultadoNiveles = ObtenerNivel();
   <link rel="apple-touch-icon" sizes="114x114" href="../images/icon-114x114.png">
 
   <script type="text/JavaScript" src="../includes/pandora.js"></script>
-  <script type="text/JavaScript" src="../inventario/localstorageInventario.js"></script>
 
   <style>
     .selected {
@@ -260,7 +258,7 @@ $resultadoNiveles = ObtenerNivel();
                 <div class="account-card">
                   <div class="header-top-account-info">
                     <a href="#" class="account-thumb">
-                      <img src="../../images/account/thumb-1.jpg" class="img-fluid" alt="">
+                      <img src="../images/account/thumb-1.jpg" class="img-fluid" alt="">
                     </a>
                     <div class="account-body">
                       <h5><a href="#"><?php echo $nombrePersona; ?></a></h5>
@@ -320,15 +318,19 @@ $resultadoNiveles = ObtenerNivel();
   <!-- Contenido de la página -->
   <div class="alice-bg section-padding-bottom">
     <div class="container no-gliters">
-      <div class="row no-gliters">
+      <div class="row justify-content-center">
         <div class="col">
           <div class="post-content-wrapper">
-            <form action="#" method="post" class="job-post-form">
+
+            <form action="#" method="post" class="dashboard-form">
+
               <div id="information" class="row justify-content-center">
+
                 <input type="hidden" name="iIdConstanteContacto" id="iIdConstanteContacto" value="">
                 <input type="hidden" name="iClaveContacto" id="iClaveContacto" value="">
 
-                <div class="col-md-10">
+
+                <div class="col-md-12">
                   <div class="row">
 
                     <div class="col-md-4">
@@ -406,7 +408,7 @@ $resultadoNiveles = ObtenerNivel();
                         <label class="col-md-4 col-form-label">ASIGNADO A:</label>
                         <input type="text" id="iIdAsignadoA" class="form-control" placeholder="ASIGNADO A"
                           maxlength="150" onkeypress="this.value = this.value.toUpperCase();return">
-                          <a href="#" class="boton-intec" data-toggle="modal" data-target="apply-popup-id-1">NUEVO</a>
+
                       </div>
                     </div>
 
@@ -418,34 +420,46 @@ $resultadoNiveles = ObtenerNivel();
                       </div>
                     </div>
 
-                    <div class="COL-MD-6">
+                    <div class="col-md-4">
                       <div class="form-group">
                         <label class="col-md-4 col-form-label">FECHA DE INGRESO:</label>
-                        <div class="col-sm-9">
-                          <input type="date" id="dFechaIngreso" class="form-control" placeholder="FECHA DE NACIMIENTO"
-                            name="FechaIngreso" pattern="\d{4}-\d{2}-\d{2}"
-                            title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required
-                            min="<?php echo $fechaMinima = "1950-01-01"; ?>"
-                            max="<?php echo $fechaMaxima = "2024-01-01"; ?>" maxlength="10">
-                          <?php
-                          $fechaActual = date('Y-m-d');
-                          $fechaMinima = date('Y-m-d', strtotime('-18 years', strtotime($fechaActual)));
-                          $fechaMaxima = $fechaActual;
-                          $fechaLimiteInferior = '1950-01-01';
-                          ?>
-                        </div>
+                        <input type="date" id="dFechaIngreso" class="form-control" placeholder="FECHA DE NACIMIENTO"
+                          name="FechaIngreso" pattern="\d{4}-\d{2}-\d{2}"
+                          title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required
+                          min="<?php echo $fechaMinima = "1950-01-01"; ?>"
+                          max="<?php echo $fechaMaxima = "2024-01-01"; ?>" maxlength="10">
+                        <?php
+                        $fechaActual = date('Y-m-d');
+                        $fechaMinima = date('Y-m-d', strtotime('-18 years', strtotime($fechaActual)));
+                        $fechaMaxima = $fechaActual;
+                        $fechaLimiteInferior = '1950-01-01';
+                        ?>
                       </div>
                     </div>
-
-
                   </div>
+
+                  <div class="candidate">
+                    <div class="body">
+
+                      <div class="row-left">
+                        <button type="submit" class="boton-intec">REGISTRAR</button>
+                        <button type="submit" class="boton-intec">VOLVER</button>
+                      </div>
+
+                      <div class="candidate">
+                        <div class="apply-popup">
+                          <div class="row-left">
+                            <a href="#" class="boton-intec" data-toggle="modal"
+                              data-target="#apply-popup-id-1">NUEVO</a>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
                 </div>
-              </div>
-              <div class="signin-option">
-                <div class="buttons">
-                  <button type="submit" class="boton-intec">REGISTRAR</button>
-                  <a href="#" class="boton-intec">VOLVER</a>
-                </div>
+
               </div>
 
             </form>
@@ -455,20 +469,24 @@ $resultadoNiveles = ObtenerNivel();
     </div>
   </div>
 
-  <!-- INICIO DE MODAL -->
+  <!-- inicio de modales -->
   <div class="apply-popup">
-    <div class="modal fade" id="apply-popup-id-2" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="apply-popup-id-1" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog" role="document">
-        <div class="modal-content">
-
+        <div class="modal-content" style="width: 800px; height: auto; padding: 50px;">
           <div class="modal-header">
             <h5 class="modal-title"><i data-feather="edit"></i>ALTA PERSONA</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
           </div>
           <div class="modal-body">
             <form class="dashboard-form" id="AltaPersona">
+
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">* NOMBRE (S)</label>
+                <div class="col-sm-9">
+                  <input type="text" id="nombre" class="form-control" placeholder="NOMBRE" min="2" maxlength="150"
+                    onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)" required>
+                </div>
+              </div>
               <?php
               // Calcular la fecha actual
               $fechaActual = date('Y-m-d');
@@ -482,24 +500,84 @@ $resultadoNiveles = ObtenerNivel();
               // Establecer la fecha mínima como 1900-01-01 (opcional)
               $fechaLimiteInferior = '1900-01-01';
               ?>
-              <div class="form-group">
-                <option value="">FECHA DE BAJA</option>
-                <input type="date" class="form-control" placeholder="FECHA DE BAJA" name="fechaIngreso"
-                  id="dtFechaBajaModificacion" pattern="\d{4}-\d{2}-\d{2}"
-                  title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required min="<?php echo $fechaMinima; ?>"
-                  max="<?php echo $fechaMaxima; ?>" maxlength="10" value="<?php echo date('Y-m-d'); ?>">
+              <div class="row">
+
+                <div class="form-group">
+                  <option value="">FECHA DE BAJA</option>
+                  <input type="date" class="form-control" placeholder="FECHA DE BAJA" name="fechaIngreso"
+                    id="dtFechaBajaModificacion" pattern="\d{4}-\d{2}-\d{2}"
+                    title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required min="<?php echo $fechaMinima; ?>"
+                    max="<?php echo $fechaMaxima; ?>" maxlength="10" value="<?php echo date('Y-m-d'); ?>" />
+                </div>
+
+
+
               </div>
-              <button class="button primary-bg btn-block" id="botonAplicarBaja">APLICAR</button>
-              <!--
-                            <script>
-                                document.getElementById('botonAplicarBaja').addEventListener('click', ValidarBaja)
-                            </script> -->
+              <!--<script>
+
+                    function validarContactoNuevo(){
+
+                        console.log("Está entrando a validar los datos del contacto nuevo");
+                        var ContactoSeleccionado = document.getElementById('tipoContactoAgregar');
+                        var ContactoPartes = ContactoSeleccionado.value.split('-');
+                        var iIdConstanteContacto = ContactoPartes[0];
+                        var iClaveContacto = ContactoPartes[1];
+
+                        document.getElementById('iIdConstanteContacto').value = iIdConstanteContacto;
+                        document.getElementById('iClaveContacto').value = iClaveContacto;
+
+
+                        var DatoContactoPersona = localStorage.getItem('datosConsultaIndividual');
+
+                        var bResultadoEmpleado = JSON.parse(DatoContactoPersona);
+                        var iIdPersonaContacto = bResultadoEmpleado.iIdPersona;
+
+                        document.getElementById('iIdPersonaContacto').value = iIdPersonaContacto;
+
+                        var datosContactoNew = {
+                            iIdConstanteContacto: iIdConstanteContacto,
+                            iClaveContacto: iClaveContacto,
+                            contacto: document.getElementById('vchContactoAgregar').value,
+                            persona: iIdPersonaContacto
+                        };
+
+
+                        var datosContactoNuevo = new XMLHttpRequest();
+                        datosContactoNuevo.open('POST', '/SisAdmonIntecproof/persona/altaPersona/validarDatosContacto.php', true);
+                        datosContactoNuevo.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                        var formData = new URLSearchParams(datosContactoNew).toString();
+
+                        datosContactoNuevo.send(formData);
+
+                        datosContactoNuevo.onload = function (){
+                            if (datosContactoNuevo.status === 200){
+                                var respuesta = JSON.parse(datosContactoNuevo.responseText);
+                                if (respuesta.bResultado === 1){
+                                    localStorage.setItem('agregarContacto', JSON.stringify(datosContactoNew));
+                                }else {
+                                    console.log("Mensaje Error: "+respuesta.vchMensaje);
+                                    alert(respuesta.vchMensaje);
+                                }
+                            }
+                        }
+                    }
+                </script>-->
+              <div class="row">
+                <a class="boton-intec" href="#" id="buttonGuardarContacto" data-toggle="modal"
+                  data-target="#apply-popup-id-1">APLICAR </a>
+              </div>
+              <!--<script>
+                    document.getElementById('buttonGuardarContacto').addEventListener('click', validarContactoNuevo);
+                </script>-->
+
             </form>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <!-- fianal de modales -->
 
   <!-- Footer -->
   <footer class="footer-bg">
@@ -520,15 +598,6 @@ $resultadoNiveles = ObtenerNivel();
                     <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
                   </div>
                 </div>
-                <!--<div class="footer-social">
-                        <ul class="social-icons">
-                            <li><a href="#"><i data-feather="facebook"></i></a></li>
-                            <li><a href="#"><i data-feather="twitter"></i></a></li>
-                            <li><a href="#"><i data-feather="linkedin"></i></a></li>
-                            <li><a href="#"><i data-feather="instagram"></i></a></li>
-                            <li><a href="#"><i data-feather="youtube"></i></a></li>
-                        </ul>
-                    </div>-->
               </div>
             </div>
           </div>
@@ -540,28 +609,28 @@ $resultadoNiveles = ObtenerNivel();
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="assets/js/jquery.min.js"></script>
-  <script src="assets/js/popper.min.js"></script>
-  <script src="assets/js/bootstrap.min.js"></script>
-  <script src="assets/js/feather.min.js"></script>
-  <script src="assets/js/bootstrap-select.min.js"></script>
-  <script src="assets/js/jquery.nstSlider.min.js"></script>
-  <script src="assets/js/owl.carousel.min.js"></script>
-  <script src="assets/js/visible.js"></script>
-  <script src="assets/js/jquery.countTo.js"></script>
-  <script src="assets/js/chart.js"></script>
-  <script src="assets/js/plyr.js"></script>
-  <script src="assets/js/tinymce.min.js"></script>
-  <script src="assets/js/slick.min.js"></script>
-  <script src="assets/js/jquery.ajaxchimp.min.js"></script>
-  <script src="assets/js/html5-simple-date-input-polyfill.min.js"></script>
+  <script src="../assets/js/jquery.min.js"></script>
+  <script src="../assets/js/popper.min.js"></script>
+  <script src="../assets/js/bootstrap.min.js"></script>
+  <script src="../assets/js/feather.min.js"></script>
+  <script src="../assets/js/bootstrap-select.min.js"></script>
+  <script src="../assets/js/jquery.nstSlider.min.js"></script>
+  <script src="../assets/js/owl.carousel.min.js"></script>
+  <script src="../assets/js/visible.js"></script>
+  <script src="../assets/js/jquery.countTo.js"></script>
+  <script src="../assets/js/chart.js"></script>
+  <script src="../assets/js/plyr.js"></script>
+  <script src="../assets/js/tinymce.min.js"></script>
+  <script src="../assets/js/slick.min.js"></script>
+  <script src="../assets/js/jquery.ajaxchimp.min.js"></script>
+  <script src="../assets/js/html5-simple-date-input-polyfill.min.js"></script>
 
-  <script src="js/custom.js"></script>
+  <script src="../js/custom.js"></script>
 
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
-  <script src="js/map.js"></script>
+  <script src="../js/map.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script>
+  <!--<script>
     function ValidarDatosContacto() {
       // Obtener los valores de los elementos del formulario ocultos
       var ContactoSeleccionado = document.getElementById('iIdtipoProducto');
@@ -611,7 +680,7 @@ $resultadoNiveles = ObtenerNivel();
         }
       };
     }
-  </script>
+  </script>-->
 
 
 </body>
