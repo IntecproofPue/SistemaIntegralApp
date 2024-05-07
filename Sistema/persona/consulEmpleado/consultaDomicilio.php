@@ -512,6 +512,10 @@ $resultadoEstado = ObtenerEstadoProcedencia();
           </div>
           <div class="modal-body">
             <form action="#">
+                <input type="hidden" name = "iIdConstanteSede" id="iIdConstanteSede" value="" >
+                <input type="hidden" name = "iClaveSede" id="iClaveSede" value="" >
+                <input type="hidden" name="iIdPersonaDomicilio" id="iIdPersonaDomicilio" value="" >
+                <input type="hidden" name="iIdDomicilio" id="iIdDomicilio" value="" >
 
               <div class="form-group">
                   <option value="">ENTIDAD FEDERATIVA</option>
@@ -563,8 +567,73 @@ $resultadoEstado = ObtenerEstadoProcedencia();
               <input type="text" class="form-control" placeholder="LETRA" id="vchLetraModif"
                     style="text-transform: uppercase" >
               </div>
-              
-              <button class="button primary-bg btn-block" id="botonAplicar">APLICAR</button>
+                <script>
+                    function validarDatosDomicilio(){
+                        var EntidadFederativaSeleccionada = document.getElementById('iIdEntidadFederativaModif');
+                        var EntidadFederativaPartes = EntidadFederativaSeleccionada.value.split('-');
+                        var iIdEntidadFederativa = EntidadFederativaPartes[0];
+                        var iClaveEntidad = EntidadFederativaPartes[1];
+
+                        document.getElementById('iIdConstanteSede').value = iIdEntidadFederativa;
+                        document.getElementById('iClaveSede').value = iClaveEntidad;
+
+                        var datosPersonaDomicilio = localStorage.getItem('datosConsultaIndividual');
+                        var bResultadoPersona = JSON.parse(datosPersonaDomicilio);
+                        var iIdPersonaDomicilio = bResultadoPersona.iIdPersona;
+
+                        var datosDomicilioModificacion = localStorage.getItem('datosConsultaDomicilio');
+                        var bResultadoDomicilioModificacion = JSON.parse(datosDomicilioModificacion);
+                        var iIdDomicilio = bResultadoDomicilioModificacion[0].iIdPersonasDomicilios;
+
+
+                        document.getElementById('iIdPersonaDomicilio').value = iIdPersonaDomicilio;
+                        document.getElementById('iIdDomicilio').value = iIdDomicilio;
+
+
+                        var datosFormulario = {
+                            iIdConstanteEstado: iIdEntidadFederativa,
+                            iClaveEstado: iClaveEntidad,
+                            vchMunicipio: document.getElementById('vchMunicipioModif').value,
+                            vchLocalidad: document.getElementById('vchLocalidadModif').value,
+                            codigoPostal: document.getElementById('iCodigoPostalModif').value,
+                            vchColonia: document.getElementById('vchColoniaModif').value,
+                            vchCalle: document.getElementById('vchCalleModif').value,
+                            vchLetra: document.getElementById('vchLetraModif').value,
+                            vchNoExt: document.getElementById('vchNoExtModif').value,
+                            vchNoInt: document.getElementById('vchNoIntModif').value,
+                            persona: iIdPersonaDomicilio,
+                            domicilio: iIdDomicilio,
+                            opcion: 2
+                        };
+
+                        var datosDomicilioModif = new XMLHttpRequest();
+
+                        datosDomicilioModif.open('POST', '/SisAdmonIntecproof/persona/altaPersona/validarDatosDomicilio.php', true);
+                        datosDomicilioModif.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                        var formData = new URLSearchParams(datosFormulario).toString();
+
+                        datosDomicilioModif.send(formData);
+
+                        datosDomicilioModif.onload = function (){
+                            if (datosDomicilioModif.status === 200){
+                                var respuesta = JSON.parse(datosDomicilioModif.responseText);
+                                if (respuesta.bResultado === 1){
+                                    alert(respuesta.vchMensaje);
+                                    localStorage.setItem('agregarDomicilio', JSON.stringify(datosFormulario));
+                                }else {
+                                    console.log("Mensaje de error: ", respuesta.vchMensaje);
+                                    alert(respuesta.vchMensaje);
+                                }
+                            }
+                        }
+                    }
+                </script>
+
+              <button class="button primary-bg btn-block" id="botonAplicar">APLICAR CAMBIOS</button>
+                <script>
+                    document.getElementById('botonAplicar').addEventListener('click', validarDatosDomicilio);
+                </script>
 
             </form>
           </div>
@@ -592,15 +661,6 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                     <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
                   </div>
                 </div>
-                <!--<div class="footer-social">
-                                    <ul class="social-icons">
-                                        <li><a href="#"><i data-feather="facebook"></i></a></li>
-                                        <li><a href="#"><i data-feather="twitter"></i></a></li>
-                                        <li><a href="#"><i data-feather="linkedin"></i></a></li>
-                                        <li><a href="#"><i data-feather="instagram"></i></a></li>
-                                        <li><a href="#"><i data-feather="youtube"></i></a></li>
-                                    </ul>
-                                </div>-->
               </div>
             </div>
           </div>

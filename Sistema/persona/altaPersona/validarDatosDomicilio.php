@@ -13,11 +13,15 @@
     $vchLetra = isset($_POST['vchLetra'])?$_POST['vchLetra']:'';
     $vchNoExt = isset($_POST['vchNoExt'])?$_POST['vchNoExt']:'';
     $vchNoInt = isset($_POST['vchNoInt'])?$_POST['vchNoInt']:'';
+    $iIdPersona = isset($_POST['persona'])?$_POST['persona']: 0;
+    $iIdDomicilio = isset($_POST['domicilio'])?$_POST['domicilio']:0;
+    $opcion = isset($_POST['opcion'])?$_POST['opcion']:1;
+
 
 
 
     $datosDomicilio = array(
-                        'iIdPersona' => 0,
+                        'iIdPersona' => $iIdPersona,
                         'vchCalle' => $vchCalle,
                         'vchNoExt' => $vchNoExt,
                         'vchNoInt' => $vchNoInt,
@@ -30,9 +34,9 @@
                         'iAgruEntidad' => 4,
                         'iCveEntidad' => $iClaveEstado,
                         'iIdUsuarioUltModificacion' => $_SESSION['user_id'],
-                        'iIdDomicilio' => 0,
+                        'iIdDomicilio' => $iIdDomicilio,
                         'bEstatus' => 1,
-                        'iOpcion' => 1,
+                        'iOpcion' => $opcion,
                         'iProceso' => 2,
                         'bResultado' => 0,
                         'vchCampoError' => '',
@@ -89,28 +93,19 @@
 
     if ($result === false) {
         $errorInformacion = sqlsrv_errors();
-        $respuesta = array (
+        $respuesta   = array (
             'error' => true,
+            'mensaje' => $datosDomicilio['vchMensaje'],
+            'campoError' => $datosDomicilio['vchCampoError'],
             'sqlError' => $errorInformacion
         );
         echo json_encode($respuesta);
-        exit;
+
     } else {
-        $datosDomicilio = array();
-        do {
-            while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
-                $datosDomicilio[] = $row;
-            }
-        } while (sqlsrv_next_result($result));
-    
-        // Aquí empieza la conversión y guardado de datos en localStorage
-        echo '<script>';
-        echo 'var datosDomicilio = ' . json_encode($datosDomicilio) . ';';
-        echo 'var datosDomicilioJSON = JSON.stringify(datosDomicilio);';
-        echo 'localStorage.setItem("datosDomicilio", datosDomicilioJSON);';
-        echo '</script>';
+        echo json_encode($datosDomicilio);
     }
-    
-    sqlsrv_free_stmt($result);
+
+
     sqlsrv_close($GLOBALS['conn']);
-    
+
+

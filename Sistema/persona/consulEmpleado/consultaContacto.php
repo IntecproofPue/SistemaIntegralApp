@@ -700,6 +700,16 @@ $resultadoContacto = ObtenerTipoContacto();
       var contenedor = document.getElementById('agregaContacto');
       contenedor.innerHTML = agregarListaContactos(longitudContacto);
 
+        document.querySelectorAll('.boton-intec').forEach(function (button){
+            button.addEventListener('click', function (event){
+                event.preventDefault();
+
+                var index = this.id.replace('buttonBaja', '');
+                var registro = document.querySelector(`.candidate:nth-child(${index + 1})`);
+                registro.style.display = 'none';
+            });
+        });
+
     }
 
     function agregarListaContactos(longitudContacto) {
@@ -748,16 +758,6 @@ $resultadoContacto = ObtenerTipoContacto();
       }
       return contacto;
     }
-
-    document.querySelectorAll('.boton-intec').forEach(function (button){
-        button.addEventListener('click', function (event){
-            event.preventDefault();
-
-            var index = this.id.replace('buttonBaja', '');
-            var registro = document.querySelector(`.candidate:nth-child(${index + 1})`);
-            registro.style.display = 'none';
-        });
-    });
 
 
   </script>
