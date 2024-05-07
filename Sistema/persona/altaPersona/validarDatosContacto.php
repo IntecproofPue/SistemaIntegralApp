@@ -5,11 +5,11 @@ session_start();
 $iIdConstanteContacto = isset($_POST['iIdConstanteContacto'])? $_POST['iIdConstanteContacto']:0;
 $iClaveContacto = isset($_POST['iClaveContacto'])?$_POST['iClaveContacto']: 0;
 $vchContacto = isset($_POST['contacto'])?$_POST['contacto']:'';
-
+$iIdPersona = isset($_POST['persona'])?$_POST['persona']:0;
 
 
 $datosContacto = array(
-    'iIdPersona' => 0,
+    'iIdPersona' => $iIdPersona,
     'iIdTipoContacto' => $iIdConstanteContacto,
     'iAgruContacto' => 8,
     'iCveContacto' => $iClaveContacto,
@@ -32,7 +32,7 @@ $procedureName = "EXEC prcRN_Contacto          @iIdPersona = ?,
                                                @iIdContacto = ?,
                                                @iIdUsuarioUltModificacion = ?, 
                                                @iOpcion = ?,
-                                               @iProceso = 2, 
+                                               @iProceso = ?,
                                                @bResultado = ?,
                                                @vchCampoError = ? ,
                                                @vchMensaje = ?

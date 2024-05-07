@@ -41,27 +41,53 @@ if (!isset($_SESSION['user_id'])) {
   exit();
 }
 
-function ObtenerEstadoProcedencia()
-{
-  $agrupadorEstado = 4;
-  if (isset($_SESSION['CatConstante'])) {
-    $datosEdoProcedencia = $_SESSION['CatConstante'];
-    $estadoEncontrado = array();
 
-    foreach ($datosEdoProcedencia as $valorEstado) {
-      if ($valorEstado['iAgrupador'] == $agrupadorEstado) {
-        $estadoEncontrado[] = $valorEstado;
-      }
+// Función para validar campos
+function validarCampo($valor, $tipo = 'text', $longitudMax = null)
+{
+    $valor = trim($valor);
+
+    // Validar según el tipo
+    switch ($tipo) {
+        case 'text':
+            $valor = htmlspecialchars($valor); // Escapar caracteres especiales
+            break;
+        case 'email':
+            $valor = filter_var($valor, FILTER_VALIDATE_EMAIL);
+            break;
+        case 'Telefono':
+            // Puedes implementar una validación específica para números de teléfono si es necesario
+            break;
+        default:
+            // Tipo no reconocido
+            return null;
     }
-    return $estadoEncontrado;
-  } else {
-    echo ("No hay datos del Estado de Procedencia");
-  }
+
+    // Validar la longitud si es necesario
+    if ($longitudMax !== null && strlen($valor) > $longitudMax) {
+        return null;
+    }
+
+    return $valor;
 }
 
-$resultadoContacto = ObtenerEstadoProcedencia();
-$resultadoEstado = ObtenerEstadoProcedencia();
-$estadoProcedencia = json_encode($resultadoEstado);
+function ObtenerTipoContacto(){
+    if (isset ($_SESSION['CatConstante'])){
+        $datosContacto = $_SESSION['CatConstante'];
+        $contactoEncontrado = array();
+
+        foreach ($datosContacto as $valorContacto) {
+            if ($valorContacto['iAgrupador'] == 8) {
+                $contactoEncontrado [] = $valorContacto;
+            }
+        }
+        return $contactoEncontrado;
+    } else {
+        echo ("No hay datos del Tipo de contacto");
+    }
+}
+
+$resultadoContacto = ObtenerTipoContacto();
 
 ?>
 
@@ -217,72 +243,6 @@ $estadoProcedencia = json_encode($resultadoEstado);
     <![endif]-->
 
 
-  <script>
-    function soloLetras(e) {
-      tecla = (document.all) ? e.keyCode : e.which;
-
-      if (tecla == 8) {
-        return true;
-      }
-
-      patronAceptado = /[A-Z]/;
-      tecla_final = String.fromCharCode(tecla);
-      return patronAceptado.test(tecla_final);
-    }
-
-    function soloNumeros(e) {
-      tecla = (document.all) ? e.keyCode : e.which;
-
-
-      if (tecla == 8) {
-        return true;
-      }
-
-
-      patronAceptado = /[0-9]/;
-      tecla_final = String.fromCharCode(tecla);
-      return patronAceptado.test(tecla_final);
-    }
-
-    function cargarUsosFiscales() {
-
-
-      window.alert("Hola");
-
-
-
-    }
-
-    function soloRfc(e) {
-
-      tecla = (document.all) ? e.keyCode : e.which;
-
-
-      if (tecla == 8) {
-        return true;
-      }
-
-
-      patronAceptado = /[A-Za-z0-9]/;
-      tecla_final = String.fromCharCode(tecla);
-      return patronAceptado.test(tecla_final);
-    }
-
-
-    function soloNombre(e) {
-
-      tecla = (document.all) ? e.keyCode : e.which;
-
-
-      if (tecla == 8) {
-        return true;
-      }
-      patronAceptado = /[a-zA-Z áéíóúñÁÉÍÓÚÑ]+/;
-      tecla_final = String.fromCharCode(tecla);
-      return patronAceptado.test(tecla_final);
-    }
-  </script>
-
 </head>
 
 <body>
@@ -386,12 +346,6 @@ $estadoProcedencia = json_encode($resultadoEstado);
     </div>
   </header>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-
-    });
-
-  </script>
 
   <!-- Contenido de la página -->
   <div class="alice-bg section-padding-bottom">
@@ -414,6 +368,32 @@ $estadoProcedencia = json_encode($resultadoEstado);
                       </div>
                     </div>
                   </div>
+                    <!-- INICIO DE TITULOS -->
+                        <div class="employer">
+                            <div class="body">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+
+                                            <label class="col-form-label">TIPO DE CONTACTO</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="col-form-label"> CONTACTO </label>
+                                        </div>
+                                </div>
+                                <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="col-form-label">USUARIO ULTIMA MODIFICACION</label>
+                                        </div>
+                                </div>
+                                <div class="col-md-3">
+                                        <div class="form-group ">
+                                            <label class="col-form-label">FECHA ULTIMA MODIFICACION</label>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
 
                   <div class="filtered-employer-wrapper" id="agregaContacto"></div>
 
@@ -426,6 +406,51 @@ $estadoProcedencia = json_encode($resultadoEstado);
     </div>
   </div>
 
+  <script>
+      function validarTipoContacto() {
+          var tipoContacto = document.getElementById("tipoContactoAgregar").value;
+          var contactoInput = document.getElementById("vchContactoAgregar");
+
+          // Reinicia el valor del campo de contacto al cambiar el tipo de contacto
+          contactoInput.value = "";
+          contactoInput.disabled = false;
+
+          // Limpia clases de estilo relacionadas con errores
+          contactoInput.classList.remove("invalid");
+
+          // Desvincula el evento input para evitar interferencias
+          contactoInput.removeEventListener("input", validarCampo);
+
+          // Agrega el evento input para validar el nuevo campo
+          if (tipoContacto === "email" || tipoContacto === "Telefono") {
+              contactoInput.addEventListener("input", validarCampo);
+          }
+      }
+
+      function validarCampo(event) {
+          var tipoContacto = document.getElementById("tipoContactoAgregar").value;
+          var contactoInput = event.target;
+
+          if (tipoContacto === "email") {
+              var emailValue = contactoInput.value.trim();
+              if (!validarEmail(emailValue)) {
+                  contactoInput.classList.add("invalid");
+              } else {
+                  contactoInput.classList.remove("invalid");
+              }
+          } else if (tipoContacto === "Telefono") {
+              var telefonoValue = contactoInput.value.trim();
+              contactoInput.value = telefonoValue.replace(/[^0-9]/g, ''); // Solo permite números
+
+              if (telefonoValue.length > 10 || !(/^\d+$/.test(telefonoValue))) {
+                  contactoInput.classList.add("invalid");
+              } else {
+                  contactoInput.classList.remove("invalid");
+              }
+          }
+      }
+
+  </script>
   <!-- inicio de modales -->
   <div class="apply-popup">
     <div class="modal fade" id="apply-popup-id-1" tabindex="-1" role="dialog" aria-hidden="true">
@@ -441,23 +466,90 @@ $estadoProcedencia = json_encode($resultadoEstado);
             <form action="#">
               <div class="row">
 
-                <div class="col-md-4">
+                <div class="col-md-7">
                   <div class="form-group">
+                      <input type="hidden" name = "iIdConstanteContacto" id="iIdConstanteContacto" value="" >
+                      <input type="hidden" name = "iClaveContacto" id="iClaveContacto" value="" >
+                      <input type="hidden" name = "iClaveContacto" id="iIdPersonaContacto" value="" >
+
                     <label class="col-form-label">TIPO CONTACTO</label>
-                    <input id="tipoContacto" type="text" class="form-control" placeholder="TIPO CONTACTO" disabled>
+                      <select class="form-control" Name="tipoContacto" id="tipoContactoAgregar"
+                              onchange="validarTipoContacto()" required>
+                          <option value="">SELECCIONE UN TIPO DE CONTACTO</option>
+                          <?php foreach ($resultadoContacto as $contacto): ?>
+                              <option value="<?= $contacto['iIdConstante'].'-'.$contacto['iClaveCatalogo'] ?>">
+                                  [<?= $contacto['iClaveCatalogo'] ?>] - <?= $contacto['vchDescripcion'] ?>
+                              </option>
+                          <?php endforeach; ?>
+
+                      </select>
                   </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-5">
                   <div class="form-group">
                     <label class="col-form-label">CONTACTO</label>
-                    <input id="tipoContacto" class="form-control" name="tipoContacto" placeholder="CONTACTO" disabled>
+                    <input id="vchContactoAgregar" class="form-control" name="tipoContacto" placeholder="CONTACTO" required>
                   </div>
                 </div>
               </div>
+                <script>
+
+                    function validarContactoNuevo(){
+
+                        console.log("Está entrando a validar los datos del contacto nuevo");
+                        var ContactoSeleccionado = document.getElementById('tipoContactoAgregar');
+                        var ContactoPartes = ContactoSeleccionado.value.split('-');
+                        var iIdConstanteContacto = ContactoPartes[0];
+                        var iClaveContacto = ContactoPartes[1];
+
+                        document.getElementById('iIdConstanteContacto').value = iIdConstanteContacto;
+                        document.getElementById('iClaveContacto').value = iClaveContacto;
+
+
+                        var DatoContactoPersona = localStorage.getItem('datosConsultaIndividual');
+
+                        var bResultadoEmpleado = JSON.parse(DatoContactoPersona);
+                        var iIdPersonaContacto = bResultadoEmpleado.iIdPersona;
+
+                        document.getElementById('iIdPersonaContacto').value = iIdPersonaContacto;
+
+                        var datosContactoNew = {
+                            iIdConstanteContacto: iIdConstanteContacto,
+                            iClaveContacto: iClaveContacto,
+                            contacto: document.getElementById('vchContactoAgregar').value,
+                            persona: iIdPersonaContacto
+                        };
+
+
+                        var datosContactoNuevo = new XMLHttpRequest();
+                        datosContactoNuevo.open('POST', '/SisAdmonIntecproof/persona/altaPersona/validarDatosContacto.php', true);
+                        datosContactoNuevo.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                        var formData = new URLSearchParams(datosContactoNew).toString();
+
+                        datosContactoNuevo.send(formData);
+
+                        datosContactoNuevo.onload = function (){
+                            if (datosContactoNuevo.status === 200){
+                                var respuesta = JSON.parse(datosContactoNuevo.responseText);
+                                if (respuesta.bResultado === 1){
+                                    localStorage.setItem('agregarContacto', JSON.stringify(datosContactoNew));
+                                }else {
+                                    console.log("Mensaje Error: "+respuesta.vchMensaje);
+                                    alert(respuesta.vchMensaje);
+                                }
+                            }
+                        }
+                    }
+                </script>
               <div class="row">
-                <a class="boton-intec" href="#" data-toggle="modal" data-target="#apply-popup-id-1">GUARDAR</a>
-                </div>
+                <a class="boton-intec" href="#" id="buttonGuardarContacto" data-toggle="modal" data-target="#apply-popup-id-1">GUARDAR </a>
+              </div>
+                <script>
+                    document.getElementById('buttonGuardarContacto').addEventListener('click', validarContactoNuevo);
+                </script>
+
             </form>
           </div>
         </div>
@@ -604,11 +696,10 @@ $estadoProcedencia = json_encode($resultadoEstado);
     });
 
 
-
-
     function insertarContactos(longitudContacto) {
       var contenedor = document.getElementById('agregaContacto');
       contenedor.innerHTML = agregarListaContactos(longitudContacto);
+
     }
 
     function agregarListaContactos(longitudContacto) {
@@ -619,23 +710,20 @@ $estadoProcedencia = json_encode($resultadoEstado);
           <div class="employer">
               <div class="body">              
 
-              <div class="col-md-3">
+              <div class="col-md-4">
                 <div class="form-group">
-                  <label class="col-form-label">TIPO DE CONTACTO</label>
                   <input id="vchTipoContacto${i}" type="text" class="form-control" placeholder="TIPO CONTACTO" disabled>
                 </div>
               </div>
 
-              <div class="col-md-3">
+              <div class="col-md-4">
                 <div class="form-group">
-                  <label class="col-form-label">CONTACTO</label>
                   <input id="vchContacto${i}" class="form-control" name="tipoContacto" placeholder="CONTACTO" disabled>
                 </div>
               </div>
 
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label class="col-form-label">USUARIO MODIFICACION</label>
                     <input type="text" class="form-control" id="ilUsuarioUltModificacion${i}"
                       name="ilUsuarioUltModificacion" placeholder="USER ULT MODIF." style="text-transform: uppercase"
                       disabled>
@@ -644,15 +732,13 @@ $estadoProcedencia = json_encode($resultadoEstado);
 
                 <div class="col-md-3">
                   <div class="form-group">
-                    <label class="col-form-label">ULTIMA MODIFICACION</label>
                     <input type="text" class="form-control" placeholder="##/##/####" id="dtFechaUltModificacion${i}"
                       name="dtFechaUltModificacion" style="text-transform: uppercase" disabled>
                   </div>
                 </div>
 
              <div class="boton-intec${i}">
-            <a  href="#" data-toggle="modal" data-target="#apply-popup-id-${i + 1}" 
-            style="width: 40px; height: 25px; padding: 2px; display:none;" >BAJA</a>
+                <a  href="#" class="boton-intec" id="buttonBaja${i}">BAJA</a>
           </div>
         
       </div>
@@ -663,10 +749,18 @@ $estadoProcedencia = json_encode($resultadoEstado);
       return contacto;
     }
 
+    document.querySelectorAll('.boton-intec').forEach(function (button){
+        button.addEventListener('click', function (event){
+            event.preventDefault();
+
+            var index = this.id.replace('buttonBaja', '');
+            var registro = document.querySelector(`.candidate:nth-child(${index + 1})`);
+            registro.style.display = 'none';
+        });
+    });
+
 
   </script>
-
-  
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -680,9 +774,6 @@ $estadoProcedencia = json_encode($resultadoEstado);
       }
     });
   </script>
-
-
-
 
 </body>
 
