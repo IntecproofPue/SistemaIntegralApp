@@ -4,6 +4,25 @@ require_once ('../../includes/load.php');
 
 session_start();
 
+function ObtenerTipoDocumento()
+{
+    if (isset($_SESSION['CatConstante'])) {
+        $datosDocumentos = $_SESSION['CatConstante'];
+        $documentosEncontrados = array();
+
+        foreach ($datosDocumentos as $valorDocumento) {
+            if ($valorDocumento['iAgrupador'] == 10) {
+                $documentosEncontrados[] = $valorDocumento;
+            }
+        }
+        return $documentosEncontrados;
+    } else {
+        echo ("No hay datos del Estado de Procedencia");
+    }
+}
+
+$resultadoDocumento = ObtenerTipoDocumento();
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -45,89 +64,6 @@ session_start();
     <link rel="apple-touch-icon" sizes="114x114" href="../../images/icon-114x114.png">
 
     <style>
-        .selected {
-            color: #007bff;
-            /* Cambia este color por el que desees */
-            font-weight: bold;
-            /* O cualquier otro estilo que desees */
-
-
-        }
-
-        .row .col-md-4 {
-            margin-top: -13px;
-            margin-bottom: -13px;
-
-        }
-
-        .boton-intec {
-            /* border: none;
-            color: black;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 7px;*/
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: solid;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .boton-intec:hover {
-            background-color: #0b7dda;
-        }
-
-        .boton-intec:active {
-            background-color: #3e8e41;
-        }
-
-        /* width: 10%;
-            background-color: navy;
-            padding: 3px ;
-            border-radius: 7px;
-            color: navy;
-            text-decoration: none;
-            color: white;*/
-        .update-photo {
-            float: center;
-
-        }
-
-        .update-photo {
-            position: relative;
-            display: inline-block;
-        }
-
-        .edit-text {
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            background-color: rgba(255, 255, 255, 0.7);
-            padding: 5px;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 1;
-            /* asegura que el texto esté sobre la imagen */
-
-        }
-
-        .image {
-            display: block;
-            max-width: 100%;
-        }
-
-        input[type="file"] {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-        }
-
         .employer {
             margin-bottom: -30px;
             padding: 5px 20px;
@@ -261,9 +197,8 @@ session_start();
                                                 </h6>
                                             </label>
                                             <div class="row-left">
-                                                <a href="#" id="agregarDocumento" class="boton-intec" class="thumb"
-                                                    data-toggle="modal" data-target="#"
-                                                    style="display:none;">AGREGAR</a>
+                                                <a href="#" class="boton-intec" data-toggle="modal"
+                                                    data-target="#apply-popup-id-2" style="display:none;">AGREGAR</a>
                                             </div>
                                         </div>
                                     </div>
@@ -303,6 +238,7 @@ session_start();
 
                                     <div class="employer" id="agregarDocumentos"></div>
 
+
                                 </div>
                             </div>
                         </form>
@@ -311,6 +247,86 @@ session_start();
             </div>
         </div>
     </div>
+
+    <!-- inicio de modales -->
+    <div class="apply-popup">
+        <div class="modal fade" id="apply-popup-id-1" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="width: 800px; height: auto; padding: 50px;">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><i data-feather="edit"></i>ALTA DE DOCUMENTOS</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form class="dashboard-form" id="AltaPersona">
+
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">TIPO DE DOCUMENTO:</label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="docuento" class="form-control"
+                                        placeholder="TIPO DE DOCUMENTO">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">PRIMER APELLIDO:</label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="primerApellido" class="form-control"
+                                        placeholder="PRIMER APELLIDO" min="2" name="primerApellido" maxlength="50"
+                                        onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)"
+                                        required>
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+                                <a class="boton-intec" href="#" id="buttonGuardarContacto" data-toggle="modal"
+                                    data-target="#apply-popup-id-1">APLICAR</a>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="apply-popup">
+        <div class="modal fade" id="apply-popup-id-2" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form class="dashboard-form" id="AltaPersona">
+                        <input type="hidden" name="iIdConstanteDocumento" id="iIdConstanteDocumento" value="">
+                        <input type="hidden" name="iClaveDocumento" id="iClaveDocumento" value="">
+
+                        <div class="modal-body">
+                            <div class="form-group">
+                            <select class="form-control" id="iIdDocumento" name="iIdDocumento[]">
+                                <option value="">SELECCIONE UN TIPO DE DOCUMENTO</option>
+                                <?php foreach ($resultadoDocumento as $documento): ?>
+                                    <option value="<?= $documento['iIdConstante'] . '-' . $documento['iClaveCatalogo'] ?>">
+                                        [<?= $documento['iClaveCatalogo'] ?>] - <?= $documento['vchDescripcion'] ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                            </div>
+                            <div class="form-group file-input-wrap">
+                                <label for="up-cv">
+                                    <input id="up-cv" type="file">
+                                    <i data-feather="upload-cloud"></i>
+                                    <span>AGREGAR DOCUMENTO<span>(pdf,zip,doc,docx)</span></span>
+                                </label>
+                            </div>
+                            <button class="boton-intec">GUARDAR</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- fianal de modales -->
 
     <!-- Footer -->
     <footer class="footer-bg">
@@ -506,10 +522,11 @@ session_start();
                                         </ul>
 
                                 <ul>
-                                    <a href="../3121.png" target="_blank">
-                                        <img id="iconoModificar${i}" src="../../3121.png"  style="width: 50px; height: auto; display: none;" >
+                                    <a href="#apply-popup-id-1" data-toggle="modal">
+                                        <img id="iconoModificar${i}" src="../../3121.png" style="width: 50px; height: auto; display: none;" >
                                     </a>
                                 </ul>
+
                                     </div>
                                 </div>
 
@@ -542,17 +559,17 @@ session_start();
                 mutationsList.forEach((mutation) => {
                     if (mutation.type === 'childList') {
 
-                       var bTamanioDocumentos = localStorage.getItem('datosConsultaDocumentos');
-                       var tamanioFinal = bTamanioDocumentos? bTamanioDocumentos.length : 0;
+                        var bTamanioDocumentos = localStorage.getItem('datosConsultaDocumentos');
+                        var tamanioFinal = bTamanioDocumentos ? bTamanioDocumentos.length : 0;
 
-                       for (var i= 0; i<tamanioFinal; i++){
-                           const habilitarIconoModificar = document.getElementById(`iconoModificar${i}`);
+                        for (var i = 0; i < tamanioFinal; i++) {
+                            const habilitarIconoModificar = document.getElementById(`iconoModificar${i}`);
 
-                           if (habilitarIconoModificar !== null && localStorage.getItem('habilitarBotones') === 'true') {
-                               habilitarIconoModificar.style.display = 'block';
-                               console.log(habilitarIconoModificar);
-                           }
-                       }
+                            if (habilitarIconoModificar !== null && localStorage.getItem('habilitarBotones') === 'true') {
+                                habilitarIconoModificar.style.display = 'block';
+                                console.log(habilitarIconoModificar);
+                            }
+                        }
 
                     }
                 });

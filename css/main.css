@@ -10307,6 +10307,7 @@ input[type="file"] {
 .update-photo {
   position: relative;
   display: inline-block;
+  
 }
 
 .edit-text {
@@ -10335,4 +10336,9 @@ input[type="file"] {
   height: 100%;
   opacity: 0;
   cursor: pointer;
+}
+
+.employer {
+  margin-bottom: -30px;
+  padding: 5px 20px;
 }
