@@ -3,64 +3,27 @@ require_once ('../includes/pandora.php');
 require_once ('../includes/load.php');
 
 session_start();
-function ObtenerTipoContratacion()
-{
-  if (isset($_SESSION['CatConstante'])) {
-    $datosTipoContratacion = $_SESSION['CatConstante'];
-    $contratacionEncontrada = array();
 
-    foreach ($datosTipoContratacion as $valorContratacion) {
-      if ($valorContratacion['iAgrupador'] == 1) {
-        $contratacionEncontrada[] = $valorContratacion;
-      }
+
+function ObtenerIdGenero()
+{
+    if (isset($_SESSION['CatConstante'])) {
+        $datosGenero = $_SESSION['CatConstante'];
+        $generoEncontrado = array();
+
+        foreach ($datosGenero as $valorGenero) {
+            if ($valorGenero['iAgrupador'] == 3) {
+                $generoEncontrado[] = $valorGenero;
+            }
+        }
+        return $generoEncontrado;
+    } else {
+        echo ("No hay datos del género");
     }
-    return $contratacionEncontrada;
-  } else {
-    echo ("No hay datos del Tipo de Contratación");
-  }
 }
 
-$resultadoContratacion = ObtenerTipoContratacion();
+$resultadoGenero = ObtenerIdGenero();
 
-
-function ObtenerHorasLaborales()
-{
-  if (isset($_SESSION['CatConstante'])) {
-    $datosHorasLaborales = $_SESSION['CatConstante'];
-    $horasLaboralesEncontradas = array();
-
-    foreach ($datosHorasLaborales as $valorHorasLaborales) {
-      if ($valorHorasLaborales['iAgrupador'] == 2) {
-        $horasLaboralesEncontradas[] = $valorHorasLaborales;
-      }
-    }
-    return $horasLaboralesEncontradas;
-  } else {
-    echo ("No hay datos de las horas laborales");
-  }
-}
-
-$resultadoHorasLaborales = ObtenerHorasLaborales();
-
-
-function ObtenerNivel()
-{
-  if (isset($_SESSION['CatConstante'])) {
-    $datosNivel = $_SESSION['CatConstante'];
-    $nivelesEncontrados = array();
-
-    foreach ($datosNivel as $valorNivel) {
-      if ($valorNivel['iAgrupador'] == 22) {
-        $nivelesEncontrados[] = $valorNivel;
-      }
-    }
-    return $nivelesEncontrados;
-  } else {
-    echo ("No hay datos de las horas laborales");
-  }
-}
-
-$resultadoNiveles = ObtenerNivel();
 
 
 ?>
@@ -479,93 +442,56 @@ $resultadoNiveles = ObtenerNivel();
           </div>
           <div class="modal-body">
             <form class="dashboard-form" id="AltaPersona">
-
               <div class="form-group row">
-                <label class="col-sm-3 col-form-label">* NOMBRE (S)</label>
+                <label class="col-sm-3 col-form-label">TIPO DE PERSONA:</label>
+                <div class="col-sm-9">
+                  <input type="text" id="nombre" class="form-control" placeholder="TIPO DE PERSONA" min="2"
+                    maxlength="150" onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)"
+                    required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">NOMBRE (S):</label>
                 <div class="col-sm-9">
                   <input type="text" id="nombre" class="form-control" placeholder="NOMBRE" min="2" maxlength="150"
                     onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)" required>
                 </div>
               </div>
-              <?php
-              // Calcular la fecha actual
-              $fechaActual = date('Y-m-d');
-
-              // Restar 18 años a la fecha actual
-              $fechaMinima = date('Y-m-d', strtotime('-2 years', strtotime($fechaActual)));
-
-              // Establecer la fecha máxima como la fecha actual
-              $fechaMaxima = $fechaActual;
-
-              // Establecer la fecha mínima como 1900-01-01 (opcional)
-              $fechaLimiteInferior = '1900-01-01';
-              ?>
-              <div class="row">
-
-                <div class="form-group">
-                  <option value="">FECHA DE BAJA</option>
-                  <input type="date" class="form-control" placeholder="FECHA DE BAJA" name="fechaIngreso"
-                    id="dtFechaBajaModificacion" pattern="\d{4}-\d{2}-\d{2}"
-                    title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required min="<?php echo $fechaMinima; ?>"
-                    max="<?php echo $fechaMaxima; ?>" maxlength="10" value="<?php echo date('Y-m-d'); ?>" />
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">PRIMER APELLIDO:</label>
+                <div class="col-sm-9">
+                  <input type="text" id="primerApellido" class="form-control" placeholder="PRIMER APELLIDO" min="2"
+                    name="primerApellido" maxlength="50"
+                    onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)" required>
                 </div>
-
-
-
               </div>
-              <!--<script>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">SEGUNDO APELLIDO:</label>
+                <div class="col-sm-9">
+                  <input type="text" id="segundoApellido" class="form-control" placeholder="SEGUNDO APELLIDO" min="2"
+                    name="segundoApellido" maxlength="50"
+                    onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">GENERO:</label>
+                <div class="col-sm-9">
+                  <select class="form-control" name="genero" id="genero" required>
+                    <option value="" selected>SELECCIONE UN GENERO</option>
+                    <?php foreach ($resultadoGenero as $genero): ?>
+                      <option value="<?= $genero['iIdConstante'] . '-' . $genero['iClaveCatalogo'] ?>">
+                        [<?= $genero['iClaveCatalogo'] ?>] - <?= $genero['vchDescripcion'] ?>
+                      </option>
+                    <?php endforeach; ?>
+                  </select>
+                </div>
+                <input type="hidden" name="iIdConstanteGenero" id="iIdConstanteGenero" value="">
+                <input type="hidden" name="iClaveGenero" id="iClaveGenero" value="">
+              </div>
 
-                    function validarContactoNuevo(){
-
-                        console.log("Está entrando a validar los datos del contacto nuevo");
-                        var ContactoSeleccionado = document.getElementById('tipoContactoAgregar');
-                        var ContactoPartes = ContactoSeleccionado.value.split('-');
-                        var iIdConstanteContacto = ContactoPartes[0];
-                        var iClaveContacto = ContactoPartes[1];
-
-                        document.getElementById('iIdConstanteContacto').value = iIdConstanteContacto;
-                        document.getElementById('iClaveContacto').value = iClaveContacto;
-
-
-                        var DatoContactoPersona = localStorage.getItem('datosConsultaIndividual');
-
-                        var bResultadoEmpleado = JSON.parse(DatoContactoPersona);
-                        var iIdPersonaContacto = bResultadoEmpleado.iIdPersona;
-
-                        document.getElementById('iIdPersonaContacto').value = iIdPersonaContacto;
-
-                        var datosContactoNew = {
-                            iIdConstanteContacto: iIdConstanteContacto,
-                            iClaveContacto: iClaveContacto,
-                            contacto: document.getElementById('vchContactoAgregar').value,
-                            persona: iIdPersonaContacto
-                        };
-
-
-                        var datosContactoNuevo = new XMLHttpRequest();
-                        datosContactoNuevo.open('POST', '/SisAdmonIntecproof/persona/altaPersona/validarDatosContacto.php', true);
-                        datosContactoNuevo.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-                        var formData = new URLSearchParams(datosContactoNew).toString();
-
-                        datosContactoNuevo.send(formData);
-
-                        datosContactoNuevo.onload = function (){
-                            if (datosContactoNuevo.status === 200){
-                                var respuesta = JSON.parse(datosContactoNuevo.responseText);
-                                if (respuesta.bResultado === 1){
-                                    localStorage.setItem('agregarContacto', JSON.stringify(datosContactoNew));
-                                }else {
-                                    console.log("Mensaje Error: "+respuesta.vchMensaje);
-                                    alert(respuesta.vchMensaje);
-                                }
-                            }
-                        }
-                    }
-                </script>-->
               <div class="row">
                 <a class="boton-intec" href="#" id="buttonGuardarContacto" data-toggle="modal"
-                  data-target="#apply-popup-id-1">APLICAR </a>
+                  data-target="#apply-popup-id-1">APLICAR</a>
               </div>
               <!--<script>
                     document.getElementById('buttonGuardarContacto').addEventListener('click', validarContactoNuevo);
