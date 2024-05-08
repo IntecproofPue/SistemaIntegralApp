@@ -10342,3 +10342,52 @@ input[type="file"] {
   margin-bottom: -30px;
   padding: 5px 20px;
 }
+
+@media all and (max-width: 575px) {
+  .candidato-filter-result.grid {
+    display: block;
+  }
+  .candidato-filter-result.grid:before {
+    height: 0;
+    width: 0;
+  }
+  .candidato.half-grid {
+    width: 100%;
+  }
+}
+
+@media all and (max-width: 439px) {
+  .candidato {
+    display: block;
+  }
+  .candidato .thumb + .body {
+    padding-left: 0;
+    margin-top: 15px;
+  }
+  .title-and-info .title {
+    display: block;
+  }
+  .title-and-info .title .thumb + .title-body {
+    padding-left: 0;
+    margin-top: 20px;
+  }
+  .skill-and-profile .skill a {
+    margin-bottom: 10px;
+  }
+  .information-and-contact .buttons {
+    display: block;
+  }
+  .information-and-contact .buttons .cover-download,
+  .information-and-contact .buttons .contact-download {
+    width: 100%;
+  }
+  .information-and-contact .buttons .cover-download svg,
+  .information-and-contact .buttons .contact-download svg {
+    height: 15px;
+  }
+  .information-and-contact .buttons .cover-download:hover,
+  .information-and-contact .buttons .contact-download:hover {
+    border-color: rgba(36, 109, 248, 0.2);
+    color: #246df8;
+  }
+}

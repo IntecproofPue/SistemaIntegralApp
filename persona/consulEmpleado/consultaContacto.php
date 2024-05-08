@@ -45,46 +45,47 @@ if (!isset($_SESSION['user_id'])) {
 // Función para validar campos
 function validarCampo($valor, $tipo = 'text', $longitudMax = null)
 {
-    $valor = trim($valor);
+  $valor = trim($valor);
 
-    // Validar según el tipo
-    switch ($tipo) {
-        case 'text':
-            $valor = htmlspecialchars($valor); // Escapar caracteres especiales
-            break;
-        case 'email':
-            $valor = filter_var($valor, FILTER_VALIDATE_EMAIL);
-            break;
-        case 'Telefono':
-            // Puedes implementar una validación específica para números de teléfono si es necesario
-            break;
-        default:
-            // Tipo no reconocido
-            return null;
-    }
+  // Validar según el tipo
+  switch ($tipo) {
+    case 'text':
+      $valor = htmlspecialchars($valor); // Escapar caracteres especiales
+      break;
+    case 'email':
+      $valor = filter_var($valor, FILTER_VALIDATE_EMAIL);
+      break;
+    case 'Telefono':
+      // Puedes implementar una validación específica para números de teléfono si es necesario
+      break;
+    default:
+      // Tipo no reconocido
+      return null;
+  }
 
-    // Validar la longitud si es necesario
-    if ($longitudMax !== null && strlen($valor) > $longitudMax) {
-        return null;
-    }
+  // Validar la longitud si es necesario
+  if ($longitudMax !== null && strlen($valor) > $longitudMax) {
+    return null;
+  }
 
-    return $valor;
+  return $valor;
 }
 
-function ObtenerTipoContacto(){
-    if (isset ($_SESSION['CatConstante'])){
-        $datosContacto = $_SESSION['CatConstante'];
-        $contactoEncontrado = array();
+function ObtenerTipoContacto()
+{
+  if (isset($_SESSION['CatConstante'])) {
+    $datosContacto = $_SESSION['CatConstante'];
+    $contactoEncontrado = array();
 
-        foreach ($datosContacto as $valorContacto) {
-            if ($valorContacto['iAgrupador'] == 8) {
-                $contactoEncontrado [] = $valorContacto;
-            }
-        }
-        return $contactoEncontrado;
-    } else {
-        echo ("No hay datos del Tipo de contacto");
+    foreach ($datosContacto as $valorContacto) {
+      if ($valorContacto['iAgrupador'] == 8) {
+        $contactoEncontrado[] = $valorContacto;
+      }
     }
+    return $contactoEncontrado;
+  } else {
+    echo ("No hay datos del Tipo de contacto");
+  }
 }
 
 $resultadoContacto = ObtenerTipoContacto();
@@ -357,43 +358,52 @@ $resultadoContacto = ObtenerTipoContacto();
               <div id="information" class="row justify-content-center">
                 <div class="col-md-12">
 
-                  <div class="container">
-                    <div class="body">
-                      <label class="col-form-label">
-                        <h6><i data-feather="user-check"></i>INFORMACION DE CONTACTO</h6>
-                      </label>
-                      <div class="row-left">
-                        <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-1"
-                          style="display:none;" id="buttonAgregar">AGREGAR</a>
+                  <div class="alice-bg padding-top-10 padding-buttom-10">
+                    <div class="conteiner">
+                      <div class="row">
+
+                        <div class="col-md-6">
+                          <h6><i data-feather="user-check"></i>INFORMACION DE CONTACTO</h6>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="breadcrumb-form" style="display: flex; justify-content: flex-end;">
+                            <div class="body">
+                            <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-1"
+                              style="display:none;" id="buttonAgregar">AGREGAR</a>
+                            </div>
+                          </div>
+                        </div>
+
                       </div>
                     </div>
                   </div>
-                    <!-- INICIO DE TITULOS -->
-                        <div class="employer">
-                            <div class="body">
-                                <div class="col-md-4">
-                                    <div class="form-group">
+                  <!-- INICIO DE TITULOS -->
+                  <div class="employer">
+                    <div class="body">
+                      <div class="col-md-4">
+                        <div class="form-group">
 
-                                            <label class="col-form-label">TIPO DE CONTACTO</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label class="col-form-label"> CONTACTO </label>
-                                        </div>
-                                </div>
-                                <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label class="col-form-label">USUARIO ULTIMA MODIFICACION</label>
-                                        </div>
-                                </div>
-                                <div class="col-md-3">
-                                        <div class="form-group ">
-                                            <label class="col-form-label">FECHA ULTIMA MODIFICACION</label>
-                                        </div>
-                                </div>
-                            </div>
+                          <label class="col-form-label">TIPO DE CONTACTO</label>
                         </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label class="col-form-label"> CONTACTO </label>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label class="col-form-label">USUARIO ULTIMA MODIFICACION</label>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group ">
+                          <label class="col-form-label">FECHA ULTIMA MODIFICACION</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
                   <div class="filtered-employer-wrapper" id="agregaContacto"></div>
 
@@ -407,48 +417,48 @@ $resultadoContacto = ObtenerTipoContacto();
   </div>
 
   <script>
-      function validarTipoContacto() {
-          var tipoContacto = document.getElementById("tipoContactoAgregar").value;
-          var contactoInput = document.getElementById("vchContactoAgregar");
+    function validarTipoContacto() {
+      var tipoContacto = document.getElementById("tipoContactoAgregar").value;
+      var contactoInput = document.getElementById("vchContactoAgregar");
 
-          // Reinicia el valor del campo de contacto al cambiar el tipo de contacto
-          contactoInput.value = "";
-          contactoInput.disabled = false;
+      // Reinicia el valor del campo de contacto al cambiar el tipo de contacto
+      contactoInput.value = "";
+      contactoInput.disabled = false;
 
-          // Limpia clases de estilo relacionadas con errores
+      // Limpia clases de estilo relacionadas con errores
+      contactoInput.classList.remove("invalid");
+
+      // Desvincula el evento input para evitar interferencias
+      contactoInput.removeEventListener("input", validarCampo);
+
+      // Agrega el evento input para validar el nuevo campo
+      if (tipoContacto === "email" || tipoContacto === "Telefono") {
+        contactoInput.addEventListener("input", validarCampo);
+      }
+    }
+
+    function validarCampo(event) {
+      var tipoContacto = document.getElementById("tipoContactoAgregar").value;
+      var contactoInput = event.target;
+
+      if (tipoContacto === "email") {
+        var emailValue = contactoInput.value.trim();
+        if (!validarEmail(emailValue)) {
+          contactoInput.classList.add("invalid");
+        } else {
           contactoInput.classList.remove("invalid");
+        }
+      } else if (tipoContacto === "Telefono") {
+        var telefonoValue = contactoInput.value.trim();
+        contactoInput.value = telefonoValue.replace(/[^0-9]/g, ''); // Solo permite números
 
-          // Desvincula el evento input para evitar interferencias
-          contactoInput.removeEventListener("input", validarCampo);
-
-          // Agrega el evento input para validar el nuevo campo
-          if (tipoContacto === "email" || tipoContacto === "Telefono") {
-              contactoInput.addEventListener("input", validarCampo);
-          }
+        if (telefonoValue.length > 10 || !(/^\d+$/.test(telefonoValue))) {
+          contactoInput.classList.add("invalid");
+        } else {
+          contactoInput.classList.remove("invalid");
+        }
       }
-
-      function validarCampo(event) {
-          var tipoContacto = document.getElementById("tipoContactoAgregar").value;
-          var contactoInput = event.target;
-
-          if (tipoContacto === "email") {
-              var emailValue = contactoInput.value.trim();
-              if (!validarEmail(emailValue)) {
-                  contactoInput.classList.add("invalid");
-              } else {
-                  contactoInput.classList.remove("invalid");
-              }
-          } else if (tipoContacto === "Telefono") {
-              var telefonoValue = contactoInput.value.trim();
-              contactoInput.value = telefonoValue.replace(/[^0-9]/g, ''); // Solo permite números
-
-              if (telefonoValue.length > 10 || !(/^\d+$/.test(telefonoValue))) {
-                  contactoInput.classList.add("invalid");
-              } else {
-                  contactoInput.classList.remove("invalid");
-              }
-          }
-      }
+    }
 
   </script>
   <!-- inicio de modales -->
@@ -468,88 +478,90 @@ $resultadoContacto = ObtenerTipoContacto();
 
                 <div class="col-md-7">
                   <div class="form-group">
-                      <input type="hidden" name = "iIdConstanteContacto" id="iIdConstanteContacto" value="" >
-                      <input type="hidden" name = "iClaveContacto" id="iClaveContacto" value="" >
-                      <input type="hidden" name = "iClaveContacto" id="iIdPersonaContacto" value="" >
+                    <input type="hidden" name="iIdConstanteContacto" id="iIdConstanteContacto" value="">
+                    <input type="hidden" name="iClaveContacto" id="iClaveContacto" value="">
+                    <input type="hidden" name="iClaveContacto" id="iIdPersonaContacto" value="">
 
                     <label class="col-form-label">TIPO CONTACTO</label>
-                      <select class="form-control" Name="tipoContacto" id="tipoContactoAgregar"
-                              onchange="validarTipoContacto()" required>
-                          <option value="">SELECCIONE UN TIPO DE CONTACTO</option>
-                          <?php foreach ($resultadoContacto as $contacto): ?>
-                              <option value="<?= $contacto['iIdConstante'].'-'.$contacto['iClaveCatalogo'] ?>">
-                                  [<?= $contacto['iClaveCatalogo'] ?>] - <?= $contacto['vchDescripcion'] ?>
-                              </option>
-                          <?php endforeach; ?>
+                    <select class="form-control" Name="tipoContacto" id="tipoContactoAgregar"
+                      onchange="validarTipoContacto()" required>
+                      <option value="">SELECCIONE UN TIPO DE CONTACTO</option>
+                      <?php foreach ($resultadoContacto as $contacto): ?>
+                        <option value="<?= $contacto['iIdConstante'] . '-' . $contacto['iClaveCatalogo'] ?>">
+                          [<?= $contacto['iClaveCatalogo'] ?>] - <?= $contacto['vchDescripcion'] ?>
+                        </option>
+                      <?php endforeach; ?>
 
-                      </select>
+                    </select>
                   </div>
                 </div>
 
                 <div class="col-md-5">
                   <div class="form-group">
                     <label class="col-form-label">CONTACTO</label>
-                    <input id="vchContactoAgregar" class="form-control" name="tipoContacto" placeholder="CONTACTO" required>
+                    <input id="vchContactoAgregar" class="form-control" name="tipoContacto" placeholder="CONTACTO"
+                      required>
                   </div>
                 </div>
               </div>
-                <script>
+              <script>
 
-                    function validarContactoNuevo(){
+                function validarContactoNuevo() {
 
-                        console.log("Está entrando a validar los datos del contacto nuevo");
-                        var ContactoSeleccionado = document.getElementById('tipoContactoAgregar');
-                        var ContactoPartes = ContactoSeleccionado.value.split('-');
-                        var iIdConstanteContacto = ContactoPartes[0];
-                        var iClaveContacto = ContactoPartes[1];
+                  console.log("Está entrando a validar los datos del contacto nuevo");
+                  var ContactoSeleccionado = document.getElementById('tipoContactoAgregar');
+                  var ContactoPartes = ContactoSeleccionado.value.split('-');
+                  var iIdConstanteContacto = ContactoPartes[0];
+                  var iClaveContacto = ContactoPartes[1];
 
-                        document.getElementById('iIdConstanteContacto').value = iIdConstanteContacto;
-                        document.getElementById('iClaveContacto').value = iClaveContacto;
-
-
-                        var DatoContactoPersona = localStorage.getItem('datosConsultaIndividual');
-
-                        var bResultadoEmpleado = JSON.parse(DatoContactoPersona);
-                        var iIdPersonaContacto = bResultadoEmpleado.iIdPersona;
-
-                        document.getElementById('iIdPersonaContacto').value = iIdPersonaContacto;
-
-                        var datosContactoNew = {
-                            iIdConstanteContacto: iIdConstanteContacto,
-                            iClaveContacto: iClaveContacto,
-                            contacto: document.getElementById('vchContactoAgregar').value,
-                            persona: iIdPersonaContacto
-                        };
+                  document.getElementById('iIdConstanteContacto').value = iIdConstanteContacto;
+                  document.getElementById('iClaveContacto').value = iClaveContacto;
 
 
-                        var datosContactoNuevo = new XMLHttpRequest();
-                        datosContactoNuevo.open('POST', '/SisAdmonIntecproof/persona/altaPersona/validarDatosContacto.php', true);
-                        datosContactoNuevo.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                  var DatoContactoPersona = localStorage.getItem('datosConsultaIndividual');
 
-                        var formData = new URLSearchParams(datosContactoNew).toString();
+                  var bResultadoEmpleado = JSON.parse(DatoContactoPersona);
+                  var iIdPersonaContacto = bResultadoEmpleado.iIdPersona;
 
-                        datosContactoNuevo.send(formData);
+                  document.getElementById('iIdPersonaContacto').value = iIdPersonaContacto;
 
-                        datosContactoNuevo.onload = function (){
-                            if (datosContactoNuevo.status === 200){
-                                var respuesta = JSON.parse(datosContactoNuevo.responseText);
-                                if (respuesta.bResultado === 1){
-                                    localStorage.setItem('agregarContacto', JSON.stringify(datosContactoNew));
-                                    alert(respuesta.vchMensaje);
-                                }else {
-                                    console.log("Mensaje Error: "+respuesta.vchMensaje);
-                                    alert(respuesta.vchMensaje);
-                                }
-                            }
-                        }
+                  var datosContactoNew = {
+                    iIdConstanteContacto: iIdConstanteContacto,
+                    iClaveContacto: iClaveContacto,
+                    contacto: document.getElementById('vchContactoAgregar').value,
+                    persona: iIdPersonaContacto
+                  };
+
+
+                  var datosContactoNuevo = new XMLHttpRequest();
+                  datosContactoNuevo.open('POST', '/SisAdmonIntecproof/persona/altaPersona/validarDatosContacto.php', true);
+                  datosContactoNuevo.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                  var formData = new URLSearchParams(datosContactoNew).toString();
+
+                  datosContactoNuevo.send(formData);
+
+                  datosContactoNuevo.onload = function () {
+                    if (datosContactoNuevo.status === 200) {
+                      var respuesta = JSON.parse(datosContactoNuevo.responseText);
+                      if (respuesta.bResultado === 1) {
+                        localStorage.setItem('agregarContacto', JSON.stringify(datosContactoNew));
+                        alert(respuesta.vchMensaje);
+                      } else {
+                        console.log("Mensaje Error: " + respuesta.vchMensaje);
+                        alert(respuesta.vchMensaje);
+                      }
                     }
-                </script>
+                  }
+                }
+              </script>
               <div class="row">
-                <a class="boton-intec" href="#" id="buttonGuardarContacto" data-toggle="modal" data-target="#apply-popup-id-1">GUARDAR </a>
+                <a class="boton-intec" href="#" id="buttonGuardarContacto" data-toggle="modal"
+                  data-target="#apply-popup-id-1">GUARDAR </a>
               </div>
-                <script>
-                    document.getElementById('buttonGuardarContacto').addEventListener('click', validarContactoNuevo);
-                </script>
+              <script>
+                document.getElementById('buttonGuardarContacto').addEventListener('click', validarContactoNuevo);
+              </script>
 
             </form>
           </div>
@@ -693,36 +705,36 @@ $resultadoContacto = ObtenerTipoContacto();
 
       var selectorAgregar = '#buttonAgregar';
 
-        document.querySelectorAll(selector).forEach((button) => {
-            button.addEventListener('click', function (event) {
-                event.preventDefault();
+      document.querySelectorAll(selector).forEach((button) => {
+        button.addEventListener('click', function (event) {
+          event.preventDefault();
 
-                var indexStr = this.id.replace('buttonBaja', '');
-                console.log(indexStr);
-                var indexInt = parseInt(indexStr, 10);
+          var indexStr = this.id.replace('buttonBaja', '');
+          console.log(indexStr);
+          var indexInt = parseInt(indexStr, 10);
 
-                console.log(indexInt);
+          console.log(indexInt);
 
-                if (isNaN(indexInt)) {
-                    console.error('Índice inválido', indexInt);
-                    return;
-                }
-
-
-                var registro = document.querySelector(`.candidate:nth-child(${indexInt + 1})`);
-                console.log(registro);
-                registro.style.display = 'none';
+          if (isNaN(indexInt)) {
+            console.error('Índice inválido', indexInt);
+            return;
+          }
 
 
+          var registro = document.querySelector(`.candidate:nth-child(${indexInt + 1})`);
+          console.log(registro);
+          registro.style.display = 'none';
 
 
-                var botonAgregar = document.querySelector(selectorAgregar);
-                if (botonAgregar ){
-                    botonAgregar.style.display = 'block';
-                }
 
-            });
+
+          var botonAgregar = document.querySelector(selectorAgregar);
+          if (botonAgregar) {
+            botonAgregar.style.display = 'block';
+          }
+
         });
+      });
 
 
     }
@@ -789,31 +801,31 @@ $resultadoContacto = ObtenerTipoContacto();
       }
 
 
-        const container = document.getElementById('agregaContacto');
+      const container = document.getElementById('agregaContacto');
 
-        const observerCallback = (mutationsList, observer) => {
+      const observerCallback = (mutationsList, observer) => {
 
-            mutationsList.forEach((mutation) => {
-                if (mutation.type === 'childList') {
+        mutationsList.forEach((mutation) => {
+          if (mutation.type === 'childList') {
 
-                    var bTamanioContacto = localStorage.getItem('datosConsultaContacto');
-                    var tamanioFinal = bTamanioContacto? bTamanioContacto.length : 0;
+            var bTamanioContacto = localStorage.getItem('datosConsultaContacto');
+            var tamanioFinal = bTamanioContacto ? bTamanioContacto.length : 0;
 
-                    for (var i= 0; i<tamanioFinal; i++){
-                        const habilitarIconoModificar = document.getElementById(`buttonBaja${i}`);
+            for (var i = 0; i < tamanioFinal; i++) {
+              const habilitarIconoModificar = document.getElementById(`buttonBaja${i}`);
 
-                        if (habilitarIconoModificar !== null && localStorage.getItem('habilitarBotones') === 'true') {
-                            habilitarIconoModificar.style.display = 'block';
-                        }
-                    }
+              if (habilitarIconoModificar !== null && localStorage.getItem('habilitarBotones') === 'true') {
+                habilitarIconoModificar.style.display = 'block';
+              }
+            }
 
-                }
-            });
-        };
+          }
+        });
+      };
 
-        // Declaración de 'observer' fuera de la función de callback
-        const observer = new MutationObserver((observerCallback));
-        observer.observe(document.documentElement, { childList: true, subtree: true });
+      // Declaración de 'observer' fuera de la función de callback
+      const observer = new MutationObserver((observerCallback));
+      observer.observe(document.documentElement, { childList: true, subtree: true });
 
 
     });
