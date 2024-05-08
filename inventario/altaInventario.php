@@ -1,6 +1,7 @@
 <?php
 require_once ('../includes/pandora.php');
 require_once ('../includes/load.php');
+require_once ('../includes/sql.php');
 
 session_start();
 
@@ -68,90 +69,6 @@ $resultadoGenero = ObtenerIdGenero();
   <link rel="apple-touch-icon" sizes="114x114" href="../images/icon-114x114.png">
 
   <script type="text/JavaScript" src="../includes/pandora.js"></script>
-
-  <style>
-    .selected {
-      color: #007bff;
-      /* Cambia este color por el que desees */
-      font-weight: bold;
-      /* O cualquier otro estilo que desees */
-
-    }
-
-    .row .col-md-4 {
-      margin-top: -13px;
-      margin-bottom: -13px;
-
-    }
-
-    .boton-intec {
-      /* border: none;
-            color: black;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 7px;*/
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: white;
-      text-decoration: solid;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .boton-intec:hover {
-      background-color: #0b7dda;
-    }
-
-    .boton-intec:active {
-      background-color: #3e8e41;
-    }
-
-    /* width: 10%;
-            background-color: navy;
-            padding: 3px ;
-            border-radius: 7px;
-            color: navy;
-            text-decoration: none;
-            color: white;*/
-    .update-photo {
-      float: center;
-
-    }
-
-    .update-photo {
-      position: relative;
-      display: inline-block;
-    }
-
-    .edit-text {
-      position: absolute;
-      top: 5px;
-      left: 5px;
-      background-color: rgba(255, 255, 255, 0.7);
-      padding: 5px;
-      border-radius: 5px;
-      cursor: pointer;
-      z-index: 1;
-      /* asegura que el texto esté sobre la imagen */
-
-    }
-
-    .image {
-      display: block;
-      max-width: 100%;
-    }
-
-    input[type="file"] {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      cursor: pointer;
-    }
-  </style>
 
 </head>
 
@@ -298,7 +215,7 @@ $resultadoGenero = ObtenerIdGenero();
 
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label class="col-md-4 col-form-label">TIPO DE PRODUCTO:</label>
+                       <!-- <label class="col-md-4 col-form-label">TIPO DE PRODUCTO:</label>-->
                         <select class="form-control" Name="iIdtipoProducto" id="iIdtipoProducto" required>
                           <option value="">SELECCIONE UN PRODUCTO</option>
                           <?php foreach ($resultadoContacto as $contacto): ?>
@@ -313,7 +230,7 @@ $resultadoGenero = ObtenerIdGenero();
 
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label class="col-md-4 col-form-label">TIPO DE SUBPRODUCTO:</label>
+                        <!--<label class="col-md-4 col-form-label">TIPO DE SUBPRODUCTO:</label>-->
                         <select class="form-control" Name="iIdTipoSubproducto" id="iIdTipoSubproducto" required>
                           <option value="">SELECCIONE UN SUBPRODUCTO</option>
                           <?php foreach ($resultadoContacto as $contacto): ?>
@@ -328,7 +245,7 @@ $resultadoGenero = ObtenerIdGenero();
 
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label class="col-md-4 col-form-label">MODELO:</label>
+                        <!--<label class="col-md-4 col-form-label">MODELO:</label>-->
                         <input type="text" id="vchModelo" class="form-control" placeholder="MODELO" maxlength="150"
                           onkeypress="this.value = this.value.toUpperCase();return">
                       </div>
@@ -336,7 +253,7 @@ $resultadoGenero = ObtenerIdGenero();
 
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label class="col-md-4 col-form-label">MARCA:</label>
+                        <!--<label class="col-md-4 col-form-label">MARCA:</label>-->
                         <input type="text" id="iIdMarca" class="form-control" placeholder="MARCA" maxlength="150"
                           onkeypress="this.value = this.value.toUpperCase();return">
                       </div>
@@ -344,7 +261,7 @@ $resultadoGenero = ObtenerIdGenero();
 
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label class="col-md-4 col-form-label">SERIE:</label>
+                        <!--<label class="col-md-4 col-form-label">SERIE:</label>-->
                         <input type="text" id="vchSerie" class="form-control" placeholder="SERIE" maxlength="150"
                           onkeypress="this.value = this.value.toUpperCase();return">
                       </div>
@@ -352,7 +269,7 @@ $resultadoGenero = ObtenerIdGenero();
 
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label class="col-md-4 col-form-label">ESTATUS:</label>
+                        <!--<label class="col-md-4 col-form-label">ESTATUS:</label>-->
                         <input type="text" id="iIdEstatus" class="form-control" placeholder="ESTATUS" maxlength="150"
                           onkeypress="this.value = this.value.toUpperCase();return">
                       </div>
@@ -360,7 +277,7 @@ $resultadoGenero = ObtenerIdGenero();
 
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label class="col-md-4 col-form-label">TIPO DE ASIGNACION:</label>
+                        <!--<label class="col-md-4 col-form-label">TIPO DE ASIGNACION:</label>-->
                         <input type="text" id="iIdTipoAsignacion" class="form-control" placeholder="TIPO DE ASIGNACION"
                           maxlength="150" onkeypress="this.value = this.value.toUpperCase();return">
                       </div>
@@ -368,7 +285,7 @@ $resultadoGenero = ObtenerIdGenero();
 
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label class="col-md-4 col-form-label">ASIGNADO A:</label>
+                        <!--<label class="col-md-4 col-form-label">ASIGNADO A:</label>-->
                         <input type="text" id="iIdAsignadoA" class="form-control" placeholder="ASIGNADO A"
                           maxlength="150" onkeypress="this.value = this.value.toUpperCase();return">
 
@@ -377,7 +294,7 @@ $resultadoGenero = ObtenerIdGenero();
 
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label class="col-md-4 col-form-label">PROYECTO ASIGNADO:</label>
+                        <!--<label class="col-md-4 col-form-label">PROYECTO ASIGNADO:</label>-->
                         <input type="text" id="iIdProyectoAsignado" class="form-control" placeholder="PROYECTO ASIGNADO"
                           maxlength="150" onkeypress="this.value = this.value.toUpperCase();return">
                       </div>
@@ -385,7 +302,7 @@ $resultadoGenero = ObtenerIdGenero();
 
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label class="col-md-4 col-form-label">FECHA DE INGRESO:</label>
+                        <!--<label class="col-md-4 col-form-label">FECHA DE INGRESO:</label>-->
                         <input type="date" id="dFechaIngreso" class="form-control" placeholder="FECHA DE NACIMIENTO"
                           name="FechaIngreso" pattern="\d{4}-\d{2}-\d{2}"
                           title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required
@@ -439,7 +356,7 @@ $resultadoGenero = ObtenerIdGenero();
         <div class="modal-content" style="width: 800px; height: auto; padding: 50px;">
           <div class="modal-header">
             <h5 class="modal-title"><i data-feather="edit"></i>ALTA PERSONA</h5>
-          </div>
+          </div>          
           <div class="modal-body">
             <form class="dashboard-form" id="AltaPersona">
               <div class="form-group row">

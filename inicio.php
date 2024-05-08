@@ -110,23 +110,33 @@ if (isset($_SESSION['user_id'])) {
                                     </div>
                                 </div>
                             </div>
+                            <?php
+
+                            $user = obtenerUsuario($_SESSION['user_id']);
+                            $row = $GLOBALS['rowObtenerNombre'];
+                            $nombrePersona = $row['nombrePersona'];
+                            $emailPersona = $row['contacto'];
+
+                            ?>
                             <div class="dropdown header-top-account">
-                                <a href="#" class="account-button">MI CUENTA</a>
+                                <a href="#" class="account-button"><?php echo $miCuentaTxt; ?></a>
                                 <div class="account-card">
                                     <div class="header-top-account-info">
                                         <a href="#" class="account-thumb">
-                                            <img src="../../images/account/thumb-1.jpg" class="img-fluid" alt="">
+                                            <img src="../images/account/thumb-1.jpg" class="img-fluid" alt="">
                                         </a>
                                         <div class="account-body">
-                                            <h5><a href="#">Mostrar Empleado</a></h5>
-                                            <span class="mail">empleado@intecproof.com</span>
+                                            <h5><a href="#"><?php echo $nombrePersona; ?></a></h5>
+                                            <span class="mail"><?php echo $emailPersona; ?></span>
                                         </div>
                                     </div>
                                     <ul class="account-item-list">
-                                        <li><a href="#"><span class="ti-user"></span>CUENTA</a></li>
-                                        <li><a href="#"><span class="ti-settings"></span>AJUSTES</a></li>
-                                        <li><a href="../Sistema/index.php"><span
-                                                    class="ti-power-off"></span>LogOut</a></li>
+                                        <li><a href="#"><span class="ti-user"></span><?php echo $Perfil; ?></a></li>
+                                        <li><a href="#"><span
+                                                    class="ti-settings"></span><?php echo $herramientas; ?></a></li>
+                                        <li><a href="../includes/load.php"><span
+                                                    class="ti-power-off"></span><?php echo $logout; ?></a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -430,7 +440,8 @@ if (isset($_SESSION['user_id'])) {
                                             <a href="#" data-toggle="dropdown" class="dropdown-toggle"
                                                 aria-haspopup="true" aria-expanded="false">ALTA DE PROYECTOS</a>
                                             <ul class="dropdown-menu">
-                                                <li class="menu-item"><a href="proyectos/altaProyecto.php">ALTA DE PROYECTO</a></li>
+                                                <li class="menu-item"><a href="proyectos/altaProyecto.php">ALTA DE
+                                                        PROYECTO</a></li>
                                                 <li class="menu-item"><a href="#">MORE INFO</a></li>
                                                 <li class="menu-item"><a href="#">MORE INFO</a></li>
                                             </ul>
@@ -518,22 +529,14 @@ if (isset($_SESSION['user_id'])) {
                                     <a href="#">
                                         <img src="images/footer-logo.png" class="img-fluid" alt="">
                                     </a>
-                                    <p class="copyright-text">DERECHOS DE AUTOR <a href="#">INTECPROOF</a> 2024, RESERVADOS</p>
+                                    <p class="copyright-text">DERECHOS DE AUTOR <a href="#">INTECPROOF</a> 2024,
+                                        RESERVADOS</p>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="back-to-top">
                                         <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
                                     </div>
                                 </div>
-                                <!--<div class="footer-social">
-                                    <ul class="social-icons">
-                                        <li><a href="#"><i data-feather="facebook"></i></a></li>
-                                        <li><a href="#"><i data-feather="twitter"></i></a></li>
-                                        <li><a href="#"><i data-feather="linkedin"></i></a></li>
-                                        <li><a href="#"><i data-feather="instagram"></i></a></li>
-                                        <li><a href="#"><i data-feather="youtube"></i></a></li>
-                                    </ul>
-                                </div>-->
                             </div>
                         </div>
                     </div>
