@@ -501,21 +501,17 @@ session_start();
 
                                         <ul>
                                     <a href="Sistema/pngwing.com.png" target="_blank">
-                                        <img src="../../pngwing.com.png" id="" style="width: 70px; height: auto;">
+                                        <img src="../../pngwing.com.png" id="iconoPDF${i}" style="width: 70px; height: auto;">
                                     </a>
                                         </ul>
-                                
+
                                 <ul>
-                                    <a href="Sistema/3121.png" target="_blank">
-                                        <img id="iconoModificar" src="../../3121.png"  style="width: 50px; height: auto; display: none;" >
+                                    <a href="../3121.png" target="_blank">
+                                        <img id="iconoModificar${i}" src="../../3121.png"  style="width: 50px; height: auto; display: none;" >
                                     </a>
                                 </ul>
-
                                     </div>
                                 </div>
-                               
-                                      
-                                
 
                             </div>
                         </div>
@@ -530,25 +526,46 @@ session_start();
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             console.log(localStorage.getItem('habilitarBotones'));
+
             if (localStorage.getItem('habilitarBotones') === 'true') {
                 const habilitarBotonDomicilio = document.querySelectorAll('.boton-intec');
                 habilitarBotonDomicilio.forEach(boton => {
                     boton.disabled = false;
                     boton.style.display = 'block';
                 });
-
-                const habilitarIconoModificar = document.getElementById('iconoModificar');
-                console.log(localStorage.getItem('habilitarBotones'));
-                console.log(habilitarIconoModificar);
-
-                if (habilitarIconoModificar && habilitarIconoModificar.style.display === 'none') {
-                    habilitarIconoModificar.style.display = 'block';
-                } else {
-                    console.error("No se puede habilitar el icono");
-                }
             }
 
+            const container = document.getElementById('agregarDocumentos');
+
+            const observerCallback = (mutationsList, observer) => {
+
+                mutationsList.forEach((mutation) => {
+                    if (mutation.type === 'childList') {
+
+                       var bTamanioDocumentos = localStorage.getItem('datosConsultaDocumentos');
+                       var tamanioFinal = bTamanioDocumentos? bTamanioDocumentos.length : 0;
+
+                       for (var i= 0; i<tamanioFinal; i++){
+                           const habilitarIconoModificar = document.getElementById(`iconoModificar${i}`);
+
+                           if (habilitarIconoModificar !== null && localStorage.getItem('habilitarBotones') === 'true') {
+                               habilitarIconoModificar.style.display = 'block';
+                               console.log(habilitarIconoModificar);
+                           }
+                       }
+
+                    }
+                });
+            };
+
+            // Declaración de 'observer' fuera de la función de callback
+            const observer = new MutationObserver((observerCallback));
+            observer.observe(document.documentElement, { childList: true, subtree: true });
+
+
         });
+
+
     </script>
 
 

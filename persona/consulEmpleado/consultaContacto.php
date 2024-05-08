@@ -748,7 +748,7 @@ $resultadoContacto = ObtenerTipoContacto();
                 </div>
 
              <div class="boton-intec${i}">
-                <a  href="#" class="boton-intec" id="buttonBaja${i}">BAJA</a>
+                <a  href="#" class="boton-intec" id="buttonBaja${i}" style="display: none">BAJA</a>
           </div>
         
       </div>
@@ -772,6 +772,36 @@ $resultadoContacto = ObtenerTipoContacto();
           boton.style.display = 'block';
         });
       }
+
+
+        const container = document.getElementById('agregaContacto');
+
+        const observerCallback = (mutationsList, observer) => {
+
+            mutationsList.forEach((mutation) => {
+                if (mutation.type === 'childList') {
+
+                    var bTamanioContacto = localStorage.getItem('datosConsultaContacto');
+                    var tamanioFinal = bTamanioContacto? bTamanioContacto.length : 0;
+
+                    for (var i= 0; i<tamanioFinal; i++){
+                        const habilitarIconoModificar = document.getElementById(`buttonBaja${i}`);
+
+                        if (habilitarIconoModificar !== null && localStorage.getItem('habilitarBotones') === 'true') {
+                            habilitarIconoModificar.style.display = 'block';
+                            console.log(habilitarIconoModificar);
+                        }
+                    }
+
+                }
+            });
+        };
+
+        // Declaración de 'observer' fuera de la función de callback
+        const observer = new MutationObserver((observerCallback));
+        observer.observe(document.documentElement, { childList: true, subtree: true });
+
+
     });
   </script>
 
