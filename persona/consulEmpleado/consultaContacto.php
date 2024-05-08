@@ -357,14 +357,14 @@ $resultadoContacto = ObtenerTipoContacto();
               <div id="information" class="row justify-content-center">
                 <div class="col-md-12">
 
-                  <div class="candidate">
+                  <div class="container">
                     <div class="body">
                       <label class="col-form-label">
                         <h6><i data-feather="user-check"></i>INFORMACION DE CONTACTO</h6>
                       </label>
                       <div class="row-left">
                         <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-1"
-                          style="display:none;">AGREGAR</a>
+                          style="display:none;" id="buttonAgregar">AGREGAR</a>
                       </div>
                     </div>
                   </div>
@@ -535,6 +535,7 @@ $resultadoContacto = ObtenerTipoContacto();
                                 var respuesta = JSON.parse(datosContactoNuevo.responseText);
                                 if (respuesta.bResultado === 1){
                                     localStorage.setItem('agregarContacto', JSON.stringify(datosContactoNew));
+                                    alert(respuesta.vchMensaje);
                                 }else {
                                     console.log("Mensaje Error: "+respuesta.vchMensaje);
                                     alert(respuesta.vchMensaje);
@@ -578,15 +579,6 @@ $resultadoContacto = ObtenerTipoContacto();
                     <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
                   </div>
                 </div>
-                <!--<div class="footer-social">
-                                    <ul class="social-icons">
-                                        <li><a href="#"><i data-feather="facebook"></i></a></li>
-                                        <li><a href="#"><i data-feather="twitter"></i></a></li>
-                                        <li><a href="#"><i data-feather="linkedin"></i></a></li>
-                                        <li><a href="#"><i data-feather="instagram"></i></a></li>
-                                        <li><a href="#"><i data-feather="youtube"></i></a></li>
-                                    </ul>
-                                </div>-->
               </div>
             </div>
           </div>
@@ -624,7 +616,6 @@ $resultadoContacto = ObtenerTipoContacto();
   <script>
 
     document.addEventListener('DOMContentLoaded', function () {
-      console.log("Esta en los datos del contacto");
 
       var datosContacto = localStorage.getItem('datosConsultaIndividual');
       var bResultadoContacto = JSON.parse(datosContacto);
@@ -641,9 +632,7 @@ $resultadoContacto = ObtenerTipoContacto();
 
       datosContactos.onload = function () {
         if (datosContactos.status === 200) {
-          console.log("Respuesta exitosa");
           var respuesta = JSON.parse(datosContactos.responseText);
-          console.log(respuesta);
 
           if (respuesta[0].bResultado === 1) {
             localStorage.setItem('datosConsultaContacto', JSON.stringify(respuesta));
@@ -652,7 +641,6 @@ $resultadoContacto = ObtenerTipoContacto();
 
             if (datosContactoConsulta) {
               var bResultado = JSON.parse(datosContactoConsulta);
-              console.log('Objeto parseado: ', bResultado);
 
               let longitudContacto = bResultado.length;
 
@@ -700,15 +688,42 @@ $resultadoContacto = ObtenerTipoContacto();
       var contenedor = document.getElementById('agregaContacto');
       contenedor.innerHTML = agregarListaContactos(longitudContacto);
 
-        document.querySelectorAll('.boton-intec').forEach(function (button){
-            button.addEventListener('click', function (event){
+
+      var selector = `[id^='buttonBaja']`;
+
+      var selectorAgregar = '#buttonAgregar';
+
+        document.querySelectorAll(selector).forEach((button) => {
+            button.addEventListener('click', function (event) {
                 event.preventDefault();
 
-                var index = this.id.replace('buttonBaja', '');
-                var registro = document.querySelector(`.candidate:nth-child(${index + 1})`);
+                var indexStr = this.id.replace('buttonBaja', '');
+                console.log(indexStr);
+                var indexInt = parseInt(indexStr, 10);
+
+                console.log(indexInt);
+
+                if (isNaN(indexInt)) {
+                    console.error('Índice inválido', indexInt);
+                    return;
+                }
+
+
+                var registro = document.querySelector(`.candidate:nth-child(${indexInt + 1})`);
+                console.log(registro);
                 registro.style.display = 'none';
+
+
+
+
+                var botonAgregar = document.querySelector(selectorAgregar);
+                if (botonAgregar ){
+                    botonAgregar.style.display = 'block';
+                }
+
             });
         });
+
 
     }
 
@@ -789,7 +804,6 @@ $resultadoContacto = ObtenerTipoContacto();
 
                         if (habilitarIconoModificar !== null && localStorage.getItem('habilitarBotones') === 'true') {
                             habilitarIconoModificar.style.display = 'block';
-                            console.log(habilitarIconoModificar);
                         }
                     }
 
