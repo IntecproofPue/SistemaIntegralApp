@@ -225,7 +225,7 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                 <div class="col">
                     <div class="header-top">
                         <div class="logo-area">
-                            <a href="../../inicio.php"><img src="../../images/logo-2.png" alt=""></a>
+                        <a href="../../inicio.php"><img src="../../images/logo-2.png" alt=""></a>
                         </div>
                         <div class="header-top-toggler">
                             <div class="header-top-toggler-button"></div>
@@ -301,7 +301,7 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                             </div>
                         </div>
                     </div>
-                    <!-- pestañas de navegación-->
+                    <!-- pestañas de navegación
                     <div class="skill-and-profile">
                         <div class="skill" style="display: flex; justify-content: center;">
                             <label style="align-self: flex-end;"><a href="DatosEmpleado.php">EMPLEADO</a></label>
@@ -312,7 +312,7 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                             <label style="align-self: flex-end;"><a href="cunsultaDoctos.php">DOCUMENTOS</a></label>
                         </div>
                     </div>
-                    <!-- fin de pestañas de navegación-->
+                    fin de pestañas de navegación-->
                 </div>
             </div>
         </div>
@@ -416,6 +416,13 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                                     </label>
                                     <div class="row">
 
+                                    <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="col-form-label">ID: </label>
+                                                <input id="vchPuesto" type="text" class="form-control"
+                                                    placeholder="NOMBRE DE PUESTO" disabled>
+                                            </div>
+                                        </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label class="col-form-label">NOMBRE PUESTO: </label>

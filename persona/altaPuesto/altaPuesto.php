@@ -11,7 +11,7 @@ if ( isset( $_SESSION['user_id'] ) ) {?>
     ?>
     <script type="text/javascript">
         //Redireccionamiento tras 5 segundos
-        setTimeout( function() { window.location.href = "../../index.php"; }, 0 );
+        setTimeout( function() { window.location.href = "index.php"; }, 0 );
     </script>
     <?php
 
@@ -199,7 +199,7 @@ $resultadoNiveles = ObtenerNivel();
                 <div class="col">
                     <div class="header-top">
                         <div class="logo-area">
-                            <a href="../../index.html"><img src="../../images/logo-2.png" alt=""></a>
+                        <a href="../../inicio.php"><img src="../../images/logo-2.png" alt=""></a>
                         </div>
                         <div class="header-top-toggler">
                             <div class="header-top-toggler-button"></div>
@@ -278,7 +278,7 @@ $resultadoNiveles = ObtenerNivel();
                             aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <!--<div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav">
                                 <li class="menu-item active"><a title="PERSONA" href="../altaPersona/altaPersona.php">PERSONA</a></li>
                                 <li class="menu-item active"><a title="DOMICILIO" href="../altaPersona/altaDomicilio.php">DOMICILIO</a>
@@ -288,7 +288,7 @@ $resultadoNiveles = ObtenerNivel();
                                 <li class="menu-item active"><a title="CONTACTO" href="../altaPersona/altaEmpleado.php">EMPLEADO</a>
                                 </li>
                             </ul>
-                        </div>
+                        </div>-->
                     </nav>
                 </div>
             </div>
@@ -296,18 +296,12 @@ $resultadoNiveles = ObtenerNivel();
     </header>
 
     <!-- Breadcrumb -->
-    <div class="alice-bg padding-top-60 padding-bottom-60">
+    <div class="alice-bg padding-top-20 padding-bottom-20">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
                     <div class="breadcrumb-area">
                         <h1>ALTA PUESTO</h1>
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">INICIO</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">ALTA PUESTO&nbsp;&nbsp;</li>
-                            </ol>
-                        </nav>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -506,7 +500,7 @@ $resultadoNiveles = ObtenerNivel();
                                                     };
                                                 }
                                             </script>
-                                            <button type="button" class="button" id = "botonSiguiente" >SIGUIENTE</button>
+                                            <button type="button" class="button" id = "botonSiguiente" >GUARDAR</button>
                                             <script>
                                                 document.getElementById('botonSiguiente').addEventListener('click', ValidarDatosPuesto);
                                             </script>
@@ -523,26 +517,22 @@ $resultadoNiveles = ObtenerNivel();
     </div>
     <!-- Footer -->
     <footer class="footer-bg">
-
-
         <div class="footer-bottom-area">
             <div class="container">
                 <div class="row">
                     <div class="col">
                         <div class="footer-bottom border-top">
                             <div class="row">
-                                <div class="col-xl-4 col-lg-5 order-lg-2">
-                                    <div class="footer-app-download">
-                                        <!--<a href="#" class="apple-app">Apple Store</a>
-                  <a href="#" class="android-app">Google Play</a>-->
-                                    </div>
+                                <div class="col-lg-6">
+                                    <a href="#">
+                                        <img src="../../images/footer-logo.png" class="img-fluid" alt="">
+                                    </a>
+                                    <p class="copyright-text">DERECHOS DE AUTOR <a href="#">INTECPROOF</a> 2024,
+                                        RESERVADOS</p>
                                 </div>
-                                <div class="col-xl-4 col-lg-4 order-lg-1">
-                                    <!-- <p class="copyright-text">Copyright <a href="#">Oficiona</a> 2020, All right reserved</p> -->
-                                </div>
-                                <div class="col-xl-4 col-lg-3 order-lg-3">
+                                <div class="col-lg-6">
                                     <div class="back-to-top">
-                                        <a href="#">Subir<i class="fas fa-angle-up"></i></a>
+                                        <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
                                     </div>
                                 </div>
                             </div>

@@ -276,7 +276,7 @@ if (isset($_SESSION['user_id'])) {
                                                 <li class="menu-item"><a href="persona/altaPuesto/altaPuesto.php">ALTA
                                                         DE PUESTO</a></li>
                                                 <li class="menu-item"><a
-                                                        href="persona/consulEmpleado/consultaPuesto.php">CONSULTA DE
+                                                        href="persona/altaPuesto/consultaPuesto.php">CONSULTA DE
                                                         PUESTO</a></li>
                                                 <li class="menu-item"><a
                                                         href="persona/modifiPersona/modificaPuesto.php">MODIFICACION DE
