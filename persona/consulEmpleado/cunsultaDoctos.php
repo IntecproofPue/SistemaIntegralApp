@@ -303,7 +303,7 @@ $resultadoDocumento = ObtenerTipoDocumento();
                         <div class="modal-body">
                             <div class="form-group">
                             <select class="form-control" id="iIdDocumento" name="iIdDocumento[]">
-                                <option value="">SELECCIONE UN TIPO DE DOCUMENTO</option>
+                                <option value="">TIPO DE DOCUMENTO: </option>
                                 <?php foreach ($resultadoDocumento as $documento): ?>
                                     <option value="<?= $documento['iIdConstante'] . '-' . $documento['iClaveCatalogo'] ?>">
                                         [<?= $documento['iClaveCatalogo'] ?>] - <?= $documento['vchDescripcion'] ?>
@@ -311,22 +311,102 @@ $resultadoDocumento = ObtenerTipoDocumento();
                                 <?php endforeach; ?>
                             </select>
                             </div>
-                            <div class="form-group file-input-wrap">
+                                                       <div class="form-group file-input-wrap">
+                                <option value="">CARGAR DOCUMENTO: </option>
                                 <label for="up-cv">
-                                    <input id="up-cv" type="file">
+                                    <input id="up-cv" type="file" onchange="cargarDocumento(event)">
                                     <i data-feather="upload-cloud"></i>
-                                    <span>AGREGAR DOCUMENTO<span>(pdf,zip,doc,docx)</span></span>
+                                    <p id = "nombreArchivo">NOMBRE DEL ARCHIVO<p>(pdf,zip,doc,docx)</p></p>
                                 </label>
                             </div>
                             <button class="boton-intec">GUARDAR</button>
                         </div>
+
+                        <!--<script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>-->
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.min.js"></script>
+                        <script>
+                            function cargarDocumento(event){
+                                var documento = event.target.files[0];
+                                if (!documento){
+                                    return;
+                                }
+                                var leerDocumento = new FileReader();
+                                leerDocumento.onload = function (e){
+                                    var data = new Uint8Array(e.target.result);
+                                    pdfjsLib.getDocument(data).promise.then(function (pdf){
+                                        renderizarPdf(pdf);
+                                    });
+                                };
+                                leerDocumento.readAsArrayBuffer(documento);
+
+                                var fileName = document.getElementById('nombreArchivo');
+                                fileName.textContent = 'NOMBRE DEL ARCHIVO: '+documento.name;
+
+
+                                var openRequest = indexedDB.open("BaseDatosDocumentos", 1);
+                                openRequest.onupgradeneeded = function (e){
+                                    var db = e.target.result;
+
+                                    if (!db.objectStoreNames.contains('archivosPDF')){
+                                        db.createObjectStore('archivosPDF', {keyPath: 'id'});
+                                    }
+                                };
+
+                                openRequest.onsuccess = function (e) {
+                                    var db = e.target.result;
+
+                                    var transaccion = db.transaction(["archivosPDF"], "readwrite");
+                                    var objectStore = transaccion.objectStore("archivosPDF");
+                                    var request = objectStore.add({
+                                        id: "archivo1",
+                                        nombre: documento.name,
+                                        data: documento
+                                    });
+
+                                    request.onerror = function (e) {
+                                        console.log("Error al agregar el archivo:", e.target.errorCode);
+                                    };
+
+                                    request.onsuccess = function (e) {
+                                        console.log("Archivo agregado exitosamente");
+                                    };
+                                }
+                            }
+
+                            function renderizarPdf(pdf) {
+                                var pageNumber = 1;
+                                pdf.getPage(pageNumber).then(function(page) {
+                                    var scale = 1.5;
+                                    var viewport = page.getViewport({scale: scale});
+
+                                    var canvas = document.createElement('canvas');
+                                    var context = canvas.getContext('2d');
+                                    canvas.height = viewport.height;
+                                    canvas.width = viewport.width;
+
+                                    canvas.style.display = "block";
+                                    canvas.style.margin = "auto";
+
+                                    var renderContext = {
+                                        canvasContext: context,
+                                        viewport: viewport
+                                    };
+                                    page.render(renderContext).promise.then(function() {
+                                        var modalBody = document.querySelector('#apply-popup-id-2.modal.fade');
+
+                                    });
+                                });
+
+                            }
+
+                        </script>
 
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <!-- fianal de modales -->
+    <!-- final de modales -->
 
     <!-- Footer -->
     <footer class="footer-bg">
@@ -348,15 +428,6 @@ $resultadoDocumento = ObtenerTipoDocumento();
                                         <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
                                     </div>
                                 </div>
-                                <!--<div class="footer-social">
-                                    <ul class="social-icons">
-                                        <li><a href="#"><i data-feather="facebook"></i></a></li>
-                                        <li><a href="#"><i data-feather="twitter"></i></a></li>
-                                        <li><a href="#"><i data-feather="linkedin"></i></a></li>
-                                        <li><a href="#"><i data-feather="instagram"></i></a></li>
-                                        <li><a href="#"><i data-feather="youtube"></i></a></li>
-                                    </ul>
-                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -390,17 +461,18 @@ $resultadoDocumento = ObtenerTipoDocumento();
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
     <script src="../../js/map.js"></script>
+
+
+
+
     <!-- Tu contenido HTML -->
 
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            console.log("Está en los datos del empleado");
 
             var datosDocumentos = localStorage.getItem('datosConsultaIndividual');
             var bResultadoDocumentos = JSON.parse(datosDocumentos);
-
-            console.log("Esto es bResultadoDocumentos:", bResultadoDocumentos);
 
             var iIdEmpleadoDoctos = bResultadoDocumentos.iIdEmpleado;
 
@@ -414,11 +486,8 @@ $resultadoDocumento = ObtenerTipoDocumento();
 
             datosDocumentos.onload = function () {
                 if (datosDocumentos.status === 200) {
-                    console.log("Respuesta existosa");
 
                     var respuesta = JSON.parse(datosDocumentos.responseText);
-
-                    console.log(respuesta);
 
                     if (respuesta[0].bResultado === 1) {
                         localStorage.setItem('datosConsultaDocumentos', JSON.stringify(respuesta));
@@ -427,11 +496,8 @@ $resultadoDocumento = ObtenerTipoDocumento();
 
                         if (datosDocumentosConsulta) {
                             var bResultado = JSON.parse(datosDocumentosConsulta);
-                            console.log('Objeto parseado: ', bResultado);
 
                             let longitudDocumentos = bResultado.length;
-
-                            console.log("Esta es la longitud de bResultado:", longitudDocumentos);
 
                             insertarDocumentos(longitudDocumentos);
 
@@ -542,7 +608,6 @@ $resultadoDocumento = ObtenerTipoDocumento();
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            console.log(localStorage.getItem('habilitarBotones'));
 
             if (localStorage.getItem('habilitarBotones') === 'true') {
                 const habilitarBotonDomicilio = document.querySelectorAll('.boton-intec');
@@ -567,7 +632,6 @@ $resultadoDocumento = ObtenerTipoDocumento();
 
                             if (habilitarIconoModificar !== null && localStorage.getItem('habilitarBotones') === 'true') {
                                 habilitarIconoModificar.style.display = 'block';
-                                console.log(habilitarIconoModificar);
                             }
                         }
 

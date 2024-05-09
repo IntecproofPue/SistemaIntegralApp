@@ -4,6 +4,7 @@ require_once ('../../includes/load.php');
 session_start();
 
 
+
 $vchRFC = $_POST['rfc'];
 $iIdPuesto = $_POST['iIdPuesto'];
 $iIdSede = $_POST['iIdSede'];
@@ -23,7 +24,6 @@ $datosEmpleado = array(
     'vchRFC' => $vchRFC,
     'iIdPuesto' => $iIdPuesto,
     'iIdSede' => $iIdSede,
-   // 'iClaveSede' => $iClaveSede,
     'iIdUsuarioUltModificacion' => $_SESSION['user_id']
 );
 
@@ -40,7 +40,6 @@ $params = array(
     $datosEmpleado['vchRFC'],
     $datosEmpleado['iIdPuesto'],
     $datosEmpleado['iIdSede'],
-    //$datosEmpleado['iClaveSede'],
     $datosEmpleado['iIdUsuarioUltModificacion']
 );
 
@@ -71,6 +70,9 @@ if ($result === false) {
 
     echo json_encode($DatosEmpleadoMasivo);
     $GLOBALS['contadorEmpleado'] = $contador;
+
+
+
 }
 
 

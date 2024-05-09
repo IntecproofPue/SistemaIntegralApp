@@ -366,16 +366,13 @@ if (isset($_SESSION['user_id'])) { ?>
                               nombre: document.getElementById('nombreaBuscar').value
                           };
 
-                          console.log("Console.log de FormularioConsultaEmpleado"+FormularioConsultaEmpleado);
 
                           var datosConsultaEmpleado = new XMLHttpRequest();
 
                           if (FormularioConsultaEmpleado.idEmpleado != 0){
                               consultaIndivual();
-                              console.log("ID del empleado: "+FormularioConsultaEmpleado.idEmpleado);
                           }else{
                               consultaMasiva();
-                              console.log("Está entrando en las pruebas masivas del proceso");
                           }
                           function consultaIndivual(){
                             var datosConsultaEmpleado = new XMLHttpRequest();
@@ -387,17 +384,13 @@ if (isset($_SESSION['user_id'])) { ?>
 
                               datosConsultaEmpleado.send(formDataIndividual);
 
-                              console.log("FormDataIndividual: "+formDataIndividual);
-
 
                               datosConsultaEmpleado.onload = function (){
                                   if (datosConsultaEmpleado.status === 200){
                                       localStorage.clear();
                                       var empleadoIndividual = JSON.parse(datosConsultaEmpleado.responseText);
                                       if (empleadoIndividual.bResultado == 1){
-                                          console.log(empleadoIndividual.bResultado);
                                           alert(empleadoIndividual.vchMensaje);
-                                          console.log(empleadoIndividual);
 
                                           localStorage.setItem('datosConsultaIndividual',JSON.stringify(empleadoIndividual));
 
@@ -422,8 +415,6 @@ if (isset($_SESSION['user_id'])) { ?>
                               var formDataMasiva = new URLSearchParams(FormularioConsultaEmpleado).toString();
                               datosConsultaEmpleado.send(formDataMasiva);
 
-                              console.log("Console.log de formDataMasiva"+formDataMasiva);
-
 
                               datosConsultaEmpleado.onload = function (){
                                   if (datosConsultaEmpleado.status === 200){
@@ -432,9 +423,7 @@ if (isset($_SESSION['user_id'])) { ?>
                                       console.log(respuestaMasiva);
 
                                       if (respuestaMasiva[0].bResultado === 1){
-                                          console.log(respuestaMasiva[0].bResultado);
                                           alert(respuestaMasiva[0].vchMensaje);
-                                          console.log(respuestaMasiva);
                                           localStorage.setItem('datosConsultaMasiva',JSON.stringify(respuestaMasiva));
                                           window.location.href = "consultaMasivaEmpleado.php";
                                       }else{

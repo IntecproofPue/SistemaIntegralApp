@@ -471,7 +471,7 @@ $resultadoRegimen = ObtenerIdRegimen();
 
                                     } else if (consultaMasiva) {
 
-                                        bResultadoMasivo = JSON.parse(consultaMasiva);
+                                        var bResultadoMasivo = JSON.parse(consultaMasiva);
                                         var iIdEmpleado = bResultadoMasivo.iIdEmpleado;
 
                                         console.log(iIdEmpleado);
@@ -821,8 +821,6 @@ $resultadoRegimen = ObtenerIdRegimen();
                                                 });
 
                                             </script>
-
-                                          <a href="#" class="boton-intec" class="thumb">GUARDAR</a>
                                         </div>
                                  </div>
                                 </div>
@@ -1342,15 +1340,6 @@ $resultadoRegimen = ObtenerIdRegimen();
                                         <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
                                     </div>
                                 </div>
-                                <!--<div class="footer-social">
-                                    <ul class="social-icons">
-                                        <li><a href="#"><i data-feather="facebook"></i></a></li>
-                                        <li><a href="#"><i data-feather="twitter"></i></a></li>
-                                        <li><a href="#"><i data-feather="linkedin"></i></a></li>
-                                        <li><a href="#"><i data-feather="instagram"></i></a></li>
-                                        <li><a href="#"><i data-feather="youtube"></i></a></li>
-                                    </ul>
-                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -1595,6 +1584,46 @@ $resultadoRegimen = ObtenerIdRegimen();
 
         }
 
+    </script>
+
+    <script>
+        document.querySelectorAll('.boton-intec').forEach(boton => {
+            boton.addEventListener('click', function (){
+
+                const botones = document.querySelectorAll('.boton-intec');
+                botones.forEach(boton => {
+                    boton.style.display = 'none';
+                });
+
+
+                const modales = document.querySelectorAll('.modal.fade');
+                modales.forEach(modal => {
+                    modal.style.display = 'none';
+                });
+
+                const mostrarModal = this.getAttribute('data-modal');
+
+               const modalElement =  document.getElementById(mostrarModal);
+               if (modalElement){
+                   modalElement.style.display = 'block';
+               }
+
+               const buttonGuardarDiv = document.querySelector('.candidate');
+
+               const buttonGuardar = document.createElement('button');
+               buttonGuardar.textContent = 'GUARDAR';
+               buttonGuardar.className = 'boton-intec';
+               buttonGuardar.style.display = 'block';
+
+               buttonGuardarDiv.appendChild(buttonGuardar);
+
+               buttonGuardar.addEventListener('click', function (){
+
+               });
+
+
+            });
+        });
     </script>
 
 
