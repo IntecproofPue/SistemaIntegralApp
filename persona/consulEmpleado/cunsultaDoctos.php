@@ -589,7 +589,7 @@ $resultadoDocumento = ObtenerTipoDocumento();
 
                                 <ul>
                                     <a href="#apply-popup-id-1" data-toggle="modal">
-                                        <img id="iconoModificar${i}" src="../../3121.png" style="width: 50px; height: auto; display: none;" >
+                                        <img id="iconoModificar${i}" src="../../trash-can_38501.png" style="width: 50px; height: auto; display: none;" >
                                     </a>
                                 </ul>
 
