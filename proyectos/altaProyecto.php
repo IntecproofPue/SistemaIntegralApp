@@ -1,92 +1,11 @@
 <?php
 require_once ('../includes/pandora.php');
 require_once ('../includes/load.php');
-require_once ('../includes/functions.php');
 require_once ('../includes/sql.php');
 
 session_start();
 
-function ObtenerIdGenero()
-{
-  if (isset($_SESSION['CatConstante'])) {
-    $datosGenero = $_SESSION['CatConstante'];
-    $generoEncontrado = array();
 
-    foreach ($datosGenero as $valorGenero) {
-      if ($valorGenero['iAgrupador'] == 3) {
-        $generoEncontrado[] = $valorGenero;
-      }
-    }
-    return $generoEncontrado;
-  } else {
-    echo ("No hay datos del género");
-  }
-}
-
-$resultadoGenero = ObtenerIdGenero();
-
-
-
-?>
-
-function ObtenerTipoContratacion()
-{
-    if (isset($_SESSION['CatConstante'])) {
-        $datosTipoContratacion = $_SESSION['CatConstante'];
-        $contratacionEncontrada = array();
-
-        foreach ($datosTipoContratacion as $valorContratacion) {
-            if ($valorContratacion['iAgrupador'] == 1) {
-                $contratacionEncontrada[] = $valorContratacion;
-            }
-        }
-        return $contratacionEncontrada;
-    } else {
-        echo ("No hay datos del Tipo de Contratación");
-    }
-}
-
-$resultadoContratacion = ObtenerTipoContratacion();
-
-
-function ObtenerHorasLaborales()
-{
-    if (isset($_SESSION['CatConstante'])) {
-        $datosHorasLaborales = $_SESSION['CatConstante'];
-        $horasLaboralesEncontradas = array();
-
-        foreach ($datosHorasLaborales as $valorHorasLaborales) {
-            if ($valorHorasLaborales['iAgrupador'] == 2) {
-                $horasLaboralesEncontradas[] = $valorHorasLaborales;
-            }
-        }
-        return $horasLaboralesEncontradas;
-    } else {
-        echo ("No hay datos de las horas laborales");
-    }
-}
-
-$resultadoHorasLaborales = ObtenerHorasLaborales();
-
-
-function ObtenerNivel()
-{
-    if (isset($_SESSION['CatConstante'])) {
-        $datosNivel = $_SESSION['CatConstante'];
-        $nivelesEncontrados = array();
-
-        foreach ($datosNivel as $valorNivel) {
-            if ($valorNivel['iAgrupador'] == 22) {
-                $nivelesEncontrados[] = $valorNivel;
-            }
-        }
-        return $nivelesEncontrados;
-    } else {
-        echo ("No hay datos de las horas laborales");
-    }
-}
-
-$resultadoNiveles = ObtenerNivel();
 
 
 ?>
@@ -95,40 +14,103 @@ $resultadoNiveles = ObtenerNivel();
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Required meta tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>
-        <?php echo $tituloPagina; ?>
-    </title>
+  <title>
+    <?php echo $tituloPagina; ?>
+  </title>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
 
-    <!-- External Css -->
-    <link rel="stylesheet" href="../assets/css/fontawesome-all.min.css">
-    <link rel="stylesheet" href="../assets/css/themify-icons.css" />
-    <link rel="stylesheet" href="../assets/css/et-line.css" />
-    <link rel="stylesheet" href="../assets/css/bootstrap-select.min.css" />
-    <link rel="stylesheet" href="../assets/css/plyr.css" />
-    <link rel="stylesheet" href="../assets/css/flag.css" />
-    <link rel="stylesheet" href="../assets/css/slick.css" />
-    <link rel="stylesheet" href="../assets/css/owl.carousel.min.css" />
-    <link rel="stylesheet" href="../assets/css/jquery.nstSlider.min.css" />
+  <!-- External Css -->
+  <link rel="stylesheet" href="../assets/css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="../assets/css/themify-icons.css" />
+  <link rel="stylesheet" href="../assets/css/et-line.css" />
+  <link rel="stylesheet" href="../assets/css/bootstrap-select.min.css" />
+  <link rel="stylesheet" href="../assets/css/plyr.css" />
+  <link rel="stylesheet" href="../assets/css/flag.css" />
+  <link rel="stylesheet" href="../assets/css/slick.css" />
+  <link rel="stylesheet" href="../assets/css/owl.carousel.min.css" />
+  <link rel="stylesheet" href="../assets/css/jquery.nstSlider.min.css" />
 
-    <!-- Custom Css -->
-    <link rel="stylesheet" type="text/css" href="../css/main.css">
-    <link rel="stylesheet" type="text/css" href="../dashboard/css/dashboard.css">
+  <!-- Custom Css -->
+  <link rel="stylesheet" type="text/css" href="../css/main.css">
+  <link rel="stylesheet" type="text/css" href="../dashboard/css/dashboard.css">
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600%7CRoboto:300i,400,500" rel="stylesheet">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600%7CRoboto:300i,400,500" rel="stylesheet">
 
-    <!-- Favicon -->
-    <link rel="icon" href="../images/favicon.png">
-    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="../images/icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="../images/icon-114x114.png">
+  <!-- Favicon -->
+  <link rel="icon" href="../images/favicon.png">
+  <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="../images/icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="../images/icon-114x114.png">
+
+  <script type="text/JavaScript" src="../includes/pandora.js"></script>
+  <script>
+    function soloLetras(e) {
+      tecla = (document.all) ? e.keyCode : e.which;
+
+      if (tecla == 8) {
+        return true;
+      }
+
+      patronAceptado = /[A-Z]/;
+      tecla_final = String.fromCharCode(tecla);
+      return patronAceptado.test(tecla_final);
+    }
+
+    function soloNumeros(e) {
+      tecla = (document.all) ? e.keyCode : e.which;
+
+
+      if (tecla == 8) {
+        return true;
+      }
+
+
+      patronAceptado = /[0-9]/;
+      tecla_final = String.fromCharCode(tecla);
+      return patronAceptado.test(tecla_final);
+
+
+      function cargarUsosFiscales() {
+        window.alert("Hola");
+      }
+
+      function soloRfc(e) {
+
+        tecla = (document.all) ? e.keyCode : e.which;
+
+
+        if (tecla == 8) {
+          return true;
+        }
+
+
+        patronAceptado = /[A-Za-z0-9]/;
+        tecla_final = String.fromCharCode(tecla);
+        return patronAceptado.test(tecla_final);
+      }
+
+
+      function soloNombre(e) {
+
+        tecla = (document.all) ? e.keyCode : e.which;
+
+
+        if (tecla == 8) {
+          return true;
+        }
+        patronAceptado = /[a-zA-Z áéíóúñÁÉÍÓÚÑ]+/;
+        tecla_final = String.fromCharCode(tecla);
+        return patronAceptado.test(tecla_final);
+      }
+    }
+  </script>
 
 </head>
 
@@ -231,223 +213,224 @@ $resultadoNiveles = ObtenerNivel();
     </div>
   </header>
 
-    <!-- Breadcrumb -->
-    <div class="alice-bg padding-top-70 padding-bottom-70">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="breadcrumb-area">
-                        <h1>ALTA DE PROYECTOS</h1>
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">INICIO</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">PROYECTOS</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="breadcrumb-form">
-                        <form action="#">
-                            <input type="text" placeholder="BUSCAR">
-                            <button><i data-feather="search"></i></button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+  <!-- Breadcrumb-->
+  <div class="alice-bg padding-top-30 padding-bottom-30">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="breadcrumb-area">
+            <label class="col-form-label"><i></i>
+              <h4><i data-feather="plus-circle"></i>ALTA DE PROYECTO</h4>
+            </label>
+          </div>
         </div>
+        <!--<div class="col-md-6">
+          <div class="breadcrumb-form">
+            <form action="#">
+              <input type="text" placeholder="BUSCAR">
+              <button><i data-feather="search"></i></button>
+            </form>
+          </div>
+        </div>-->
+      </div>
     </div>
-    <!-- Breadcrumb End -->
+  </div>
+  <!--Breadcrumb End -->
 
-    <div class="alice-bg section-padding-bottom">
-        <div class="container no-gliters">
-            <div class="row no-gliters">
-                <div class="col">
-                    <div class="post-content-wrapper">
-                        <form action="#" class="job-post-form">
-                            <div class="basic-info-input">
-                                <h4><i data-feather="plus-circle"></i>AGREGAR PROYECTO</h4>
+  <div class="alice-bg section-padding-bottom">
+    <div class="container no-gliters">
+      <div class="row no-gliters">
+        <div class="col">
+          <div class="post-content-wrapper">
+            <form action="#" class="job-post-form">
+              <div class="basic-info-input">
+                <h4><i data-feather="plus-circle"></i>AGREGAR PROYECTO</h4>
 
-                                <div id="information" class="row">
-                                    <label class="col-md-3 col-form-label">Information</label>
-                                    <div class="col-md-9">
-                                        <div class="row">
+                <div id="information" class="row">
+                  <div class="col-md-12">
+                    <div class="row">
 
-                                        <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" placeholder="NOMBRE DE PROYECTO">
-                                                </div>
-                                            </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <input type="text" class="form-control" placeholder="*NOMBRE DE PROYECTO">
+                        </div>
+                      </div>
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" placeholder="NOMBRE CORTO">
-                                                </div>
-                                            </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <input type="text" class="form-control" placeholder="NOMBRE CORTO">
+                        </div>
+                      </div>
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <select class="form-control">
-                                                        <option>TIPO DE CLIENTE</option>
-                                                        <option>Accounting / Finance</option>
-                                                        <option>Health Care</option>
-                                                        <option>Garments / Textile</option>
-                                                        <option>Telecommunication</option>
-                                                    </select>
-                                                    <i class="fa fa-caret-down"></i>
-                                                </div>
-                                            </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <select class="form-control">
+                            <option>TIPO DE CLIENTE</option>
+                            <option>Accounting / Finance</option>
+                            <option>Health Care</option>
+                            <option>Garments / Textile</option>
+                            <option>Telecommunication</option>
+                          </select>
+                          <i class="fa fa-caret-down"></i>
+                        </div>
+                      </div>
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <select class="form-control">
-                                                        <option>SEDE DE PROYECTO</option>
-                                                        <option>Accounting / Finance</option>
-                                                        <option>Health Care</option>
-                                                        <option>Garments / Textile</option>
-                                                        <option>Telecommunication</option>
-                                                    </select>
-                                                    <i class="fa fa-caret-down"></i>
-                                                </div>
-                                            </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <select class="form-control">
+                            <option>SEDE DE PROYECTO</option>
+                            <option>Accounting / Finance</option>
+                            <option>Health Care</option>
+                            <option>Garments / Textile</option>
+                            <option>Telecommunication</option>
+                          </select>
+                          <i class="fa fa-caret-down"></i>
+                        </div>
+                      </div>
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                <select class="form-control">
-                                                        <option>FECHA DE INICIO</option>
-                                                        <option><input type="date" placeholder="FECHA DE INICIO"
-                                                        class="form-control"></option>
-                                                    </select>
-                                                </div>
-                                            </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label style="margin-bottom: -10px;">*FECHA DE INICIO</label>
+                          <input type="date" id="dFechaInicio" class="form-control" placeholder=" *FECHA DE INICIO"
+                            name="FechaIngreso" pattern="\d{4}-\d{2}-\d{2}"
+                            title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required
+                            min="<?php echo $fechaMinima = "1950-01-01"; ?>"
+                            max="<?php echo $fechaMaxima = "2024-01-01"; ?>" maxlength="10">
+                          <?php
+                          $fechaActual = date('Y-m-d');
+                          $fechaMinima = date('Y-m-d', strtotime('-18 years', strtotime($fechaActual)));
+                          $fechaMaxima = $fechaActual;
+                          $fechaLimiteInferior = '1950-01-01';
+                          ?>
+                        </div>
+                      </div>
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <select class="form-control">
-                                                        <option>TIPO SUBPRODUCTO</option>
-                                                        <option>Part Time</option>
-                                                        <option>Full Time</option>
-                                                        <option>Temperory</option>
-                                                        <option>Permanent</option>
-                                                        <option>Freelance</option>
-                                                    </select>
-                                                    <i class="fa fa-caret-down"></i>
-                                                </div>
-                                            </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <select class="form-control">
+                            <option>TIPO SUBPRODUCTO</option>
+                            <option>Part Time</option>
+                            <option>Full Time</option>
+                            <option>Temperory</option>
+                            <option>Permanent</option>
+                            <option>Freelance</option>
+                          </select>
+                          <i class="fa fa-caret-down"></i>
+                        </div>
+                      </div>
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <select class="form-control">
-                                                        <option>ASIGNADO</option>
-                                                        <option>Less than 1 Year</option>
-                                                        <option>2 Year</option>
-                                                        <option>3 Year</option>
-                                                        <option>4 Year</option>
-                                                        <option>Over 5 Year</option>
-                                                    </select>
-                                                    <i class="fa fa-caret-down"></i>
-                                                </div>
-                                            </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <select class="form-control">
+                            <option>ASIGNADO</option>
+                            <option>Less than 1 Year</option>
+                            <option>2 Year</option>
+                            <option>3 Year</option>
+                            <option>4 Year</option>
+                            <option>Over 5 Year</option>
+                          </select>
+                          <i class="fa fa-caret-down"></i>
+                        </div>
+                      </div>
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <select class="form-control">
-                                                        <option>MARCA</option>
-                                                        <option>Accounting / Finance</option>
-                                                        <option>Health Care</option>
-                                                        <option>Garments / Textile</option>
-                                                        <option>Telecommunication</option>
-                                                    </select>
-                                                    <i class="fa fa-caret-down"></i>
-                                                </div>
-                                            </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <select class="form-control">
+                            <option>MARCA</option>
+                            <option>Accounting / Finance</option>
+                            <option>Health Care</option>
+                            <option>Garments / Textile</option>
+                            <option>Telecommunication</option>
+                          </select>
+                          <i class="fa fa-caret-down"></i>
+                        </div>
+                      </div>
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <select class="form-control">
-                                                        <option>PROYECTO ASIGNADO</option>
-                                                        <option>Matriculation</option>
-                                                        <option>Intermidiate</option>
-                                                        <option>Gradute</option>
-                                                    </select>
-                                                    <i class="fa fa-caret-down"></i>
-                                                </div>
-                                            </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <select class="form-control">
+                            <option>PROYECTO ASIGNADO</option>
+                            <option>Matriculation</option>
+                            <option>Intermidiate</option>
+                            <option>Gradute</option>
+                          </select>
+                          <i class="fa fa-caret-down"></i>
+                        </div>
+                      </div>
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" placeholder="MODELO">
-                                                </div>
-                                            </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <input type="text" class="form-control" placeholder="MODELO">
+                        </div>
+                      </div>
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <input type="date" placeholder="FECHA DE INGRESO"
-                                                        class="form-control">
-                                                </div>
-                                            </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <input type="date" placeholder="FECHA DE INGRESO" class="form-control">
+                        </div>
+                      </div>
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" placeholder="SERIE">
-                                                </div>
-                                            </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <input type="text" class="form-control" placeholder="SERIE">
+                        </div>
+                      </div>
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <select class="form-control">
-                                                        <option>STATUS</option>
-                                                        <option>Matriculation</option>
-                                                        <option>Intermidiate</option>
-                                                        <option>Gradute</option>
-                                                    </select>
-                                                    <i class="fa fa-caret-down"></i>
-                                                </div>
-                                            </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <select class="form-control">
+                            <option>STATUS</option>
+                            <option>Matriculation</option>
+                            <option>Intermidiate</option>
+                            <option>Gradute</option>
+                          </select>
+                          <i class="fa fa-caret-down"></i>
+                        </div>
+                      </div>
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <select class="form-control">
-                                                        <option>TIPO DE MOVIMIENTO</option>
-                                                        <option>Male</option>
-                                                        <option>Female</option>
-                                                    </select>
-                                                    <i class="fa fa-caret-down"></i>
-                                                </div>
-                                            </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <select class="form-control">
+                            <option>TIPO DE MOVIMIENTO</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                          </select>
+                          <i class="fa fa-caret-down"></i>
+                        </div>
+                      </div>
 
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="signin-option">
-                                    <div class="buttons">
-                                        <a href="#" class="btn button primary-bg">Sign in</a>
-                                        <a href="#" class="btn button primary-bg">Register</a>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </form>
                     </div>
-
+                  </div>
                 </div>
 
-            </div>
+                <div class="signin-option">
+                  <div class="buttons">
+                    <a href="#" class="boton-intec">SIGUIENTE</a>
+                    <a href="#" class="boton-intec">LIMPIAR</a>
+                  </div>
+                </div>
 
-
-
-
+              </div>
+            </form>
+          </div>
 
         </div>
-    </div>
-    </div>
-    </div>
-    </div>
 
-  
- <!-- Footer -->
- <footer class="footer-bg">
+      </div>
+
+
+
+
+
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+
+
+  <!-- Footer -->
+  <footer class="footer-bg">
     <div class="footer-bottom-area">
       <div class="container">
         <div class="row">
@@ -474,28 +457,28 @@ $resultadoNiveles = ObtenerNivel();
   </footer>
   <!-- Footer End -->
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/popper.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/feather.min.js"></script>
-    <script src="assets/js/bootstrap-select.min.js"></script>
-    <script src="assets/js/jquery.nstSlider.min.js"></script>
-    <script src="assets/js/owl.carousel.min.js"></script>
-    <script src="assets/js/visible.js"></script>
-    <script src="assets/js/jquery.countTo.js"></script>
-    <script src="assets/js/chart.js"></script>
-    <script src="assets/js/plyr.js"></script>
-    <script src="assets/js/tinymce.min.js"></script>
-    <script src="assets/js/slick.min.js"></script>
-    <script src="assets/js/jquery.ajaxchimp.min.js"></script>
-    <script src="assets/js/html5-simple-date-input-polyfill.min.js"></script>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/popper.min.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
+  <script src="assets/js/feather.min.js"></script>
+  <script src="assets/js/bootstrap-select.min.js"></script>
+  <script src="assets/js/jquery.nstSlider.min.js"></script>
+  <script src="assets/js/owl.carousel.min.js"></script>
+  <script src="assets/js/visible.js"></script>
+  <script src="assets/js/jquery.countTo.js"></script>
+  <script src="assets/js/chart.js"></script>
+  <script src="assets/js/plyr.js"></script>
+  <script src="assets/js/tinymce.min.js"></script>
+  <script src="assets/js/slick.min.js"></script>
+  <script src="assets/js/jquery.ajaxchimp.min.js"></script>
+  <script src="assets/js/html5-simple-date-input-polyfill.min.js"></script>
 
-    <script src="js/custom.js"></script>
+  <script src="js/custom.js"></script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
-    <script src="js/map.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
+  <script src="js/map.js"></script>
 
 </body>
 
