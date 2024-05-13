@@ -282,7 +282,7 @@ $resultadoDocumento = ObtenerTipoDocumento();
 
                             <div class="row">
                                 <a class="boton-intec" href="#" id="buttonGuardarContacto" data-toggle="modal"
-                                    data-target="#apply-popup-id-1">APLICAR</a>
+                                    data-target="#apply-popup-id-1">BORRAR</a>
                             </div>
 
                         </form>
@@ -538,6 +538,48 @@ $resultadoDocumento = ObtenerTipoDocumento();
                 }
             }
         });
+        function insertarContactos(longitudContacto) {
+      var contenedor = document.getElementById('agregaContacto');
+      contenedor.innerHTML = agregarListaContactos(longitudContacto);
+
+
+      var selector = `[id^='iconoModificar']`;
+
+      var selectorAgregar = '#iconoModificar';
+
+      document.querySelectorAll(selector).forEach((button) => {
+        button.addEventListener('click', function (event) {
+          event.preventDefault();
+
+          var indexStr = this.id.replace('iconoModificar', '');
+          console.log(indexStr);
+          var indexInt = parseInt(indexStr, 10);
+
+          console.log(indexInt);
+
+          if (isNaN(indexInt)) {
+            console.error('Índice inválido', indexInt);
+            return;
+          }
+
+
+          var registro = document.querySelector(`.employer:nth-child(${indexInt + 1})`);
+          console.log(registro);
+          registro.style.display = 'none';
+
+
+
+
+          var iconoModificar = document.querySelector(selectorAgregar);
+          if (iconoModificar) {
+            iconoModificar.style.display = 'block';
+          }
+
+        });
+      });
+
+
+    }
 
         function insertarDocumentos(longitudDocumentos) {
             var contenedor = document.getElementById('agregarDocumentos');
@@ -588,7 +630,7 @@ $resultadoDocumento = ObtenerTipoDocumento();
                                         </ul>
 
                                 <ul>
-                                    <a href="#apply-popup-id-1" data-toggle="modal">
+                                    <a href="#" data-toggle="modal">
                                         <img id="iconoModificar${i}" src="../../trash-can_38501.png" style="width: 50px; height: auto; display: none;" >
                                     </a>
                                 </ul>

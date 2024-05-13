@@ -8,19 +8,19 @@ session_start();
 
 function ObtenerIdGenero()
 {
-    if (isset($_SESSION['CatConstante'])) {
-        $datosGenero = $_SESSION['CatConstante'];
-        $generoEncontrado = array();
+  if (isset($_SESSION['CatConstante'])) {
+    $datosGenero = $_SESSION['CatConstante'];
+    $generoEncontrado = array();
 
-        foreach ($datosGenero as $valorGenero) {
-            if ($valorGenero['iAgrupador'] == 3) {
-                $generoEncontrado[] = $valorGenero;
-            }
-        }
-        return $generoEncontrado;
-    } else {
-        echo ("No hay datos del género");
+    foreach ($datosGenero as $valorGenero) {
+      if ($valorGenero['iAgrupador'] == 3) {
+        $generoEncontrado[] = $valorGenero;
+      }
     }
+    return $generoEncontrado;
+  } else {
+    echo ("No hay datos del género");
+  }
 }
 
 $resultadoGenero = ObtenerIdGenero();
@@ -215,7 +215,7 @@ $resultadoGenero = ObtenerIdGenero();
 
                     <div class="col-md-4">
                       <div class="form-group">
-                       <!-- <label class="col-md-4 col-form-label">TIPO DE PRODUCTO:</label>-->
+                        <!-- <label class="col-md-4 col-form-label">TIPO DE PRODUCTO:</label>-->
                         <select class="form-control" Name="iIdtipoProducto" id="iIdtipoProducto" required>
                           <option value="">SELECCIONE UN PRODUCTO</option>
                           <?php foreach ($resultadoContacto as $contacto): ?>
@@ -326,15 +326,10 @@ $resultadoGenero = ObtenerIdGenero();
                         <button type="submit" class="boton-intec">VOLVER</button>
                       </div>
 
-                      <div class="candidate">
-                        <div class="apply-popup">
-                          <div class="row-left">
-                            <a href="#" class="boton-intec" data-toggle="modal"
-                              data-target="#apply-popup-id-1">NUEVO</a>
-                          </div>
-                        </div>
-                      </div>
 
+                      <div class="row-left">
+                        <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-1">NUEVO</a>
+                      </div>
                     </div>
                   </div>
 
@@ -355,64 +350,126 @@ $resultadoGenero = ObtenerIdGenero();
       <div class="modal-dialog" role="document">
         <div class="modal-content" style="width: 800px; height: auto; padding: 50px;">
           <div class="modal-header">
-            <h5 class="modal-title"><i data-feather="edit"></i>ALTA PERSONA</h5>
-          </div>          
+            <h5 class="modal-title"><i data-feather="edit"></i>NUEVO INVENTARIO</h5>
+          </div>
+
           <div class="modal-body">
             <form class="dashboard-form" id="AltaPersona">
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">TIPO DE PERSONA:</label>
-                <div class="col-sm-9">
-                  <input type="text" id="nombre" class="form-control" placeholder="TIPO DE PERSONA" min="2"
-                    maxlength="150" onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)"
-                    required>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">NOMBRE (S):</label>
-                <div class="col-sm-9">
-                  <input type="text" id="nombre" class="form-control" placeholder="NOMBRE" min="2" maxlength="150"
-                    onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)" required>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">PRIMER APELLIDO:</label>
-                <div class="col-sm-9">
-                  <input type="text" id="primerApellido" class="form-control" placeholder="PRIMER APELLIDO" min="2"
-                    name="primerApellido" maxlength="50"
-                    onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)" required>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">SEGUNDO APELLIDO:</label>
-                <div class="col-sm-9">
-                  <input type="text" id="segundoApellido" class="form-control" placeholder="SEGUNDO APELLIDO" min="2"
-                    name="segundoApellido" maxlength="50"
-                    onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)" required>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">GENERO:</label>
-                <div class="col-sm-9">
-                  <select class="form-control" name="genero" id="genero" required>
-                    <option value="" selected>SELECCIONE UN GENERO</option>
-                    <?php foreach ($resultadoGenero as $genero): ?>
-                      <option value="<?= $genero['iIdConstante'] . '-' . $genero['iClaveCatalogo'] ?>">
-                        [<?= $genero['iClaveCatalogo'] ?>] - <?= $genero['vchDescripcion'] ?>
-                      </option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
-                <input type="hidden" name="iIdConstanteGenero" id="iIdConstanteGenero" value="">
-                <input type="hidden" name="iClaveGenero" id="iClaveGenero" value="">
-              </div>
+              <div class="col-md-12">
+                <div class="row">
 
-              <div class="row">
-                <a class="boton-intec" href="#" id="buttonGuardarContacto" data-toggle="modal"
-                  data-target="#apply-popup-id-1">APLICAR</a>
-              </div>
-              <!--<script>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <!-- <label class="col-md-4 col-form-label">TIPO DE PRODUCTO:</label>-->
+                      <select class="form-control" Name="iIdtipoProducto" id="iIdtipoProducto" required>
+                        <option value="">SELECCIONE UN PRODUCTO</option>
+                        <?php foreach ($resultadoContacto as $contacto): ?>
+                          <option value="<?= $contacto['iIdConstante'] . '-' . $contacto['iClaveCatalogo'] ?>">
+                            [<?= $contacto['iClaveCatalogo'] ?>] -
+                            <?= $contacto['vchDescripcion'] ?>
+                          </option>
+                        <?php endforeach; ?>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <!--<label class="col-md-4 col-form-label">TIPO DE SUBPRODUCTO:</label>-->
+                      <select class="form-control" Name="iIdTipoSubproducto" id="iIdTipoSubproducto" required>
+                        <option value="">SELECCIONE UN SUBPRODUCTO</option>
+                        <?php foreach ($resultadoContacto as $contacto): ?>
+                          <option value="<?= $contacto['iIdConstante'] . '-' . $contacto['iClaveCatalogo'] ?>">
+                            [<?= $contacto['iClaveCatalogo'] ?>] -
+                            <?= $contacto['vchDescripcion'] ?>
+                          </option>
+                        <?php endforeach; ?>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <!--<label class="col-md-4 col-form-label">MODELO:</label>-->
+                      <input type="text" id="vchModelo" class="form-control" placeholder="MODELO" maxlength="150"
+                        onkeypress="this.value = this.value.toUpperCase();return">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <!--<label class="col-md-4 col-form-label">MARCA:</label>-->
+                      <input type="text" id="iIdMarca" class="form-control" placeholder="MARCA" maxlength="150"
+                        onkeypress="this.value = this.value.toUpperCase();return">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <!--<label class="col-md-4 col-form-label">SERIE:</label>-->
+                      <input type="text" id="vchSerie" class="form-control" placeholder="SERIE" maxlength="150"
+                        onkeypress="this.value = this.value.toUpperCase();return">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <!--<label class="col-md-4 col-form-label">ESTATUS:</label>-->
+                      <input type="text" id="iIdEstatus" class="form-control" placeholder="ESTATUS" maxlength="150"
+                        onkeypress="this.value = this.value.toUpperCase();return">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <!--<label class="col-md-4 col-form-label">TIPO DE ASIGNACION:</label>-->
+                      <input type="text" id="iIdTipoAsignacion" class="form-control" placeholder="TIPO DE ASIGNACION"
+                        maxlength="150" onkeypress="this.value = this.value.toUpperCase();return">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <!--<label class="col-md-4 col-form-label">ASIGNADO A:</label>-->
+                      <input type="text" id="iIdAsignadoA" class="form-control" placeholder="ASIGNADO A" maxlength="150"
+                        onkeypress="this.value = this.value.toUpperCase();return">
+
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <!--<label class="col-md-4 col-form-label">PROYECTO ASIGNADO:</label>-->
+                      <input type="text" id="iIdProyectoAsignado" class="form-control" placeholder="PROYECTO ASIGNADO"
+                        maxlength="150" onkeypress="this.value = this.value.toUpperCase();return">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <!--<label class="col-md-4 col-form-label">FECHA DE INGRESO:</label>-->
+                      <input type="date" id="dFechaIngreso" class="form-control" placeholder="FECHA DE NACIMIENTO"
+                        name="FechaIngreso" pattern="\d{4}-\d{2}-\d{2}" title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)"
+                        required min="<?php echo $fechaMinima = "1950-01-01"; ?>"
+                        max="<?php echo $fechaMaxima = "2024-01-01"; ?>" maxlength="10">
+                      <?php
+                      $fechaActual = date('Y-m-d');
+                      $fechaMinima = date('Y-m-d', strtotime('-18 years', strtotime($fechaActual)));
+                      $fechaMaxima = $fechaActual;
+                      $fechaLimiteInferior = '1950-01-01';
+                      ?>
+                    </div>
+                  </div>
+
+                  
+                  <!--<script>
                     document.getElementById('buttonGuardarContacto').addEventListener('click', validarContactoNuevo);
                 </script>-->
+                </div>
+              </div>
+              <div class="row">
+                    <a class="boton-intec" href="#" id="buttonGuardarContacto" data-toggle="modal"
+                      data-target="#apply-popup-id-1">APLICAR</a>
+                  </div>
 
             </form>
           </div>
