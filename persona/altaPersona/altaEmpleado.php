@@ -1,7 +1,7 @@
 <?php
-
-        require_once('../../includes/pandora.php');
-        require_once ('../../includes/load.php');
+require_once ('../includes/pandora.php');
+require_once ('../includes/load.php');
+require_once ('../includes/sql.php');
 
         session_start();
         function ObtenerSede(){

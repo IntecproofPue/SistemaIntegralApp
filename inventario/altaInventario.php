@@ -69,6 +69,67 @@ $resultadoGenero = ObtenerIdGenero();
   <link rel="apple-touch-icon" sizes="114x114" href="../images/icon-114x114.png">
 
   <script type="text/JavaScript" src="../includes/pandora.js"></script>
+  <script>
+    function soloLetras(e) {
+      tecla = (document.all) ? e.keyCode : e.which;
+
+      if (tecla == 8) {
+        return true;
+      }
+
+      patronAceptado = /[A-Z]/;
+      tecla_final = String.fromCharCode(tecla);
+      return patronAceptado.test(tecla_final);
+    }
+
+    function soloNumeros(e) {
+      tecla = (document.all) ? e.keyCode : e.which;
+
+
+      if (tecla == 8) {
+        return true;
+      }
+
+
+      patronAceptado = /[0-9]/;
+      tecla_final = String.fromCharCode(tecla);
+      return patronAceptado.test(tecla_final);
+
+
+      function cargarUsosFiscales() {
+        window.alert("Hola");
+      }
+
+      function soloRfc(e) {
+
+        tecla = (document.all) ? e.keyCode : e.which;
+
+
+        if (tecla == 8) {
+          return true;
+        }
+
+
+        patronAceptado = /[A-Za-z0-9]/;
+        tecla_final = String.fromCharCode(tecla);
+        return patronAceptado.test(tecla_final);
+      }
+
+
+      function soloNombre(e) {
+
+        tecla = (document.all) ? e.keyCode : e.which;
+
+
+        if (tecla == 8) {
+          return true;
+        }
+        patronAceptado = /[a-zA-Z áéíóúñÁÉÍÓÚÑ]+/;
+        tecla_final = String.fromCharCode(tecla);
+        return patronAceptado.test(tecla_final);
+      }
+    }
+  </script>
 
 </head>
 
@@ -217,7 +278,7 @@ $resultadoGenero = ObtenerIdGenero();
                       <div class="form-group">
                         <!-- <label class="col-md-4 col-form-label">TIPO DE PRODUCTO:</label>-->
                         <select class="form-control" Name="iIdtipoProducto" id="iIdtipoProducto" required>
-                          <option value="">SELECCIONE UN PRODUCTO</option>
+                          <option value="">*SELECCIONE UN PRODUCTO</option>
                           <?php foreach ($resultadoContacto as $contacto): ?>
                             <option value="<?= $contacto['iIdConstante'] . '-' . $contacto['iClaveCatalogo'] ?>">
                               [<?= $contacto['iClaveCatalogo'] ?>] -
@@ -232,7 +293,7 @@ $resultadoGenero = ObtenerIdGenero();
                       <div class="form-group">
                         <!--<label class="col-md-4 col-form-label">TIPO DE SUBPRODUCTO:</label>-->
                         <select class="form-control" Name="iIdTipoSubproducto" id="iIdTipoSubproducto" required>
-                          <option value="">SELECCIONE UN SUBPRODUCTO</option>
+                          <option value="">*SELECCIONE UN SUBPRODUCTO</option>
                           <?php foreach ($resultadoContacto as $contacto): ?>
                             <option value="<?= $contacto['iIdConstante'] . '-' . $contacto['iClaveCatalogo'] ?>">
                               [<?= $contacto['iClaveCatalogo'] ?>] -
@@ -240,6 +301,14 @@ $resultadoGenero = ObtenerIdGenero();
                             </option>
                           <?php endforeach; ?>
                         </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <!--<label class="col-md-4 col-form-label">*MARCA:</label>-->
+                        <input type="text" id="iIdMarca" class="form-control" placeholder="*MARCA" maxlength="150"
+                          onkeypress="this.value = this.value.toUpperCase();return">
                       </div>
                     </div>
 
@@ -253,32 +322,16 @@ $resultadoGenero = ObtenerIdGenero();
 
                     <div class="col-md-4">
                       <div class="form-group">
-                        <!--<label class="col-md-4 col-form-label">MARCA:</label>-->
-                        <input type="text" id="iIdMarca" class="form-control" placeholder="MARCA" maxlength="150"
+                        <!--<label class="col-md-4 col-form-label">*SERIE:</label>-->
+                        <input type="text" id="vchSerie" class="form-control" placeholder="*SERIE" maxlength="150"
                           onkeypress="this.value = this.value.toUpperCase();return">
                       </div>
                     </div>
 
                     <div class="col-md-4">
                       <div class="form-group">
-                        <!--<label class="col-md-4 col-form-label">SERIE:</label>-->
-                        <input type="text" id="vchSerie" class="form-control" placeholder="SERIE" maxlength="150"
-                          onkeypress="this.value = this.value.toUpperCase();return">
-                      </div>
-                    </div>
-
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <!--<label class="col-md-4 col-form-label">ESTATUS:</label>-->
-                        <input type="text" id="iIdEstatus" class="form-control" placeholder="ESTATUS" maxlength="150"
-                          onkeypress="this.value = this.value.toUpperCase();return">
-                      </div>
-                    </div>
-
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <!--<label class="col-md-4 col-form-label">TIPO DE ASIGNACION:</label>-->
-                        <input type="text" id="iIdTipoAsignacion" class="form-control" placeholder="TIPO DE ASIGNACION"
+                        <!--<label class="col-md-4 col-form-label">*TIPO DE ASIGNACION:</label>-->
+                        <input type="text" id="iIdTipoAsignacion" class="form-control" placeholder="*TIPO DE ASIGNACION"
                           maxlength="150" onkeypress="this.value = this.value.toUpperCase();return">
                       </div>
                     </div>
@@ -286,7 +339,7 @@ $resultadoGenero = ObtenerIdGenero();
                     <div class="col-md-4">
                       <div class="form-group">
                         <!--<label class="col-md-4 col-form-label">ASIGNADO A:</label>-->
-                        <input type="text" id="iIdAsignadoA" class="form-control" placeholder="ASIGNADO A"
+                        <input type="text" id="iIdAsignadoA" class="form-control" placeholder="*ASIGNADO A"
                           maxlength="150" onkeypress="this.value = this.value.toUpperCase();return">
 
                       </div>
@@ -294,16 +347,17 @@ $resultadoGenero = ObtenerIdGenero();
 
                     <div class="col-md-4">
                       <div class="form-group">
-                        <!--<label class="col-md-4 col-form-label">PROYECTO ASIGNADO:</label>-->
-                        <input type="text" id="iIdProyectoAsignado" class="form-control" placeholder="PROYECTO ASIGNADO"
-                          maxlength="150" onkeypress="this.value = this.value.toUpperCase();return">
+                        <!--<label class="col-md-4 col-form-label">*PROYECTO ASIGNADO:</label>-->
+                        <input type="text" id="iIdProyectoAsignado" class="form-control"
+                          placeholder="*PROYECTO ASIGNADO" maxlength="150"
+                          onkeypress="this.value = this.value.toUpperCase();return">
                       </div>
                     </div>
 
                     <div class="col-md-4">
-                      <div class="form-group">
-                        <!--<label class="col-md-4 col-form-label">FECHA DE INGRESO:</label>-->
-                        <input type="date" id="dFechaIngreso" class="form-control" placeholder="FECHA DE NACIMIENTO"
+                      <div class="form-group" >
+                        <label style="margin-bottom: -10px;" >*FECHA DE INGRESO</label>
+                        <input type="date" id="dFechaIngreso" class="form-control" placeholder=" *FECHA DE NACIMIENTO"
                           name="FechaIngreso" pattern="\d{4}-\d{2}-\d{2}"
                           title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required
                           min="<?php echo $fechaMinima = "1950-01-01"; ?>"
@@ -314,6 +368,14 @@ $resultadoGenero = ObtenerIdGenero();
                         $fechaMaxima = $fechaActual;
                         $fechaLimiteInferior = '1950-01-01';
                         ?>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <!--<label class="col-md-4 col-form-label">OBSERVACIONES:</label>-->
+                        <textarea class="form-control" id="iIdProyectoAsignado" placeholder="OBSERVACIONES"
+                          onkeypress="this.value = this.value.toUpperCase();return"></textarea>
                       </div>
                     </div>
                   </div>
@@ -328,7 +390,8 @@ $resultadoGenero = ObtenerIdGenero();
 
 
                       <div class="row-left">
-                        <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-1">NUEVO</a>
+                        <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-1">NUEVA
+                          PERSONA</a>
                       </div>
                     </div>
                   </div>
@@ -350,7 +413,7 @@ $resultadoGenero = ObtenerIdGenero();
       <div class="modal-dialog" role="document">
         <div class="modal-content" style="width: 800px; height: auto; padding: 50px;">
           <div class="modal-header">
-            <h5 class="modal-title"><i data-feather="edit"></i>NUEVO INVENTARIO</h5>
+            <h5 class="modal-title"><i data-feather="edit"></i>NUEVA PERSONA</h5>
           </div>
 
           <div class="modal-body">
@@ -360,116 +423,64 @@ $resultadoGenero = ObtenerIdGenero();
 
                   <div class="col-md-4">
                     <div class="form-group">
-                      <!-- <label class="col-md-4 col-form-label">TIPO DE PRODUCTO:</label>-->
-                      <select class="form-control" Name="iIdtipoProducto" id="iIdtipoProducto" required>
-                        <option value="">SELECCIONE UN PRODUCTO</option>
-                        <?php foreach ($resultadoContacto as $contacto): ?>
-                          <option value="<?= $contacto['iIdConstante'] . '-' . $contacto['iClaveCatalogo'] ?>">
-                            [<?= $contacto['iClaveCatalogo'] ?>] -
-                            <?= $contacto['vchDescripcion'] ?>
-                          </option>
-                        <?php endforeach; ?>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <!--<label class="col-md-4 col-form-label">TIPO DE SUBPRODUCTO:</label>-->
-                      <select class="form-control" Name="iIdTipoSubproducto" id="iIdTipoSubproducto" required>
-                        <option value="">SELECCIONE UN SUBPRODUCTO</option>
-                        <?php foreach ($resultadoContacto as $contacto): ?>
-                          <option value="<?= $contacto['iIdConstante'] . '-' . $contacto['iClaveCatalogo'] ?>">
-                            [<?= $contacto['iClaveCatalogo'] ?>] -
-                            <?= $contacto['vchDescripcion'] ?>
-                          </option>
-                        <?php endforeach; ?>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <!--<label class="col-md-4 col-form-label">MODELO:</label>-->
-                      <input type="text" id="vchModelo" class="form-control" placeholder="MODELO" maxlength="150"
-                        onkeypress="this.value = this.value.toUpperCase();return">
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <!--<label class="col-md-4 col-form-label">MARCA:</label>-->
-                      <input type="text" id="iIdMarca" class="form-control" placeholder="MARCA" maxlength="150"
-                        onkeypress="this.value = this.value.toUpperCase();return">
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <!--<label class="col-md-4 col-form-label">SERIE:</label>-->
-                      <input type="text" id="vchSerie" class="form-control" placeholder="SERIE" maxlength="150"
-                        onkeypress="this.value = this.value.toUpperCase();return">
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <!--<label class="col-md-4 col-form-label">ESTATUS:</label>-->
-                      <input type="text" id="iIdEstatus" class="form-control" placeholder="ESTATUS" maxlength="150"
-                        onkeypress="this.value = this.value.toUpperCase();return">
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <!--<label class="col-md-4 col-form-label">TIPO DE ASIGNACION:</label>-->
-                      <input type="text" id="iIdTipoAsignacion" class="form-control" placeholder="TIPO DE ASIGNACION"
+                      <!--<label class="col-md-4 col-form-label">TIPPO DE PERSONA:</label>-->
+                      <input type="text" id="vchTipoPersona" class="form-control" placeholder="*TIPO PERSONA"
                         maxlength="150" onkeypress="this.value = this.value.toUpperCase();return">
                     </div>
                   </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
-                      <!--<label class="col-md-4 col-form-label">ASIGNADO A:</label>-->
-                      <input type="text" id="iIdAsignadoA" class="form-control" placeholder="ASIGNADO A" maxlength="150"
-                        onkeypress="this.value = this.value.toUpperCase();return">
-
+                      <!--<label class="col-sm-3 col-form-label">*NOMBRE:</label>-->
+                      <input type="text" id="vchNombre" class="form-control" placeholder="*NOMBRE" min="2" name="Nombre"
+                        maxlength="50" onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)"
+                        required>
                     </div>
                   </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
-                      <!--<label class="col-md-4 col-form-label">PROYECTO ASIGNADO:</label>-->
-                      <input type="text" id="iIdProyectoAsignado" class="form-control" placeholder="PROYECTO ASIGNADO"
-                        maxlength="150" onkeypress="this.value = this.value.toUpperCase();return">
+                      <!--<label class="col-sm-3 col-form-label">* PRIMER APELLIDO:</label>-->
+                      <input type="text" id="primerApellido" class="form-control" placeholder="*PRIMER APELLIDO" min="2"
+                        name="primerApellido" maxlength="50"
+                        onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)" required>
                     </div>
                   </div>
 
                   <div class="col-md-4">
-                    <div class="form-group">
-                      <!--<label class="col-md-4 col-form-label">FECHA DE INGRESO:</label>-->
-                      <input type="date" id="dFechaIngreso" class="form-control" placeholder="FECHA DE NACIMIENTO"
-                        name="FechaIngreso" pattern="\d{4}-\d{2}-\d{2}" title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)"
-                        required min="<?php echo $fechaMinima = "1950-01-01"; ?>"
-                        max="<?php echo $fechaMaxima = "2024-01-01"; ?>" maxlength="10">
-                      <?php
-                      $fechaActual = date('Y-m-d');
-                      $fechaMinima = date('Y-m-d', strtotime('-18 years', strtotime($fechaActual)));
-                      $fechaMaxima = $fechaActual;
-                      $fechaLimiteInferior = '1950-01-01';
-                      ?>
+                    <div class="form-group ">
+                      <!--<label class="col-sm-3 col-form-label">SEGUNDO APELLIDO:</label>-->
+                      <input type="text" id="segundoApellido" class="form-control" placeholder="SEGUNDO APELLIDO"
+                        min="2" name="segundoApellido" maxlength="50"
+                        onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)" required>
                     </div>
                   </div>
 
-                  
-                  <!--<script>
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <!-- <label class="col-sm-3 col-form-label">*GENERO:</label>-->
+                      <select class="form-control" name="genero" id="genero" required>
+                        <option value="" selected>SELECCIONE UN GENERO</option>
+                        <?php foreach ($resultadoGenero as $genero): ?>
+                          <option value="<?= $genero['iIdConstante'] . '-' . $genero['iClaveCatalogo'] ?>">
+                            [<?= $genero['iClaveCatalogo'] ?>] - <?= $genero['vchDescripcion'] ?>
+                          </option>
+                        <?php endforeach; ?>
+                      </select>
+                    </div>
+                    <input type="hidden" name="iIdConstanteGenero" id="iIdConstanteGenero" value="">
+                    <input type="hidden" name="iClaveGenero" id="iClaveGenero" value="">
+                  </div>
+
+                  <script>
                     document.getElementById('buttonGuardarContacto').addEventListener('click', validarContactoNuevo);
-                </script>-->
+                  </script>
                 </div>
               </div>
               <div class="row">
-                    <a class="boton-intec" href="#" id="buttonGuardarContacto" data-toggle="modal"
-                      data-target="#apply-popup-id-1">APLICAR</a>
-                  </div>
+                <a class="boton-intec" href="#" id="buttonGuardarContacto" data-toggle="modal"
+                  data-target="#apply-popup-id-1">GUARDAR</a>
+              </div>
 
             </form>
           </div>
@@ -530,57 +541,93 @@ $resultadoGenero = ObtenerIdGenero();
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
   <script src="../js/map.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <!--<script>
-    function ValidarDatosContacto() {
-      // Obtener los valores de los elementos del formulario ocultos
-      var ContactoSeleccionado = document.getElementById('iIdtipoProducto');
-      var ContactoPartes = ContactoSeleccionado.value.split('-');
-      var iIdConstanteContacto = ContactoPartes[0];
-      var iClaveContacto = ContactoPartes[1];
+  <script>
+    function ValidarDatosPersona() {
+      var respuestaFinal = "";
+
+      //localStorage.clear(); //Limpiar el localStorage para no almancenar basura
+
+      // Obtener los valores de los elementos del formulario para genero
+      var GeneroSeleccionado = document.getElementById('genero');
+      var GeneroPartes = GeneroSeleccionado.value.split('-');
+      var iIdConstanteGenero = GeneroPartes[0];
+      var iClaveGenero = GeneroPartes[1];
 
       // Asignar los valores a los campos ocultos
-      document.getElementById('iIdConstanteContacto').value = iIdConstanteContacto;
-      document.getElementById('iClaveContacto').value = iClaveContacto;
+      document.getElementById('iIdConstanteGenero').value = iIdConstanteGenero;
+      console.log(GeneroSeleccionado.value);
+      document.getElementById('iClaveGenero').value = iClaveGenero;
+
+      // Obtener los valores de los elementos del formulario para nacionalidad
+      var NacionalidadSeleccionado = document.getElementById('nacionalidad');
+      var NacionalidadPartes = NacionalidadSeleccionado.value.split('-');
+      var iIdConstanteNacionalidad = NacionalidadPartes[0];
+      var iClaveNacionalidad = NacionalidadPartes[1];
+
+      // Asignar los valores a los campos ocultos
+      document.getElementById('iIdConstanteNacionalidad').value = iIdConstanteNacionalidad;
+      console.log(NacionalidadSeleccionado.value);
+      document.getElementById('iClaveNacionalidad').value = iClaveNacionalidad;
+
+
 
       // Crear un objeto con los datos del formulario
       var datosFormulario = {
-        vchTipoContacto: document.getElementById('iIdtipoProducto').value,
-        iIdConstanteContacto: iIdConstanteContacto,
-        iClaveContacto: iClaveContacto,
-        contacto: document.getElementById('Producto').value  // ADECUAR CON DATOS EXTRAS
+        genero: GeneroSeleccionado.value,
+        nombre: document.getElementById('nombre').value,
+        primerApellido: document.getElementById('primerApellido').value,
+        segundoApellido: document.getElementById('segundoApellido').value,
+        curp: document.getElementById('curp').value,
+        genero: document.getElementById('genero').value,
+        iIdConstanteGenero: iIdConstanteGenero,
+        iClaveGenero: iClaveGenero,
+        nacionalidad: document.getElementById('nacionalidad').value,
+        iIdConstanteNacionalidad: iIdConstanteNacionalidad,
+        iClaveNacionalidad: iClaveNacionalidad,
+        fechaNacimiento: document.getElementById('fechaNacimiento').value,
+        rfc: document.getElementById('rfc').value,
+        regimenFiscal: document.getElementById('regimenFiscal').value,
+        usoFiscal: document.getElementById('usoFiscal').value,
+        codigoPostal: document.getElementById('CodigoFiscal').value
       };
 
       // Crear una instancia de XMLHttpRequest
-      var datosContacto = new XMLHttpRequest();
+      var datosPersona = new XMLHttpRequest();
 
       // Configurar la solicitud
-      datosContacto.open('POST', 'validarDatosContacto.php', true);
-      datosContacto.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      datosPersona.open('POST', 'validarDatosPersona.php', true);
+      datosPersona.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
       // Convertir el objeto de datos a una cadena de consulta URL
       var formData = new URLSearchParams(datosFormulario).toString();
 
       // Enviar la solicitud
-      datosContacto.send(formData);
+      datosPersona.send(formData);
 
       // Manejar la respuesta
-      datosContacto.onload = function () {
-        if (datosContacto.status === 200) {
-          var respuesta = JSON.parse(datosContacto.responseText);
+      datosPersona.onload = function () {
+        if (datosPersona.status === 200) {
+          var respuesta = JSON.parse(datosPersona.responseText);
           if (respuesta.bResultado === 1) {
             console.log(respuesta);
-            // Guardar solo los datos necesarios en localStorage
-            localStorage.setItem('datosContacto', JSON.stringify());
+            localStorage.setItem('datosPersona', JSON.stringify(datosFormulario));
+            window.location.href = "altaDomicilio.php";
           } else {
             console.error("Mensaje Error: " + respuesta.vchMensaje);
             alert(respuesta.vchMensaje);
+            respuestaFinal = respuesta.vchMensaje;
+
+            //document.write(respuestaFinal);
+            var miSpan = document.getElementById('spanOculto');
+            miSpan.innerHTML = respuestaFinal;
+            funcionDesbloquearMensaje();
           }
         } else {
           console.error("Error en la solicitud al servidor");
         }
       };
     }
-  </script>-->
+  </script>
 
 
 </body>
