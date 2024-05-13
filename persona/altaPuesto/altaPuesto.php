@@ -1,17 +1,17 @@
 <?php
-require_once('../../includes/pandora.php');
+require_once ('../../includes/pandora.php');
 require_once ('../../includes/load.php');
 require_once ('../../includes/sql.php');
 
 session_start();
 
-if ( isset( $_SESSION['user_id'] ) ) {?>
-<?php }else{
+if (isset($_SESSION['user_id'])) { ?>
+<?php } else {
 
     ?>
     <script type="text/javascript">
         //Redireccionamiento tras 5 segundos
-        setTimeout( function() { window.location.href = "index.php"; }, 0 );
+        setTimeout(function () { window.location.href = "index.php"; }, 0);
     </script>
     <?php
 
@@ -199,7 +199,7 @@ $resultadoNiveles = ObtenerNivel();
                 <div class="col">
                     <div class="header-top">
                         <div class="logo-area">
-                        <a href="../../inicio.php"><img src="../../images/logo-2.png" alt=""></a>
+                            <a href="../../inicio.php"><img src="../../images/logo-2.png" alt=""></a>
                         </div>
                         <div class="header-top-toggler">
                             <div class="header-top-toggler-button"></div>
@@ -245,10 +245,10 @@ $resultadoNiveles = ObtenerNivel();
                                 </div>
                             </div>
                             <?php
-                                $user = obtenerUsuario($_SESSION['user_id']);
-                                $row =$GLOBALS['rowObtenerNombre'];
-                                $nombrePersona = $row['nombrePersona'];
-                                $emailPersona = $row['contacto'];
+                            $user = obtenerUsuario($_SESSION['user_id']);
+                            $row = $GLOBALS['rowObtenerNombre'];
+                            $nombrePersona = $row['nombrePersona'];
+                            $emailPersona = $row['contacto'];
 
                             ?>
                             <div class="dropdown header-top-account">
@@ -265,8 +265,10 @@ $resultadoNiveles = ObtenerNivel();
                                     </div>
                                     <ul class="account-item-list">
                                         <li><a href="#"><span class="ti-user"></span><?php echo $Perfil; ?></a></li>
-                                        <li><a href="#"><span class="ti-settings"></span><?php echo $herramientas; ?></a></li>
-                                        <li><a href="../../includes/logout.php"><span class="ti-power-off"></span><?php echo $logout; ?></a></li>
+                                        <li><a href="#"><span
+                                                    class="ti-settings"></span><?php echo $herramientas; ?></a></li>
+                                        <li><a href="../../includes/logout.php"><span
+                                                    class="ti-power-off"></span><?php echo $logout; ?></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -320,25 +322,27 @@ $resultadoNiveles = ObtenerNivel();
                     <div class="dashboard-container">
                         <div class="dashboard-content-wrapper">
 
-                            <form  class="dashboard-form">
+                            <form class="dashboard-form">
 
-                                <input type="hidden" name = "iIdConstanteContratacion" id="iIdConstanteContratacion" value="" >
-                                <input type="hidden" name = "iClaveContratacion" id="iClaveContratacion" value="" >
+                                <input type="hidden" name="iIdConstanteContratacion" id="iIdConstanteContratacion"
+                                    value="">
+                                <input type="hidden" name="iClaveContratacion" id="iClaveContratacion" value="">
 
-                                <input type="hidden" name = "iIdConstanteHoras" id="iIdConstanteHoras" value="" >
-                                <input type="hidden" name = "iClaveHoras" id="iClaveHoras" value="" >
+                                <input type="hidden" name="iIdConstanteHoras" id="iIdConstanteHoras" value="">
+                                <input type="hidden" name="iClaveHoras" id="iClaveHoras" value="">
 
 
-                                <input type="hidden" name = "iIdConstanteNivel" id="iIdConstanteNivel" value="" >
-                                <input type="hidden" name = "iClaveNivel" id="iClaveNivel" value="" >
+                                <input type="hidden" name="iIdConstanteNivel" id="iIdConstanteNivel" value="">
+                                <input type="hidden" name="iClaveNivel" id="iClaveNivel" value="">
 
                                 <div class="dashboard-section basic-info-input">
                                     <h4><i data-feather="user-check"></i>INFORMACIÓN DEL PUESTO</h4>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*NOMBRE DEL PUESTO</label>
                                         <div class="col-sm-9">
-                                            <input type="text" id="nombrePuesto" name = "nombrePuesto" class="form-control" placeholder="NOMBRE DEL PUESTO"
-                                                min="2" maxlength="150"
+                                            <input type="text" id="nombrePuesto" name="nombrePuesto"
+                                                class="form-control" placeholder="NOMBRE DEL PUESTO" min="2"
+                                                maxlength="150"
                                                 onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)"
                                                 required>
                                         </div>
@@ -346,7 +350,8 @@ $resultadoNiveles = ObtenerNivel();
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*DESCRIPCION DE PUESTO:</label>
                                         <div class="col-sm-9">
-                                            <input type="text" id = "descripcionPuesto" name = "descripcionPuesto" class="form-control" placeholder="DESCRIPCION DE PUESTO"
+                                            <input type="text" id="descripcionPuesto" name="descripcionPuesto"
+                                                class="form-control" placeholder="DESCRIPCION DE PUESTO"
                                                 style="text-transform: uppercase" pattern="[A-Za-zÁÉÍÓÚáéíóúüÜñÑ\s]+"
                                                 title="SOLO SE PERMITEN LETRAS" required>
                                         </div>
@@ -354,10 +359,12 @@ $resultadoNiveles = ObtenerNivel();
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*NIVEL ORGANIZACIONAL:</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control" id="nivelOrganizacional" name="nivelOrganizacional">
+                                            <select class="form-control" id="nivelOrganizacional"
+                                                name="nivelOrganizacional">
                                                 <option value="" selected>SELECCIONE UN NIVEL ORGANIZACIONAL</option>
                                                 <?php foreach ($resultadoNiveles as $nivel): ?>
-                                                    <option value="<?= $nivel['iIdConstante'].'-'.$nivel['iClaveCatalogo'] ?>">
+                                                    <option
+                                                        value="<?= $nivel['iIdConstante'] . '-' . $nivel['iClaveCatalogo'] ?>">
                                                         [<?= $nivel['iClaveCatalogo'] ?>] - <?= $nivel['vchDescripcion'] ?>
                                                     </option>
                                                 <?php endforeach; ?>
@@ -370,8 +377,10 @@ $resultadoNiveles = ObtenerNivel();
                                             <select class="form-control" id="tipoContratacion" name="tipoContratacion">
                                                 <option value="" selected>SELECCIONE UN TIPO DE CONTRATACIÓN</option>
                                                 <?php foreach ($resultadoContratacion as $contratacion): ?>
-                                                    <option value="<?= $contratacion['iIdConstante'].'-'.$contratacion['iClaveCatalogo'] ?>">
-                                                        [<?= $contratacion['iClaveCatalogo'] ?>] - <?= $contratacion['vchDescripcion'] ?>
+                                                    <option
+                                                        value="<?= $contratacion['iIdConstante'] . '-' . $contratacion['iClaveCatalogo'] ?>">
+                                                        [<?= $contratacion['iClaveCatalogo'] ?>] -
+                                                        <?= $contratacion['vchDescripcion'] ?>
                                                     </option>
                                                 <?php endforeach; ?>
                                             </select>
@@ -380,39 +389,45 @@ $resultadoNiveles = ObtenerNivel();
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*HORAS LABORALES:</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control" id = "horasLaborales" name="horasLaborales">
+                                            <select class="form-control" id="horasLaborales" name="horasLaborales">
                                                 <option value="" selected>SELECCIONE LAS HORALES LABORALES </option>
                                                 <?php foreach ($resultadoHorasLaborales as $horas): ?>
-                                                    <option value="<?= $horas['iIdConstante'].'-'.$horas['iClaveCatalogo'] ?>">
+                                                    <option
+                                                        value="<?= $horas['iIdConstante'] . '-' . $horas['iClaveCatalogo'] ?>">
                                                         [<?= $horas['iClaveCatalogo'] ?>] - <?= $horas['vchDescripcion'] ?>
                                                     </option>
                                                 <?php endforeach; ?>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">*SALARIO NETO:</label>
-                                        <div class="col-sm-9">
-                                            <input type="number" id = "salarioNeto" name="salarioNeto" class="form-control" placeholder="SALARIO NETO"
-                                                required step="any" pattern="\d+(\.\d{1,2})?"
-                                                title="INGRESA UN NUMERO VALIDO (HASTA 2 DECIMALES)">
-                                        </div>
-                                    </div>
+
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*SALARIO FISCAL:</label>
                                         <div class="col-sm-9">
-                                            <input type="number"  id = "salarioFiscal" name="salarioFiscal" class="form-control" placeholder="SALARIO FISCAL"
-                                                step="any" pattern="\d+(\.\d{1,2})?"
-                                                title="INGRESA UN NUMERO VALIDO (HASTA 2 DECIMALES)" required>
+                                            <input type="number" id="salarioFiscal" name="salarioFiscal"
+                                                class="form-control" placeholder="SALARIO FISCAL" step="any"
+                                                pattern="\d+(\.\d{1,2})?"
+                                                title="INGRESA UN NUMERO VALIDO (HASTA 2 DECIMALES)" required
+                                                oninput="calcularSalarioNeto()">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">*SALARIO COMPLEMENTARIO:</label>
                                         <div class="col-sm-9">
-                                            <input type="number" class="form-control" id = "salarioComplementario" name="salarioComplementario"
-                                                placeholder="SALARIO COMPLEMENTARIO" step="any"
+                                            <input type="number" class="form-control" id="salarioComplementario"
+                                                name="salarioComplementario" placeholder="SALARIO COMPLEMENTARIO"
+                                                step="any" pattern="\d+(\.\d{1,2})?"
+                                                title="INGRESA UN NUMERO VALIDO (HASTA 2 DECIMALES)" required
+                                                oninput="calcularSalarioNeto()">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">*SALARIO NETO:</label>
+                                        <div class="col-sm-9">
+                                            <input type="number" id="salarioNeto" name="salarioNeto"
+                                                class="form-control" placeholder="SALARIO NETO" required step="any"
                                                 pattern="\d+(\.\d{1,2})?"
-                                                title="INGRESA UN NUMERO VALIDO (HASTA 2 DECIMALES)" required>
+                                                title="INGRESA UN NUMERO VALIDO (HASTA 2 DECIMALES)" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -435,7 +450,7 @@ $resultadoNiveles = ObtenerNivel();
                                                     var HorasSeleccionadas = document.getElementById('horasLaborales');
                                                     var HorasPartes = HorasSeleccionadas.value.split('-');
                                                     var iIdConstanteHoras = HorasPartes[0];
-                                                    var iClaveHoras= HorasPartes[1];
+                                                    var iClaveHoras = HorasPartes[1];
 
                                                     // Asignar los valores a los campos ocultos
                                                     document.getElementById('iIdConstanteHoras').value = iIdConstanteHoras;
@@ -446,7 +461,7 @@ $resultadoNiveles = ObtenerNivel();
                                                     var NivelSeleccionado = document.getElementById('nivelOrganizacional');
                                                     var NivelPartes = NivelSeleccionado.value.split('-');
                                                     var iIdConstanteNivel = NivelPartes[0];
-                                                    var iClaveNivel= NivelPartes[1];
+                                                    var iClaveNivel = NivelPartes[1];
 
                                                     // Asignar los valores a los campos ocultos
                                                     document.getElementById('iIdConstanteNivel').value = iIdConstanteNivel;
@@ -481,14 +496,14 @@ $resultadoNiveles = ObtenerNivel();
                                                     datosPuesto.send(formData);
 
                                                     // Manejar la respuesta
-                                                    datosPuesto.onload = function() {
+                                                    datosPuesto.onload = function () {
                                                         if (datosPuesto.status === 200) {
                                                             var respuesta = JSON.parse(datosPuesto.responseText);
                                                             if (respuesta.bResultado == 1) {
                                                                 localStorage.clear();
                                                                 console.log("Exito");
                                                                 alert(respuesta.vchMensaje);
-                                                                localStorage.setItem('datosPuesto',JSON.stringify(respuesta));
+                                                                localStorage.setItem('datosPuesto', JSON.stringify(respuesta));
                                                                 window.location.href = "../consulEmpleado/consultaPuesto.php";
                                                             } else {
                                                                 console.error("Mensaje Error: " + respuesta.vchMensaje);
@@ -500,7 +515,7 @@ $resultadoNiveles = ObtenerNivel();
                                                     };
                                                 }
                                             </script>
-                                            <button type="button" class="button" id = "botonSiguiente" >GUARDAR</button>
+                                            <button type="button" class="button" id="botonSiguiente">GUARDAR</button>
                                             <script>
                                                 document.getElementById('botonSiguiente').addEventListener('click', ValidarDatosPuesto);
                                             </script>
@@ -568,6 +583,16 @@ $resultadoNiveles = ObtenerNivel();
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
     <script src="../../js/map.js"></script>
+
+    <script>
+        function calcularSalarioNeto() {
+            var salarioFiscal = parseFloat(document.getElementById("salarioFiscal").value);
+            var salarioComplementario = parseFloat(document.getElementById("salarioComplementario").value);
+            var salarioNeto = salarioFiscal + salarioComplementario;
+            document.getElementById("salarioNeto").value = salarioNeto.toFixed(2);
+        }
+    </script>
+
 </body>
 
 </html>
