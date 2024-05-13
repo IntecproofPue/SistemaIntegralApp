@@ -338,7 +338,7 @@ $resultadoNiveles = ObtenerNivel();
                                 <div class="dashboard-section basic-info-input">
                                     <h4><i data-feather="user-check"></i>INFORMACIÓN DEL PUESTO</h4>
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">*NOMBRE DEL PUESTO</label>
+                                        <label class="col-sm-3 col-form-label">*NOMBRE DEL PUESTO:</label>
                                         <div class="col-sm-9">
                                             <input type="text" id="nombrePuesto" name="nombrePuesto"
                                                 class="form-control" placeholder="NOMBRE DEL PUESTO" min="2"
@@ -402,7 +402,7 @@ $resultadoNiveles = ObtenerNivel();
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">*SALARIO FISCAL:</label>
+                                        <label class="col-sm-3 col-form-label">*SALARIO FISCAL MENSUAL:</label>
                                         <div class="col-sm-9">
                                             <input type="number" id="salarioFiscal" name="salarioFiscal"
                                                 class="form-control" placeholder="SALARIO FISCAL" step="any"
@@ -412,7 +412,7 @@ $resultadoNiveles = ObtenerNivel();
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">*SALARIO COMPLEMENTARIO:</label>
+                                        <label class="col-sm-3 col-form-label">*SALARIO COMPLEMENTARIO MENSUAL:</label>
                                         <div class="col-sm-9">
                                             <input type="number" class="form-control" id="salarioComplementario"
                                                 name="salarioComplementario" placeholder="SALARIO COMPLEMENTARIO"
@@ -422,7 +422,7 @@ $resultadoNiveles = ObtenerNivel();
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">*SALARIO NETO:</label>
+                                        <label class="col-sm-3 col-form-label">SALARIO NETO MENSUAL:</label>
                                         <div class="col-sm-9">
                                             <input type="number" id="salarioNeto" name="salarioNeto"
                                                 class="form-control" placeholder="SALARIO NETO" required step="any"
