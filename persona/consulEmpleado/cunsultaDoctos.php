@@ -299,10 +299,11 @@ $resultadoDocumento = ObtenerTipoDocumento();
                     <form class="dashboard-form" id="AltaPersona">
                         <input type="hidden" name="iIdConstanteDocumento" id="iIdConstanteDocumento" value="">
                         <input type="hidden" name="iClaveDocumento" id="iClaveDocumento" value="">
+                        <input type="hidden" name="iIdPersonaDocumento" id="iIdPersonaDocumento" value="">
 
                         <div class="modal-body">
                             <div class="form-group">
-                            <select class="form-control" id="iIdDocumento" name="iIdDocumento[]">
+                            <select class="form-control" id="iIdDocumentoAgregar" name="iIdDocumento[]">
                                 <option value="">TIPO DE DOCUMENTO: </option>
                                 <?php foreach ($resultadoDocumento as $documento): ?>
                                     <option value="<?= $documento['iIdConstante'] . '-' . $documento['iClaveCatalogo'] ?>">
@@ -319,10 +320,88 @@ $resultadoDocumento = ObtenerTipoDocumento();
                                     <p id = "nombreArchivo">NOMBRE DEL ARCHIVO<p>(pdf,zip,doc,docx)</p></p>
                                 </label>
                             </div>
-                            <button class="boton-intec">GUARDAR</button>
+
+
+                            <script>
+                                function validarDocumento(){
+
+                                    console.log ("entró al proceso");
+
+                                    var TipoDocumentoSeleccionado = document.getElementById('iIdDocumentoAgregar');
+                                    var DocumentoPartes = TipoDocumentoSeleccionado.value.split('-');
+                                    var iIdConstanteDocumento = DocumentoPartes[0];
+                                    var TipoDocumento = DocumentoPartes[1];
+
+
+                                    document.getElementById('iIdConstanteDocumento').value = iIdConstanteDocumento;
+                                    document.getElementById('iClaveDocumento').value = TipoDocumento;
+
+
+                                    var DatosDocumentosEmpleado = localStorage.getItem('datosConsultaIndividual');
+                                    var bResultadoDocumentos = JSON.parse(DatosDocumentosEmpleado);
+                                    var iIdPersonaDocumentos = bResultadoDocumentos.iIdEmpleado;
+
+                                    console.log(iIdPersonaDocumentos);
+
+                                    document.getElementById('iIdPersonaDocumento').value = iIdPersonaDocumentos;
+
+                                    var datosDocumentoAdd = {
+                                       iIdConstanteDocumento: iIdConstanteDocumento,
+                                       iClaveDocumento: TipoDocumento,
+                                       empleado: iIdPersonaDocumentos,
+                                       url:  localStorage.getItem('urlArchivo')
+                                    };
+
+                                    console.log(datosDocumentoAdd);
+                                    localStorage.setItem('datosPruebaDocumentos', JSON.stringify(datosDocumentoAdd));
+
+
+                                    var datosDocumentosNew = new XMLHttpRequest();
+                                    datosDocumentosNew.open('POST', '/SisAdmonIntecproof/persona/altaPersona/validarDatosDocumentos.php', true);
+                                    datosDocumentosNew.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                                    var formData = new URLSearchParams({
+                                        iIdConstanteDocumento: datosDocumentoAdd.iIdConstanteDocumento,
+                                        iClaveDocumento: datosDocumentoAdd.iClaveDocumento,
+                                        empleado: datosDocumentoAdd.empleado,
+                                        url: datosDocumentoAdd.url
+                                    }).toString();
+
+                                    datosDocumentosNew.send(formData);
+
+                                    localStorage.setItem('datosFormData', JSON.stringify(formData));
+
+
+                                    datosDocumentosNew.onload = function (){
+                                        if (datosDocumentosNew.status === 200){
+                                            var respuesta = JSON.parse(datosDocumentosNew.responseText);
+                                            if (respuesta.bResultado === 1){
+                                                localStorage.setItem('agregarDocumento', JSON.stringify(datosDocumentoAdd));
+                                                alert(respuesta.vchMensaje);
+                                            }else {
+                                                console.log("Mensaje de error: ", respuesta.vchMensaje);
+                                                alert(respuesta.vchMensaje);
+                                            }
+                                        }
+                                    }
+
+                                    datosDocumentosNew.onerror = function (){
+                                        console.error("Error en la solicitud: ", datosDocumentosNew.statusText);
+                                        alert ("Hubo un error al procesar la información");
+                                    }
+
+                                }
+
+                            </script>
+
+                            <button class="boton-intec" id="buttonGuardarDocumento">GUARDAR</button>
+                            <script>
+                                document.getElementById('buttonGuardarDocumento').addEventListener('click', validarDocumento);
+                            </script>
+
+
                         </div>
 
-                        <!--<script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>-->
                         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.min.js"></script>
                         <script>
                             function cargarDocumento(event){
@@ -342,11 +421,9 @@ $resultadoDocumento = ObtenerTipoDocumento();
                                 var fileName = document.getElementById('nombreArchivo');
                                 fileName.textContent = 'NOMBRE DEL ARCHIVO: '+documento.name;
 
-
                                 var openRequest = indexedDB.open("BaseDatosDocumentos", 1);
                                 openRequest.onupgradeneeded = function (e){
                                     var db = e.target.result;
-
                                     if (!db.objectStoreNames.contains('archivosPDF')){
                                         db.createObjectStore('archivosPDF', {keyPath: 'id'});
                                     }
@@ -354,22 +431,52 @@ $resultadoDocumento = ObtenerTipoDocumento();
 
                                 openRequest.onsuccess = function (e) {
                                     var db = e.target.result;
-
                                     var transaccion = db.transaction(["archivosPDF"], "readwrite");
                                     var objectStore = transaccion.objectStore("archivosPDF");
-                                    var request = objectStore.add({
-                                        id: "archivo1",
-                                        nombre: documento.name,
+
+
+                                    var objetoAgregado = {
+                                        id: documento.name,
                                         data: documento
-                                    });
+                                    };
+
+
+                                    var request = objectStore.add(objetoAgregado);
 
                                     request.onerror = function (e) {
-                                        console.log("Error al agregar el archivo:", e.target.errorCode);
+                                        console.log("Error al agregar el archivo:", e.target.error);
                                     };
 
                                     request.onsuccess = function (e) {
                                         console.log("Archivo agregado exitosamente");
+                                        visualizarArchivo(documento.name);
+
+
                                     };
+                                }
+                            }
+
+                            function visualizarArchivo (idArchivo){
+                                var openRequest = indexedDB.open("BaseDatosDocumentos", 1);
+                                openRequest.onsuccess = function (e){
+                                    var db = e.target.result;
+                                    var transaction = db.transaction(["archivosPDF"], "readonly");
+                                    var objectStore = transaction.objectStore("archivosPDF");
+                                    var request = objectStore.get(idArchivo);
+
+                                    request.onsuccess = function (e){
+                                        if (request.result) {
+                                            var blob = new Blob([request.result.data], {type: "application/pdf"});
+
+                                            var urlArchivo = URL.createObjectURL(blob);
+
+                                            localStorage.setItem('urlArchivo', urlArchivo);
+
+                                            window.open(urlArchivo, '_blank')
+                                        }else {
+                                            console.log ("No se encontró el archivo")
+                                        }
+                                    }
                                 }
                             }
 
@@ -462,10 +569,6 @@ $resultadoDocumento = ObtenerTipoDocumento();
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
     <script src="../../js/map.js"></script>
 
-
-
-
-    <!-- Tu contenido HTML -->
 
 
     <script>
@@ -643,12 +746,9 @@ $resultadoDocumento = ObtenerTipoDocumento();
             const observer = new MutationObserver((observerCallback));
             observer.observe(document.documentElement, { childList: true, subtree: true });
 
-
         });
 
-
     </script>
-
 
 </body>
 

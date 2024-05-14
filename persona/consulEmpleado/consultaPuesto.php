@@ -219,333 +219,315 @@ $resultadoEstado = ObtenerEstadoProcedencia();
 
 <body>
 
-    <header class="header-2">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <div class="header-top">
-                        <div class="logo-area">
+<header class="header-2">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="header-top">
+                    <div class="logo-area">
                         <a href="../../inicio.php"><img src="../../images/logo-2.png" alt=""></a>
-                        </div>
-                        <div class="header-top-toggler">
-                            <div class="header-top-toggler-button"></div>
-                        </div>
-                        <div class="top-nav">
-                            <div class="dropdown header-top-notification">
-                                <a href="#" class="notification-button"><?php echo $notificacionesTxt; ?></a>
-                                <div class="notification-card">
-                                    <div class="notification-head">
-                                        <span>Notificaciones</span>
-                                        <a href="#">Marcar todo como leido</a>
-                                    </div>
-                                    <div class="notification-body">
-                                        <a href="../../home-2.html" class="notification-list">
-                                            <i class="fas fa-bolt"></i>
-                                            <p>Tu CV actualizado</p>
-                                            <span class="time">5 hours ago</span>
-                                        </a>
-                                        <a href="#" class="notification-list">
-                                            <i class="fas fa-arrow-circle-down"></i>
-                                            <p>Alguien descargo tu CV</p>
-                                            <span class="time">11 hours ago</span>
-                                        </a>
-                                        <a href="#" class="notification-list">
-                                            <i class="fas fa-check-square"></i>
-                                            <p>solicitaste un puesto de.... <span>@homeland</span></p>
-                                            <span class="time">11 hours ago</span>
-                                        </a>
-                                        <a href="#" class="notification-list">
-                                            <i class="fas fa-user"></i>
-                                            <p>Cambiaste la contraseña</p>
-                                            <span class="time">5 hours ago</span>
-                                        </a>
-                                        <a href="#" class="notification-list">
-                                            <i class="fas fa-arrow-circle-down"></i>
-                                            <p>Alguien descargo tu CV</p>
-                                            <span class="time">11 hours ago</span>
-                                        </a>
-                                    </div>
-                                    <div class="notification-footer">
-                                        <a href="#">Ver Notificaciones</a>
-                                    </div>
+                    </div>
+                    <div class="header-top-toggler">
+                        <div class="header-top-toggler-button"></div>
+                    </div>
+                    <div class="top-nav">
+                        <div class="dropdown header-top-notification">
+                            <a href="#" class="notification-button"><?php echo $notificacionesTxt; ?></a>
+                            <div class="notification-card">
+                                <div class="notification-head">
+                                    <span>Notificaciones</span>
+                                    <a href="#">Marcar todo como leido</a>
+                                </div>
+                                <div class="notification-body">
+                                    <a href="../../home-2.html" class="notification-list">
+                                        <i class="fas fa-bolt"></i>
+                                        <p>Tu CV actualizado</p>
+                                        <span class="time">5 hours ago</span>
+                                    </a>
+                                    <a href="#" class="notification-list">
+                                        <i class="fas fa-arrow-circle-down"></i>
+                                        <p>Alguien descargo tu CV</p>
+                                        <span class="time">11 hours ago</span>
+                                    </a>
+                                    <a href="#" class="notification-list">
+                                        <i class="fas fa-check-square"></i>
+                                        <p>solicitaste un puesto de.... <span>@homeland</span></p>
+                                        <span class="time">11 hours ago</span>
+                                    </a>
+                                    <a href="#" class="notification-list">
+                                        <i class="fas fa-user"></i>
+                                        <p>Cambiaste la contraseña</p>
+                                        <span class="time">5 hours ago</span>
+                                    </a>
+                                    <a href="#" class="notification-list">
+                                        <i class="fas fa-arrow-circle-down"></i>
+                                        <p>Alguien descargo tu CV</p>
+                                        <span class="time">11 hours ago</span>
+                                    </a>
+                                </div>
+                                <div class="notification-footer">
+                                    <a href="#">Ver Notificaciones</a>
                                 </div>
                             </div>
-                            <?php
+                        </div>
+                        <?php
 
-                            $user = obtenerUsuario($_SESSION['user_id']);
-                            $row = $GLOBALS['rowObtenerNombre'];
-                            $nombrePersona = $row['nombrePersona'];
-                            $emailPersona = $row['contacto'];
+                        $user = obtenerUsuario($_SESSION['user_id']);
+                        $row = $GLOBALS['rowObtenerNombre'];
+                        $nombrePersona = $row['nombrePersona'];
+                        $emailPersona = $row['contacto'];
 
-                            ?>
-                            <div class="dropdown header-top-account">
-                                <a href="#" class="account-button"><?php echo $miCuentaTxt; ?></a>
-                                <div class="account-card">
-                                    <div class="header-top-account-info">
-                                        <a href="#" class="account-thumb">
-                                            <img src="../../images/account/thumb-1.jpg" class="img-fluid" alt="">
-                                        </a>
-                                        <div class="account-body">
-                                            <h5><a href="#"><?php echo $nombrePersona; ?></a></h5>
-                                            <span class="mail"><?php echo $emailPersona; ?></span>
+                        ?>
+                        <div class="dropdown header-top-account">
+                            <a href="#" class="account-button"><?php echo $miCuentaTxt; ?></a>
+                            <div class="account-card">
+                                <div class="header-top-account-info">
+                                    <a href="#" class="account-thumb">
+                                        <img src="../../images/account/thumb-1.jpg" class="img-fluid" alt="">
+                                    </a>
+                                    <div class="account-body">
+                                        <h5><a href="#"><?php echo $nombrePersona; ?></a></h5>
+                                        <span class="mail"><?php echo $emailPersona; ?></span>
+                                    </div>
+                                </div>
+                                <ul class="account-item-list">
+                                    <li><a href="#"><span class="ti-user"></span><?php echo $Perfil; ?></a></li>
+                                    <li><a href="#"><span
+                                                    class="ti-settings"></span><?php echo $herramientas; ?></a></li>
+                                    <li><a href="../../includes/logout.php"><span
+                                                    class="ti-power-off"></span><?php echo $logout; ?></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-and-profile">
+                    <div class="skill" style="display: flex; justify-content: center;">
+                        <label style="align-self: flex-end;"><a href="DatosEmpleado.php">EMPLEADO</a></label>
+                        <label style="align-self: flex-end;" class="selected"><a
+                                href="../consulEmpleado/consultaPuesto.php ">PUESTO</a></label>
+                        <label style="align-self: flex-end;"><a href="consultaDomicilio.php">DOMICILIO</a></label>
+                        <label style="align-self: flex-end;"><a href="consultaContacto.php">CONTACTO</a></label>
+                        <label style="align-self: flex-end;"><a href="cunsultaDoctos.php">DOCUMENTOS</a></label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        var DatosPuesto = localStorage.getItem('datosConsultaIndividual');
+
+        var bResultadoPuesto = JSON.parse(DatosPuesto);
+        var iIdEmpleadoPuesto = bResultadoPuesto.iIdPuesto;
+
+
+        var datosPuesto = new XMLHttpRequest();
+
+        datosPuesto.open('POST', 'prcConsultaPuesto.php', true);
+
+        var formData = new URLSearchParams();
+        formData.append('iIdPuesto', iIdEmpleadoPuesto);
+
+        datosPuesto.send(formData);
+
+        datosPuesto.onload = function () {
+            if (datosPuesto.status === 200) {
+                var respuesta = JSON.parse(datosPuesto.responseText);
+
+                if (respuesta.bResultado === 1) {
+
+                    localStorage.setItem('datosConsultaPuesto', JSON.stringify(respuesta));
+
+                    var datosPuestoConsulta = localStorage.getItem('datosConsultaPuesto', JSON.stringify(respuesta))
+
+                    if (datosPuestoConsulta) {
+                        var bResultado = JSON.parse(datosPuestoConsulta);
+
+                        var iIdPuesto = document.getElementById('iIdPuesto');
+                        iIdPuesto.value = bResultado.iIdPuesto || 0;
+
+                        var vchPuesto = document.getElementById('vchPuesto');
+                        vchPuesto.value = bResultado.vchPuesto || '';
+
+                        var vchDescripcionPuesto = document.getElementById('vchDescripcionPuesto');
+                        vchDescripcionPuesto.value = bResultado.vchDescripcion || '';
+
+                        var vchTipoContratacion = document.getElementById('vchTipoContratacion');
+                        vchTipoContratacion.value = bResultado.vchTipoContratacion || '';
+
+                        var vchHorasLaborales = document.getElementById('vchHorasLaborales');
+                        vchHorasLaborales.value = bResultado.vchHorasLaborales || '';
+
+
+                        const pesoFinal = new Intl.NumberFormat('es-MX', {
+                            style: 'currency',
+                            currency: 'MXN',
+                            minimumFractionDigits: 2
+                        });
+
+                        var mSalarioNeto = document.getElementById('mSalarioNeto');
+                        mSalarioNeto.value = pesoFinal.format(bResultado.mSalarioNeto) || 0;
+
+                        var mSalarioFiscal = document.getElementById('mSalarioFiscal');
+                        mSalarioFiscal.value = pesoFinal.format(bResultado.mSalarioFiscal) || 0;
+
+                        var mSalarioComplementario = document.getElementById('mSalarioComplementario');
+                        mSalarioComplementario.value = pesoFinal.format(bResultado.mSalarioComplemento) || 0;
+                    }
+
+                } else {
+                    console.error("Mensaje Error: " + respuesta.vchMensaje);
+                    alert(respuesta.vchMensaje)
+                }
+            } else {
+                console.error("Error en la solicitud al servidor");
+            }
+        };
+    });
+</script>
+
+
+<!-- Contenido de la página -->
+<div class="alice-bg section-padding-bottom">
+    <div class="container no-gliters">
+        <div class="row justify-content-center">
+            <div class="col">
+                <div class="post-content-wrapper">
+                    <form action="altaPersona" method="post" class="dashboard-form">
+                        <div id="information" class="row justify-content-center">
+                            <div class="col-md-10">
+                                <label class="col-form-label">
+                                    <h6><i data-feather="user-check"></i>INFORMACION DE PUESTO</h6>
+                                </label>
+                                <div class="row">
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-form-label">ID PUESTO: </label>
+                                            <input id="iIdPuesto" type="text" class="form-control"
+                                                   placeholder="NOMBRE DE PUESTO" disabled>
                                         </div>
                                     </div>
-                                    <ul class="account-item-list">
-                                        <li><a href="#"><span class="ti-user"></span><?php echo $Perfil; ?></a></li>
-                                        <li><a href="#"><span
-                                                    class="ti-settings"></span><?php echo $herramientas; ?></a></li>
-                                        <li><a href="../../includes/logout.php"><span
-                                                    class="ti-power-off"></span><?php echo $logout; ?></a></li>
-                                    </ul>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-form-label">NOMBRE PUESTO: </label>
+                                            <input id="vchPuesto" type="text" class="form-control"
+                                                   placeholder="NOMBRE DE PUESTO" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-form-label">DESCRIPCION DE PUESTO: </label>
+                                            <input id="vchDescripcionPuesto" type="text" class="form-control"
+                                                   placeholder="DESCRIPCION DEL PUESTO" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-form-label">TIPO DE CONTRATACIÓN: </label>
+                                            <input id="vchTipoContratacion" type="text" class="form-control"
+                                                   placeholder="DESCRIPCION DEL PUESTO" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-form-label"> HORAS LABORALES: </label>
+                                            <input id="vchHorasLaborales" type="text" class="form-control"
+                                                   placeholder="HORAS LABORALES" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-form-label"> SALARIO NETO: </label>
+                                            <input id="mSalarioNeto" type="text" class="form-control"
+                                                   placeholder="SALARIO NETO" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-form-label"> SALARIO FISCAL: </label>
+                                            <input id="mSalarioFiscal" type="text" class="form-control"
+                                                   placeholder="SALARIO FISCAL" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-form-label"> SALARIO COMPLEMENTARIO: </label>
+                                            <input id="mSalarioComplementario" type="text" class="form-control"
+                                                   placeholder="SALARIO COMPLEMENTARIO" disabled>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- pestañas de navegación
-                    <div class="skill-and-profile">
-                        <div class="skill" style="display: flex; justify-content: center;">
-                            <label style="align-self: flex-end;"><a href="DatosEmpleado.php">EMPLEADO</a></label>
-                            <label style="align-self: flex-end;" class="selected"><a
-                                    href="../consulEmpleado/consultaPuesto.php ">PUESTO</a></label>
-                            <label style="align-self: flex-end;"><a href="consultaDomicilio.php">DOMICILIO</a></label>
-                            <label style="align-self: flex-end;"><a href="consultaContacto.php">CONTACTO</a></label>
-                            <label style="align-self: flex-end;"><a href="cunsultaDoctos.php">DOCUMENTOS</a></label>
-                        </div>
-                    </div>
-                    fin de pestañas de navegación-->
+                    </form>
                 </div>
             </div>
         </div>
-    </header>
+    </div>
+</div>
+<!-- fin de Contenido de página -->
 
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-
-            console.log("Está en los datos del puesto");
-
-            var DatosPuesto = localStorage.getItem('datosConsultaIndividual');
-
-            var bResultadoPuesto = JSON.parse(DatosPuesto);
-            var iIdEmpleadoPuesto = bResultadoPuesto.iIdPuesto;
-
-            // console.log(iIdPersonaDomicilio);
-
-            var datosPuesto = new XMLHttpRequest();
-
-            datosPuesto.open('POST', 'prcConsultaPuesto.php', true);
-
-            var formData = new URLSearchParams();
-            formData.append('iIdPuesto', iIdEmpleadoPuesto);
-
-            //console.log(formData);
-
-            // Enviar la solicitud
-            datosPuesto.send(formData);
-
-            // Manejar la respuesta
-            datosPuesto.onload = function () {
-                if (datosPuesto.status === 200) {
-                    console.log('Respuesta exitosa');
-                    var respuesta = JSON.parse(datosPuesto.responseText);
-                    console.log(respuesta);
-
-                    if (respuesta.bResultado === 1) {
-                        //alert(respuesta[0].vchMensaje);
-                        localStorage.setItem('datosConsultaPuesto', JSON.stringify(respuesta));
-
-                        var datosPuestoConsulta = localStorage.getItem('datosConsultaPuesto', JSON.stringify(respuesta))
-                        //console.log (datosDomicilioConsulta);
-
-                        if (datosPuestoConsulta) {
-                            var bResultado = JSON.parse(datosPuestoConsulta);
-                            console.log('Objeto parseado: ', bResultado);
-
-                            var vchPuesto = document.getElementById('vchPuesto');
-                            vchPuesto.value = bResultado.vchPuesto || '';
-
-                            var vchDescripcionPuesto = document.getElementById('vchDescripcionPuesto');
-                            vchDescripcionPuesto.value = bResultado.vchDescripcion || '';
-
-                            var vchTipoContratacion = document.getElementById('vchTipoContratacion');
-                            vchTipoContratacion.value = bResultado.vchTipoContratacion || '';
-
-                            var vchHorasLaborales = document.getElementById('vchHorasLaborales');
-                            vchHorasLaborales.value = bResultado.vchHorasLaborales || '';
-
-
-                            const pesoFinal = new Intl.NumberFormat('es-MX', {
-                                style: 'currency',
-                                currency: 'MXN',
-                                minimumFractionDigits: 2
-                            });
-
-                            var mSalarioNeto = document.getElementById('mSalarioNeto');
-                            mSalarioNeto.value = pesoFinal.format(bResultado.mSalarioNeto) || 0;
-
-                            var mSalarioFiscal = document.getElementById('mSalarioFiscal');
-                            mSalarioFiscal.value = pesoFinal.format(bResultado.mSalarioFiscal) || 0;
-
-                            var mSalarioComplementario = document.getElementById('mSalarioComplementario');
-                            mSalarioComplementario.value = pesoFinal.format(bResultado.mSalarioComplemento) || 0;
-                        }
-
-                    } else {
-                        console.error("Mensaje Error: " + respuesta.vchMensaje);
-                        alert(respuesta.vchMensaje)
-                    }
-                } else {
-                    console.error("Error en la solicitud al servidor");
-                }
-            };
-        });
-    </script>
-
-
-    <!-- Contenido de la página -->
-    <div class="alice-bg section-padding-bottom">
-        <div class="container no-gliters">
-            <div class="row justify-content-center">
+<!-- Footer -->
+<footer class="footer-bg">
+    <div class="footer-bottom-area">
+        <div class="container">
+            <div class="row">
                 <div class="col">
-                    <div class="post-content-wrapper">
-                        <form action="altaPersona" method="post" class="dashboard-form">
-                            <div id="information" class="row justify-content-center">
-                                <div class="col-md-10">
-                                    <label class="col-form-label">
-                                        <h6><i data-feather="user-check"></i>INFORMACION DE PUESTO</h6>
-                                    </label>
-                                    <div class="row">
-
-                                    <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="col-form-label">ID: </label>
-                                                <input id="vchPuesto" type="text" class="form-control"
-                                                    placeholder="NOMBRE DE PUESTO" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="col-form-label">NOMBRE PUESTO: </label>
-                                                <input id="vchPuesto" type="text" class="form-control"
-                                                    placeholder="NOMBRE DE PUESTO" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="col-form-label">DESCRIPCION DE PUESTO: </label>
-                                                <input id="vchDescripcionPuesto" type="text" class="form-control"
-                                                    placeholder="DESCRIPCION DEL PUESTO" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="col-form-label">TIPO DE CONTRATACIÓN: </label>
-                                                <input id="vchTipoContratacion" type="text" class="form-control"
-                                                    placeholder="DESCRIPCION DEL PUESTO" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="col-form-label"> HORAS LABORALES: </label>
-                                                <input id="vchHorasLaborales" type="text" class="form-control"
-                                                    placeholder="HORAS LABORALES" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="col-form-label"> SALARIO NETO: </label>
-                                                <input id="mSalarioNeto" type="text" class="form-control"
-                                                    placeholder="SALARIO NETO" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="col-form-label"> SALARIO FISCAL: </label>
-                                                <input id="mSalarioFiscal" type="text" class="form-control"
-                                                    placeholder="SALARIO FISCAL" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="col-form-label"> SALARIO COMPLEMENTARIO: </label>
-                                                <input id="mSalarioComplementario" type="text" class="form-control"
-                                                    placeholder="SALARIO COMPLEMENTARIO" disabled>
-                                            </div>
-                                        </div>
-
-                                    </div>
+                    <div class="footer-bottom border-top">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <a href="#">
+                                    <img src="../../images/footer-logo.png" class="img-fluid" alt="">
+                                </a>
+                                <p class="copyright-text">DERECHOS DE AUTOR <a href="#">INTECPROOF</a> 2024,
+                                    RESERVADOS</p>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="back-to-top">
+                                    <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- fin de Contenido de página -->
+</footer>
+<!-- Footer End -->
 
-    <!-- Footer -->
-    <footer class="footer-bg">
-        <div class="footer-bottom-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <div class="footer-bottom border-top">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <a href="#">
-                                        <img src="../../images/footer-logo.png" class="img-fluid" alt="">
-                                    </a>
-                                    <p class="copyright-text">DERECHOS DE AUTOR <a href="#">INTECPROOF</a> 2024,
-                                        RESERVADOS</p>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="back-to-top">
-                                        <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
-                                    </div>
-                                </div>
-                                <!--<div class="footer-social">
-                                    <ul class="social-icons">
-                                        <li><a href="#"><i data-feather="facebook"></i></a></li>
-                                        <li><a href="#"><i data-feather="twitter"></i></a></li>
-                                        <li><a href="#"><i data-feather="linkedin"></i></a></li>
-                                        <li><a href="#"><i data-feather="instagram"></i></a></li>
-                                        <li><a href="#"><i data-feather="youtube"></i></a></li>
-                                    </ul>
-                                </div>-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- Footer End -->
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="../../assets/js/jquery.min.js"></script>
+<script src="../../assets/js/popper.min.js"></script>
+<script src="../../assets/js/bootstrap.min.js"></script>
+<script src="../../assets/js/feather.min.js"></script>
+<script src="../../assets/js/bootstrap-select.min.js"></script>
+<script src="../../assets/js/jquery.nstSlider.min.js"></script>
+<script src="../../assets/js/owl.carousel.min.js"></script>
+<script src="../../assets/js/visible.js"></script>
+<script src="../../assets/js/jquery.countTo.js"></script>
+<script src="../../assets/js/chart.js"></script>
+<script src="../../assets/js/plyr.js"></script>
+<script src="../../assets/js/tinymce.min.js"></script>
+<script src="../../assets/js/slick.min.js"></script>
+<script src="../../assets/js/jquery.ajaxchimp.min.js"></script>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="../../assets/js/jquery.min.js"></script>
-    <script src="../../assets/js/popper.min.js"></script>
-    <script src="../../assets/js/bootstrap.min.js"></script>
-    <script src="../../assets/js/feather.min.js"></script>
-    <script src="../../assets/js/bootstrap-select.min.js"></script>
-    <script src="../../assets/js/jquery.nstSlider.min.js"></script>
-    <script src="../../assets/js/owl.carousel.min.js"></script>
-    <script src="../../assets/js/visible.js"></script>
-    <script src="../../assets/js/jquery.countTo.js"></script>
-    <script src="../../assets/js/chart.js"></script>
-    <script src="../../assets/js/plyr.js"></script>
-    <script src="../../assets/js/tinymce.min.js"></script>
-    <script src="../../assets/js/slick.min.js"></script>
-    <script src="../../assets/js/jquery.ajaxchimp.min.js"></script>
+<script src="../../js/custom.js"></script>
+<script src="../../dashboard/js/dashboard.js"></script>
+<script src="../../dashboard/js/datePicker.js"></script>
+<script src="../../dashboard/js/upload-input.js"></script>
 
-    <script src="../../js/custom.js"></script>
-    <script src="../../dashboard/js/dashboard.js"></script>
-    <script src="../../dashboard/js/datePicker.js"></script>
-    <script src="../../dashboard/js/upload-input.js"></script>
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
-    <script src="../../js/map.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
+<script src="../../js/map.js"></script>
 </body>
 
 </html>
