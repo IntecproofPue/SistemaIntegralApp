@@ -480,7 +480,7 @@ $resultadoContacto = ObtenerTipoContacto();
                   <div class="form-group">
                     <input type="hidden" name="iIdConstanteContacto" id="iIdConstanteContacto" value="">
                     <input type="hidden" name="iClaveContacto" id="iClaveContacto" value="">
-                    <input type="hidden" name="iClaveContacto" id="iIdPersonaContacto" value="">
+                    <input type="hidden" name="iIdPersonaContacto" id="iIdPersonaContacto" value="">
 
                     <label class="col-form-label">TIPO CONTACTO</label>
                     <select class="form-control" Name="tipoContacto" id="tipoContactoAgregar"
@@ -508,7 +508,6 @@ $resultadoContacto = ObtenerTipoContacto();
 
                 function validarContactoNuevo() {
 
-                  console.log("Está entrando a validar los datos del contacto nuevo");
                   var ContactoSeleccionado = document.getElementById('tipoContactoAgregar');
                   var ContactoPartes = ContactoSeleccionado.value.split('-');
                   var iIdConstanteContacto = ContactoPartes[0];

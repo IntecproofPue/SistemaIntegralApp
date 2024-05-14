@@ -355,7 +355,6 @@ if (isset($_SESSION['user_id'])) { ?>
               } else {
                 ?>
                   <script>
-                      console.log ("A punto de entrar al proceso");
                       function consultarEmpleado (){
 
                           var FormularioConsultaEmpleado = {
@@ -390,7 +389,6 @@ if (isset($_SESSION['user_id'])) { ?>
                                       localStorage.clear();
                                       var empleadoIndividual = JSON.parse(datosConsultaEmpleado.responseText);
                                       if (empleadoIndividual.bResultado == 1){
-                                          alert(empleadoIndividual.vchMensaje);
 
                                           localStorage.setItem('datosConsultaIndividual',JSON.stringify(empleadoIndividual));
 
@@ -420,10 +418,8 @@ if (isset($_SESSION['user_id'])) { ?>
                                   if (datosConsultaEmpleado.status === 200){
                                       var respuestaMasiva = JSON.parse(datosConsultaEmpleado.responseText);
 
-                                      console.log(respuestaMasiva);
 
                                       if (respuestaMasiva[0].bResultado === 1){
-                                          alert(respuestaMasiva[0].vchMensaje);
                                           localStorage.setItem('datosConsultaMasiva',JSON.stringify(respuestaMasiva));
                                           window.location.href = "consultaMasivaEmpleado.php";
                                       }else{
@@ -439,7 +435,6 @@ if (isset($_SESSION['user_id'])) { ?>
                           }
                           document.addEventListener('DOMContentLoaded', function (){
                               document.getElementById('buttonBuscar').addEventListener('click', consultarEmpleado);
-                              console.log("Se está ejecutando el proceso en el DOMContentLoaded");
                           });
                       }
                   </script>
@@ -522,7 +517,6 @@ if (isset($_SESSION['user_id'])) { ?>
                         <button type="button" class="button" id="buttonBuscar">BUSCAR</button>
                           <script>
                               document.getElementById('buttonBuscar').addEventListener('click', consultarEmpleado);
-                              console.log ('Se está ejecutando el proceso');
                           </script>
                         <button class="button" type="reset" name="buttonLimpiar" id="buttonLimpiar">LIMPIAR</button>
                       </div>
@@ -545,16 +539,13 @@ if (isset($_SESSION['user_id'])) { ?>
 
                   <script>
                     function mostrarCampo(idCampo) {
-                      // Oculta todos los campos de búsqueda
                       var campos = document.querySelectorAll('.campo-busqueda');
                       campos.forEach(function (campo) {
                         campo.style.display = 'none';
                       });
 
-                      // Obtiene el campo correspondiente al ID pasado como argumento
                       var campoMostrar = document.getElementById(idCampo);
 
-                      // Si el campo está oculto, lo muestra; de lo contrario, lo oculta
                       if (campoMostrar.style.display === 'none') {
                         campoMostrar.style.display = 'flex';
                       } else {
@@ -614,15 +605,6 @@ if (isset($_SESSION['user_id'])) { ?>
                                         <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
                                     </div>
                                 </div>
-                                <!--<div class="footer-social">
-                                    <ul class="social-icons">
-                                        <li><a href="#"><i data-feather="facebook"></i></a></li>
-                                        <li><a href="#"><i data-feather="twitter"></i></a></li>
-                                        <li><a href="#"><i data-feather="linkedin"></i></a></li>
-                                        <li><a href="#"><i data-feather="instagram"></i></a></li>
-                                        <li><a href="#"><i data-feather="youtube"></i></a></li>
-                                    </ul>
-                                </div>-->
                             </div>
                         </div>
                     </div>
