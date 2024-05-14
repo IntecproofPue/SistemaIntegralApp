@@ -4,6 +4,24 @@ require_once ('../includes/load.php');
 require_once ('../includes/sql.php');
 
 session_start();
+function ObtenerSede()
+{
+  if (isset($_SESSION['CatConstante'])) {
+    $datosSede = $_SESSION['CatConstante'];
+    $sedeEncontrado = array();
+
+    foreach ($datosSede as $valorSede) {
+      if ($valorSede['iAgrupador'] == 4) {
+        $sedeEncontrado[] = $valorSede;
+      }
+    }
+    return $sedeEncontrado;
+  } else {
+    echo ("No hay datos del Estado de Procedencia");
+  }
+}
+
+$resultadoSede = ObtenerSede();
 
 
 
@@ -116,7 +134,7 @@ session_start();
 
 <body>
 
-<header class="header-2">
+  <header class="header-2">
     <div class="container">
       <div class="row">
         <div class="col">
@@ -242,29 +260,31 @@ session_start();
       <div class="row no-gliters">
         <div class="col">
           <div class="post-content-wrapper">
-            <form action="#" class="job-post-form">
+            <form action="#" id="formularioProyecto" class="job-post-form">
               <div class="basic-info-input">
                 <h4><i data-feather="plus-circle"></i>AGREGAR PROYECTO</h4>
 
                 <div id="information" class="row">
                   <div class="col-md-12">
                     <div class="row">
+                      <input type="hidden" name="iIdConstanteSede" id="iIdConstanteSede" value="">
+                      <input type="hidden" name="iClaveSede" id="iClaveSede" value="">
 
                       <div class="col-md-4">
                         <div class="form-group">
-                          <input type="text" class="form-control" placeholder="*NOMBRE DE PROYECTO">
+                          <input type="text" id="vchNombre" class="form-control" placeholder="*NOMBRE DE PROYECTO">
                         </div>
                       </div>
 
                       <div class="col-md-4">
                         <div class="form-group">
-                          <input type="text" class="form-control" placeholder="NOMBRE CORTO">
+                          <input type="text" id="vchNombreCorto" class="form-control" placeholder="NOMBRE CORTO">
                         </div>
                       </div>
 
                       <div class="col-md-4">
                         <div class="form-group">
-                          <select class="form-control">
+                          <select class="form-control" id="iIdTipoCliente">
                             <option>TIPO DE CLIENTE</option>
                             <option>Accounting / Finance</option>
                             <option>Health Care</option>
@@ -308,7 +328,7 @@ session_start();
                       <div class="col-md-4">
                         <div class="form-group">
                           <select class="form-control">
-                            <option>TIPO SUBPRODUCTO</option>
+                            <option>TIPO SUBPROYECTO</option>
                             <option>Part Time</option>
                             <option>Full Time</option>
                             <option>Temperory</option>
@@ -360,26 +380,25 @@ session_start();
 
                       <div class="col-md-4">
                         <div class="form-group">
-                          <input type="text" class="form-control" placeholder="MODELO">
-                        </div>
-                      </div>
-
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <input type="date" placeholder="FECHA DE INGRESO" class="form-control">
-                        </div>
-                      </div>
-
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <input type="text" class="form-control" placeholder="SERIE">
+                          <label style="margin-bottom: -10px;">*FECHA DE INGRESO</label>
+                          <input type="date" id="dFechaIngreso" class="form-control" placeholder=" *FECHA DE INGRESO"
+                            name="FechaIngreso" pattern="\d{4}-\d{2}-\d{2}"
+                            title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required
+                            min="<?php echo $fechaMinima = "1950-01-01"; ?>"
+                            max="<?php echo $fechaMaxima = "2024-01-01"; ?>" maxlength="10">
+                          <?php
+                          $fechaActual = date('Y-m-d');
+                          $fechaMinima = date('Y-m-d', strtotime('-18 years', strtotime($fechaActual)));
+                          $fechaMaxima = $fechaActual;
+                          $fechaLimiteInferior = '1950-01-01';
+                          ?>
                         </div>
                       </div>
 
                       <div class="col-md-4">
                         <div class="form-group">
                           <select class="form-control">
-                            <option>STATUS</option>
+                            <option>ESTATUS</option>
                             <option>Matriculation</option>
                             <option>Intermidiate</option>
                             <option>Gradute</option>
@@ -390,6 +409,15 @@ session_start();
 
                       <div class="col-md-4">
                         <div class="form-group">
+                          <!--<label class="col-md-4 col-form-label">OBSERVACIONES:</label>-->
+                          <textarea class="form-control" id="iIdProyectoAsignado" placeholder="OBSERVACIONES"
+                            onkeypress="this.value = this.value.toUpperCase();return"></textarea>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!--<div class="col-md-4">
+                        <div class="form-group">
                           <select class="form-control">
                             <option>TIPO DE MOVIMIENTO</option>
                             <option>Male</option>
@@ -397,32 +425,32 @@ session_start();
                           </select>
                           <i class="fa fa-caret-down"></i>
                         </div>
-                      </div>
+                      </div>-->
 
-                    </div>
                   </div>
                 </div>
-
-                <div class="signin-option">
-                  <div class="buttons">
-                    <a href="#" class="boton-intec">SIGUIENTE</a>
-                    <a href="#" class="boton-intec">LIMPIAR</a>
-                  </div>
-                </div>
-
               </div>
-            </form>
-          </div>
 
+              <div class="signin-option">
+                <div class="buttons">
+                  <a href="#" class="boton-intec">SIGUIENTE</a>
+                  <a href="#" class="boton-intec">LIMPIAR</a>
+                </div>
+              </div>
+
+          </div>
+          </form>
         </div>
 
       </div>
 
-
-
-
-
     </div>
+
+
+
+
+
+  </div>
   </div>
   </div>
   </div>
@@ -479,6 +507,46 @@ session_start();
 
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
   <script src="js/map.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      // manejar del envío del formulario
+      $('#formularioProyecto').submit(function (event) {
+        // evita envío del formulario por defecto
+        event.preventDefault();
+
+        // valores de los campos del formulario
+        var datosProyecto = {
+          vchNombre: $('#nombre').val(),
+          vchNombreCorto: $('#nombreCorto').val(),
+          iIdTipoCliente: $('#idTipoCliente').val(),
+          iAgruTipoCliente: $('#agruTipoCliente').val(),
+          iCveTipoCliente: $('#cveTipoCliente').val(),
+          vchNombreCliente: $('#nombreCliente').val(),
+          iIdControlProyecto: $('#idControlProyecto').val(),
+          iAgruControlProyecto: $('#agruControlProyecto').val(),
+          iCveControlProyecto: $('#cveControlProyecto').val(),
+          dFechaInicioProyecto: $('#fechaInicioProyecto').val(),
+          dFechaFinProyecto: $('#fechaFinProyecto').val(),
+          iIdEstatus: $('#idEstatus').val(),
+          iAgruEstatus: $('#agruEstatus').val(),
+          iCveEstatus: $('#cveEstatus').val(),
+          iIdPrioridad: $('#idPrioridad').val(),
+          iAgruPrioridad: $('#agruPrioridad').val(),
+          iCvePrioridad: $('#cvePrioridad').val(),
+          iIdLiderProyecto: $('#idLiderProyecto').val(),
+          vchComentarios: $('#comentarios').val(),
+          iIdUsuarioUltModificacion: $('#idUsuarioUltModificacion').val(),
+          iIdProyecto: $('#idProyecto').val(),
+          bResultado: $('#resultado').val(),
+          vchCampoError: $('#campoError').val(),
+          vchMensaje: $('#mensaje').val()
+        };
+
+       
+      });
+    });
+  </script>
 
 </body>
 

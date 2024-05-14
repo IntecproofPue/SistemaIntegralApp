@@ -332,6 +332,23 @@ function searchPersona($vchCadena='') {
         }
     }
 
+    function ObtenerTipoPersona()
+    {
+        if (isset($_SESSION['CatConstante'])) {
+            $datosTipoPersona = $_SESSION['CatConstante'];
+            $PersonaEncontrada = array();
+
+            foreach ($datosTipoPersona as $valorTipoPersona) {
+                if ($valorTipoPersona['iAgrupador'] == 7) {
+                    $PersonaEncontrada[] = $valorTipoPersona;
+                }
+            }
+            return $PersonaEncontrada;
+        } else {
+            echo ("No hay datos de la Persona");
+        }
+    }
+
 
 // Close statement and connection
     sqlsrv_free_stmt($stmt);

@@ -369,7 +369,7 @@ $resultadoGenero = ObtenerIdGenero();
                         $fechaLimiteInferior = '1950-01-01';
                         ?>
                       </div>
-                    </div>
+                    </div> 
 
                     <div class="col-md-4">
                       <div class="form-group">
@@ -546,6 +546,15 @@ $resultadoGenero = ObtenerIdGenero();
       var respuestaFinal = "";
 
       //localStorage.clear(); //Limpiar el localStorage para no almancenar basura
+      var formulario =document.querySelector("#");
+
+      formulario.addEventListener('submit', function(){
+        var titulo = document.querySelector('#').value;
+        if(titulo.length >= 1){
+          localStorage.setItem(titulo, titulo);
+        }
+      });
+     
 
       // Obtener los valores de los elementos del formulario para genero
       var GeneroSeleccionado = document.getElementById('genero');
