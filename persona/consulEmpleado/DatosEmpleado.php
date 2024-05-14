@@ -5,6 +5,11 @@ require_once('../../includes/load.php');
 session_start();
 
 
+header("Access-Control-Allow-Origin: *"); // Permite solicitudes desde cualquier origen
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS"); // Permite métodos HTTP específicos
+header("Access-Control-Allow-Headers: Content-Type, Accept"); // Permite encabezados específicos
+
+
 if (isset($_SESSION['user_id'])) {
     // Si el usuario está autenticado, no se hace nada
 } else {
@@ -688,10 +693,10 @@ $resultadoRegimen = ObtenerIdRegimen();
                                         </div>
                                     </div>
 
-                                    <div class="candidate">
+                                    <div class="candidate" >
                                         <div class="body">
                                             <div class="row">
-                                                <div class="row-left">
+                                                <div class="row-left" id="buttonsModificar">
                                                     <a href="#" class="boton-intec" data-toggle="modal"
                                                        data-target="#apply-popup-id-1" id="buttonModificarEmpleado">MODIFICAR</a>
                                                     <a href="#" class="boton-intec" data-toggle="modal"
@@ -1041,49 +1046,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                                    value="<?php echo date('Y-m-d'); ?>">
                         </div>
 
-                        <script>
-                            /*function ValidarBaja(){
-
-                                var datosBajaEmpleado = {
-
-                                    fechaBaja : document.getElementById('dtFechaBajaModificacion').value,
-                                    proceso : 3, //baja de empleado
-                                    empleado: window.iIdEmpleadoGlobal,
-                                    opcion: 2
-                                };
-
-                                localStorage.setItem('datosBaja', JSON.stringify(datosBajaEmpleado));
-
-
-                                /*var datosBaja = new XMLHttpRequest();
-
-                                datosBaja.open('POST', 'prcActualizaEmpleado.php', true);
-                                datosBaja.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-                                var formData = new URLSearchParams(datosBajaEmpleado).toString();
-
-                                datosBaja.send(formData);
-
-                                datosBaja.onload = function(){
-                                    if (datosBaja.status === 200){
-                                        var respuesta = JSON.parse(datosBaja.responseText);
-                                        if (respuesta.bResultado === 1){
-                                            console.log(respuesta);
-                                            localStorage.setItem('datosBaja', JSON.stringify(datosBajaEmpleado));
-                                            window.location.href = "consultaEmpleado.php";
-                                        }else {
-                                            console.error("Mensaje de error: "+respuesta.vchMensaje);
-                                            alert(respuesta.vchMensaje);
-                                        }
-                                    }else {
-                                        console.error("Error en la solicitud al servidor");
-                                    }
-                                }
-                            }*/
-                        </script>
-                        <button class="button primary-bg btn-block" id="botonAplicarBaja"
-                                onclick=deshabilitarBotonesDinamicos()>APLICAR CAMBIOS
-                        </button>
+                        <button class="button primary-bg btn-block" id="botonAplicarBaja" name = "buttonsAplicar">APLICAR CAMBIOS </button>
 
                     </form>
                 </div>
@@ -1301,36 +1264,46 @@ $resultadoRegimen = ObtenerIdRegimen();
 <script src="MostrarDatosEmpleado.js"></script>
 <script src="FuncionesEmpleado.js"></script>
 
+<script> document.getElementById('botonAplicarBaja').addEventListener('click', ValidarBaja); </script>
 
 <script>
-    let botonGuardarCreado = false; // Variable global para rastrear si el botón "GUARDAR" ya ha sido creado
-    console.log(botonGuardarCreado);
+    function deshabilitarBotones() {
+        document.getElementById('buttonsModificar').querySelectorAll('.boton-intec').forEach(boton => {
+            boton.addEventListener('click', function () {
 
-    document.getElementById('botonAplicarBaja').addEventListener('click', function () {
-        ValidarBaja();
-        if (!botonGuardarCreado) {
-            setTimeout(function () { // Utiliza setTimeout para retrasar la creación del botón
+                const botones = document.querySelectorAll('.boton-intec');
+                botones.forEach(boton => {
+                    boton.style.display = 'none';
+                });
+
+
+                const modales = document.querySelectorAll('.modal.fade');
+                modales.forEach(modal => {
+                    modal.style.display = 'none';
+                });
+
+                const mostrarModal = this.getAttribute('data-modal');
+
+                const modalElement = document.getElementById(mostrarModal);
+                if (modalElement) {
+                    modalElement.style.display = 'block';
+                }
+
                 const buttonGuardarDiv = document.querySelector('.candidate');
-                if (!buttonGuardarDiv) return;
-
                 const buttonGuardar = document.createElement('button');
                 buttonGuardar.textContent = 'GUARDAR';
                 buttonGuardar.className = 'boton-intec';
-                buttonGuardar.style.display = 'block'; // Asegúrate de que el botón se muestre
+                buttonGuardar.style.display = 'none'; // Oculta el botón "Guardar" inicialmente
 
                 buttonGuardarDiv.appendChild(buttonGuardar);
 
-                buttonGuardar.addEventListener('click', function (event) {
-                    event.stopPropagation(); // Evita que el evento se propague
-                    console.log('Botón GUARDAR presionado');
-                });
+                // Muestra el botón "Guardar" cuando se muestra el modal
+                buttonGuardar.style.display = 'block'; // Cambia a 'block' para mostrar el botón "Guardar"
 
-                botonGuardarCreado = true;
-                console.log(botonGuardarCreado);
-            }, 100); // Retraso de 100 milisegundos
-        }
-    });
 
+            });
+        });
+    }
 </script>
 
 
