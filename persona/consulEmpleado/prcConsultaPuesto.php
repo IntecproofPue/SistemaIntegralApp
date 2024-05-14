@@ -3,6 +3,8 @@
 require_once ('../../includes/load.php');
 session_start();
 
+var_dump($_POST);
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $iIdPuesto = $_POST['iIdPuesto'];
 }
@@ -52,6 +54,8 @@ if ($result === false) {
 
     echo json_encode($DatosDomicilioConsulta);
 }
+
+var_dump($DatosDomicilioConsulta);
 
 sqlsrv_free_stmt($result);
 

@@ -368,6 +368,8 @@ if (isset($_SESSION['user_id'])) { ?>
 
                           var datosConsultaEmpleado = new XMLHttpRequest();
 
+                          localStorage.setItem('Request', JSON.stringify(datosConsultaEmpleado));
+
                           if (FormularioConsultaEmpleado.idEmpleado != 0){
                               consultaIndivual();
                           }else{
@@ -375,7 +377,8 @@ if (isset($_SESSION['user_id'])) { ?>
                           }
                           function consultaIndivual(){
                             var datosConsultaEmpleado = new XMLHttpRequest();
-                            
+
+
                               datosConsultaEmpleado.open('POST', 'prcConsultaIndividual.php',true);
                               datosConsultaEmpleado.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
