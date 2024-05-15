@@ -269,16 +269,35 @@ $resultadoSede = ObtenerSede();
                     <div class="row">
                       <input type="hidden" name="iIdConstanteSede" id="iIdConstanteSede" value="">
                       <input type="hidden" name="iClaveSede" id="iClaveSede" value="">
+                      <input type="hidden" name="#" id="" value="">
+
+                      <!-- <div class="col-md-4">
+                    <div class="form-group row">
+                       <label class="col-sm-3 col-form-label">*GENERO:</label>
+                      <select class="form-control" name="genero" id="genero" required>
+                        <option value="" selected>SELECCIONE UN GENERO</option>
+                        <?php foreach ($resultadoGenero as $genero): ?>
+                          <option value="<?= $genero['iIdConstante'] . '-' . $genero['iClaveCatalogo'] ?>">
+                            [<?= $genero['iClaveCatalogo'] ?>] - <?= $genero['vchDescripcion'] ?>
+                          </option>
+                        <?php endforeach; ?>
+                      </select>
+                    </div>
+                    <input type="hidden" name="iIdConstanteGenero" id="iIdConstanteGenero" value="">
+                    <input type="hidden" name="iClaveGenero" id="iClaveGenero" value="">
+                  </div>-->
 
                       <div class="col-md-4">
                         <div class="form-group">
-                          <input type="text" id="vchNombre" class="form-control" placeholder="*NOMBRE DE PROYECTO">
+                          <input type="text" id="vchNombre" class="form-control" placeholder="*NOMBRE DE PROYECTO"
+                            onkeypress="this.value = this.value.toUpperCase();return">
                         </div>
                       </div>
 
                       <div class="col-md-4">
                         <div class="form-group">
-                          <input type="text" id="vchNombreCorto" class="form-control" placeholder="NOMBRE CORTO">
+                          <input type="text" id="vchNombreCorto" class="form-control" placeholder="NOMBRE CORTO"
+                            onkeypress="this.value = this.value.toUpperCase();return">
                         </div>
                       </div>
 
@@ -310,8 +329,9 @@ $resultadoSede = ObtenerSede();
 
                       <div class="col-md-4">
                         <div class="form-group">
-                          <label style="margin-bottom: -10px;">*FECHA DE INICIO</label>
-                          <input type="date" id="dFechaInicio" class="form-control" placeholder=" *FECHA DE INICIO"
+                          <label style="margin-bottom: 0px; margin-top: -15px;">*FECHA DE INICIO</label>
+                          <input type="date" id="dFechaInicio" class="form-control"
+                            style="margin-top: -19px; margin-bottom: 0px;" placeholder=" *FECHA DE INICIO"
                             name="FechaIngreso" pattern="\d{4}-\d{2}-\d{2}"
                             title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required
                             min="<?php echo $fechaMinima = "1950-01-01"; ?>"
@@ -381,8 +401,8 @@ $resultadoSede = ObtenerSede();
                       <div class="col-md-4">
                         <div class="form-group">
                           <label style="margin-bottom: -10px;">*FECHA DE INGRESO</label>
-                          <input type="date" id="dFechaIngreso" class="form-control" placeholder=" *FECHA DE INGRESO"
-                            name="FechaIngreso" pattern="\d{4}-\d{2}-\d{2}"
+                          <input type="date" id="dFechaIngreso" class="form-control" style=" margin-top: -20px; "
+                            placeholder=" *FECHA DE INGRESO" name="FechaIngreso" pattern="\d{4}-\d{2}-\d{2}"
                             title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required
                             min="<?php echo $fechaMinima = "1950-01-01"; ?>"
                             max="<?php echo $fechaMaxima = "2024-01-01"; ?>" maxlength="10">
@@ -487,27 +507,27 @@ $resultadoSede = ObtenerSede();
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="assets/js/jquery.min.js"></script>
-  <script src="assets/js/popper.min.js"></script>
-  <script src="assets/js/bootstrap.min.js"></script>
-  <script src="assets/js/feather.min.js"></script>
-  <script src="assets/js/bootstrap-select.min.js"></script>
-  <script src="assets/js/jquery.nstSlider.min.js"></script>
-  <script src="assets/js/owl.carousel.min.js"></script>
-  <script src="assets/js/visible.js"></script>
-  <script src="assets/js/jquery.countTo.js"></script>
-  <script src="assets/js/chart.js"></script>
-  <script src="assets/js/plyr.js"></script>
-  <script src="assets/js/tinymce.min.js"></script>
-  <script src="assets/js/slick.min.js"></script>
-  <script src="assets/js/jquery.ajaxchimp.min.js"></script>
-  <script src="assets/js/html5-simple-date-input-polyfill.min.js"></script>
+  <script src="../assets/js/jquery.min.js"></script>
+  <script src="../assets/js/popper.min.js"></script>
+  <script src="../assets/js/bootstrap.min.js"></script>
+  <script src="../assets/js/feather.min.js"></script>
+  <script src="../assets/js/bootstrap-select.min.js"></script>
+  <script src="../assets/js/jquery.nstSlider.min.js"></script>
+  <script src="../assets/js/owl.carousel.min.js"></script>
+  <script src="../assets/js/visible.js"></script>
+  <script src="../assets/js/jquery.countTo.js"></script>
+  <script src="../assets/js/chart.js"></script>
+  <script src="../assets/js/plyr.js"></script>
+  <script src="../assets/js/tinymce.min.js"></script>
+  <script src="../assets/js/slick.min.js"></script>
+  <script src="../assets/js/jquery.ajaxchimp.min.js"></script>
+  <script src="../assets/js/html5-simple-date-input-polyfill.min.js"></script>
 
-  <script src="js/custom.js"></script>
+  <script src="../js/custom.js"></script>
 
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
-  <script src="js/map.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="../js/map.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script>
     $(document).ready(function () {
       // manejar del envío del formulario
@@ -543,7 +563,7 @@ $resultadoSede = ObtenerSede();
           vchMensaje: $('#mensaje').val()
         };
 
-       
+
       });
     });
   </script>

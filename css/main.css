@@ -10391,3 +10391,52 @@ input[type="file"] {
     color: #246df8;
   }
 }
+
+.campo-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.campo-item {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.table-like {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ddd; /* borde de la "tabla" */
+  
+  border-radius: 5px; /* bordes redondeados */
+  
+  margin-bottom: 20px; /* espacio inferior */
+  
+}
+
+.table-like-header {
+  display: table-row;
+  background-color: #f5f5f5; /* color de fondo del encabezado */            
+  font-weight: bold;  /* texto en negrita */
+ 
+}
+
+.table-like-header>div {
+  display: table-cell;
+  padding: 8px 10px;/* Espacio interno */            
+  border-bottom: 1px solid #ddd; /* Borde inferior de las celdas del encabezado */
+  
+}
+
+.table-like-row {
+  display: table-row;
+}
+
+.table-like-row>div {
+  display: table-cell;
+  padding: 8px 10px;/* Espacio interno */            
+  border-bottom: 1px solid #ddd;  /* Borde inferior de las celdas */
+ 
+}
