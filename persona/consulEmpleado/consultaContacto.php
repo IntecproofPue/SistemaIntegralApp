@@ -370,7 +370,7 @@ $resultadoContacto = ObtenerTipoContacto();
                           <div class="breadcrumb-form" style="display: flex; justify-content: flex-end;">
                             <div class="body">
                             <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-1"
-                              style="display:none;" id="buttonAgregar">AGREGAR</a>
+                              style="display:none;" id="buttonAgregar">AGREGAR NUEVO</a>
                             </div>
                           </div>
                         </div>
@@ -533,7 +533,8 @@ $resultadoContacto = ObtenerTipoContacto();
 
 
                   var datosContactoNuevo = new XMLHttpRequest();
-                  datosContactoNuevo.open('POST', '/SisAdmonIntecproof/persona/altaPersona/validarDatosContacto.php', true);
+                  //datosContactoNuevo.open('POST', 'SisAdmonIntecproof/persona/altaPersona/validarDatosContacto.php', true);
+                  datosContactoNuevo.open('POST', '/SistemaIntegralApp/persona/altaPersona/validarDatosContacto.php', true);
                   datosContactoNuevo.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
                   var formData = new URLSearchParams(datosContactoNew).toString();
@@ -556,7 +557,7 @@ $resultadoContacto = ObtenerTipoContacto();
               </script>
               <div class="row">
                 <a class="boton-intec" href="#" id="buttonGuardarContacto" data-toggle="modal"
-                  data-target="#apply-popup-id-1">GUARDAR </a>
+                  data-target="#apply-popup-id-1">AGREGAR</a>
               </div>
               <script>
                 document.getElementById('buttonGuardarContacto').addEventListener('click', validarContactoNuevo);
@@ -774,7 +775,9 @@ $resultadoContacto = ObtenerTipoContacto();
                 </div>
 
              <div class="boton-intec${i}">
-                <a  href="#" class="boton-intec" id="buttonBaja${i}" style="display: none">BAJA</a>
+                
+      <img id="buttonBaja${i}" src="../../trash-can_38501.png" style="width: 50px; height: auto; display: none;" >
+ 
           </div>
         
       </div>

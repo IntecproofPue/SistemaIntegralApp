@@ -30,7 +30,10 @@ async function cargarDocumento(event) {
 async function enviarArchivoAlServidor(base64Data, nombreArchivo){
     try{
 
-        var base64Limpia = base64Data.replace(/^data:pdf;base64, /, '');
+        // Guardar el nombre del archivo en el localStorage
+        localStorage.setItem('nombreDocto', nombreDocto);
+
+        var base64Limpia = base64Data.replace(/^data:application\/pdf;base64,/, '');
         var byteCharacters = atob(base64Limpia);
         var byteNumbers = new Array(byteCharacters.length);
         for (var i=0; i<byteCharacters.length; i++){
@@ -42,7 +45,7 @@ async function enviarArchivoAlServidor(base64Data, nombreArchivo){
         var formData = new FormData();
         formData.append("archivo", blob, nombreArchivo);
 
-        var urlEndPoint = "http://localhost:8080/";
+        var urlEndPoint = "http://localhost/SistemaIntegralApp/doctosPDF";
 
         await fetch(urlEndPoint, {
             method: "POST",
