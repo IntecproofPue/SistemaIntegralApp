@@ -1,6 +1,6 @@
 <?php
-require_once ('../../includes/pandora.php');
-require_once ('../../includes/load.php');
+require_once('../../includes/pandora.php');
+require_once('../../includes/load.php');
 
 session_start();
 
@@ -17,7 +17,7 @@ function ObtenerTipoDocumento()
         }
         return $documentosEncontrados;
     } else {
-        echo ("No hay datos del Estado de Procedencia");
+        echo("No hay datos del Estado de Procedencia");
     }
 }
 
@@ -41,14 +41,14 @@ $resultadoDocumento = ObtenerTipoDocumento();
 
     <!-- External Css -->
     <link rel="stylesheet" href="../../assets/css/fontawesome-all.min.css">
-    <link rel="stylesheet" href="../../assets/css/themify-icons.css" />
-    <link rel="stylesheet" href="../../assets/css/et-line.css" />
-    <link rel="stylesheet" href="../../assets/css/bootstrap-select.min.css" />
-    <link rel="stylesheet" href="../../assets/css/plyr.css" />
-    <link rel="stylesheet" href="../../assets/css/flag.css" />
-    <link rel="stylesheet" href="../../assets/css/slick.css" />
-    <link rel="stylesheet" href="../../assets/css/owl.carousel.min.css" />
-    <link rel="stylesheet" href="../../assets/css/jquery.nstSlider.min.css" />
+    <link rel="stylesheet" href="../../assets/css/themify-icons.css"/>
+    <link rel="stylesheet" href="../../assets/css/et-line.css"/>
+    <link rel="stylesheet" href="../../assets/css/bootstrap-select.min.css"/>
+    <link rel="stylesheet" href="../../assets/css/plyr.css"/>
+    <link rel="stylesheet" href="../../assets/css/flag.css"/>
+    <link rel="stylesheet" href="../../assets/css/slick.css"/>
+    <link rel="stylesheet" href="../../assets/css/owl.carousel.min.css"/>
+    <link rel="stylesheet" href="../../assets/css/jquery.nstSlider.min.css"/>
 
     <!-- Custom Css -->
     <link rel="stylesheet" type="text/css" href="../../css/main.css">
@@ -80,460 +80,236 @@ $resultadoDocumento = ObtenerTipoDocumento();
 
 <body>
 
-    <header class="header-2">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <div class="header-top">
-                        <div class="logo-area">
-                            <a href="../../inicio.php"><img src="../../images/logo-2.png" alt=""></a>
-                        </div>
-                        <div class="header-top-toggler">
-                            <div class="header-top-toggler-button"></div>
-                        </div>
-                        <div class="top-nav">
-                            <div class="dropdown header-top-notification">
-                                <a href="#" class="notification-button"><?php echo $notificacionesTxt; ?></a>
-                                <div class="notification-card">
-                                    <div class="notification-head">
-                                        <span>Notificaciones</span>
-                                        <a href="#">Marcar todo como leido</a>
-                                    </div>
-                                    <div class="notification-body">
-                                        <a href="../../home-2.html" class="notification-list">
-                                            <i class="fas fa-bolt"></i>
-                                            <p>Tu CV actualizado</p>
-                                            <span class="time">5 hours ago</span>
-                                        </a>
-                                        <a href="#" class="notification-list">
-                                            <i class="fas fa-arrow-circle-down"></i>
-                                            <p>Alguien descargo tu CV</p>
-                                            <span class="time">11 hours ago</span>
-                                        </a>
-                                        <a href="#" class="notification-list">
-                                            <i class="fas fa-check-square"></i>
-                                            <p>solicitaste un puesto de.... <span>@homeland</span></p>
-                                            <span class="time">11 hours ago</span>
-                                        </a>
-                                        <a href="#" class="notification-list">
-                                            <i class="fas fa-user"></i>
-                                            <p>Cambiaste la contraseña</p>
-                                            <span class="time">5 hours ago</span>
-                                        </a>
-                                        <a href="#" class="notification-list">
-                                            <i class="fas fa-arrow-circle-down"></i>
-                                            <p>Alguien descargo tu CV</p>
-                                            <span class="time">11 hours ago</span>
-                                        </a>
-                                    </div>
-                                    <div class="notification-footer">
-                                        <a href="#">Ver Notificaciones</a>
-                                    </div>
+<header class="header-2">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="header-top">
+                    <div class="logo-area">
+                        <a href="../../inicio.php"><img src="../../images/logo-2.png" alt=""></a>
+                    </div>
+                    <div class="header-top-toggler">
+                        <div class="header-top-toggler-button"></div>
+                    </div>
+                    <div class="top-nav">
+                        <div class="dropdown header-top-notification">
+                            <a href="#" class="notification-button"><?php echo $notificacionesTxt; ?></a>
+                            <div class="notification-card">
+                                <div class="notification-head">
+                                    <span>Notificaciones</span>
+                                    <a href="#">Marcar todo como leido</a>
+                                </div>
+                                <div class="notification-body">
+                                    <a href="../../home-2.html" class="notification-list">
+                                        <i class="fas fa-bolt"></i>
+                                        <p>Tu CV actualizado</p>
+                                        <span class="time">5 hours ago</span>
+                                    </a>
+                                    <a href="#" class="notification-list">
+                                        <i class="fas fa-arrow-circle-down"></i>
+                                        <p>Alguien descargo tu CV</p>
+                                        <span class="time">11 hours ago</span>
+                                    </a>
+                                    <a href="#" class="notification-list">
+                                        <i class="fas fa-check-square"></i>
+                                        <p>solicitaste un puesto de.... <span>@homeland</span></p>
+                                        <span class="time">11 hours ago</span>
+                                    </a>
+                                    <a href="#" class="notification-list">
+                                        <i class="fas fa-user"></i>
+                                        <p>Cambiaste la contraseña</p>
+                                        <span class="time">5 hours ago</span>
+                                    </a>
+                                    <a href="#" class="notification-list">
+                                        <i class="fas fa-arrow-circle-down"></i>
+                                        <p>Alguien descargo tu CV</p>
+                                        <span class="time">11 hours ago</span>
+                                    </a>
+                                </div>
+                                <div class="notification-footer">
+                                    <a href="#">Ver Notificaciones</a>
                                 </div>
                             </div>
-                            <?php
+                        </div>
+                        <?php
 
-                            $user = obtenerUsuario($_SESSION['user_id']);
-                            $row = $GLOBALS['rowObtenerNombre'];
-                            $nombrePersona = $row['nombrePersona'];
-                            $emailPersona = $row['contacto'];
+                        $user = obtenerUsuario($_SESSION['user_id']);
+                        $row = $GLOBALS['rowObtenerNombre'];
+                        $nombrePersona = $row['nombrePersona'];
+                        $emailPersona = $row['contacto'];
 
-                            ?>
-                            <div class="dropdown header-top-account">
-                                <a href="#" class="account-button"><?php echo $miCuentaTxt; ?></a>
-                                <div class="account-card">
-                                    <div class="header-top-account-info">
-                                        <a href="#" class="account-thumb">
-                                            <img src="../../images/account/thumb-1.jpg" class="img-fluid" alt="">
-                                        </a>
-                                        <div class="account-body">
-                                            <h5><a href="#"><?php echo $nombrePersona; ?></a></h5>
-                                            <span class="mail"><?php echo $emailPersona; ?></span>
-                                        </div>
+                        ?>
+                        <div class="dropdown header-top-account">
+                            <a href="#" class="account-button"><?php echo $miCuentaTxt; ?></a>
+                            <div class="account-card">
+                                <div class="header-top-account-info">
+                                    <a href="#" class="account-thumb">
+                                        <img src="../../images/account/thumb-1.jpg" class="img-fluid" alt="">
+                                    </a>
+                                    <div class="account-body">
+                                        <h5><a href="#"><?php echo $nombrePersona; ?></a></h5>
+                                        <span class="mail"><?php echo $emailPersona; ?></span>
                                     </div>
-                                    <ul class="account-item-list">
-                                        <li><a href="#"><span class="ti-user"></span><?php echo $Perfil; ?></a></li>
-                                        <li><a href="#"><span
+                                </div>
+                                <ul class="account-item-list">
+                                    <li><a href="#"><span class="ti-user"></span><?php echo $Perfil; ?></a></li>
+                                    <li><a href="#"><span
                                                     class="ti-settings"></span><?php echo $herramientas; ?></a></li>
-                                        <li><a href="../../includes/logout.php"><span
+                                    <li><a href="../../includes/logout.php"><span
                                                     class="ti-power-off"></span><?php echo $logout; ?></a></li>
-                                    </ul>
-                                </div>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                    <!-- pestañas de navegación-->
-                    <div class="skill-and-profile">
-                        <div class="skill" style="display: flex; justify-content: center;">
-                            <label style="align-self: flex-end;"><a href="DatosEmpleado.php">EMPLEADO</a></label>
-                            <label style="align-self: flex-end;"><a
-                                    href="../consulEmpleado/consultaPuesto.php ">PUESTO</a></label>
-                            <label style="align-self: flex-end;"><a href="consultaDomicilio.php">DOMICILIO</a></label>
-                            <label style="align-self: flex-end;"><a href="consultaContacto.php">CONTACTO</a></label>
-                            <label style="align-self: flex-end;" class="selected"><a
-                                    href="consultaDoctos.php">DOCUMENTOS</a></label>
-                        </div>
-                    </div>
-                    <!-- fin de pestañas de navegación-->
                 </div>
+                <!-- pestañas de navegación-->
+                <div class="skill-and-profile">
+                    <div class="skill" style="display: flex; justify-content: center;">
+                        <label style="align-self: flex-end;"><a href="DatosEmpleado.php">EMPLEADO</a></label>
+                        <label style="align-self: flex-end;"><a
+                                    href="../consulEmpleado/consultaPuesto.php ">PUESTO</a></label>
+                        <label style="align-self: flex-end;"><a href="consultaDomicilio.php">DOMICILIO</a></label>
+                        <label style="align-self: flex-end;"><a href="consultaContacto.php">CONTACTO</a></label>
+                        <label style="align-self: flex-end;" class="selected"><a
+                                    href="consultaDoctos.php">DOCUMENTOS</a></label>
+                    </div>
+                </div>
+                <!-- fin de pestañas de navegación-->
             </div>
         </div>
-    </header>
+    </div>
+</header>
 
-    <!-- Contenido de la página -->
-    <div class="alice-bg section-padding-bottom">
-        <div class="container no-gliters">
-            <div class="row justify-content-center">
-                <div class="col">
-                    <div class="post-content-wrapper">
-                        <form action="altaDocumentos" method="post" class="dashboard-form">
-                            <div id="information" class="row justify-content-center">
-                                <div class="col-md-12">
+<!-- Contenido de la página -->
+<div class="alice-bg section-padding-bottom">
+    <div class="container no-gliters">
+        <div class="row justify-content-center">
+            <div class="col">
+                <div class="post-content-wrapper">
+                    <form action="altaDocumentos" method="post" class="dashboard-form">
+                        <div id="information" class="row justify-content-center">
+                            <div class="col-md-12">
 
-                                    <div class="candidate">
-                                        <div class="body">
-                                            <label class="col-form-label">
-                                                <h6><i data-feather="user-check"></i>INFORMACION DE DOCUMENTOS
-                                                </h6>
-                                            </label>
-                                            <div class="row-left">
-                                                <a href="#" class="boton-intec" data-toggle="modal"
-                                                    data-target="#apply-popup-id-2" style="display:none;">AGREGAR</a>
-                                            </div>
+                                <div class="candidate">
+                                    <div class="body">
+                                        <label class="col-form-label">
+                                            <h6><i data-feather="user-check"></i>INFORMACION DE DOCUMENTOS
+                                            </h6>
+                                        </label>
+                                        <div class="row-left">
+                                            <a href="#" class="boton-intec" data-toggle="modal"
+                                               data-target="#apply-popup-id-2" style="display:none;">AGREGAR</a>
                                         </div>
                                     </div>
+                                </div>
 
-                                    <!-- INICIO DE TITULOS -->
-                                    <div class="employer">
-                                        <div class="body">
-                                            <div class="row">
-                                                <div class="body">
-                                                    <div class="col-md-3">
-                                                        <div class="form-group">
-                                                            <label class="col-form-label">TIPO DE
-                                                                DOCUMENTO</label>
-                                                        </div>
+                                <!-- INICIO DE TITULOS -->
+                                <div class="employer">
+                                    <div class="body">
+                                        <div class="row">
+                                            <div class="body">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="col-form-label">TIPO DE
+                                                            DOCUMENTO</label>
                                                     </div>
-                                                    <div class="col-md-3">
-                                                        <div class="form-group">
-                                                            <label class="col-form-label"> ESTATUS DE DOCUMENTO </label>
-                                                        </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="col-form-label"> ESTATUS DE DOCUMENTO </label>
                                                     </div>
-                                                    <div class="col-md-3">
-                                                        <div class="form-group">
-                                                            <label class="col-form-label">USUARIO ULTIMA
-                                                                MODIFICACION</label>
-                                                        </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="col-form-label">USUARIO ULTIMA
+                                                            MODIFICACION</label>
                                                     </div>
-                                                    <div class="col-md-3">
-                                                        <div class="form-group ">
-                                                            <label class="col-form-label">FECHA ULTIMA
-                                                                MODIFICACION</label>
-                                                        </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group ">
+                                                        <label class="col-form-label">FECHA ULTIMA
+                                                            MODIFICACION</label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="employer" id="agregarDocumentos"></div>
-
-
                                 </div>
+
+                                <div class="employer" id="agregarDocumentos"></div>
+
+
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- inicio de modales -->
-    <div class="apply-popup">
-        <div class="modal fade" id="apply-popup-id-1" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content" style="width: 800px; height: auto; padding: 50px;">
+<!-- inicio de modales -->
+<div class="apply-popup">
+    <div class="modal fade" id="apply-popup-id-2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form class="dashboard-form" id="AltaPersona">
+                    <input type="hidden" name="iIdConstanteDocumento" id="iIdConstanteDocumento" value="">
+                    <input type="hidden" name="iClaveDocumento" id="iClaveDocumento" value="">
+                    <input type="hidden" name="iIdPersonaDocumento" id="iIdPersonaDocumento" value="">
+
                     <div class="modal-header">
                         <h5 class="modal-title"><i data-feather="edit"></i>ALTA DE DOCUMENTOS</h5>
                     </div>
                     <div class="modal-body">
-                        <form class="dashboard-form" id="AltaPersona">
-
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">TIPO DE DOCUMENTO:</label>
-                                <div class="col-sm-9">
-                                    <input type="text" id="docuento" class="form-control"
-                                        placeholder="TIPO DE DOCUMENTO">
-                                </div>
-                            </div>
-
-
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">PRIMER APELLIDO:</label>
-                                <div class="col-sm-9">
-                                    <input type="text" id="primerApellido" class="form-control"
-                                        placeholder="PRIMER APELLIDO" min="2" name="primerApellido" maxlength="50"
-                                        onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)"
-                                        required>
-                                </div>
-                            </div>
-
-
-
-                            <div class="row">
-                                <a class="boton-intec" href="#" id="buttonGuardarContacto" data-toggle="modal"
-                                    data-target="#apply-popup-id-1">BORRAR</a>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="apply-popup">
-        <div class="modal fade" id="apply-popup-id-2" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <form class="dashboard-form" id="AltaPersona">
-                        <input type="hidden" name="iIdConstanteDocumento" id="iIdConstanteDocumento" value="">
-                        <input type="hidden" name="iClaveDocumento" id="iClaveDocumento" value="">
-                        <input type="hidden" name="iIdPersonaDocumento" id="iIdPersonaDocumento" value="">
-
-                        <div class="modal-body">
-                            <div class="form-group">
+                        <div class="form-group">
                             <select class="form-control" id="iIdDocumentoAgregar" name="iIdDocumento[]">
-                                <option value="">TIPO DE DOCUMENTO: </option>
+                                <option value="">TIPO DE DOCUMENTO:</option>
                                 <?php foreach ($resultadoDocumento as $documento): ?>
                                     <option value="<?= $documento['iIdConstante'] . '-' . $documento['iClaveCatalogo'] ?>">
                                         [<?= $documento['iClaveCatalogo'] ?>] - <?= $documento['vchDescripcion'] ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
-                            </div>
-                                                       <div class="form-group file-input-wrap">
-                                <option value="">CARGAR DOCUMENTO: </option>
-                                <label for="up-cv">
-                                    <input id="up-cv" type="file" onchange="cargarDocumento(event)">
-                                    <i data-feather="upload-cloud"></i>
-                                    <p id = "nombreArchivo">NOMBRE DEL ARCHIVO<p>(pdf,zip,doc,docx)</p></p>
-                                </label>
-                            </div>
-
-
-                            <script>
-                                function validarDocumento(){
-
-                                    console.log ("entró al proceso");
-
-                                    var TipoDocumentoSeleccionado = document.getElementById('iIdDocumentoAgregar');
-                                    var DocumentoPartes = TipoDocumentoSeleccionado.value.split('-');
-                                    var iIdConstanteDocumento = DocumentoPartes[0];
-                                    var TipoDocumento = DocumentoPartes[1];
-
-
-                                    document.getElementById('iIdConstanteDocumento').value = iIdConstanteDocumento;
-                                    document.getElementById('iClaveDocumento').value = TipoDocumento;
-
-
-                                    var DatosDocumentosEmpleado = localStorage.getItem('datosConsultaIndividual');
-                                    var bResultadoDocumentos = JSON.parse(DatosDocumentosEmpleado);
-                                    var iIdPersonaDocumentos = bResultadoDocumentos.iIdEmpleado;
-
-                                    console.log(iIdPersonaDocumentos);
-
-                                    document.getElementById('iIdPersonaDocumento').value = iIdPersonaDocumentos;
-
-                                    var datosDocumentoAdd = {
-                                       iIdConstanteDocumento: iIdConstanteDocumento,
-                                       iClaveDocumento: TipoDocumento,
-                                       empleado: iIdPersonaDocumentos,
-                                       url:  localStorage.getItem('urlArchivo')
-                                    };
-
-                                    console.log(datosDocumentoAdd);
-                                    localStorage.setItem('datosPruebaDocumentos', JSON.stringify(datosDocumentoAdd));
-
-
-                                    var datosDocumentosNew = new XMLHttpRequest();
-                                    datosDocumentosNew.open('POST', '/SisAdmonIntecproof/persona/altaPersona/validarDatosDocumentos.php', true);
-                                    datosDocumentosNew.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-                                    var formData = new URLSearchParams({
-                                        iIdConstanteDocumento: datosDocumentoAdd.iIdConstanteDocumento,
-                                        iClaveDocumento: datosDocumentoAdd.iClaveDocumento,
-                                        empleado: datosDocumentoAdd.empleado,
-                                        url: datosDocumentoAdd.url
-                                    }).toString();
-
-                                    datosDocumentosNew.send(formData);
-
-                                    localStorage.setItem('datosFormData', JSON.stringify(formData));
-
-
-                                    datosDocumentosNew.onload = function (){
-                                        if (datosDocumentosNew.status === 200){
-                                            var respuesta = JSON.parse(datosDocumentosNew.responseText);
-                                            if (respuesta.bResultado === 1){
-                                                localStorage.setItem('agregarDocumento', JSON.stringify(datosDocumentoAdd));
-                                                alert(respuesta.vchMensaje);
-                                            }else {
-                                                console.log("Mensaje de error: ", respuesta.vchMensaje);
-                                                alert(respuesta.vchMensaje);
-                                            }
-                                        }
-                                    }
-
-                                    datosDocumentosNew.onerror = function (){
-                                        console.error("Error en la solicitud: ", datosDocumentosNew.statusText);
-                                        alert ("Hubo un error al procesar la información");
-                                    }
-
-                                }
-
-                            </script>
-
-                            <button class="boton-intec" id="buttonGuardarDocumento">GUARDAR</button>
-                            <script>
-                                document.getElementById('buttonGuardarDocumento').addEventListener('click', validarDocumento);
-                            </script>
-
-
                         </div>
+                        <div class="form-group file-input-wrap">
+                            <option value="">CARGAR DOCUMENTO:</option>
+                            <label for="up-cv">
+                                <input id="up-cv" type="file" onchange="cargarDocumento(event)">
+                                <i data-feather="upload-cloud"></i>
+                                <p id="nombreArchivo">NOMBRE DEL ARCHIVO
+                                <p>(pdf,zip,doc,docx)</p></p>
+                            </label>
+                        </div>
+                        <button class="boton-intec" id="buttonGuardarDocumento">GUARDAR</button>
 
-                        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.min.js"></script>
-                        <script>
-                            function cargarDocumento(event){
-                                var documento = event.target.files[0];
-                                if (!documento){
-                                    return;
-                                }
-                                var leerDocumento = new FileReader();
-                                leerDocumento.onload = function (e){
-                                    var data = new Uint8Array(e.target.result);
-                                    pdfjsLib.getDocument(data).promise.then(function (pdf){
-                                        renderizarPdf(pdf);
-                                    });
-                                };
-                                leerDocumento.readAsArrayBuffer(documento);
+                    </div>
 
-                                var fileName = document.getElementById('nombreArchivo');
-                                fileName.textContent = 'NOMBRE DEL ARCHIVO: '+documento.name;
-
-                                var openRequest = indexedDB.open("BaseDatosDocumentos", 1);
-                                openRequest.onupgradeneeded = function (e){
-                                    var db = e.target.result;
-                                    if (!db.objectStoreNames.contains('archivosPDF')){
-                                        db.createObjectStore('archivosPDF', {keyPath: 'id'});
-                                    }
-                                };
-
-                                openRequest.onsuccess = function (e) {
-                                    var db = e.target.result;
-                                    var transaccion = db.transaction(["archivosPDF"], "readwrite");
-                                    var objectStore = transaccion.objectStore("archivosPDF");
-
-
-                                    var objetoAgregado = {
-                                        id: documento.name,
-                                        data: documento
-                                    };
-
-
-                                    var request = objectStore.add(objetoAgregado);
-
-                                    request.onerror = function (e) {
-                                        console.log("Error al agregar el archivo:", e.target.error);
-                                    };
-
-                                    request.onsuccess = function (e) {
-                                        console.log("Archivo agregado exitosamente");
-                                        visualizarArchivo(documento.name);
-
-
-                                    };
-                                }
-                            }
-
-                            function visualizarArchivo (idArchivo){
-                                var openRequest = indexedDB.open("BaseDatosDocumentos", 1);
-                                openRequest.onsuccess = function (e){
-                                    var db = e.target.result;
-                                    var transaction = db.transaction(["archivosPDF"], "readonly");
-                                    var objectStore = transaction.objectStore("archivosPDF");
-                                    var request = objectStore.get(idArchivo);
-
-                                    request.onsuccess = function (e){
-                                        if (request.result) {
-                                            var blob = new Blob([request.result.data], {type: "application/pdf"});
-
-                                            var urlArchivo = URL.createObjectURL(blob);
-
-                                            localStorage.setItem('urlArchivo', urlArchivo);
-
-                                            window.open(urlArchivo, '_blank')
-                                        }else {
-                                            console.log ("No se encontró el archivo")
-                                        }
-                                    }
-                                }
-                            }
-
-                            function renderizarPdf(pdf) {
-                                var pageNumber = 1;
-                                pdf.getPage(pageNumber).then(function(page) {
-                                    var scale = 1.5;
-                                    var viewport = page.getViewport({scale: scale});
-
-                                    var canvas = document.createElement('canvas');
-                                    var context = canvas.getContext('2d');
-                                    canvas.height = viewport.height;
-                                    canvas.width = viewport.width;
-
-                                    canvas.style.display = "block";
-                                    canvas.style.margin = "auto";
-
-                                    var renderContext = {
-                                        canvasContext: context,
-                                        viewport: viewport
-                                    };
-                                    page.render(renderContext).promise.then(function() {
-                                        var modalBody = document.querySelector('#apply-popup-id-2.modal.fade');
-
-                                    });
-                                });
-
-                            }
-
-                        </script>
-
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
     </div>
-    <!-- final de modales -->
+</div>
+<!-- final de modales -->
 
-    <!-- Footer -->
-    <footer class="footer-bg">
-        <div class="footer-bottom-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <div class="footer-bottom border-top">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <a href="#">
-                                        <img src="../../images/footer-logo.png" class="img-fluid" alt="">
-                                    </a>
-                                    <p class="copyright-text">DERECHOS DE AUTOR <a href="#">INTECPROOF</a> 2024,
-                                        RESERVADOS</p>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="back-to-top">
-                                        <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
-                                    </div>
+<!-- Footer -->
+<footer class="footer-bg">
+    <div class="footer-bottom-area">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="footer-bottom border-top">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <a href="#">
+                                    <img src="../../images/footer-logo.png" class="img-fluid" alt="">
+                                </a>
+                                <p class="copyright-text">DERECHOS DE AUTOR <a href="#">INTECPROOF</a> 2024,
+                                    RESERVADOS</p>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="back-to-top">
+                                    <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -541,159 +317,119 @@ $resultadoDocumento = ObtenerTipoDocumento();
                 </div>
             </div>
         </div>
-    </footer>
-    <!-- Footer End -->
+    </div>
+</footer>
+<!-- Footer End -->
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="../../assets/js/jquery.min.js"></script>
-    <script src="../../assets/js/popper.min.js"></script>
-    <script src="../../assets/js/bootstrap.min.js"></script>
-    <script src="../../assets/js/feather.min.js"></script>
-    <script src="../../assets/js/bootstrap-select.min.js"></script>
-    <script src="../../assets/js/jquery.nstSlider.min.js"></script>
-    <script src="../../assets/js/owl.carousel.min.js"></script>
-    <script src="../../assets/js/visible.js"></script>
-    <script src="../../assets/js/jquery.countTo.js"></script>
-    <script src="../../assets/js/chart.js"></script>
-    <script src="../../assets/js/plyr.js"></script>
-    <script src="../../assets/js/tinymce.min.js"></script>
-    <script src="../../assets/js/slick.min.js"></script>
-    <script src="../../assets/js/jquery.ajaxchimp.min.js"></script>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="../../assets/js/jquery.min.js"></script>
+<script src="../../assets/js/popper.min.js"></script>
+<script src="../../assets/js/bootstrap.min.js"></script>
+<script src="../../assets/js/feather.min.js"></script>
+<script src="../../assets/js/bootstrap-select.min.js"></script>
+<script src="../../assets/js/jquery.nstSlider.min.js"></script>
+<script src="../../assets/js/owl.carousel.min.js"></script>
+<script src="../../assets/js/visible.js"></script>
+<script src="../../assets/js/jquery.countTo.js"></script>
+<script src="../../assets/js/chart.js"></script>
+<script src="../../assets/js/plyr.js"></script>
+<script src="../../assets/js/tinymce.min.js"></script>
+<script src="../../assets/js/slick.min.js"></script>
+<script src="../../assets/js/jquery.ajaxchimp.min.js"></script>
 
-    <script src="../../js/custom.js"></script>
-    <script src="../../dashboard/js/dashboard.js"></script>
-    <script src="../../dashboard/js/datePicker.js"></script>
-    <script src="../../dashboard/js/upload-input.js"></script>
+<script src="../../js/custom.js"></script>
+<script src="../../dashboard/js/dashboard.js"></script>
+<script src="../../dashboard/js/datePicker.js"></script>
+<script src="../../dashboard/js/upload-input.js"></script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
-    <script src="../../js/map.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
+<script src="../../js/map.js"></script>
+<script src="ProcesosDocumentosEmpleado.js"></script>
 
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-
-            var datosDocumentos = localStorage.getItem('datosConsultaIndividual');
-            var bResultadoDocumentos = JSON.parse(datosDocumentos);
-
-            var iIdEmpleadoDoctos = bResultadoDocumentos.iIdEmpleado;
-
-            var datosDocumentos = new XMLHttpRequest();
-            datosDocumentos.open('POST', 'prcConsultaDocumentos', true);
-
-            var formData = new URLSearchParams();
-            formData.append('iIdEmpleadoDocumento', iIdEmpleadoDoctos);
-
-            datosDocumentos.send(formData);
-
-            datosDocumentos.onload = function () {
-                if (datosDocumentos.status === 200) {
-
-                    var respuesta = JSON.parse(datosDocumentos.responseText);
-
-                    if (respuesta[0].bResultado === 1) {
-                        localStorage.setItem('datosConsultaDocumentos', JSON.stringify(respuesta));
-
-                        var datosDocumentosConsulta = localStorage.getItem('datosConsultaDocumentos');
-
-                        if (datosDocumentosConsulta) {
-                            var bResultado = JSON.parse(datosDocumentosConsulta);
-
-                            let longitudDocumentos = bResultado.length;
-
-                            insertarDocumentos(longitudDocumentos);
-
-                            for (var i = 0; i < longitudDocumentos; i++) {
-                                var iIdTipoDocumento = 'vchTipoDocumento' + i;
-                                var iIdEstatusDocumento = 'vchEstatusDocumento' + i;
-                                var iIdUsuarioUltModificacion = 'iIdUsuarioUltModificacion' + i;
-                                var dFechaModificacion = 'dtFechaUltModificacion' + i;
+<script> document.getElementById('buttonGuardarDocumento').addEventListener('click', validarDocumento); </script>
 
 
-                                var vchTipoDocumentoForm = document.getElementById(iIdTipoDocumento);
-                                vchTipoDocumentoForm.value = bResultado[i].vchTipoDocto;
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var datosDocumentos = localStorage.getItem('datosConsultaIndividual');
+        var bResultadoDocumentos = JSON.parse(datosDocumentos);
 
-                                var vchEstatusForm = document.getElementById(iIdEstatusDocumento);
-                                vchEstatusForm.value = bResultado[i].vchActivo;
+        var iIdEmpleadoDoctos = bResultadoDocumentos.iIdEmpleado;
 
-                                var vchUsuarioForm = document.getElementById(iIdUsuarioUltModificacion);
-                                vchUsuarioForm.value = bResultado[i].vchUsuarioUltModificacion;
+        var datosDocumentos = new XMLHttpRequest();
+        datosDocumentos.open('POST', 'prcConsultaDocumentos', true);
 
-                                var dFechaUltModifForm = bResultado[i].dtFechaUltModificacion.date;
-                                var fechaModif = new Date(dFechaUltModifForm);
+        var formData = new URLSearchParams();
+        formData.append('iIdEmpleadoDocumento', iIdEmpleadoDoctos);
 
-                                var fechaModifFinal = fechaModif.toLocaleString('es-ES', {
-                                    day: '2-digit',
-                                    month: '2-digit',
-                                    year: 'numeric',
-                                    hour: '2-digit',
-                                    minute: '2-digit',
-                                    second: '2-digit',
-                                    hour12: false
-                                });
+        datosDocumentos.send(formData);
 
-                                var dFechaModificacionForm = document.getElementById(dFechaModificacion);
-                                dFechaModificacionForm.value = fechaModifFinal
-                            }
+        datosDocumentos.onload = function () {
+            if (datosDocumentos.status === 200) {
+
+                var respuesta = JSON.parse(datosDocumentos.responseText);
+
+                if (respuesta[0].bResultado === 1) {
+                    localStorage.setItem('datosConsultaDocumentos', JSON.stringify(respuesta));
+
+                    var datosDocumentosConsulta = localStorage.getItem('datosConsultaDocumentos');
+
+                    if (datosDocumentosConsulta) {
+                        var bResultado = JSON.parse(datosDocumentosConsulta);
+
+                        let longitudDocumentos = bResultado.length;
+
+                        insertarDocumentos(longitudDocumentos);
+
+                        for (var i = 0; i < longitudDocumentos; i++) {
+                            var iIdTipoDocumento = 'vchTipoDocumento' + i;
+                            var iIdEstatusDocumento = 'vchEstatusDocumento' + i;
+                            var iIdUsuarioUltModificacion = 'iIdUsuarioUltModificacion' + i;
+                            var dFechaModificacion = 'dtFechaUltModificacion' + i;
+
+
+                            var vchTipoDocumentoForm = document.getElementById(iIdTipoDocumento);
+                            vchTipoDocumentoForm.value = bResultado[i].vchTipoDocto;
+
+                            var vchEstatusForm = document.getElementById(iIdEstatusDocumento);
+                            vchEstatusForm.value = bResultado[i].vchActivo;
+
+                            var vchUsuarioForm = document.getElementById(iIdUsuarioUltModificacion);
+                            vchUsuarioForm.value = bResultado[i].vchUsuarioUltModificacion;
+
+                            var dFechaUltModifForm = bResultado[i].dtFechaUltModificacion.date;
+                            var fechaModif = new Date(dFechaUltModifForm);
+
+                            var fechaModifFinal = fechaModif.toLocaleString('es-ES', {
+                                day: '2-digit',
+                                month: '2-digit',
+                                year: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                second: '2-digit',
+                                hour12: false
+                            });
+
+                            var dFechaModificacionForm = document.getElementById(dFechaModificacion);
+                            dFechaModificacionForm.value = fechaModifFinal
                         }
                     }
                 }
             }
-        });
-        function insertarContactos(longitudContacto) {
-      var contenedor = document.getElementById('agregaContacto');
-      contenedor.innerHTML = agregarListaContactos(longitudContacto);
+        }
+    });
 
-
-      var selector = `[id^='iconoModificar']`;
-
-      var selectorAgregar = '#iconoModificar';
-
-      document.querySelectorAll(selector).forEach((button) => {
-        button.addEventListener('click', function (event) {
-          event.preventDefault();
-
-          var indexStr = this.id.replace('iconoModificar', '');
-          console.log(indexStr);
-          var indexInt = parseInt(indexStr, 10);
-
-          console.log(indexInt);
-
-          if (isNaN(indexInt)) {
-            console.error('Índice inválido', indexInt);
-            return;
-          }
-
-
-          var registro = document.querySelector(`.employer:nth-child(${indexInt + 1})`);
-          console.log(registro);
-          registro.style.display = 'none';
-
-
-
-
-          var iconoModificar = document.querySelector(selectorAgregar);
-          if (iconoModificar) {
-            iconoModificar.style.display = 'block';
-          }
-
-        });
-      });
-
-
+    function insertarDocumentos(longitudDocumentos) {
+        var contenedor = document.getElementById('agregarDocumentos');
+        contenedor.innerHTML = agregarListaDocumentos(longitudDocumentos);
     }
 
-        function insertarDocumentos(longitudDocumentos) {
-            var contenedor = document.getElementById('agregarDocumentos');
-            contenedor.innerHTML = agregarListaDocumentos(longitudDocumentos);
-        }
+    function agregarListaDocumentos(longitudDocumentos) {
+        var documento = '';
 
-        function agregarListaDocumentos(longitudDocumentos) {
-            var documento = '';
-
-            for (var i = 0; i < longitudDocumentos; i++) {
-                documento += `
+        for (var i = 0; i < longitudDocumentos; i++) {
+            documento += `
                         <div class="employer">
                             <div class="body">
                                 <div class="row">
@@ -733,7 +469,7 @@ $resultadoDocumento = ObtenerTipoDocumento();
                                         </ul>
 
                                 <ul>
-                                    <a href="#" data-toggle="modal">
+                                    <a href="#apply-popup-id-1" data-toggle="modal">
                                         <img id="iconoModificar${i}" src="../../trash-can_38501.png" style="width: 50px; height: auto; display: none;" >
                                     </a>
                                 </ul>
@@ -744,53 +480,49 @@ $resultadoDocumento = ObtenerTipoDocumento();
                             </div>
                         </div>
                 `;
-            }
-            return documento;
+        }
+        return documento;
+    }
+
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        if (localStorage.getItem('habilitarBotones') === 'true') {
+            const habilitarBotonDomicilio = document.querySelectorAll('.boton-intec');
+            habilitarBotonDomicilio.forEach(boton => {
+                boton.disabled = false;
+                boton.style.display = 'block';
+            });
         }
 
-    </script>
+        const container = document.getElementById('agregarDocumentos');
 
+        const observerCallback = (mutationsList, observer) => {
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
+            mutationsList.forEach((mutation) => {
+                if (mutation.type === 'childList') {
 
-            if (localStorage.getItem('habilitarBotones') === 'true') {
-                const habilitarBotonDomicilio = document.querySelectorAll('.boton-intec');
-                habilitarBotonDomicilio.forEach(boton => {
-                    boton.disabled = false;
-                    boton.style.display = 'block';
-                });
-            }
+                    var bTamanioDocumentos = localStorage.getItem('datosConsultaDocumentos');
+                    var tamanioFinal = bTamanioDocumentos ? bTamanioDocumentos.length : 0;
 
-            const container = document.getElementById('agregarDocumentos');
+                    for (var i = 0; i < tamanioFinal; i++) {
+                        const habilitarIconoModificar = document.getElementById(`iconoModificar${i}`);
 
-            const observerCallback = (mutationsList, observer) => {
-
-                mutationsList.forEach((mutation) => {
-                    if (mutation.type === 'childList') {
-
-                        var bTamanioDocumentos = localStorage.getItem('datosConsultaDocumentos');
-                        var tamanioFinal = bTamanioDocumentos ? bTamanioDocumentos.length : 0;
-
-                        for (var i = 0; i < tamanioFinal; i++) {
-                            const habilitarIconoModificar = document.getElementById(`iconoModificar${i}`);
-
-                            if (habilitarIconoModificar !== null && localStorage.getItem('habilitarBotones') === 'true') {
-                                habilitarIconoModificar.style.display = 'block';
-                            }
+                        if (habilitarIconoModificar !== null && localStorage.getItem('habilitarBotones') === 'true') {
+                            habilitarIconoModificar.style.display = 'block';
                         }
-
                     }
-                });
-            };
 
-            // Declaración de 'observer' fuera de la función de callback
-            const observer = new MutationObserver((observerCallback));
-            observer.observe(document.documentElement, { childList: true, subtree: true });
+                }
+            });
+        };
+        const observer = new MutationObserver((observerCallback));
+        observer.observe(document.documentElement, {childList: true, subtree: true});
+    });
 
-        });
-
-    </script>
+</script>
 
 </body>
 

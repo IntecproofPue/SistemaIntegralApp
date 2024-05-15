@@ -67,16 +67,9 @@ if ($result === false) {
     exit;
 
 } else {
-        $DatosActualizacionEmpleado = array();
-        while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
-            $DatosActualizacionEmpleado[] = $row;
-        }
 
-
-    echo json_encode($DatosActualizacionEmpleado);
+    echo json_encode($datosActualizacion);
 }
-
-var_dump($DatosActualizacionEmpleado);
 
 sqlsrv_free_stmt($result);
 

@@ -5,11 +5,6 @@ require_once('../../includes/load.php');
 session_start();
 
 
-header("Access-Control-Allow-Origin: *"); // Permite solicitudes desde cualquier origen
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS"); // Permite métodos HTTP específicos
-header("Access-Control-Allow-Headers: Content-Type, Accept"); // Permite encabezados específicos
-
-
 if (isset($_SESSION['user_id'])) {
     // Si el usuario está autenticado, no se hace nada
 } else {
@@ -94,7 +89,7 @@ function ObtenerAutorizacionContratante()
         'iOpcion' => 2
     );
 
-    $procedureName = "EXEC prcConsultaEmpleado      @iIdEmpleado = ?,
+    $procedureName = "EXEC prcConsultaEmpleado          @iIdEmpleado = ?,
                                                         @iIdUsuarioUltModificacion = ?,
                                                         @iOpcion = ? 
                                                         ";
@@ -124,6 +119,7 @@ function ObtenerAutorizacionContratante()
 }
 
 $resultadoContratantes = ObtenerAutorizacionContratante();
+
 
 
 function ObtenerIdGenero()
@@ -688,7 +684,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                                                 <label class="col-form-label">FECHA ULTIMA
                                                     MODIFICACION</label>
                                                 <input type="text" class="form-control" placeholder="FECHA ULTIMA MOD."
-                                                       id="dtFechaUltModificacion" disabled/>
+                                                       id="dtFechaUltModifEmpleado" disabled/>
                                             </div>
                                         </div>
                                     </div>
@@ -1069,6 +1065,8 @@ $resultadoRegimen = ObtenerIdRegimen();
                 </div>
                 <div class="modal-body">
                     <form action="#">
+                        <input type="hidden" name = "iIdConstanteSede" id="iIdConstanteSedeReactivacion" value="" >
+                        <input type="hidden" name = "iClaveSede" id="iClaveSedeReactivacion" value="" >
                         <div class="form-group">
                             <option value="">NSS</option>
                             <input type="tel" class="form-control" name="vchNSS" id="vchNSSReactivacion" maxlength="10"
@@ -1112,6 +1110,16 @@ $resultadoRegimen = ObtenerIdRegimen();
                             </select>
                         </div>
                         <div class="form-group">
+                            <option value="">SEDE</option>
+                            <select class="form-control" Name="iIdSede" id="idSedeReactivacion">
+                                <?php foreach ($resultadoSede as $sede): ?>
+                                    <option value="<?= $sede['iIdConstante'] . '-' . $sede['iClaveCatalogo'] ?>">
+                                        [<?= $sede['iClaveCatalogo'] ?>] - <?= $sede['vchDescripcion'] ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <option value="">PERSONA QUE AUTORIZA CONTRATACIÓN</option>
                             <select class="form-control" Name="iIdPersonaContratante"
                                     id="iIdPersonaContratanteReactivacion">
@@ -1123,8 +1131,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        <button class="button primary-bg btn-block" id="buttonAplicarReactivacion">APLICAR CAMBIOS
-                        </button>
+                        <button class="button primary-bg btn-block" id="buttonAplicarReactivacion">APLICAR CAMBIOS</button>
                     </form>
                 </div>
             </div>
@@ -1147,8 +1154,8 @@ $resultadoRegimen = ObtenerIdRegimen();
                 </div>
                 <div class="modal-body">
                     <form action="#">
-                        <input type="hidden" name = "iIdConstanteSede" id="iIdConstanteSedePromocion" value="" >
-                        <input type="hidden" name = "iClaveSede" id="iClaveSedePromocion" value="" >
+                        <input type="hidden" name = "iIdConstanteSede" id="idConstanteSedePromocion" value="" >
+                        <input type="hidden" name = "iClaveSede" id="iCveSedePromocion" value="" >
 
                         <div class="form-group row">
                             <div class="col-sm-9">
@@ -1199,7 +1206,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        <button class="button primary-bg btn-block" id="aplicarPromocion">APLICAR</button>
+                        <button class="button primary-bg btn-block" id="buttonAplicarPromocion">APLICAR CAMBIOS</button>
                     </form>
                 </div>
             </div>
@@ -1264,7 +1271,16 @@ $resultadoRegimen = ObtenerIdRegimen();
 <script src="MostrarDatosEmpleado.js"></script>
 <script src="FuncionesEmpleado.js"></script>
 
-<script> document.getElementById('botonAplicarBaja').addEventListener('click', ValidarBaja); </script>
+<script>
+        document.getElementById('botonAplicarBaja').addEventListener('click', ValidarBaja);
+</script>
+<script>
+    document.getElementById('buttonAplicarReactivacion').addEventListener('click', ValidarReactivacion);
+</script>
+
+<script>
+    document.getElementById('buttonAplicarPromocion').addEventListener('click', ValidarPromocion);
+</script>
 
 <script>
     function deshabilitarBotones() {
