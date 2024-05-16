@@ -1,133 +1,99 @@
-function MostrarDatosEmpleado(bResultado) {
-    var vchNSSEmpleado = document.getElementById('vchNSSModificar');
-    vchNSSEmpleado.value = bResultado.vchNSS;
+function ObtenerDatosEmpleado(){
+    var consultaIndivual = localStorage.getItem('datosConsultaIndividual');
+    //console.log(consultaIndivual);
+    var consultaMasiva = localStorage.getItem('empleadoSeleccionado');
+    console.log(consultaMasiva);
 
-    //Fecha ingreso
-    var dFechaIngresModif = bResultado.dFechaIngreso.date;
-    var fechaIngresoModif = new Date(dFechaIngresModif);
-    var fechaIngresoFinalModif = fechaIngresoModif.toISOString().slice(0, 10);
+    if (consultaIndivual) {
+        var bResultado = JSON.parse(consultaIndivual);
+        MostrarDatos(bResultado);
 
-    var dFechaIngresoModificacion = document.getElementById('dtFechaIngresoModificacion');
-    dFechaIngresoModificacion.value = fechaIngresoFinalModif || '';
+    } else if (consultaMasiva) {
 
-    //Sede
-    var iIdSedeModificacion = bResultado.iIdSede;
-    var selectElementSede = document.getElementById('iIdSedeModificar');
+        var bResultadoMasivo = JSON.parse(consultaMasiva);
+        var iIdEmpleado = bResultadoMasivo.iIdEmpleado;
 
-    for (var i = 0; i < selectElementSede.options.length; i++) {
-        var optionSede = selectElementSede.options[i];
-        var optionIdSede = parseInt(optionSede.value.split('-')[0]);
+        console.log(iIdEmpleado);
 
-        if (optionIdSede === iIdSedeModificacion) {
-            optionSede.selected = true;
-            break;
+        var datosEmpleadoMasivo = new XMLHttpRequest();
+        datosEmpleadoMasivo.open('POST', 'prcConsultaIndividual.php', true);
+
+        var formEmpleado = new URLSearchParams();
+        formEmpleado.append('idEmpleado', iIdEmpleado);
+
+        datosEmpleadoMasivo.send(formEmpleado);
+
+        datosEmpleadoMasivo.onload = function () {
+            if (datosEmpleadoMasivo.status === 200) {
+                var respuesta = JSON.parse(datosEmpleadoMasivo.responseText);
+
+                if (respuesta.bResultado === 1) {
+                    localStorage.clear();
+
+                    localStorage.setItem('datosConsultaIndividual', JSON.stringify(respuesta));
+
+                    var datosEmpleadoFinal = localStorage.getItem('datosConsultaIndividual', JSON.stringify(respuesta));
+
+                    var bResultado = JSON.parse(datosEmpleadoFinal);
+                    MostrarDatos(bResultado);
+                }
+            }
         }
     }
-
-
-    //Contratado por
-    var iIdContratanteModificacion = bResultado.iIdContratadoPor;
-    var selectElementContratante = document.getElementById('iIdPersonaContratanteModificar');
-
-    for (var i = 0; i < selectElementContratante.options.length; i++) {
-        var optionContratado = selectElementContratante.options[i];
-        console.log(optionContratado.value);
-        console.log(iIdContratanteModificacion);
-        if (optionContratado.value == iIdContratanteModificacion.toString()) {
-            console.log("entra en este if");
-            optionContratado.selected = true;
-            break;
-        }
-    }
-
-    var vchNombreEmpleado = document.getElementById('vchNombreEmpleadoModificar');
-    vchNombreEmpleado.value = bResultado.vchNombre
-
-    var vchPrimerApellidoEmpleado = document.getElementById('vchPrimerApellidoModificar');
-    vchPrimerApellidoEmpleado.value = bResultado.vchPrimerApellido;
-
-    var vchSegundoApellidoEmpleado = document.getElementById('vchSegundoApellidoModificar');
-    vchSegundoApellidoEmpleado.value = bResultado.vchSegundoApellido;
-
-    var vchRFCEmpleado = document.getElementById('vchRFCModificar');
-    vchRFCEmpleado.value = bResultado.vchRFC;
-
-    var vchCURPEmpleado = document.getElementById('vchCURPModificar');
-    vchCURPEmpleado.value = bResultado.vchCURP;
-
-    //Fecha de nacimiento
-    var dFechaNacimientoModif = bResultado.dFechaNacimiento.date;
-    var dFechaNacimiento = new Date(dFechaNacimientoModif);
-    var fechaNacimientoFinalModif = dFechaNacimiento.toISOString().slice(0, 10);
-
-    var dFechaNacimientoModificacion = document.getElementById('dtFechaNacimientoModificacion');
-    dFechaNacimientoModificacion.value = fechaNacimientoFinalModif || '';
-
-    //Genero
-    var iIdGeneroModificacion = bResultado.iIdGenero;
-    var selectElementGenero = document.getElementById('iIdGeneroModificar');
-
-    for (var i = 0; i < selectElementGenero.options.length; i++) {
-        var optionGenero = selectElementGenero.options[i];
-
-        var optionIdGenero = parseInt(optionGenero.value.split('-')[0]);
-
-        if (optionIdGenero == iIdGeneroModificacion) {
-            optionGenero.selected = true;
-            break;
-        }
-    }
-
-    //Nacionalidad
-    var iIdNacionalidadModificacion = bResultado.iIdNacionalidad;
-    var selectElementNacionalidad = document.getElementById('iIdNacionalidadModificar');
-
-    for (var i = 0; i < selectElementNacionalidad.options.length; i++) {
-        var optionNacionalidad = selectElementNacionalidad.options[i];
-
-        var optionIdNacionalidad = parseInt(optionNacionalidad.value.split('-')[0]);
-
-        if (optionIdNacionalidad === iIdNacionalidadModificacion) {
-            optionNacionalidad.selected = true;
-            break;
-        }
-    }
-
-    //Regimen fiscal
-    var iIdRegimenModificacion = bResultado.iIdRegimen;
-    var selectElementRegimen = document.getElementById('regimenFiscalModificar');
-
-    for (var i = 0; i < selectElementRegimen.options.length; i++) {
-        var optionRegimen = selectElementRegimen.options[i];
-        if (optionRegimen === iIdRegimenModificacion) {
-            optionRegimen.selected = true;
-            break;
-        }
-    }
-
-
-    //Uso fiscal
-    var vchUsoFiscalModificacion = bResultado.vchUsoFiscal;
-    console.log(vchUsoFiscalModificacion);
-    var selectElementUsoFiscal = document.getElementById('usoFiscalModificar');
-
-    for (var i = 0; i < selectElementUsoFiscal.options.length; i++) {
-        var optionUsoFiscal = selectElementUsoFiscal.options[i];
-
-        if (optionUsoFiscal === vchUsoFiscalModificacion) {
-            optionUsoFiscal.selected = true;
-            break;
-        }
-    }
-
-
-    //Codigo Fiscal
-    var iIdCodigoFiscalEmpleado = document.getElementById('iIdCodigoPostalModificar');
-    iIdCodigoFiscalEmpleado.value = bResultado.iCodigoPostalFiscal;
-
-
+    return bResultado;
 }
 
+function ModalModificarDatos() {
+    var datosModificarEmpleado = localStorage.getItem('datosConsultaIndividual');
+    if (datosModificarEmpleado) {
+        var bResultadoModificar = JSON.parse(datosModificarEmpleado);
+        MostrarDatosModificacion(bResultadoModificar);
+    }
+}
+
+function  ModalReactivacion() {
+    var datosReactivacion = localStorage.getItem('datosConsultaIndividual');
+    if (datosReactivacion) {
+        var bResultadoReactivacion = JSON.parse(datosReactivacion);
+        MostrarDatosReactivacion(bResultadoReactivacion);
+    }
+}
+
+function ModalPromocion () {
+    var datosPromocion = localStorage.getItem('datosConsultaIndividual');
+    if (datosPromocion) {
+        var bResultadoPromocion = JSON.parse(datosPromocion);
+        MostrarDatosPromocion(bResultadoPromocion);
+    }
+}
+
+function cargarUsoFiscal() {
+    var regimenSeleccionado = document.getElementById("regimenFiscalModificar").value;
+
+    var usoFiscalSeleccionado = document.getElementById("usoFiscalModificar");
+
+    usoFiscalSeleccionado.innerHTML = '';
+
+    var vchUsoFiscalModificacion = bResultado.vchUsoFiscal;
+
+    for (var i = 0; i < usoFiscalSeleccionado.options.length; i++) {
+        var optionUsoFiscal = usoFiscalSeleccionado.options[i];
+        if (optionUsoFiscal.value === vchUsoFiscalModificacion) {
+            optionUsoFiscal.selected = true;
+
+            break;
+        }
+    }
+
+    var opcionesUsos = ObtenerUsosFiscales(regimenSeleccionado);
+
+    for (var i = 0; i < opcionesUsos.length; i++) {
+        var opcionUsoFiscal = document.createElement("option");
+        opcionUsoFiscal.value = opcionesUsos[i].uso;
+        opcionUsoFiscal.textContent = '[' + opcionesUsos[i].uso + '] - ' + opcionesUsos[i].descripcion;
+        usoFiscalSeleccionado.add(opcionUsoFiscal);
+    }
+}
 
 function MostrarDatosReactivacion(bResultado) {
 
@@ -179,146 +145,195 @@ function MostrarDatosReactivacion(bResultado) {
 }
 
 
+function MostrarDatosPromocion(bResultado) {
 
-    function MostrarDatosPromocion(bResultado) {
+    //Puesto
+    var iIdPuestoModificacion = bResultado.iIdPuesto;
+    var selectElementPuesto = document.getElementById('iIdPuestoPromocion');
 
-        //Puesto
-        var iIdPuestoModificacion = bResultado.iIdPuesto;
-        var selectElementPuesto = document.getElementById('iIdPuestoPromocion');
-
-        for (var i = 0; i < selectElementPuesto.options.length; i++) {
-            var optionPuesto = selectElementPuesto.options[i];
-            if (optionPuesto.value === iIdPuestoModificacion.toString()) {
-                optionPuesto.selected = true;
-                break;
-            }
+    for (var i = 0; i < selectElementPuesto.options.length; i++) {
+        var optionPuesto = selectElementPuesto.options[i];
+        if (optionPuesto.value === iIdPuestoModificacion.toString()) {
+            optionPuesto.selected = true;
+            break;
         }
-
-        //NSS
-        var vchNSSPromocion = document.getElementById('vchNSSPromocion');
-        vchNSSPromocion.value = bResultado.vchNSS;
-
-        //Sede
-        var iIdSedeModificacion = bResultado.iIdSede;
-        var selectElementSede = document.getElementById('idSedePromocion');
-
-        for (var i = 0; i < selectElementSede.options.length; i++) {
-            var optionSede = selectElementSede.options[i];
-            var optionIdSede = parseInt(optionSede.value.split('-')[0]);
-
-            if (optionIdSede === iIdSedeModificacion) {
-                optionSede.selected = true;
-                break;
-            }
-        }
-
     }
 
+    //NSS
+    var vchNSSPromocion = document.getElementById('vchNSSPromocion');
+    vchNSSPromocion.value = bResultado.vchNSS;
 
-    function MostrarDatos(bResultado) {
-        var idInput = document.getElementById('idInput');
-        idInput.value = bResultado.iIdEmpleado || '';
+    //Sede
+    var iIdSedeModificacion = bResultado.iIdSede;
+    var selectElementSede = document.getElementById('idSedePromocion');
 
-        var nombreInput = document.getElementById('vchNombre');
-        nombreInput.value = bResultado.vchNombre || '';
+    for (var i = 0; i < selectElementSede.options.length; i++) {
+        var optionSede = selectElementSede.options[i];
+        var optionIdSede = parseInt(optionSede.value.split('-')[0]);
 
-        var vchPrimerApellido = document.getElementById('vchPrimerApellido');
-        vchPrimerApellido.value = bResultado.vchPrimerApellido || '';
-
-        var vchSegundoApellido = document.getElementById('vchSegundoApellido');
-        vchSegundoApellido.value = bResultado.vchSegundoApellido || '';
-
-        var vchPuesto = document.getElementById('vchPuesto');
-        vchPuesto.value = bResultado.vchPuesto || '';
-
-        var dFechaIngresoOriginal = bResultado.dFechaIngreso.date;
-        var fechaIngreso = new Date(dFechaIngresoOriginal);
-        var fechaIngresoFinal = fechaIngreso.toLocaleDateString('es-ES', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-        });
-        var dFechaIngresoUlt = document.getElementById('dtFechaIngreso');
-        dFechaIngresoUlt.value = fechaIngresoFinal;
-
-        var vchEstatusEmpleado = document.getElementById('iIdEstatusEmpleado');
-        vchEstatusEmpleado.value = bResultado.vchEstatusEmpleado || '';
-
-        var vchNSS = document.getElementById('vchNSS');
-        vchNSS.value = bResultado.vchNSS || '';
-
-        var dFechaPromocionOriginal = bResultado.dtFechaUltPromocion.date;
-        var fechaPromocion = new Date(dFechaPromocionOriginal);
-        var fechaIPromocionFinal = fechaPromocion.toLocaleDateString('es-ES', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-        });
-        var dFechaPromocion = document.getElementById('dtFechaUltPromocion');
-        dFechaPromocion.value = fechaIPromocionFinal || '';
-
-        var vchSede = document.getElementById('iIdSedeForm');
-        vchSede.value = bResultado.vchSede || '';
-
-        var dFechaBajaOriginal = bResultado.dtFechaBaja.date;
-        var fechaBaja = new Date(dFechaBajaOriginal);
-        var fechaBajaFinal = fechaBaja.toLocaleDateString('es-ES', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-        });
-        var dFechBaja = document.getElementById('dtFechaBaja');
-        dFechBaja.value = fechaBajaFinal === '01/01/1900' ? '' : fechaBajaFinal;
-
-        var vchUsuario = document.getElementById('vchUsuarioUltModificacion');
-        vchUsuario.value = bResultado.vchUsuarioUltModificacion || '';
-
-        var dFechaUltModifOriginal = bResultado.dtFechaUltModifEmpleado.date;
-        var fechaModif = new Date(dFechaUltModifOriginal);
-        var fechaModifFinal = fechaModif.toLocaleString('es-ES', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false
-        });
-        var dFechaModificacion = document.getElementById('dtFechaUltModifEmpleado');
-        dFechaModificacion.value = fechaModifFinal === '01/01/1900' ? '' : fechaModifFinal;
-
-        //Datos Persona
-        var vchRFC = document.getElementById('vchRFC');
-        vchRFC.value = bResultado.vchRFC || '';
-
-        var vchCURP = document.getElementById('vchCURP');
-        vchCURP.value = bResultado.vchCURP || '';
-
-        var dFechaNacimientoOriginal = bResultado.dFechaNacimiento.date;
-        var fechaNacimiento = new Date(dFechaNacimientoOriginal);
-        var fechaNacimientoFinal = fechaNacimiento.toLocaleDateString('es-ES', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-        });
-        var dFechaNacimiento = document.getElementById('dFechaNacimiento');
-        dFechaNacimiento.value = fechaNacimientoFinal === '01/01/1900' ? '' : fechaNacimientoFinal;
-
-        var vchGenero = document.getElementById('iIdGenero');
-        vchGenero.value = bResultado.vchGenero || '';
-
-        var vchNacionalidad = document.getElementById('iIdNacionalidad');
-        vchNacionalidad.value = bResultado.vchNacionalidad || '';
-
-        //Datos Fiscales
-        var vchRegimen = document.getElementById('vchRegimen');
-        vchRegimen.value = bResultado.vchDescripcionRegimen;
-
-        var vchUsoFiscal = document.getElementById('vchUsoFiscal');
-        vchUsoFiscal.value = bResultado.vchDescripcionUso;
-
-        var iCodigoPostalFiscal = document.getElementById('iCodigoPostalFiscal');
-        iCodigoPostalFiscal.value = bResultado.iCodigoPostalFiscal;
-
+        if (optionIdSede === iIdSedeModificacion) {
+            optionSede.selected = true;
+            break;
+        }
     }
+
+}
+
+function MostrarDatos(bResultado) {
+    var idInput = document.getElementById('idInput');
+    idInput.value = bResultado.iIdEmpleado || '';
+
+    var nombreInput = document.getElementById('vchNombre');
+    nombreInput.value = bResultado.vchNombre || '';
+
+    var vchPrimerApellido = document.getElementById('vchPrimerApellido');
+    vchPrimerApellido.value = bResultado.vchPrimerApellido || '';
+
+    var vchSegundoApellido = document.getElementById('vchSegundoApellido');
+    vchSegundoApellido.value = bResultado.vchSegundoApellido || '';
+
+    var vchPuesto = document.getElementById('vchPuesto');
+    vchPuesto.value = bResultado.vchPuesto || '';
+
+    var dFechaIngresoOriginal = bResultado.dFechaIngreso.date;
+    var fechaIngreso = new Date(dFechaIngresoOriginal);
+    var fechaIngresoFinal = fechaIngreso.toLocaleDateString('es-ES', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+    });
+    var dFechaIngresoUlt = document.getElementById('dtFechaIngreso');
+    dFechaIngresoUlt.value = fechaIngresoFinal;
+
+    var vchEstatusEmpleado = document.getElementById('iIdEstatusEmpleado');
+    vchEstatusEmpleado.value = bResultado.vchEstatusEmpleado || '';
+
+    var vchNSS = document.getElementById('vchNSS');
+    vchNSS.value = bResultado.vchNSS || '';
+
+    var dFechaPromocionOriginal = bResultado.dtFechaUltPromocion.date;
+    var fechaPromocion = new Date(dFechaPromocionOriginal);
+    var fechaIPromocionFinal = fechaPromocion.toLocaleDateString('es-ES', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+    });
+    var dFechaPromocion = document.getElementById('dtFechaUltPromocion');
+    dFechaPromocion.value = fechaIPromocionFinal || '';
+
+    var vchSede = document.getElementById('iIdSedeForm');
+    vchSede.value = bResultado.vchSede || '';
+
+    var dFechaBajaOriginal = bResultado.dtFechaBaja.date;
+    var fechaBaja = new Date(dFechaBajaOriginal);
+    var fechaBajaFinal = fechaBaja.toLocaleDateString('es-ES', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+    });
+    var dFechBaja = document.getElementById('dtFechaBaja');
+    dFechBaja.value = fechaBajaFinal === '01/01/1900' ? '' : fechaBajaFinal;
+
+    var vchUsuario = document.getElementById('vchUsuarioUltModificacion');
+    vchUsuario.value = bResultado.vchUsuarioUltModificacion || '';
+
+    var dFechaUltModifOriginal = bResultado.dtFechaUltModifEmpleado.date;
+    var fechaModif = new Date(dFechaUltModifOriginal);
+    var fechaModifFinal = fechaModif.toLocaleString('es-ES', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+    });
+    var dFechaModificacion = document.getElementById('dtFechaUltModifEmpleado');
+    dFechaModificacion.value = fechaModifFinal === '01/01/1900' ? '' : fechaModifFinal;
+
+    //Datos Persona
+    var vchRFC = document.getElementById('vchRFC');
+    vchRFC.value = bResultado.vchRFC || '';
+
+    var vchCURP = document.getElementById('vchCURP');
+    vchCURP.value = bResultado.vchCURP || '';
+
+    var dFechaNacimientoOriginal = bResultado.dFechaNacimiento.date;
+    var fechaNacimiento = new Date(dFechaNacimientoOriginal);
+    var fechaNacimientoFinal = fechaNacimiento.toLocaleDateString('es-ES', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+    });
+    var dFechaNacimiento = document.getElementById('dFechaNacimiento');
+    dFechaNacimiento.value = fechaNacimientoFinal === '01/01/1900' ? '' : fechaNacimientoFinal;
+
+    var vchGenero = document.getElementById('iIdGenero');
+    vchGenero.value = bResultado.vchGenero || '';
+
+    var vchNacionalidad = document.getElementById('iIdNacionalidad');
+    vchNacionalidad.value = bResultado.vchNacionalidad || '';
+
+    //Datos Fiscales
+    var vchRegimen = document.getElementById('vchRegimen');
+    vchRegimen.value = bResultado.vchDescripcionRegimen;
+
+    var vchUsoFiscal = document.getElementById('vchUsoFiscal');
+    vchUsoFiscal.value = bResultado.vchDescripcionUso;
+
+    var iCodigoPostalFiscal = document.getElementById('iCodigoPostalFiscal');
+    iCodigoPostalFiscal.value = bResultado.iCodigoPostalFiscal;
+
+}
+
+function deshabilitarBotones() {
+    document.getElementById('buttonsModificar').querySelectorAll('.boton-intec').forEach(boton => {
+        boton.addEventListener('click', function () {
+
+            const botones = document.querySelectorAll('.boton-intec');
+            botones.forEach(boton => {
+                boton.style.display = 'none';
+            });
+
+
+            const modales = document.querySelectorAll('.modal.fade');
+            modales.forEach(modal => {
+                modal.style.display = 'none';
+            });
+
+            const mostrarModal = this.getAttribute('data-modal');
+
+            const modalElement = document.getElementById(mostrarModal);
+            if (modalElement) {
+                modalElement.style.display = 'block';
+            }
+
+            const buttonGuardarDiv = document.querySelector('.candidate');
+            const buttonGuardar = document.createElement('button');
+            buttonGuardar.textContent = 'GUARDAR';
+            buttonGuardar.className = 'boton-intec-1'; //Boton con nueva clase
+            buttonGuardar.style.display = 'none';
+
+            buttonGuardarDiv.appendChild(buttonGuardar);
+
+            buttonGuardar.style.display = 'block';
+
+        });
+    });
+}
+
+function habilitarBotones() {
+    const habilitarBotones = document.querySelectorAll('.boton-intec');
+    habilitarBotones.forEach(boton => boton.disabled = false);
+
+    localStorage.setItem('habilitarBotones', 'true');
+}
+
+function variableGlobalEmpleado () {
+    var datosEmpleadoModificacion = localStorage.getItem('datosConsultaIndividual');
+    var bResultadoEmpleado = JSON.parse(datosEmpleadoModificacion);
+
+    window.iIdEmpleadoGlobal = bResultadoEmpleado.iIdEmpleado;
+
+}
 
