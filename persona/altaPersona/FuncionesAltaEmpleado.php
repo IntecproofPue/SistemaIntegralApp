@@ -112,4 +112,89 @@
 
     }
 
+    function ObtenerIdGenero()
+    {
+        if (isset($_SESSION['CatConstante'])) {
+            $datosGenero = $_SESSION['CatConstante'];
+            $generoEncontrado = array();
+
+            foreach ($datosGenero as $valorGenero) {
+                if ($valorGenero['iAgrupador'] == 3) {
+                    $generoEncontrado[] = $valorGenero;
+                }
+            }
+            return $generoEncontrado;
+        } else {
+            echo("No hay datos del género");
+        }
+    }
+
+    function obtenerIdNacionalidad()
+    {
+        if (isset($_SESSION['CatConstante'])) {
+            $datosNacionalidad = $_SESSION['CatConstante'];
+            $nacionalidadEncontrada = array();
+
+            foreach ($datosNacionalidad as $valorNacionalidad) {
+                if ($valorNacionalidad['iAgrupador'] == 6) {
+                    $nacionalidadEncontrada[] = $valorNacionalidad;
+                }
+            }
+            return $nacionalidadEncontrada;
+        } else {
+            echo("No hay datos de la nacionalidad");
+        }
+    }
+
+    function EjecutarRegimenUso()
+    {
+
+        $datosRegimenUso = array(
+            'iOpcion' => 1,
+            'iIdTipoPersona' => 61
+        );
+
+        $procedureName = "EXEC prcConsultaRegimenUso    @iOpcion = ?,
+                                                            @iIdTipoPersona = ?
+                                                            ";
+
+        $params = array(
+            $datosRegimenUso['iOpcion'],
+            $datosRegimenUso['iIdTipoPersona']
+        );
+
+        $result = sqlsrv_query($GLOBALS['conn'], $procedureName, $params);
+
+        $RegimenUso = array();
+
+        if ($result === false) {
+            die(print_r(sqlsrv_errors(), true));
+
+        } else {
+            do {
+                while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+                    $RegimenUso[] = $row;
+                }
+            } while (sqlsrv_next_result($result));
+        }
+
+        return $RegimenUso;
+
+        sqlsrv_close($conn);
+    }
+
+    function ObtenerIdRegimen()
+    {
+        $datosRegimen = $_SESSION['RegimenUso'];
+        $RegimenEncontrado = array();
+
+        foreach ($datosRegimen as $valorRegimen) {
+            $idRegimen = $valorRegimen['iIdRegimenFiscal'];
+            $RegimenEncontrado[$idRegimen] = $valorRegimen;
+        }
+
+
+        return array_values($RegimenEncontrado);
+    }
+
 ?>

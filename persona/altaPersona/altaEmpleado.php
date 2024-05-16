@@ -297,8 +297,7 @@ if (isset($_SESSION['user_id'])) { ?>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group row" id="documentosContainer" name="documentosContainer">
-                                    </div>
+                                    <div class="form-group row" id="documentosContainer" name="documentosContainer"> </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label"></label>
                                         <div class="col-sm-9">
@@ -335,7 +334,7 @@ if (isset($_SESSION['user_id'])) { ?>
     <div class="modal fade" id="apply-popup-id-2" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form class="dashboard-form" id="AltaPersona">
+                <form class="dashboard-form" id="AltaDocumentos">
                     <input type="hidden" name="iIdConstanteDocumento" id="iIdConstanteDocumento" value="">
                     <input type="hidden" name="iClaveDocumento" id="iClaveDocumento" value="">
                     <input type="hidden" name="iIdPersonaDocumento" id="iIdPersonaDocumento" value="">
@@ -428,6 +427,7 @@ if (isset($_SESSION['user_id'])) { ?>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
     <script src="../../js/map.js"></script>
     <script src="DatosEmpleadoAlta.js"></script>
+    <script src ="../consulEmpleado/ProcesosDocumentosEmpleado.js" ></script>
 
     <script> document.getElementById('registrarEmpleado').addEventListener('click', enviarFormularios);</script>
     <script> document.getElementById('Cancelar').addEventListener('click', RegresarInicio); </script>

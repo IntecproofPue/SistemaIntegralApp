@@ -117,7 +117,6 @@ function ValidarReactivacion() {
         }
     };
 
-
 }
 
 function ValidarPromocion() {

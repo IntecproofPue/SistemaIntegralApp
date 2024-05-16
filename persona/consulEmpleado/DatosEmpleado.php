@@ -1,6 +1,8 @@
 <?php
 require_once('../../includes/pandora.php');
 require_once('../../includes/load.php');
+require_once('../altaPersona/FuncionesAltaEmpleado.php');
+
 
 session_start();
 
@@ -14,208 +16,12 @@ if (isset($_SESSION['user_id'])) {
     echo '</script>';
 }
 
-function ObtenerSede()
-{
-    if (isset ($_SESSION['CatConstante'])) {
-        $datosSede = $_SESSION['CatConstante'];
-        $sedeEncontrado = array();
-
-        foreach ($datosSede as $valorSede) {
-            if ($valorSede['iAgrupador'] == 4) {
-                $sedeEncontrado [] = $valorSede;
-            }
-        }
-        return $sedeEncontrado;
-    } else {
-        echo("No hay datos del Estado de Procedencia");
-    }
-}
-
 $resultadoSede = ObtenerSede();
-
-function ObtenerPuesto()
-{
-    $datosPuesto = array(
-        'iIdPuesto' => 0,
-        'vchPuesto' => '',
-        'iIdTipoContratacion' => 0,
-        'iIdUsuarioUltModificacion' => $_SESSION['user_id'],
-        'iOpcion' => 2
-    );
-
-    $procedureName = "EXEC prcConsultaPuesto    @iIdPuesto = ?, 
-                                                        @vchPuesto = ?, 
-                                                        @iIdTipoContratacion = ?,
-                                                        @iIdUsuarioUltModificacion  = ?,
-                                                        @iOpcion = ?                                                       
-                                                    ";
-
-    $params = array(
-
-        $datosPuesto['iIdPuesto'],
-        $datosPuesto['vchPuesto'],
-        $datosPuesto['iIdTipoContratacion'],
-        $datosPuesto['iIdUsuarioUltModificacion'],
-        $datosPuesto['iOpcion']
-    );
-
-    $result = sqlsrv_query($GLOBALS['conn'], $procedureName, $params);
-
-    $CatPuestos = array();
-
-    if ($result === false) {
-        die(print_r(sqlsrv_errors(), true));
-
-    } else {
-        do {
-            while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
-                $CatPuestos[] = $row;
-            }
-        } while (sqlsrv_next_result($result));
-    }
-    return $CatPuestos;
-
-    sqlsrv_close($GLOBALS['conn']);
-
-}
-
 $resultadoPuesto = ObtenerPuesto();
-
-function ObtenerAutorizacionContratante()
-{
-    $datosConsulta = array(
-        'iIdEmpleado' => 0,
-        'iIdUsuarioUltModificacion' => $_SESSION['user_id'],
-        'iOpcion' => 2
-    );
-
-    $procedureName = "EXEC prcConsultaEmpleado          @iIdEmpleado = ?,
-                                                        @iIdUsuarioUltModificacion = ?,
-                                                        @iOpcion = ? 
-                                                        ";
-    $params = array(
-        $datosConsulta['iIdEmpleado'],
-        $datosConsulta['iIdUsuarioUltModificacion'],
-        $datosConsulta['iOpcion']
-    );
-    $result = sqlsrv_query($GLOBALS['conn'], $procedureName, $params);
-
-    $Contratantes = array();
-
-    if ($result === false) {
-        die(print_r(sqlsrv_errors(), true));
-
-    } else {
-        do {
-            while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
-                $Contratantes[] = $row;
-            }
-        } while (sqlsrv_next_result($result));
-    }
-    return $Contratantes;
-
-    sqlsrv_close($GLOBALS['conn']);
-
-}
-
 $resultadoContratantes = ObtenerAutorizacionContratante();
-
-
-
-function ObtenerIdGenero()
-{
-    if (isset($_SESSION['CatConstante'])) {
-        $datosGenero = $_SESSION['CatConstante'];
-        $generoEncontrado = array();
-
-        foreach ($datosGenero as $valorGenero) {
-            if ($valorGenero['iAgrupador'] == 3) {
-                $generoEncontrado[] = $valorGenero;
-            }
-        }
-        return $generoEncontrado;
-    } else {
-        echo("No hay datos del género");
-    }
-}
-
 $resultadoGenero = ObtenerIdGenero();
-
-
-function obtenerIdNacionalidad()
-{
-    if (isset($_SESSION['CatConstante'])) {
-        $datosNacionalidad = $_SESSION['CatConstante'];
-        $nacionalidadEncontrada = array();
-
-        foreach ($datosNacionalidad as $valorNacionalidad) {
-            if ($valorNacionalidad['iAgrupador'] == 6) {
-                $nacionalidadEncontrada[] = $valorNacionalidad;
-            }
-        }
-        return $nacionalidadEncontrada;
-    } else {
-        echo("No hay datos de la nacionalidad");
-    }
-}
-
 $resultadoNacionalidad = obtenerIdNacionalidad();
-
-
-function EjecutarRegimenUso()
-{
-
-    $datosRegimenUso = array(
-        'iOpcion' => 1,
-        'iIdTipoPersona' => 61
-    );
-
-    $procedureName = "EXEC prcConsultaRegimenUso    @iOpcion = ?,
-                                                        @iIdTipoPersona = ?
-                                                        ";
-
-    $params = array(
-        $datosRegimenUso['iOpcion'],
-        $datosRegimenUso['iIdTipoPersona']
-    );
-
-    $result = sqlsrv_query($GLOBALS['conn'], $procedureName, $params);
-
-    $RegimenUso = array();
-
-    if ($result === false) {
-        die(print_r(sqlsrv_errors(), true));
-
-    } else {
-        do {
-            while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
-                $RegimenUso[] = $row;
-            }
-        } while (sqlsrv_next_result($result));
-    }
-
-    return $RegimenUso;
-
-    sqlsrv_close($conn);
-}
-
 $_SESSION['RegimenUso'] = EjecutarRegimenUso();
-
-
-function ObtenerIdRegimen()
-{
-    $datosRegimen = $_SESSION['RegimenUso'];
-    $RegimenEncontrado = array();
-
-    foreach ($datosRegimen as $valorRegimen) {
-        $idRegimen = $valorRegimen['iIdRegimenFiscal'];
-        $RegimenEncontrado[$idRegimen] = $valorRegimen;
-    }
-
-
-    return array_values($RegimenEncontrado);
-}
-
 $resultadoRegimen = ObtenerIdRegimen();
 
 
@@ -253,6 +59,8 @@ $resultadoRegimen = ObtenerIdRegimen();
     <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="../../images/icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="../../images/icon-114x114.png">
+    <script src = "MostrarDatosEmpleado.js" ></script>
+    <script src = "ProcesoModificacionEmpleado.js"> </script>
 
     <style>
         .selected {
@@ -467,55 +275,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                     <?php
                     } else {
                     ?>
-                        <script>
-
-                            document.addEventListener('DOMContentLoaded', function () {
-                                var consultaIndivual = localStorage.getItem('datosConsultaIndividual');
-                                //console.log(consultaIndivual);
-                                var consultaMasiva = localStorage.getItem('empleadoSeleccionado');
-                                console.log(consultaMasiva);
-
-                                if (consultaIndivual) {
-                                    var bResultado = JSON.parse(consultaIndivual);
-                                    MostrarDatos(bResultado);
-
-                                } else if (consultaMasiva) {
-
-                                    var bResultadoMasivo = JSON.parse(consultaMasiva);
-                                    var iIdEmpleado = bResultadoMasivo.iIdEmpleado;
-
-                                    console.log(iIdEmpleado);
-
-                                    var datosEmpleadoMasivo = new XMLHttpRequest();
-                                    datosEmpleadoMasivo.open('POST', 'prcConsultaIndividual.php', true);
-
-                                    var formEmpleado = new URLSearchParams();
-                                    formEmpleado.append('idEmpleado', iIdEmpleado);
-
-                                    datosEmpleadoMasivo.send(formEmpleado);
-
-                                    datosEmpleadoMasivo.onload = function () {
-                                        if (datosEmpleadoMasivo.status === 200) {
-                                            var respuesta = JSON.parse(datosEmpleadoMasivo.responseText);
-
-                                            if (respuesta.bResultado === 1) {
-                                                localStorage.clear();
-
-                                                localStorage.setItem('datosConsultaIndividual', JSON.stringify(respuesta));
-
-                                                var datosEmpleadoFinal = localStorage.getItem('datosConsultaIndividual', JSON.stringify(respuesta));
-
-                                                var bResultado = JSON.parse(datosEmpleadoFinal);
-                                                MostrarDatos(bResultado);
-                                            }
-                                        }
-                                    }
-                                }
-                                return bResultado;
-
-                            });
-
-                        </script>
+                        <script> document.addEventListener('DOMContentLoaded', ObtenerDatosEmpleado); </script>
 
                         <form action="#" method="post" class="dashboard-form">
                             <div id="information" class="row justify-content-center">
@@ -689,7 +449,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                                         </div>
                                     </div>
 
-                                    <div class="candidate" >
+                                    <div class="candidate">
                                         <div class="body">
                                             <div class="row">
                                                 <div class="row-left" id="buttonsModificar">
@@ -705,29 +465,9 @@ $resultadoRegimen = ObtenerIdRegimen();
                                                 </div>
                                             </div>
                                             <script>
-
-                                                document.getElementById('buttonModificarEmpleado').addEventListener('click', function () {
-                                                    var datosModificarEmpleado = localStorage.getItem('datosConsultaIndividual');
-                                                    if (datosModificarEmpleado) {
-                                                        var bResultadoModificar = JSON.parse(datosModificarEmpleado);
-                                                        MostrarDatosEmpleado(bResultadoModificar);
-                                                    }
-                                                });
-                                                document.getElementById('buttonReactivacion').addEventListener('click', function () {
-                                                    var datosReactivacion = localStorage.getItem('datosConsultaIndividual');
-                                                    if (datosReactivacion) {
-                                                        var bResultadoReactivacion = JSON.parse(datosReactivacion);
-                                                        MostrarDatosReactivacion(bResultadoReactivacion);
-                                                    }
-                                                });
-
-                                                document.getElementById('buttonPromocion').addEventListener('click', function () {
-                                                    var datosPromocion = localStorage.getItem('datosConsultaIndividual');
-                                                    if (datosPromocion) {
-                                                        var bResultadoPromocion = JSON.parse(datosPromocion);
-                                                        MostrarDatosPromocion(bResultadoPromocion);
-                                                    }
-                                                });
+                                                document.getElementById('buttonModificarEmpleado').addEventListener('click', ModalModificarDatos);
+                                                document.getElementById('buttonReactivacion').addEventListener('click', ModalReactivacion );
+                                                document.getElementById('buttonPromocion').addEventListener('click',ModalPromocion );
                                             </script>
                                         </div>
                                     </div>
@@ -742,25 +482,8 @@ $resultadoRegimen = ObtenerIdRegimen();
     </div>
 </div>
 
-<script>
-    document.getElementById('buttonModificarEmpleado').addEventListener('click', function () {
-        const habilitarBotones = document.querySelectorAll('.boton-intec');
-        habilitarBotones.forEach(boton => boton.disabled = false);
-
-        localStorage.setItem('habilitarBotones', 'true');
-    });
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var datosEmpleadoModificacion = localStorage.getItem('datosConsultaIndividual');
-        var bResultadoEmpleado = JSON.parse(datosEmpleadoModificacion);
-
-        window.iIdEmpleadoGlobal = bResultadoEmpleado.iIdEmpleado;
-
-    });
-</script>
-
+<script> document.getElementById('buttonModificarEmpleado').addEventListener('click',  habilitarBotones); </script>
+<script> document.addEventListener('DOMContentLoaded', variableGlobalEmpleado);</script>
 
 <!-- inicio de modales -->
 <div class="apply-popup">
@@ -868,16 +591,13 @@ $resultadoRegimen = ObtenerIdRegimen();
                         <div class="form-group">
                             <?php
                             // Calcular la fecha actual
-                            $fechaActual = date('Y-m-d');
+                            $fechaActual = date('Y-m-d', strtotime('-18 years'));
 
                             // Restar 18 años a la fecha actual
-                            $fechaMinima = date('Y-m-d', strtotime('-2 years', strtotime($fechaActual)));
-
-                            // Establecer la fecha máxima como la fecha actual
-                            $fechaMaxima = $fechaActual;
+                           // $fechaMinima = date('Y-m-d', strtotime('- 18 years', strtotime($fechaActual)));
 
                             // Establecer la fecha mínima como 1900-01-01 (opcional)
-                            $fechaLimiteInferior = '1900-01-01';
+                            $fechaLimiteInferior = '1980-01-01';
                             ?>
                             <div class="form-group">
                                 <option value="">FECHA DE NACIMIENTO</option>
@@ -885,7 +605,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                                        name="fechaIngreso" id="dtFechaNacimientoModificacion"
                                        pattern="\d{4}-\d{2}-\d{2}"
                                        title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)"
-                                       min="<?php echo $fechaMinima; ?>" max="<?php echo $fechaMaxima; ?>"
+                                       min="<?php echo $fechaLimiteInferior; ?>" max="<?php echo $fechaActual; ?>"
                                        maxlength="10">
                             </div>
                         </div>
@@ -999,7 +719,9 @@ $resultadoRegimen = ObtenerIdRegimen();
                                        style="display: none;" onchange="updateImage(this)">
                             </label>
                         </div>
-                        <button class="boton-intec">APLICAR</button>
+                        <button class="button primary-bg btn-block" id="botonAplicarCambios" name="buttonsAplicar">APLICAR
+                            CAMBIOS
+                        </button>
                     </form>
                 </div>
             </div>
@@ -1042,7 +764,9 @@ $resultadoRegimen = ObtenerIdRegimen();
                                    value="<?php echo date('Y-m-d'); ?>">
                         </div>
 
-                        <button class="button primary-bg btn-block" id="botonAplicarBaja" name = "buttonsAplicar">APLICAR CAMBIOS </button>
+                        <button class="button primary-bg btn-block" id="botonAplicarBaja" name="buttonsAplicar">APLICAR
+                            CAMBIOS
+                        </button>
 
                     </form>
                 </div>
@@ -1065,8 +789,8 @@ $resultadoRegimen = ObtenerIdRegimen();
                 </div>
                 <div class="modal-body">
                     <form action="#">
-                        <input type="hidden" name = "iIdConstanteSede" id="iIdConstanteSedeReactivacion" value="" >
-                        <input type="hidden" name = "iClaveSede" id="iClaveSedeReactivacion" value="" >
+                        <input type="hidden" name="iIdConstanteSede" id="iIdConstanteSedeReactivacion" value="">
+                        <input type="hidden" name="iClaveSede" id="iClaveSedeReactivacion" value="">
                         <div class="form-group">
                             <option value="">NSS</option>
                             <input type="tel" class="form-control" name="vchNSS" id="vchNSSReactivacion" maxlength="10"
@@ -1089,7 +813,8 @@ $resultadoRegimen = ObtenerIdRegimen();
                         ?>
                         <div class="form-group">
                             <option value="">FECHA DE REINGRESO</option>
-                            <input type="date" class="form-control" placeholder="FECHA DE REINGRESO" name="fechaReIngreso"
+                            <input type="date" class="form-control" placeholder="FECHA DE REINGRESO"
+                                   name="fechaReIngreso"
                                    id="dFechaReIngresoReactivacion" pattern="\d{4}-\d{2}-\d{2}"
                                    title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)"
                                    min="<?php echo $fechaMinima; ?>" max="<?php echo $fechaMaxima; ?>" maxlength="10"
@@ -1131,7 +856,8 @@ $resultadoRegimen = ObtenerIdRegimen();
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        <button class="button primary-bg btn-block" id="buttonAplicarReactivacion">APLICAR CAMBIOS</button>
+                        <button class="button primary-bg btn-block" id="buttonAplicarReactivacion">APLICAR CAMBIOS
+                        </button>
                     </form>
                 </div>
             </div>
@@ -1154,8 +880,8 @@ $resultadoRegimen = ObtenerIdRegimen();
                 </div>
                 <div class="modal-body">
                     <form action="#">
-                        <input type="hidden" name = "iIdConstanteSede" id="idConstanteSedePromocion" value="" >
-                        <input type="hidden" name = "iClaveSede" id="iCveSedePromocion" value="" >
+                        <input type="hidden" name="iIdConstanteSede" id="idConstanteSedePromocion" value="">
+                        <input type="hidden" name="iClaveSede" id="iCveSedePromocion" value="">
 
                         <div class="form-group row">
                             <div class="col-sm-9">
@@ -1271,57 +997,10 @@ $resultadoRegimen = ObtenerIdRegimen();
 <script src="MostrarDatosEmpleado.js"></script>
 <script src="FuncionesEmpleado.js"></script>
 
-<script>
-        document.getElementById('botonAplicarBaja').addEventListener('click', ValidarBaja);
-</script>
-<script>
-    document.getElementById('buttonAplicarReactivacion').addEventListener('click', ValidarReactivacion);
-</script>
-
-<script>
-    document.getElementById('buttonAplicarPromocion').addEventListener('click', ValidarPromocion);
-</script>
-
-<script>
-    function deshabilitarBotones() {
-        document.getElementById('buttonsModificar').querySelectorAll('.boton-intec').forEach(boton => {
-            boton.addEventListener('click', function () {
-
-                const botones = document.querySelectorAll('.boton-intec');
-                botones.forEach(boton => {
-                    boton.style.display = 'none';
-                });
-
-
-                const modales = document.querySelectorAll('.modal.fade');
-                modales.forEach(modal => {
-                    modal.style.display = 'none';
-                });
-
-                const mostrarModal = this.getAttribute('data-modal');
-
-                const modalElement = document.getElementById(mostrarModal);
-                if (modalElement) {
-                    modalElement.style.display = 'block';
-                }
-
-                const buttonGuardarDiv = document.querySelector('.candidate');
-                const buttonGuardar = document.createElement('button');
-                buttonGuardar.textContent = 'GUARDAR';
-                buttonGuardar.className = 'boton-intec';
-                buttonGuardar.style.display = 'none'; // Oculta el botón "Guardar" inicialmente
-
-                buttonGuardarDiv.appendChild(buttonGuardar);
-
-                // Muestra el botón "Guardar" cuando se muestra el modal
-                buttonGuardar.style.display = 'block'; // Cambia a 'block' para mostrar el botón "Guardar"
-
-
-            });
-        });
-    }
-</script>
-
+<script> document.getElementById('botonAplicarBaja').addEventListener('click', ValidarBaja); </script>
+<script> document.getElementById('buttonAplicarReactivacion').addEventListener('click', ValidarReactivacion); </script>
+<script> document.getElementById('buttonAplicarPromocion').addEventListener('click', ValidarPromocion); </script>
+<script> deshabilitarBotones(); </script>
 
 </body>
 
