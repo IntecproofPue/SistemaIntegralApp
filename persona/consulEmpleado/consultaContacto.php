@@ -369,8 +369,8 @@ $resultadoContacto = ObtenerTipoContacto();
                         <div class="col-md-6">
                           <div class="breadcrumb-form" style="display: flex; justify-content: flex-end;">
                             <div class="body">
-                            <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-1"
-                              style="display:none;" id="buttonAgregar">AGREGAR NUEVO</a>
+                              <a href="#" class="boton-intec" data-toggle="modal" data-target="#apply-popup-id-1"
+                                style="display:none;" id="buttonAgregar">AGREGAR NUEVO</a>
                             </div>
                           </div>
                         </div>
@@ -461,115 +461,32 @@ $resultadoContacto = ObtenerTipoContacto();
     }
 
   </script>
-  <!-- inicio de modales -->
+  
   <div class="apply-popup">
-    <div class="modal fade" id="apply-popup-id-1" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content" style="width: 800px; height: auto; padding: 50px;">
-          <div class="modal-header">
-            <h5 class="modal-title"><i data-feather="edit"></i>INFORMACION DE CONTACTO</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form action="#">
-              <div class="row">
-
-                <div class="col-md-7">
-                  <div class="form-group">
-                    <input type="hidden" name="iIdConstanteContacto" id="iIdConstanteContacto" value="">
-                    <input type="hidden" name="iClaveContacto" id="iClaveContacto" value="">
-                    <input type="hidden" name="iIdPersonaContacto" id="iIdPersonaContacto" value="">
-
-                    <label class="col-form-label">TIPO CONTACTO</label>
-                    <select class="form-control" Name="tipoContacto" id="tipoContactoAgregar"
-                      onchange="validarTipoContacto()" required>
-                      <option value="">SELECCIONE UN TIPO DE CONTACTO</option>
-                      <?php foreach ($resultadoContacto as $contacto): ?>
-                        <option value="<?= $contacto['iIdConstante'] . '-' . $contacto['iClaveCatalogo'] ?>">
-                          [<?= $contacto['iClaveCatalogo'] ?>] - <?= $contacto['vchDescripcion'] ?>
-                        </option>
-                      <?php endforeach; ?>
-
-                    </select>
-                  </div>
-                </div>
-
-                <div class="col-md-5">
-                  <div class="form-group">
-                    <label class="col-form-label">CONTACTO</label>
-                    <input id="vchContactoAgregar" class="form-control" name="tipoContacto" placeholder="CONTACTO"
-                      required>
-                  </div>
-                </div>
-              </div>
-              <script>
-
-                function validarContactoNuevo() {
-
-                  var ContactoSeleccionado = document.getElementById('tipoContactoAgregar');
-                  var ContactoPartes = ContactoSeleccionado.value.split('-');
-                  var iIdConstanteContacto = ContactoPartes[0];
-                  var iClaveContacto = ContactoPartes[1];
-
-                  document.getElementById('iIdConstanteContacto').value = iIdConstanteContacto;
-                  document.getElementById('iClaveContacto').value = iClaveContacto;
-
-
-                  var DatoContactoPersona = localStorage.getItem('datosConsultaIndividual');
-
-                  var bResultadoEmpleado = JSON.parse(DatoContactoPersona);
-                  var iIdPersonaContacto = bResultadoEmpleado.iIdPersona;
-
-                  document.getElementById('iIdPersonaContacto').value = iIdPersonaContacto;
-
-                  var datosContactoNew = {
-                    iIdConstanteContacto: iIdConstanteContacto,
-                    iClaveContacto: iClaveContacto,
-                    contacto: document.getElementById('vchContactoAgregar').value,
-                    persona: iIdPersonaContacto
-                  };
-
-
-                  var datosContactoNuevo = new XMLHttpRequest();
-                  //datosContactoNuevo.open('POST', 'SisAdmonIntecproof/persona/altaPersona/validarDatosContacto.php', true);
-                  datosContactoNuevo.open('POST', '/SistemaIntegralApp/persona/altaPersona/validarDatosContacto.php', true);
-                  datosContactoNuevo.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-                  var formData = new URLSearchParams(datosContactoNew).toString();
-
-                  datosContactoNuevo.send(formData);
-
-                  datosContactoNuevo.onload = function () {
-                    if (datosContactoNuevo.status === 200) {
-                      var respuesta = JSON.parse(datosContactoNuevo.responseText);
-                      if (respuesta.bResultado === 1) {
-                        localStorage.setItem('agregarContacto', JSON.stringify(datosContactoNew));
-                        alert(respuesta.vchMensaje);
-                      } else {
-                        console.log("Mensaje Error: " + respuesta.vchMensaje);
-                        alert(respuesta.vchMensaje);
-                      }
-                    }
-                  }
-                }
-              </script>
-              <div class="row">
-                <a class="boton-intec" href="#" id="buttonGuardarContacto" data-toggle="modal"
-                  data-target="#apply-popup-id-1">AGREGAR</a>
-              </div>
-              <script>
-                document.getElementById('buttonGuardarContacto').addEventListener('click', validarContactoNuevo);
-              </script>
-
-            </form>
-          </div>
+  <div class="modal fade" id="apply-popup-id-1" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" style="width: 800px; height: auto; padding: 50px;">
+        <div class="modal-header">
+          <h5 class="modal-title"><i data-feather="edit"></i>INFORMACION DE CONTACTO</h5>
+          <button type="button" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="#">
+            <!-- Contenido existente aquí -->
+            <div class="row">
+              <a class="boton-intec" href="#" id="buttonGuardarContacto">AGREGAR</a>
+              <button class="boton-intec ml-2" id="buttonGuardarTodo">GUARDAR TODO</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
   </div>
-  <!-- fianal de modales -->
+</div>
+
+
 
   <!-- Footer -->
   <footer class="footer-bg">
@@ -831,6 +748,105 @@ $resultadoContacto = ObtenerTipoContacto();
 
 
     });
+
+    // Función para agregar el contenido a la modal
+function agregarContenidoModal(event) {
+    event.preventDefault(); // Prevenir el comportamiento predeterminado del botón
+
+    // Crear el nuevo contenido
+    var nuevoContenido = `
+        
+        <div class="modal-body">
+                    <form action="#" onsubmit = "guardarDatosContacto()">
+                        <div class="row">
+
+                            <div class="col-md-7">
+                                <div class="form-group">
+                                    <input type="hidden" name="iIdConstanteContacto" id="iIdConstanteContacto" value="" />
+                                    <input type="hidden" name="iClaveContacto" id="iClaveContacto" value="" />
+                                    <input type="hidden" name="iIdPersonaContacto" id="iIdPersonaContacto" value="" />
+
+                                    <label class="col-form-label">TIPO CONTACTO</label>
+                                    <select class="form-control" name="tipoContacto" id="tipoContactoAgregar"
+                                        onchange="validarTipoContacto()" required>
+                                        <option value="">SELECCIONE UN TIPO DE CONTACTO</option>
+                                        <?php foreach ($resultadoContacto as $contacto): ?>
+                                            <option value="<?= $contacto['iIdConstante'] . '-' . $contacto['iClaveCatalogo'] ?>">
+                                                [<?= $contacto['iClaveCatalogo'] ?>] - <?= $contacto['vchDescripcion'] ?>
+                                            </option>
+                                        <?php endforeach; ?>
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label class="col-form-label">CONTACTO</label>
+                                    <input id="vchContactoAgregar" class="form-control" name="tipoContacto" placeholder="CONTACTO"
+                                        required />
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        </div>
+        <!-- Fin del nuevo contenido -->
+    `;
+
+    // Obtener referencia al cuerpo de la modal
+    var modalBody = document.querySelector('.modal-body');
+
+    // Insertar el nuevo contenido al final del cuerpo de la modal
+    modalBody.insertAdjacentHTML('beforeend', nuevoContenido);
+}
+
+function guardarDatosContacto(){
+    event.preventDefault; 
+    var iIdConstanteContacto = document.getElementById('iIdConstanteContacto').value; 
+    var iClaveContacto = document.getElementById('iClaveContacto').value; 
+    var iIdPersonaContacto = document.getElementById('iIdPersonaContacto').value; 
+    var tipoContacto = document.getElementById('tipoContactoAgregar').value; 
+    var vchContactoAgregar = document.getElementById('vchContactoAgregar').value; 
+
+
+var datosContactoCapturados = {
+  iIdConstanteContacto:iIdConstanteContacto,
+  iClaveContacto:iClaveContacto, 
+  iIdPersonaContacto:iIdPersonaContacto, 
+  tipoContacto:tipoContacto, 
+  vchContactoAgregar:vchContactoAgregar
+}; 
+
+var datosLocalStorage = JSON.stringify(datosContactoCapturados); 
+
+localStorage.setItem('datosContactoAgregar', datosLocalStorage); 
+
+
+}
+
+
+// Obtener referencia al botón "AGREGAR"
+var botonAgregar = document.getElementById('buttonGuardarContacto');
+
+// Agregar evento click al botón "AGREGAR" y pasar el evento como argumento a la función agregarContenidoModal
+botonAgregar.addEventListener('click', function(event) {
+    agregarContenidoModal(event);
+});
+
+var botonGuardarTodo = document.getElementById('buttonGuardarTodo');
+
+// Agregar evento click al botón "GUARDAR TODO" y llamar a la función guardarDatosLocalStorage
+botonGuardarTodo.addEventListener('click', guardarDatosContacto);
+
+// Obtener referencia al botón de cerrar la modal
+var botonCerrarModal = document.querySelector('.modal-header .close');
+
+// Agregar evento click al botón de cerrar la modal para cerrarla manualmente
+botonCerrarModal.addEventListener('click', function() {
+    var modal = document.getElementById('apply-popup-id-1');
+    $(modal).modal('hide');
+});
+
   </script>
 
 </body>
