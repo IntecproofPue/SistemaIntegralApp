@@ -2,28 +2,16 @@
 require_once ('../includes/pandora.php');
 require_once ('../includes/load.php');
 require_once ('../includes/sql.php');
+require_once ('FuncionesInventario.php');
 
-session_start();
 
 
-function ObtenerIdGenero()
-{
-  if (isset($_SESSION['CatConstante'])) {
-    $datosGenero = $_SESSION['CatConstante'];
-    $generoEncontrado = array();
+$resultadoProducto = ObtenerTipoProducto();
+$resultadoTipoSubproducto = ObtenerTipoSubproducto();
+$resultadoMarcas = ObtenerMarca();
+$resultadoTipoAsignacion = ObtenerTipoAsignacion();
 
-    foreach ($datosGenero as $valorGenero) {
-      if ($valorGenero['iAgrupador'] == 3) {
-        $generoEncontrado[] = $valorGenero;
-      }
-    }
-    return $generoEncontrado;
-  } else {
-    echo ("No hay datos del género");
-  }
-}
-
-$resultadoGenero = ObtenerIdGenero();
+$resultadoPersonas = consultaPersona();
 
 
 
@@ -69,67 +57,6 @@ $resultadoGenero = ObtenerIdGenero();
   <link rel="apple-touch-icon" sizes="114x114" href="../images/icon-114x114.png">
 
   <script type="text/JavaScript" src="../includes/pandora.js"></script>
-  <script>
-    function soloLetras(e) {
-      tecla = (document.all) ? e.keyCode : e.which;
-
-      if (tecla == 8) {
-        return true;
-      }
-
-      patronAceptado = /[A-Z]/;
-      tecla_final = String.fromCharCode(tecla);
-      return patronAceptado.test(tecla_final);
-    }
-
-    function soloNumeros(e) {
-      tecla = (document.all) ? e.keyCode : e.which;
-
-
-      if (tecla == 8) {
-        return true;
-      }
-
-
-      patronAceptado = /[0-9]/;
-      tecla_final = String.fromCharCode(tecla);
-      return patronAceptado.test(tecla_final);
-
-
-      function cargarUsosFiscales() {
-        window.alert("Hola");
-      }
-
-      function soloRfc(e) {
-
-        tecla = (document.all) ? e.keyCode : e.which;
-
-
-        if (tecla == 8) {
-          return true;
-        }
-
-
-        patronAceptado = /[A-Za-z0-9]/;
-        tecla_final = String.fromCharCode(tecla);
-        return patronAceptado.test(tecla_final);
-      }
-
-
-      function soloNombre(e) {
-
-        tecla = (document.all) ? e.keyCode : e.which;
-
-
-        if (tecla == 8) {
-          return true;
-        }
-        patronAceptado = /[a-zA-Z áéíóúñÁÉÍÓÚÑ]+/;
-        tecla_final = String.fromCharCode(tecla);
-        return patronAceptado.test(tecla_final);
-      }
-    }
-  </script>
 
 </head>
 
@@ -243,14 +170,6 @@ $resultadoGenero = ObtenerIdGenero();
             </label>
           </div>
         </div>
-        <!--<div class="col-md-6">
-          <div class="breadcrumb-form">
-            <form action="#">
-              <input type="text" placeholder="BUSCAR">
-              <button><i data-feather="search"></i></button>
-            </form>
-          </div>
-        </div>-->
       </div>
     </div>
   </div>
@@ -279,10 +198,10 @@ $resultadoGenero = ObtenerIdGenero();
                         <!-- <label class="col-md-4 col-form-label">TIPO DE PRODUCTO:</label>-->
                         <select class="form-control" Name="iIdtipoProducto" id="iIdtipoProducto" required>
                           <option value="">*SELECCIONE UN PRODUCTO</option>
-                          <?php foreach ($resultadoContacto as $contacto): ?>
-                            <option value="<?= $contacto['iIdConstante'] . '-' . $contacto['iClaveCatalogo'] ?>">
-                              [<?= $contacto['iClaveCatalogo'] ?>] -
-                              <?= $contacto['vchDescripcion'] ?>
+                          <?php foreach ($resultadoProducto as $producto): ?>
+                            <option value="<?= $producto['iIdConstante'] . '-' . $producto['iClaveCatalogo'] ?>">
+                              [<?= $producto['iClaveCatalogo'] ?>] -
+                              <?= $producto['vchDescripcion'] ?>
                             </option>
                           <?php endforeach; ?>
                         </select>
@@ -294,10 +213,10 @@ $resultadoGenero = ObtenerIdGenero();
                         <!--<label class="col-md-4 col-form-label">TIPO DE SUBPRODUCTO:</label>-->
                         <select class="form-control" Name="iIdTipoSubproducto" id="iIdTipoSubproducto" required>
                           <option value="">*SELECCIONE UN SUBPRODUCTO</option>
-                          <?php foreach ($resultadoContacto as $contacto): ?>
-                            <option value="<?= $contacto['iIdConstante'] . '-' . $contacto['iClaveCatalogo'] ?>">
-                              [<?= $contacto['iClaveCatalogo'] ?>] -
-                              <?= $contacto['vchDescripcion'] ?>
+                          <?php foreach ($resultadoTipoSubproducto as $subproducto): ?>
+                            <option value="<?= $subproducto['iIdConstante'] . '-' . $subproducto['iClaveCatalogo'] ?>">
+                              [<?= $subproducto['iClaveCatalogo'] ?>] -
+                              <?= $subproducto['vchDescripcion'] ?>
                             </option>
                           <?php endforeach; ?>
                         </select>
@@ -306,15 +225,20 @@ $resultadoGenero = ObtenerIdGenero();
 
                     <div class="col-md-4">
                       <div class="form-group">
-                        <!--<label class="col-md-4 col-form-label">*MARCA:</label>-->
-                        <input type="text" id="iIdMarca" class="form-control" placeholder="*MARCA" maxlength="150"
-                          onkeypress="this.value = this.value.toUpperCase();return">
+                          <select class="form-control" Name="iIdMarca" id="iIdMarca" required>
+                              <option value="">*SELECCIONE UNA MARCA</option>
+                              <?php foreach ($resultadoMarcas as $marca): ?>
+                                  <option value="<?= $marca['iIdConstante'] . '-' . $marca['iClaveCatalogo'] ?>">
+                                      [<?= $marca['iClaveCatalogo'] ?>] -
+                                      <?= $marca['vchDescripcion'] ?>
+                                  </option>
+                              <?php endforeach; ?>
+                          </select>
                       </div>
                     </div>
 
                     <div class="col-md-4">
                       <div class="form-group">
-                        <!--<label class="col-md-4 col-form-label">MODELO:</label>-->
                         <input type="text" id="vchModelo" class="form-control" placeholder="MODELO" maxlength="150"
                           onkeypress="this.value = this.value.toUpperCase();return">
                       </div>
@@ -322,7 +246,6 @@ $resultadoGenero = ObtenerIdGenero();
 
                     <div class="col-md-4">
                       <div class="form-group">
-                        <!--<label class="col-md-4 col-form-label">*SERIE:</label>-->
                         <input type="text" id="vchSerie" class="form-control" placeholder="*SERIE" maxlength="150"
                           onkeypress="this.value = this.value.toUpperCase();return">
                       </div>
@@ -330,15 +253,20 @@ $resultadoGenero = ObtenerIdGenero();
 
                     <div class="col-md-4">
                       <div class="form-group">
-                        <!--<label class="col-md-4 col-form-label">*TIPO DE ASIGNACION:</label>-->
-                        <input type="text" id="iIdTipoAsignacion" class="form-control" placeholder="*TIPO DE ASIGNACION"
-                          maxlength="150" onkeypress="this.value = this.value.toUpperCase();return">
+                          <select class="form-control" Name="iIdTipoAsignacion" id="iIdTipoAsignacion" required>
+                              <option value="">*SELECCIONE UN TIPO DE ASIGNACION</option>
+                              <?php foreach ($resultadoTipoAsignacion as $asignacion): ?>
+                                  <option value="<?= $asignacion['iIdConstante'] . '-' . $asignacion['iClaveCatalogo'] ?>">
+                                      [<?= $asignacion['iClaveCatalogo'] ?>] -
+                                      <?= $asignacion['vchDescripcion'] ?>
+                                  </option>
+                              <?php endforeach; ?>
+                          </select>
                       </div>
                     </div>
 
                     <div class="col-md-4">
                       <div class="form-group">
-                        <!--<label class="col-md-4 col-form-label">ASIGNADO A:</label>-->
                         <input type="text" id="iIdAsignadoA" class="form-control" placeholder="*ASIGNADO A"
                           maxlength="150" onkeypress="this.value = this.value.toUpperCase();return">
 
@@ -347,7 +275,6 @@ $resultadoGenero = ObtenerIdGenero();
 
                     <div class="col-md-4">
                       <div class="form-group">
-                        <!--<label class="col-md-4 col-form-label">*PROYECTO ASIGNADO:</label>-->
                         <input type="text" id="iIdProyectoAsignado" class="form-control"
                           placeholder="*PROYECTO ASIGNADO" maxlength="150"
                           onkeypress="this.value = this.value.toUpperCase();return">
