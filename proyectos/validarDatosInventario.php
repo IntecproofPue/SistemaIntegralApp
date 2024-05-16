@@ -141,7 +141,7 @@ if ($result === false) {
 
 } else {
     echo json_encode($procedInventario);
-    $_SESSION['iIdtipoProducto' = $procedInventario['iIdtipoProducto'];
+    $_SESSION('iIdtipoProducto' = $procedInventario['iIdtipoProducto']);
 }
 
 sqlsrv_close($GLOBALS['conn']);

@@ -357,6 +357,15 @@ if ( isset( $_SESSION['user_id'] ) ) {?>
                                     <div class="dashboard-section basic-info-input">
                                         <h4><i data-feather="user-check"></i>INFORMACION BASICA</h4>
 
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">* NOMBRE (S)</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" id="nombre" class="form-control" placeholder="NOMBRE"
+                                                       min="2" maxlength="150"
+                                                       onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)"
+                                                       required>
+                                            </div>
+                                        </div>
                                          
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">* PRIMER APELLIDO:</label>
@@ -663,36 +672,32 @@ if ( isset( $_SESSION['user_id'] ) ) {?>
 
 <!-- Footer -->
 <footer class="footer-bg">
-
-
     <div class="footer-bottom-area">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <div class="footer-bottom border-top">
-                        <div class="row">
-                            <div class="col-xl-4 col-lg-5 order-lg-2">
-                                <div class="footer-app-download">
-                                    <!--<a href="#" class="apple-app">Apple Store</a>
-                                <a href="#" class="android-app">Google Play</a>-->
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-lg-4 order-lg-1">
-                                <!-- <p class="copyright-text">Copyright <a href="#">Oficiona</a> 2020, All right reserved</p> -->
-                            </div>
-                            <div class="col-xl-4 col-lg-3 order-lg-3">
-                                <div class="back-to-top">
-                                    <a href="#">Subir<i class="fas fa-angle-up"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="footer-bottom border-top">
+              <div class="row">
+                <div class="col-lg-6">
+                  <a href="#">
+                    <img src="../../images/footer-logo.png" class="img-fluid" alt="">
+                  </a>
+                  <p class="copyright-text">DERECHOS DE AUTOR <a href="#">INTECPROOF</a> 2024,
+                    RESERVADOS</p>
                 </div>
+                <div class="col-lg-6">
+                  <div class="back-to-top">
+                    <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</footer>
-<!-- Footer End -->
+  </footer>
+  <!-- Footer End -->
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
