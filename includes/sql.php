@@ -51,7 +51,7 @@ function obtenerUsuario($idUsuario='') {
                 from CatGralUsuario us
                     join Persona per ON us.iIdPersona=per.iIdPersona
                     join PersonaContacto cont ON per.iIdPersona=cont.iIdPersona
-                where per.iIdPersona=$idUsuario and cont.iIdTipoContacto=63";
+                where per.iIdPersona=$idUsuario and cont.iIdTipoContacto=63 and cont.bActivo = 1";
 
     //echo "<br>Voy a ejecutar la consulta: <b>$sql</b>";
     $stmt = sqlsrv_query($GLOBALS['conn'], $sql);

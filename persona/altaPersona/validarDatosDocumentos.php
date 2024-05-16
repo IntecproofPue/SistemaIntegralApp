@@ -10,7 +10,9 @@ $iIdConstanteDocumento = isset($_POST['iIdConstanteDocumento']) ? $_POST['iIdCon
 $iClaveDocumento = isset($_POST['iClaveDocumento']) ? $_POST['iClaveDocumento'] : 0;
 $iIdEmpleado = isset($_POST['empleado']) ? $_POST['empleado'] : 0;
 $opcion = isset($_POST['opcion']) ? $_POST['opcion'] : 1;
-$urlArchivo = isset($_POST['url']) ? $_POST['url'] : '';
+$urlArchivoBase64 = isset($_POST['url']) ? $_POST['url'] : '';
+
+$urlVarbinary = base64_decode($urlArchivoBase64);
 
 
 $datosDocumentos = array(
@@ -18,7 +20,7 @@ $datosDocumentos = array(
     'iIdTipoDocto' => $iIdConstanteDocumento,
     'iAgrupadorDocto' => $agrupadorDocumento,
     'iClaveDocto' => $iClaveDocumento,
-    'vchArchivo' => $urlArchivo,
+    //'vchArchivo' => $urlVarbinary,
     'iIdUsuario' => $_SESSION['user_id'],
     'iOpcion' => $opcion,
     'iIdEmpleadoDoctos' => 0,
@@ -29,14 +31,10 @@ $datosDocumentos = array(
 );
 
 
-var_dump($datosDocumentos);
-
-
 $procedureName = "EXEC prcRN_EmpleadoDocto      @iIdEmpleado	= ?,			
                                                 @iIdTipoDocto	= ?,			
                                                 @iAgruTipDocto		= ?,		
                                                 @iCveTipoDocto		= ?,		
-                                                @vchArchivo		= ?,			
                                                 @iIdUsuarioUltModificacion	= ?,
                                                 @iOpcion		= ?,			
                                                 @iIdEmpleadoDoctos		= ?,	
@@ -50,7 +48,7 @@ $params = array(
     $datosDocumentos['iIdTipoDocto'],
     $datosDocumentos['iAgrupadorDocto'],
     $datosDocumentos['iClaveDocto'],
-    $datosDocumentos['vchArchivo'],
+    //$datosDocumentos['vchArchivo'],
     $datosDocumentos['iIdUsuario'],
     $datosDocumentos['iOpcion'],
     array(&$datosDocumentos['iIdEmpleadoDoctos'], SQLSRV_PARAM_OUT),
