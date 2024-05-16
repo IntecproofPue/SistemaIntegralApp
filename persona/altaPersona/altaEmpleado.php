@@ -25,6 +25,8 @@ if (isset($_SESSION['user_id'])) { ?>
     <?php
 
 }
+
+
 ?>
 
 <!doctype html>
@@ -307,8 +309,9 @@ if (isset($_SESSION['user_id'])) { ?>
                                             </button>
                                             <button type="reset" class="button" id="limpiar">LIMPIAR</button>
                                             <button type="button" class="button" id="Cancelar">CANCELAR</button>
-                                            <div id="botonAgregarDocumentos" href="#" data-toggle="modal"data-target="#apply-popup-id-2"></div>
-                                            
+                                            <div id="botonAgregarDocumentos" href="#" data-toggle="modal"
+                                                data-target="#apply-popup-id-2"></div>
+
                                             <div id="botonFinalizar"></div>
                                         </div>
                                     </div>
@@ -331,77 +334,82 @@ if (isset($_SESSION['user_id'])) { ?>
     </div>
 
     <!-- inicio de modales -->
-<div class="apply-popup">
-    <div class="modal fade" id="apply-popup-id-2" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <form class="dashboard-form" id="AltaPersona">
-                    <input type="hidden" name="iIdConstanteDocumento" id="iIdConstanteDocumento" value="">
-                    <input type="hidden" name="iClaveDocumento" id="iClaveDocumento" value="">
-                    <input type="hidden" name="iIdPersonaDocumento" id="iIdPersonaDocumento" value="">
+    <div class="apply-popup">
+        <div class="modal fade" id="apply-popup-id-2" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form class="dashboard-form" id="AltaPersona">
+                        <input type="hidden" name="iIdConstanteDocumento" id="iIdConstanteDocumento" value="">
+                        <input type="hidden" name="iClaveDocumento" id="iClaveDocumento" value="">
+                        <input type="hidden" name="iIdPersonaDocumento" id="iIdPersonaDocumento" value="">
 
-                    <div class="modal-header">
-                        <h5 class="modal-title"><i data-feather="edit"></i>ALTA DE DOCUMENTOS</h5>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <select class="form-control" id="iIdDocumentoAgregar" name="iIdDocumento[]">
-                                <option value="">TIPO DE DOCUMENTO:</option>
-                                <?php foreach ($resultadoDocumento as $documento): ?>
-                                    <option value="<?= $documento['iIdConstante'] . '-' . $documento['iClaveCatalogo'] ?>">
-                                        [<?= $documento['iClaveCatalogo'] ?>] - <?= $documento['vchDescripcion'] ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
+                        <div class="modal-header">
+                            <h5 class="modal-title"><i data-feather="edit"></i>ALTA DE DOCUMENTOS</h5>
                         </div>
-                        <div class="form-group file-input-wrap">
-                            <option value="">CARGAR DOCUMENTO:</option>
-                            <label for="up-cv">
-                                <input id="up-cv" type="file" onchange="cargarDocumento(event)">
-                                <i data-feather="upload-cloud"></i>
-                                <p id="nombreArchivo">NOMBRE DEL ARCHIVO
-                                <p>(pdf,zip,doc,docx)</p></p>
-                            </label>
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <select class="form-control" id="iIdDocumentoAgregar" name="iIdDocumento[]">
+                                    <option value="">TIPO DE DOCUMENTO:</option>
+                                    <?php foreach ($resultadoDocumento as $documento): ?>
+                                        <option
+                                            value="<?= $documento['iIdConstante'] . '-' . $documento['iClaveCatalogo'] ?>">
+                                            [<?= $documento['iClaveCatalogo'] ?>] - <?= $documento['vchDescripcion'] ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+
+
+                            <div class="form-group file-input-wrap">
+                                <option value="">CARGAR DOCUMENTO:</option>
+                                <label for="up-cv">
+                                    <input id="up-cv" type="file" onchange="cargarDocumento(event)">
+                                    <i data-feather="upload-cloud"></i>
+                                    <p id="nombreArchivo">NOMBRE DEL ARCHIVO
+                                    <p>(pdf,zip,doc,docx)</p>
+                                    </p>
+                                </label>
+                            </div>
+                            <button class="boton-intec" id="buttonGuardarDocumento">GUARDAR</button>
+
                         </div>
-                        <button class="boton-intec" id="buttonGuardarDocumento">GUARDAR</button>
 
-                    </div>
-
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- final de modales -->
+    <!-- final de modales -->
 
     <!-- Footer -->
-  <footer class="footer-bg">
-    <div class="footer-bottom-area">
-      <div class="container">
-        <div class="row">
-          <div class="col">
-            <div class="footer-bottom border-top">
-              <div class="row">
-                <div class="col-lg-6">
-                  <a href="#">
-                    <img src="../../images/footer-logo.png" class="img-fluid" alt="">
-                  </a>
-                  <p class="copyright-text">DERECHOS DE AUTOR <a href="#">INTECPROOF</a> 2024,
-                    RESERVADOS</p>
+    <footer class="footer-bg">
+        <div class="footer-bottom-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="footer-bottom border-top">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <a href="#">
+                                        <img src="../../images/footer-logo.png" class="img-fluid" alt="">
+                                    </a>
+                                    <p class="copyright-text">DERECHOS DE AUTOR <a href="#">INTECPROOF</a> 2024,
+                                        RESERVADOS</p>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="back-to-top">
+                                        <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-6">
-                  <div class="back-to-top">
-                    <a href="#">SUBIR<i class="fas fa-angle-up"></i></a>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </footer>
-  <!-- Footer End -->
+    </footer>
+    <!-- Footer End -->
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

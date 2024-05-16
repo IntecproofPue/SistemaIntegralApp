@@ -99,6 +99,22 @@ function enviarFormularios() {
                 document.getElementById('botonAgregarDocumentos').appendChild(botonAgregar);
 
                 botonAgregar.addEventListener('click', function () {
+                    
+                    function habilitarFormulario() {
+                        var inputs = document.getElementsByTagName('input');
+                        for (var i = 0; i < inputs.length; i++) {
+                            inputs[i].disabled = false;
+                        }
+    
+                        var selects = document.getElementsByTagName('select');
+                        for (var i = 0; i < selects.length; i++) {
+                            selects[i].disabled = false;
+                        }
+                    }
+    
+                    habilitarFormulario();
+                    
+                    
                     var documentos = [];
                     var nuevoDocumentoContainer = document.createElement('div');
                     nuevoDocumentoContainer.className = 'col-md-12';
