@@ -404,8 +404,6 @@ if (isset($_SESSION['user_id'])) {
                                             <ul class="dropdown-menu">
                                                 <li class="menu-item"><a href="inventario/altaInventario.php">ALTA
                                                         DE INVENTARIO</a></li>
-                                                <li class="menu-item"><a href="#">MORE INFO</a></li>
-                                                <li class="menu-item"><a href="#">MORE INFO</a></li>
                                             </ul>
                                         </li>
 
@@ -414,19 +412,17 @@ if (isset($_SESSION['user_id'])) {
                                                 aria-haspopup="true" aria-expanded="false">CONSULTA DE INVENTARIO</a>
                                             <ul class="dropdown-menu">
                                                 <li class="menu-item"><a href="inventario/consultaInventario.php">CONSULTA INVENTARIO</a></li>
-                                                <li class="menu-item"><a href="#">MORE INFO</a></li>
-                                                <li class="menu-item"><a href="#">MORE INFO</a></li>
+                                                
                                             </ul>
                                         </li>
 
                                         <li class="menu-item dropdown">
                                             <a href="#" data-toggle="dropdown" class="dropdown-toggle"
-                                                aria-haspopup="true" aria-expanded="false">ACTUALIZACION DE
+                                                aria-haspopup="true" aria-expanded="false">MODIFICACION DE
                                                 INVENTARIO</a>
                                             <ul class="dropdown-menu">
-                                                <li class="menu-item"><a href="#">MORE INFO</a></li>
-                                                <li class="menu-item"><a href="#">MORE INFO</a></li>
-                                                <li class="menu-item"><a href="#">MORE INFO</a></li>
+                                                <li class="menu-item"><a href="inventario/modificacionInventario.php">MODIFICACION DE INVENTARIO</a></li>
+                                              
                                             </ul>
                                         </li>
                                     </ul>

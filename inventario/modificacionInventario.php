@@ -11,7 +11,7 @@ $resultadoTipoSubproducto = ObtenerTipoSubproducto();
 $resultadoMarcas = ObtenerMarca();
 $resultadoTipoAsignacion = ObtenerTipoAsignacion();
 
-$resultadoPersonas = consultaPersona();
+
 
 
 
@@ -195,7 +195,7 @@ $resultadoPersonas = consultaPersona();
 
                     <div class="col-md-4">
                       <div class="form-group">
-                        <!-- <label class="col-md-4 col-form-label">TIPO DE PRODUCTO:</label>-->
+                        <label class="col-md-4 form-control" Name="iIdtipoProducto" id="iIdtipoProducto">TIPO DE PRODUCTO:</label>
                         <select class="form-control" Name="iIdtipoProducto" id="iIdtipoProducto" required>
                           <option value="">*SELECCIONE UN PRODUCTO</option>
                           <?php foreach ($resultadoProducto as $producto): ?>
@@ -255,12 +255,12 @@ $resultadoPersonas = consultaPersona();
                       <div class="form-group">
                           <select class="form-control" Name="iIdTipoAsignacion" id="iIdTipoAsignacion" required>
                               <option value="">*SELECCIONE UN TIPO DE ASIGNACION</option>
-                              <!--<?php foreach ($resultadoTipoAsignacion as $asignacion): ?>
+                              <?php foreach ($resultadoTipoAsignacion as $asignacion): ?>
                                   <option value="<?= $asignacion['iIdConstante'] . '-' . $asignacion['iClaveCatalogo'] ?>">
                                       [<?= $asignacion['iClaveCatalogo'] ?>] -
                                       <?= $asignacion['vchDescripcion'] ?>
                                   </option>
-                              <?php endforeach; ?>-->
+                              <?php endforeach; ?>
                           </select>
                       </div>
                     </div>

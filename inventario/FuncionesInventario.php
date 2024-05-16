@@ -70,6 +70,7 @@
         }
     }
 
+    /*
     function consultaPersona()
     {
         $datosPersona = array(
@@ -120,6 +121,7 @@
         sqlsrv_close($GLOBALS['conn']);
 
     }
+    */
 
 
 ?>
