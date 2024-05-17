@@ -58,6 +58,8 @@ function enviarFormularios() {
             var respuesta = JSON.parse(request.responseText);
             if (respuesta.bResultado === 1) {
                 alert(respuesta.vchMensaje);
+                localStorage.setItem('datosEmpleado', JSON.stringify(respuesta));
+                console.log("Este es el número de operación: ", respuesta.iNoOperacion);
 
                 var buttonEmpleado = document.getElementById('registrarEmpleado');
                 buttonEmpleado.disabled = true;
@@ -99,22 +101,20 @@ function enviarFormularios() {
                 document.getElementById('botonAgregarDocumentos').appendChild(botonAgregar);
 
                 botonAgregar.addEventListener('click', function () {
-                    
                     function habilitarFormulario() {
                         var inputs = document.getElementsByTagName('input');
                         for (var i = 0; i < inputs.length; i++) {
                             inputs[i].disabled = false;
                         }
-    
+
                         var selects = document.getElementsByTagName('select');
                         for (var i = 0; i < selects.length; i++) {
                             selects[i].disabled = false;
                         }
                     }
-    
                     habilitarFormulario();
-                    
-                    
+
+
                     var documentos = [];
                     var nuevoDocumentoContainer = document.createElement('div');
                     nuevoDocumentoContainer.className = 'col-md-12';
@@ -173,4 +173,73 @@ function enviarFormularios() {
 function RegresarInicio(){
     localStorage.clear(); //Limpiar el localStorage para no almacenar basura
     window.location.href = ("altaPersona.php");
+}
+
+function registrarDocumentos(){
+    console.log("Si está entrando al botón");
+
+    try{
+        var datosRegistroEmpleado = localStorage.getItem('datosEmpleado');
+        var bDatosRegistroEmpleado = JSON.parse(datosRegistroEmpleado);
+
+        var TipoDocumentoSeleccionado = document.getElementById('iIdDocumentoAgregar');
+        var TipoDocumentoPartes = TipoDocumentoSeleccionado.value.split('-');
+        var iIdConstanteDocumento = TipoDocumentoPartes[0];
+        var iClaveDocumento = TipoDocumentoPartes[1];
+
+
+        document.getElementById('iIdConstanteDocumento').value = iIdConstanteDocumento;
+        document.getElementById('iClaveDocumento').value = iClaveDocumento;
+    }catch (error){
+        console.error("Ocurrió un error en la asignación de variables");
+    }
+
+    try{
+        var datosDocumentosEmpleado = {
+            empleado: bDatosRegistroEmpleado.iIdEmpleado,
+            iIdConstanteDocumento: iIdConstanteDocumento,
+            iClaveDocumento: iClaveDocumento,
+            url: localStorage.getItem('base64Archivo'),
+            operacion: bDatosRegistroEmpleado.iNoOperacion
+        };
+
+        console.log(datosDocumentosEmpleado);
+        localStorage.setItem('datosEnviarDocumentos', JSON.stringify(datosDocumentosEmpleado));
+    }catch(error){
+        console.error("Ocurrió un error en el llenado del formulario datosDocumentosEmpleado");
+    }
+
+
+    var datosDocumentos = new XMLHttpRequest();
+
+    datosDocumentos.open('POST', 'prcAltaDocumentos.php', true);
+    datosDocumentos.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    var formData = new URLSearchParams(datosDocumentosEmpleado).toString();
+    datosDocumentos.send(formData);
+
+    datosDocumentos.onload = function () {
+       if (datosDocumentos.status === 200){
+           try{
+               console.log(datosDocumentos.responseText);
+               var respuesta = JSON.parse(datosDocumentos.responseText);
+               if (respuesta.bResultado == 1){
+                   console.log(respuesta);
+                   alert(respuesta.vchMensaje);
+
+                   window.location.href = '../consulEmpleado/consultaEmpleado.php';
+               }else {
+                   console.error("Mensaje de error: ", respuesta.vchMensaje);
+                   alert(respuesta.vchMensaje);
+               }
+           }catch (error){
+               console.error('Error al parsear la información del formato JSON', error);
+               alert('Error, procesando la información del servidor. Por favor reintente');
+           }
+       } else {
+           console.error("Error en la solicitud del servidor", datosDocumentos.status);
+           alert("Falló la respuesta del servidor con el estatus: ",datosDocumentos.status);
+       }
+    };
+
 }

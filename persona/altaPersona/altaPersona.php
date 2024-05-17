@@ -433,16 +433,11 @@ if ( isset( $_SESSION['user_id'] ) ) {?>
                                                        placeholder="FECHA DE NACIMIENTO" name="fechaNacimiento"
                                                        pattern="\d{4}-\d{2}-\d{2}"
                                                        title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required
-                                                       min="<?php echo $fechaMinima="1950-01-01"; ?>" max="<?php echo $fechaMaxima="2024-01-01"; ?>"
+                                                       min="<?php echo $fechaLimiteInferior="1950-01-01"; ?>" max="<?php echo $fechaActual="2024-01-01"; ?>"
                                                        maxlength="10" >
                                                 <?php
                                                 // Calcular la fecha actual
-                                                $fechaActual = date('Y-m-d');
-                                                // Restar 18 años a la fecha actual
-                                                $fechaMinima = date('Y-m-d', strtotime('-18 years', strtotime($fechaActual)));
-                                                // Establecer la fecha máxima como la fecha actual
-                                                $fechaMaxima = $fechaActual;
-                                                // Establecer la fecha mínima como 1900-01-01 (opcional)
+                                                $fechaActual = date('Y-m-d', strtotime('- 18 years'));
                                                 $fechaLimiteInferior = '1950-01-01';
                                                 ?>
                                             </div>
