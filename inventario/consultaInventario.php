@@ -289,7 +289,7 @@ $resultadoNiveles = ObtenerNivel();
 
                                     <div class="form-group">
                                         <div class="col-md-6 col-form-label text-left">
-                                            <label for="#">PRODUCTO ASIGNADA A</label>
+                                            <label for="#">PRODUCTO ASIGNADO A</label>
                                         </div>
                                         <div class="col-md-6 col-form-label text-left">
                                             <input type="text" class="col-md-6 form-control"

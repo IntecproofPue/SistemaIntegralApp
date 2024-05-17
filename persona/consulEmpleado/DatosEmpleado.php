@@ -37,6 +37,8 @@ $resultadoRegimen = ObtenerIdRegimen();
     <title>
         <?php echo $tituloPagina; ?>
     </title>
+
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
     <!-- External Css -->
@@ -61,6 +63,7 @@ $resultadoRegimen = ObtenerIdRegimen();
     <link rel="apple-touch-icon" sizes="114x114" href="../../images/icon-114x114.png">
     <script src = "MostrarDatosEmpleado.js" ></script>
     <script src = "ProcesoModificacionEmpleado.js"> </script>
+    
 
     <style>
         .selected {
@@ -145,6 +148,7 @@ $resultadoRegimen = ObtenerIdRegimen();
 </head>
 
 <body>
+    
 
 <header class="header-2">
     <div class="container">
@@ -245,6 +249,7 @@ $resultadoRegimen = ObtenerIdRegimen();
         </div>
     </div>
 </header>
+
 
 <!-- Contenido de la página -->
 <div class="alice-bg section-padding-bottom">
@@ -1000,6 +1005,9 @@ $resultadoRegimen = ObtenerIdRegimen();
 <script> document.getElementById('botonAplicarBaja').addEventListener('click', ValidarBaja); </script>
 <script> document.getElementById('buttonAplicarReactivacion').addEventListener('click', ValidarReactivacion); </script>
 <script> document.getElementById('buttonAplicarPromocion').addEventListener('click', ValidarPromocion); </script>
+<scrip > document.getElementById('botonAplicarCambios').addEventListener('click', function{
+    console.log ("Está en una prueba para el botón de aplicar cambios"); 
+});  </scrip>
 <script> deshabilitarBotones(); </script>
 
 </body>
