@@ -268,7 +268,7 @@ $resultadoEstado = ObtenerEstadoProcedencia();
               <label style="align-self: flex-end;" class="selected"><a
                   href="consultaDomicilio.php">DOMICILIO</a></label>
               <label style="align-self: flex-end;"><a href="consultaContacto.php">CONTACTO</a></label>
-              <label style="align-self: flex-end;"><a href="cunsultaDoctos.php">DOCUMENTOS</a></label>
+              <label style="align-self: flex-end;"><a href="consultaDoctos.php">DOCUMENTOS</a></label>
             </div>
           </div>
           <!-- fin de pestañas de navegación-->

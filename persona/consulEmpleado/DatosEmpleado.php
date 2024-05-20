@@ -251,7 +251,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                         <label style="align-self: flex-end;"><a href="consultaDomicilio.php">DOMICILIO</a></label>
                         <label style="align-self: flex-end;"><a href="consultaContacto.php">CONTACTO</a></label>
                         <label style="align-self: flex-end;"><a
-                                    href="../consulEmpleado/cunsultaDoctos.php">DOCUMENTOS</a></label>
+                                    href="../consulEmpleado/consultaDoctos.php">DOCUMENTOS</a></label>
                     </div>
                 </div>
                 <!-- fin de pestañas de navegación-->
