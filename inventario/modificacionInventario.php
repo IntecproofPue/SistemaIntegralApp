@@ -168,7 +168,7 @@ $resultadoTipoAsignacion = ObtenerTipoAsignacion();
                 <div class="col-md-6">
                     <div class="breadcrumb-area">
                         <label class="col-form-label"><i></i>
-                            <h4><i data-feather="plus-circle"></i>MODIFICACION DE INVENTARIO</h4>
+                            <h4><i data-feather="plus-circle"></i>CONSULTA DE INVENTARIO</h4>
                         </label>
                     </div>
                 </div>
@@ -317,18 +317,19 @@ $resultadoTipoAsignacion = ObtenerTipoAsignacion();
 
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label class="col-form-label">OBSERVACIONES</label>
-                                                <input type="text" class="form-control" id="iIdProyectoAsignado"
-                                                    placeholder="OBSERVACIONES" name="iIdProyectoAsignado"
-                                                    disabled></input>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <div class="form-group">
                                                 <label class="col-form-label">FECHA DE BAJA</label>
                                                 <input type="text" class="form-control" id="dFechaBaja"
                                                     placeholder="FECHA DE BAJA" name="dFechaBaja" disabled></input>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="col-form-label">OBSERVACIONES</label>
+                                                <input type="text" class="form-control"
+                                                    style="width: calc(100% - 30px); margin-bottom: 30px;"
+                                                    id="iIdProyectoAsignado" placeholder="OBSERVACIONES"
+                                                    name="iIdProyectoAsignado" disabled></input>
                                             </div>
                                         </div>
 
@@ -456,7 +457,7 @@ $resultadoTipoAsignacion = ObtenerTipoAsignacion();
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="col-form-label">OBSERVACIONES:</label>
                                             <input type="text" class="form-control" id="iIdProyectoAsignado"
@@ -529,10 +530,11 @@ $resultadoTipoAsignacion = ObtenerTipoAsignacion();
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="col-form-label">OBSERVACIONES:</label>
                                             <input type="text" class="form-control" id="iIdProyectoAsignado"
+                                                style="width: calc(100% - 30px); margin-bottom: 30px; font-size: 12px; word-wrap: break-word; overflow: hidden; white-space: nowrap;"
                                                 placeholder="OBSERVACIONES" disabled></input>
                                         </div>
                                     </div>
@@ -566,21 +568,22 @@ $resultadoTipoAsignacion = ObtenerTipoAsignacion();
                     <div class="modal-body">
                         <form class="dashboard-form" id="AltaPersona">
                             <div class="col-md-12">
-                                <div class="row">
+                                <div class="row">                                    
 
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="col-form-label">OBSERVACIONES:</label>
-                                            <input type="text" class="form-control" id="iIdProyectoAsignado"
-                                                placeholder="OBSERVACIONES" disabled></input>
+                                            <label class="col-form-label">*FECHA DE BAJA</label>
+                                            <input type="text" class="form-control" id="dFechaBaja"
+                                                placeholder="FECHA DE BAJA" name="dFechaBaja" disabled></input>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4">
+                                    <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="col-form-label">FECHA DE BAJA</label>
-                                            <input type="text" class="form-control" id="dFechaBaja"
-                                                placeholder="FECHA DE BAJA" name="dFechaBaja" disabled></input>
+                                            <label class="col-form-label">OBSERVACIONES:</label>
+                                            <input type="text" class="form-control"
+                                                style="width: calc(100% - 30px); margin-bottom: 30px; font-size: 12px; word-wrap: break-word; overflow: hidden; white-space: nowrap;"
+                                                id="iIdProyectoAsignado" placeholder="OBSERVACIONES" disabled></input>
                                         </div>
                                     </div>
 
@@ -613,12 +616,13 @@ $resultadoTipoAsignacion = ObtenerTipoAsignacion();
                     <div class="modal-body">
                         <form class="dashboard-form" id="AltaPersona">
                             <div class="col-md-12">
-                                <div class="row">                                   
+                                <div class="row">
 
-                                    <div class="col-md-4">
+                                    <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="col-form-label">OBSERVACIONES:</label>
-                                            <input type="text" class="form-control" id="iIdProyectoAsignado"
+                                            <label class="col-form-label">*OBSERVACIONES:</label>
+                                            <input type="text" class="form-control"
+                                                style="width: calc(100% - 30px); margin-bottom: 30px; font-size: 12px; word-wrap: break-word; overflow: hidden; white-space: nowrap;"
                                                 placeholder="OBSERVACIONES" disabled></input>
                                         </div>
                                     </div>
@@ -652,12 +656,13 @@ $resultadoTipoAsignacion = ObtenerTipoAsignacion();
                     <div class="modal-body">
                         <form class="dashboard-form" id="AltaPersona">
                             <div class="col-md-12">
-                                <div class="row">                                    
+                                <div class="row">
 
-                                    <div class="col-md-4">
+                                    <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="col-form-label">OBSERVACIONES:</label>
-                                            <input type="text" class="form-control" id="iIdProyectoAsignado"
+                                            <label class="col-form-label">*OBSERVACIONES:</label>
+                                            <input type="text" class="form-control"
+                                                style="width: calc(100% - 30px); margin-bottom: 30px; font-size: 12px; word-wrap: break-word; overflow: hidden; white-space: nowrap;"
                                                 placeholder="OBSERVACIONES" disabled></input>
                                         </div>
                                     </div>
@@ -684,8 +689,8 @@ $resultadoTipoAsignacion = ObtenerTipoAsignacion();
                     <div class="modal-header">
                         <h5 class="modal-title"><i data-feather="edit"></i>BAJA POR ROBO</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
 
                     <div class="modal-body">
@@ -695,19 +700,20 @@ $resultadoTipoAsignacion = ObtenerTipoAsignacion();
 
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="col-form-label">OBSERVACIONES:</label>
-                                            <input type="text" class="form-control" id="iIdProyectoAsignado"
-                                                placeholder="OBSERVACIONES" disabled></input>
+                                            <label class="col-form-label">*FECHA DE BAJA</label>
+                                            <input type="text" class="form-control" id="dFechaBaja"
+                                                placeholder="FECHA DE BAJA" name="dFechaBaja" disabled></input>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="col-form-label">FECHA DE BAJA</label>
-                                                <input type="text" class="form-control" id="dFechaBaja"
-                                                    placeholder="FECHA DE BAJA" name="dFechaBaja" disabled></input>
-                                            </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-form-label">OBSERVACIONES:</label>
+                                            <input type="text" class="form-control"
+                                                style="width: calc(100% - 30px); margin-bottom: 30px; font-size: 12px; word-wrap: break-word; overflow: hidden; white-space: nowrap;"
+                                                placeholder="OBSERVACIONES" disabled></input>
                                         </div>
+                                    </div>
 
                                 </div>
                             </div>
@@ -731,30 +737,31 @@ $resultadoTipoAsignacion = ObtenerTipoAsignacion();
                     <div class="modal-header">
                         <h5 class="modal-title"><i data-feather="edit"></i>BAJA POR INSERVIBLE</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
 
                     <div class="modal-body">
                         <form class="dashboard-form" id="AltaPersona">
                             <div class="col-md-12">
-                                <div class="row">                                    
+                                <div class="row">
 
-                                    <div class="col-md-4">
+                                <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="col-form-label">OBSERVACIONES:</label>
-                                            <input type="text" class="form-control" id="iIdProyectoAsignado"
-                                                placeholder="OBSERVACIONES" disabled></input>
+                                            <label class="col-form-label">*FECHA DE BAJA</label>
+                                            <input type="text" class="form-control" id="dFechaBaja"
+                                                placeholder="FECHA DE BAJA" name="dFechaBaja" disabled></input>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="col-form-label">FECHA DE BAJA</label>
-                                                <input type="text" class="form-control" id="dFechaBaja"
-                                                    placeholder="FECHA DE BAJA" name="dFechaBaja" disabled></input>
-                                            </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-form-label">OBSERVACIONES:</label>
+                                            <input type="text" class="form-control"
+                                                style="width: calc(100% - 30px); margin-bottom: 30px; font-size: 12px; word-wrap: break-word; overflow: hidden; white-space: nowrap;"
+                                                placeholder="OBSERVACIONES" disabled></input>
                                         </div>
+                                    </div>                                   
 
                                 </div>
                             </div>
