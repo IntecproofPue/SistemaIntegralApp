@@ -574,7 +574,9 @@ if ( isset( $_SESSION['user_id'] ) ) {?>
                                                             rfc: document.getElementById('rfc').value,
                                                             regimenFiscal: document.getElementById('regimenFiscal').value,
                                                             usoFiscal: document.getElementById('usoFiscal').value,
-                                                            codigoPostal: document.getElementById('CodigoFiscal').value
+                                                            codigoPostal: document.getElementById('CodigoFiscal').value,
+                                                            proceso: 2, //alta de la persona desde empleado,
+                                                            opcion: 1
                                                         };
 
                                                         // Crear una instancia de XMLHttpRequest
@@ -615,9 +617,7 @@ if ( isset( $_SESSION['user_id'] ) ) {?>
                                                     }
                                                 </script>
                                                 <button type="button" class="button" id = "botonSiguiente">SIGUIENTE</button>
-                                                <script>
-                                                    document.getElementById('botonSiguiente').addEventListener('click', ValidarDatosPersona);
-                                                </script>
+                                                <script> document.getElementById('botonSiguiente').addEventListener('click', ValidarDatosPersona);</script>
                                                 <button type="reset" class="button">LIMPIAR</button>
 
                                             </div>
@@ -718,6 +718,8 @@ if ( isset( $_SESSION['user_id'] ) ) {?>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
 <script src="../../js/map.js"></script>
+
+
 </body>
 
 </html>

@@ -11,6 +11,8 @@ $agrupadorPersona = 7;
 $nombre = isset($_POST['nombre'])? $_POST['nombre']:'';
 $primerApellido = isset($_POST['primerApellido'])?$_POST['primerApellido']: '';
 $segundoApellido = isset($_POST['segundoApellido'])?$_POST['segundoApellido']:'';
+$iIdTipoPersona = isset($_POST['iIdTipoPersona'])?$_POST['iIdTipoPersona']: 0;
+$iClaveTipoPersona = isset($_POST['iClaveTipoPersona']) ? $_POST['iClaveTipoPersona']: 0;
 $rfc = isset($_POST['rfc'])?$_POST['rfc']:'';
 $curp = isset($_POST['curp'])?$_POST['curp']:'';
 $iIdConstanteGenero = isset($_POST['iIdConstanteGenero'])?$_POST['iIdConstanteGenero']:0;
@@ -21,6 +23,8 @@ $fechaNacimiento = isset($_POST['fechaNacimiento'])?$_POST['fechaNacimiento']:''
 $regimenFiscal = isset($_POST['regimenFiscal'])?$_POST['regimenFiscal']:'';
 $usoFiscal = isset($_POST['usoFiscal'])?$_POST['usoFiscal']:'';
 $codigoPostal = isset($_POST['codigoPostal'])?$_POST['codigoPostal']:0;
+$opcion = isset($_POST['opcion'])? $_POST['opcion']: 0;
+$proceso = isset($_POST['proceso']) ?$_POST['proceso'] : 0;
 
 
 
@@ -44,8 +48,8 @@ $datosPersona = array(
     'vchUsoFiscal' => $usoFiscal,
     'iCodigoFiscal' => $codigoPostal,
     'bEstatus' =>1,
-    'iOpcion' => 1,
-    'iProceso' => 1,
+    'iOpcion' => $opcion,
+    'iProceso' => $proceso,
     'iIdPersona' => 0,
     'iIdUsuarioUltModificacion' => $_SESSION['user_id'],
     'iIdUsoFiscal' => 0,

@@ -3,8 +3,6 @@
 require_once ('../../includes/load.php');
 session_start();
 
-$agrupadorDocumento = 10;
-
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $iIdEmpleado = isset($_POST['empleado'])? $_POST['empleado']: 0;
@@ -14,39 +12,56 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $iNoOperacion = isset($_POST['operacion'])? $_POST['operacion']: 0;
 }
 
-$urlArchivoBase64 = iconv('ISO-8859-1', 'UCS-2BE' ,$urlArchivoBase64);
-//$urlVarbinary = base64_decode($urlArchivoBase64);
+
+$serverName = "192.168.100.39, 1433"; //serverName\instanceName, portNumber (por defecto es 1433)
+$connectionInfo = array(
+            "Database"=>"BDSistemaIntegral_PRETEST",
+            "UID"=>"Development",
+            "PWD"=>"Development1234*"
+            );
+
+$dsn = $serverName.";".http_build_query($connectionInfo);
+
+$conn = odbc_connect($dsn);
+
+$agrupadorDocumento = 10;
 
 
-$query = "DECLARE @archivoBinario VARBINARY(MAX); 
-                SET @archivoBinario = (SELECT CONVERT(VARBINARY(MAX), Value) FROM #TempSessionVariables FOR XML PATH(''), TYPE).value('.', 'VARBINARY(MAX)'); 
-                INSERT INTO dbo.tempDoctos (vbDocto, iNoOperacion, iIdEmpleado) 
-                OUTPUT inserted.*, inserted.iIdtempDoctos AS iIdDocumento
-                VALUES (?,?,?)";
 
-$paramsConvert = array(
-    $urlArchivoBase64,
+
+//$urlArchivoBase64 = iconv('ISO-8859-1', 'UCS-2BE' ,$urlArchivoBase64);
+$urlVarbinary = base64_decode($urlArchivoBase64);
+
+
+$query = "INSERT INTO dbo.tempDoctos (vbDocto, iNoOperacion, iIdEmpleado) 
+            OUTPUT inserted.*, inserted.iIdtempDoctos AS iIdDocumento
+            VALUES (?,?,?)";
+
+$params = array(
+    $urlVarbinary,
     $iNoOperacion,
     $iIdEmpleado
 );
 
-$stm = sqlsrv_query($GLOBALS['conn'], $query, $paramsConvert);
+$stm = odbc_prepare($conn, $query);
+
+echo $stm;
 
 if (!$stm) {
     echo "Error en la consulta:\n";
-    die(print_r(sqlsrv_errors(), true));
-} else {
-    while ($row = sqlsrv_fetch_array($stm, SQLSRV_FETCH_ASSOC)) {
-        $idInsertado = $row['iIdDocumento'];
-        echo "ID insertado: $idInsertado\n";
-    }
+    die(print_r(odbc_error(), true));
 }
 
-sqlsrv_free_stmt($stm);
+$result = odbc_execute($stm, $params);
+
+if ($result === false){
+    die (print_r(odbc_error(), true));
+}
+
+odbc_free_stmt($stm);
 
 
-
-sqlsrv_close($GLOBALS['conn']);
+odbc_close($conn);
 
 
 /*

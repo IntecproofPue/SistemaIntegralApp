@@ -146,6 +146,23 @@
         }
     }
 
+    function ObtenerIdTipoPersona()
+    {
+        if (isset($_SESSION['CatConstante'])) {
+            $datosTipoPersona = $_SESSION['CatConstante'];
+            $tipoEncontrado = array();
+
+            foreach ($datosTipoPersona as $valorPersona) {
+                if ($valorPersona['iAgrupador'] == 7) {
+                    $tipoEncontrado[] = $valorPersona;
+                }
+            }
+            return $tipoEncontrado;
+        } else {
+            echo("No hay datos del género");
+        }
+    }
+
     function EjecutarRegimenUso()
     {
 

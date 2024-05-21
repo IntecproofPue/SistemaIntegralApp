@@ -1,19 +1,17 @@
 <?php
 require_once ('../includes/pandora.php');
 require_once ('../includes/load.php');
-require_once ('../includes/sql.php');
 require_once ('FuncionesInventario.php');
-
 
 
 $resultadoProducto = ObtenerTipoProducto();
 $resultadoTipoSubproducto = ObtenerTipoSubproducto();
 $resultadoMarcas = ObtenerMarca();
 $resultadoTipoAsignacion = ObtenerTipoAsignacion();
-
 $resultadoPersonas = consultaPersona();
-
-
+$resultadoProyectos = consultaProyecto();
+$resultadoGenero = ObtenerIdGenero();
+$resultadoTipoPersona = ObtenerIdTipoPersona();
 
 ?>
 
@@ -136,7 +134,7 @@ $resultadoPersonas = consultaPersona();
                   <ul class="account-item-list">
                     <li><a href="#"><span class="ti-user"></span><?php echo $Perfil; ?></a></li>
                     <li><a href="#"><span class="ti-settings"></span><?php echo $herramientas; ?></a></li>
-                    <li><a href="../includes/load.php"><span class="ti-power-off"></span><?php echo $logout; ?></a>
+                    <li><a href="../includes/logout.php"><span class="ti-power-off"></span><?php echo $logout; ?></a>
                     </li>
                   </ul>
                 </div>
@@ -186,17 +184,16 @@ $resultadoPersonas = consultaPersona();
 
               <div id="information" class="row justify-content-center">
 
-                <input type="hidden" name="iIdConstanteContacto" id="iIdConstanteContacto" value="">
-                <input type="hidden" name="iClaveContacto" id="iClaveContacto" value="">
-
-
                 <div class="col-md-12">
                   <div class="row">
 
                     <div class="col-md-4">
                       <div class="form-group">
                         <!-- <label class="col-md-4 col-form-label">TIPO DE PRODUCTO:</label>-->
-                        <select class="form-control" Name="iIdtipoProducto" id="iIdtipoProducto" required>
+                          <input type="hidden" name="iIdConstanteProducto" id="iIdConstanteProducto" value="">
+                          <input type="hidden" name="iClaveProducto" id="iClaveProducto" value="">
+
+                          <select class="form-control" Name="iIdtipoProducto" id="iIdtipoProducto" required>
                           <option value="">*SELECCIONE UN PRODUCTO</option>
                           <?php foreach ($resultadoProducto as $producto): ?>
                             <option value="<?= $producto['iIdConstante'] . '-' . $producto['iClaveCatalogo'] ?>">
@@ -211,7 +208,10 @@ $resultadoPersonas = consultaPersona();
                     <div class="col-md-4">
                       <div class="form-group">
                         <!--<label class="col-md-4 col-form-label">TIPO DE SUBPRODUCTO:</label>-->
-                        <select class="form-control" Name="iIdTipoSubproducto" id="iIdTipoSubproducto" required>
+
+                          <input type="hidden" name="iIdConstanteSubProducto" id="iIdConstanteSubProducto" value="">
+                          <input type="hidden" name="iClaveSubProducto" id="iClaveSubProducto" value="">
+                          <select class="form-control" Name="iIdTipoSubproducto" id="iIdTipoSubproducto" required>
                           <option value="">*SELECCIONE UN SUBPRODUCTO</option>
                           <?php foreach ($resultadoTipoSubproducto as $subproducto): ?>
                             <option value="<?= $subproducto['iIdConstante'] . '-' . $subproducto['iClaveCatalogo'] ?>">
@@ -225,6 +225,8 @@ $resultadoPersonas = consultaPersona();
 
                     <div class="col-md-4">
                       <div class="form-group">
+                          <input type="hidden" name="iIdConstanteMarca" id="iIdConstanteMarca" value="">
+                          <input type="hidden" name="iClaveMarca" id="iClaveMarca" value="">
                           <select class="form-control" Name="iIdMarca" id="iIdMarca" required>
                               <option value="">*SELECCIONE UNA MARCA</option>
                               <?php foreach ($resultadoMarcas as $marca): ?>
@@ -253,55 +255,69 @@ $resultadoPersonas = consultaPersona();
 
                     <div class="col-md-4">
                       <div class="form-group">
+                          <input type="hidden" name="iIdTipoAsignacion" id="iIdConstanteAsignacion" value="">
+                          <input type="hidden" name="iClaveAsignacion" id="iClaveAsignacion" value="">
                           <select class="form-control" Name="iIdTipoAsignacion" id="iIdTipoAsignacion" required>
                               <option value="">*SELECCIONE UN TIPO DE ASIGNACION</option>
-                              <!--<?php foreach ($resultadoTipoAsignacion as $asignacion): ?>
+                              <?php foreach ($resultadoTipoAsignacion as $asignacion): ?>
                                   <option value="<?= $asignacion['iIdConstante'] . '-' . $asignacion['iClaveCatalogo'] ?>">
                                       [<?= $asignacion['iClaveCatalogo'] ?>] -
                                       <?= $asignacion['vchDescripcion'] ?>
                                   </option>
-                              <?php endforeach; ?>-->
+                              <?php endforeach; ?>
                           </select>
                       </div>
                     </div>
 
                     <div class="col-md-4">
                       <div class="form-group">
-                        <input type="text" id="iIdAsignadoA" class="form-control" placeholder="*ASIGNADO A"
-                          maxlength="150" onkeypress="this.value = this.value.toUpperCase();return">
+                          <select class="form-control" Name="iIdAsignadoA" id="iIdAsignadoA">
+                              <option value="">SELECCIONE UNA PERSONA</option>
+                              <?php foreach ($resultadoPersonas as $personas): ?>
+                                  <option value="<?= $personas['iIdPersona']?>">
+                                      [<?= $personas['iIdPersona'] ?>] -
+                                      <?= $personas['vchNombre'] ?>
+                                  </option>
+                              <?php endforeach; ?>
+                          </select>
 
                       </div>
                     </div>
 
                     <div class="col-md-4">
                       <div class="form-group">
-                        <input type="text" id="iIdProyectoAsignado" class="form-control"
-                          placeholder="*PROYECTO ASIGNADO" maxlength="150"
-                          onkeypress="this.value = this.value.toUpperCase();return">
+                          <select class="form-control" Name="iIdProyecto" id="iIdProyecto">
+                              <option value="">SELECCIONE UN PROYECTO</option>
+                              <?php foreach ($resultadoProyectos as $proyecto): ?>
+                                  <option value="<?= $proyecto['iIdProyecto']?>">
+                                      [<?= $proyecto['iIdProyecto'] ?>] -
+                                      <?= $proyecto['vchNombreCorto'] ?>
+                                  </option>
+                              <?php endforeach; ?>
+                          </select>
                       </div>
                     </div>
 
                     <div class="col-md-4">
                       <div class="form-group" >
                         <label style="margin-bottom: -10px;" >*FECHA DE INGRESO</label>
+                          <?php
+                          $fechaActual = date('Y-m-d');
+                          $fechaLimiteInferior = '1980-01-01';
+                          ?>
                         <input type="date" id="dFechaIngreso" class="form-control" placeholder=" *FECHA DE NACIMIENTO"
                           name="FechaIngreso" pattern="\d{4}-\d{2}-\d{2}"
                           title="FORMATO DE FECHA INCORRECTA (AAAA-MM-DD)" required
-                          min="<?php echo $fechaMinima = "1950-01-01"; ?>"
-                          max="<?php echo $fechaMaxima = "2024-01-01"; ?>" maxlength="10">
-                        <?php
-                        $fechaActual = date('Y-m-d');
-                        $fechaMinima = date('Y-m-d', strtotime('-18 years', strtotime($fechaActual)));
-                        $fechaMaxima = $fechaActual;
-                        $fechaLimiteInferior = '1950-01-01';
-                        ?>
+                          min="<?php echo $fechaMinima = $fechaLimiteInferior; ?>"
+                          max="<?php echo $fechaMaxima = $fechaActual; ?>" maxlength="10">
+
                       </div>
                     </div> 
 
                     <div class="col-md-4">
                       <div class="form-group">
                         <!--<label class="col-md-4 col-form-label">OBSERVACIONES:</label>-->
-                        <textarea class="form-control" id="iIdProyectoAsignado" placeholder="OBSERVACIONES"
+                        <textarea class="form-control" id="vchObservaciones" placeholder="OBSERVACIONES"
                           onkeypress="this.value = this.value.toUpperCase();return"></textarea>
                       </div>
                     </div>
@@ -311,8 +327,8 @@ $resultadoPersonas = consultaPersona();
                     <div class="body">
 
                       <div class="row-left">
-                        <button type="submit" class="boton-intec">REGISTRAR</button>
-                        <button type="submit" class="boton-intec">VOLVER</button>
+                        <button type="submit" class="boton-intec" id="buttonRegistrar">REGISTRAR</button>
+                        <button type="submit" class="boton-intec" id="buttonVolver">VOLVER</button>
                       </div>
 
 
@@ -350,11 +366,35 @@ $resultadoPersonas = consultaPersona();
 
                   <div class="col-md-4">
                     <div class="form-group">
-                      <!--<label class="col-md-4 col-form-label">TIPPO DE PERSONA:</label>-->
-                      <input type="text" id="vchTipoPersona" class="form-control" placeholder="*TIPO PERSONA"
-                        maxlength="150" onkeypress="this.value = this.value.toUpperCase();return">
+                      <!--<label class="col-md-4 col-form-label">TIPO DE PERSONA:</label>-->
+                        <input type="hidden" name="iIdConstanteGenero" id="iIdConstanteGenero" value="">
+                        <input type="hidden" name="iClaveGenero" id="iClaveGenero" value="">
+                        <select class="form-control" name="iIdTipoPersona" id="iIdTipoPersona" required>
+                            <option value="" selected>SELECCIONE UN TIPO DE PERSONA</option>
+                            <?php foreach ($resultadoTipoPersona as $persona): ?>
+                                <option value="<?= $persona['iIdConstante'] . '-' . $persona['iClaveCatalogo'] ?>">
+                                    [<?= $persona['iClaveCatalogo'] ?>] - <?= $persona['vchDescripcion'] ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                   </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <!-- <label class="col-sm-3 col-form-label">*GENERO:</label>-->
+                            <input type="hidden" name="iIdConstanteGenero" id="iIdConstanteGenero" value="">
+                            <input type="hidden" name="iClaveGenero" id="iClaveGenero" value="">
+                            <select class="form-control" name="genero" id="genero" required>
+                                <option value="" selected>SELECCIONE UN GENERO</option>
+                                <?php foreach ($resultadoGenero as $genero): ?>
+                                    <option value="<?= $genero['iIdConstante'] . '-' . $genero['iClaveCatalogo'] ?>">
+                                        [<?= $genero['iClaveCatalogo'] ?>] - <?= $genero['vchDescripcion'] ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                    </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
@@ -382,31 +422,10 @@ $resultadoPersonas = consultaPersona();
                         onkeypress="this.value = this.value.toUpperCase();return soloNombre(event)" required>
                     </div>
                   </div>
-
-                  <div class="col-md-4">
-                    <div class="form-group row">
-                      <!-- <label class="col-sm-3 col-form-label">*GENERO:</label>-->
-                      <select class="form-control" name="genero" id="genero" required>
-                        <option value="" selected>SELECCIONE UN GENERO</option>
-                        <?php foreach ($resultadoGenero as $genero): ?>
-                          <option value="<?= $genero['iIdConstante'] . '-' . $genero['iClaveCatalogo'] ?>">
-                            [<?= $genero['iClaveCatalogo'] ?>] - <?= $genero['vchDescripcion'] ?>
-                          </option>
-                        <?php endforeach; ?>
-                      </select>
-                    </div>
-                    <input type="hidden" name="iIdConstanteGenero" id="iIdConstanteGenero" value="">
-                    <input type="hidden" name="iClaveGenero" id="iClaveGenero" value="">
-                  </div>
-
-                  <script>
-                    document.getElementById('buttonGuardarContacto').addEventListener('click', validarContactoNuevo);
-                  </script>
                 </div>
               </div>
               <div class="row">
-                <a class="boton-intec" href="#" id="buttonGuardarContacto" data-toggle="modal"
-                  data-target="#apply-popup-id-1">GUARDAR</a>
+                <a class="boton-intec" href="#" id="buttonGuardarPersona" data-toggle="modal" data-target="#apply-popup-id-1">GUARDAR</a>
               </div>
 
             </form>
@@ -468,102 +487,11 @@ $resultadoPersonas = consultaPersona();
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
   <script src="../js/map.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script>
-    function ValidarDatosPersona() {
-      var respuestaFinal = "";
+  <script src = "ProcesosAltaInventario.js"></script>
 
-      //localStorage.clear(); //Limpiar el localStorage para no almancenar basura
-      var formulario =document.querySelector("#");
-
-      formulario.addEventListener('submit', function(){
-        var titulo = document.querySelector('#').value;
-        if(titulo.length >= 1){
-          localStorage.setItem(titulo, titulo);
-        }
-      });
-     
-
-      // Obtener los valores de los elementos del formulario para genero
-      var GeneroSeleccionado = document.getElementById('genero');
-      var GeneroPartes = GeneroSeleccionado.value.split('-');
-      var iIdConstanteGenero = GeneroPartes[0];
-      var iClaveGenero = GeneroPartes[1];
-
-      // Asignar los valores a los campos ocultos
-      document.getElementById('iIdConstanteGenero').value = iIdConstanteGenero;
-      console.log(GeneroSeleccionado.value);
-      document.getElementById('iClaveGenero').value = iClaveGenero;
-
-      // Obtener los valores de los elementos del formulario para nacionalidad
-      var NacionalidadSeleccionado = document.getElementById('nacionalidad');
-      var NacionalidadPartes = NacionalidadSeleccionado.value.split('-');
-      var iIdConstanteNacionalidad = NacionalidadPartes[0];
-      var iClaveNacionalidad = NacionalidadPartes[1];
-
-      // Asignar los valores a los campos ocultos
-      document.getElementById('iIdConstanteNacionalidad').value = iIdConstanteNacionalidad;
-      console.log(NacionalidadSeleccionado.value);
-      document.getElementById('iClaveNacionalidad').value = iClaveNacionalidad;
-
-
-
-      // Crear un objeto con los datos del formulario
-      var datosFormulario = {
-        genero: GeneroSeleccionado.value,
-        nombre: document.getElementById('nombre').value,
-        primerApellido: document.getElementById('primerApellido').value,
-        segundoApellido: document.getElementById('segundoApellido').value,
-        curp: document.getElementById('curp').value,
-        genero: document.getElementById('genero').value,
-        iIdConstanteGenero: iIdConstanteGenero,
-        iClaveGenero: iClaveGenero,
-        nacionalidad: document.getElementById('nacionalidad').value,
-        iIdConstanteNacionalidad: iIdConstanteNacionalidad,
-        iClaveNacionalidad: iClaveNacionalidad,
-        fechaNacimiento: document.getElementById('fechaNacimiento').value,
-        rfc: document.getElementById('rfc').value,
-        regimenFiscal: document.getElementById('regimenFiscal').value,
-        usoFiscal: document.getElementById('usoFiscal').value,
-        codigoPostal: document.getElementById('CodigoFiscal').value
-      };
-
-      // Crear una instancia de XMLHttpRequest
-      var datosPersona = new XMLHttpRequest();
-
-      // Configurar la solicitud
-      datosPersona.open('POST', 'validarDatosPersona.php', true);
-      datosPersona.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-      // Convertir el objeto de datos a una cadena de consulta URL
-      var formData = new URLSearchParams(datosFormulario).toString();
-
-      // Enviar la solicitud
-      datosPersona.send(formData);
-
-      // Manejar la respuesta
-      datosPersona.onload = function () {
-        if (datosPersona.status === 200) {
-          var respuesta = JSON.parse(datosPersona.responseText);
-          if (respuesta.bResultado === 1) {
-            console.log(respuesta);
-            localStorage.setItem('datosPersona', JSON.stringify(datosFormulario));
-            window.location.href = "altaDomicilio.php";
-          } else {
-            console.error("Mensaje Error: " + respuesta.vchMensaje);
-            alert(respuesta.vchMensaje);
-            respuestaFinal = respuesta.vchMensaje;
-
-            //document.write(respuestaFinal);
-            var miSpan = document.getElementById('spanOculto');
-            miSpan.innerHTML = respuestaFinal;
-            funcionDesbloquearMensaje();
-          }
-        } else {
-          console.error("Error en la solicitud al servidor");
-        }
-      };
-    }
-  </script>
+  <script> document.getElementById('buttonGuardarPersona').addEventListener('click', validarPersona);</script>
+  <script> document.getElementById('buttonRegistrar').addEventListener('click', validarDatosInventario); </script>
+  <script> document.getElementById('buttonVolver').addEventListener('click', regresarInicio);  </script>
 
 
 </body>
