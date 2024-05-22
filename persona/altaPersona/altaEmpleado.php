@@ -339,7 +339,7 @@ if (isset($_SESSION['user_id'])) { ?>
     <div class="modal fade" id="apply-popup-id-2" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form class="dashboard-form" id="AltaDocumentos" enctype="multipart/form-data" >
+                <form action="prcAltaDoctos.php" method="post" class="dashboard-form" id="AltaDocumentos" enctype="multipart/form-data" >
                     <input type="hidden" name="iIdConstanteDocumento" id="iIdConstanteDocumento" value="">
                     <input type="hidden" name="iClaveDocumento" id="iClaveDocumento" value="">
 
@@ -362,7 +362,7 @@ if (isset($_SESSION['user_id'])) { ?>
                         <div class="form-group file-input-wrap">
                             <option value="">CARGAR DOCUMENTO:</option>
                             <label for="up-cv">
-                                <input id="up-cv" type="file" onchange="cargarDocumento(event)">
+                                <input id="up-cv" type="file" onchange="cargarDocumento(event)" name="documento" accept="application/pdf" >
                                 <i data-feather="upload-cloud"></i>
                                 <p id="nombreArchivo">NOMBRE DEL ARCHIVO
                                 <p>(pdf,zip,doc,docx)</p>
