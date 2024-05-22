@@ -2,7 +2,6 @@
 require_once('../../includes/pandora.php');
 require_once('../../includes/load.php');
 require_once('../altaPersona/FuncionesAltaEmpleado.php');
-require_once('../altaPersona/prcAltaDoctos.php');
 
 
 session_start();
@@ -62,7 +61,6 @@ $resultadoRegimen = ObtenerIdRegimen();
     <link rel="apple-touch-icon" sizes="114x114" href="../../images/icon-114x114.png">
     <script src = "MostrarDatosEmpleado.js" ></script>
     <script src = "ProcesoModificacionEmpleado.js"> </script>
-    <script src = "../consulEmpleado/ProcesosDocumentosEmpleado.js"></script>
 
     <style>
         .selected {
@@ -253,7 +251,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                         <label style="align-self: flex-end;"><a href="consultaDomicilio.php">DOMICILIO</a></label>
                         <label style="align-self: flex-end;"><a href="consultaContacto.php">CONTACTO</a></label>
                         <label style="align-self: flex-end;"><a
-                                    href="../consulEmpleado/consultaDoctos.php">DOCUMENTOS</a></label>
+                                    href="../consulEmpleado/cunsultaDoctos.php">DOCUMENTOS</a></label>
                     </div>
                 </div>
                 <!-- fin de pestañas de navegación-->
@@ -1012,7 +1010,6 @@ $resultadoRegimen = ObtenerIdRegimen();
 <script src="../../js/map.js"></script>
 <script src="MostrarDatosEmpleado.js"></script>
 <script src="FuncionesEmpleado.js"></script>
-<script src = "../consulEmpleado/ProcesosDocumentosEmpleado.js"></script>
 
 <script> document.getElementById('botonAplicarBaja').addEventListener('click', ValidarBaja); </script>
 <script> document.getElementById('buttonAplicarReactivacion').addEventListener('click', ValidarReactivacion); </script>
