@@ -238,7 +238,6 @@ $resultadoDocumento = ObtenerTipoDocumento();
 
                                 <div class="employer" id="agregarDocumentos"></div>
 
-
                             </div>
                         </div>
                     </form>

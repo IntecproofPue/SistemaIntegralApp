@@ -63,7 +63,7 @@ $datosInventario = array(
     'bResultado' => $Resultado,
     'vchCampoError' => $CampoError,
     'vchMensaje' => $Mensaje,
-)
+);
 
 $procedInventario = "EXEC prcAltaInventario     @iIdtipoProducto			= ?,
                                                 @iAgruProducto				= ?,

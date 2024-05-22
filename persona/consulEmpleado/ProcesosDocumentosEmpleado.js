@@ -45,7 +45,8 @@ async function enviarArchivoAlServidor(base64Data, nombreArchivo){
         var formData = new FormData();
         formData.append("archivo", blob, nombreArchivo);
 
-        var urlEndPoint = "http://localhost:8080/SisAdmonIntecproof/documentos";
+        //var urlEndPoint = "http://localhost:8080/SisAdmonIntecproof/documentos";
+        var urlEndPoint = "http://localhost/SistemaIntegralApp/doctosPDF";
 
         await fetch(urlEndPoint, {
             method: "POST",
