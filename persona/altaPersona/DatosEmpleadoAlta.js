@@ -212,7 +212,7 @@ function registrarDocumentos(){
 
     var datosDocumentos = new XMLHttpRequest();
 
-    datosDocumentos.open('POST', 'prcAltaDocumentos.php', true);
+    datosDocumentos.open('POST', 'prcAltaDoctos.php', true);
     datosDocumentos.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
     var formData = new URLSearchParams(datosDocumentosEmpleado).toString();

@@ -2,6 +2,7 @@
 
 require_once ('../../includes/load.php');
 session_start();
+$agrupadorDocumento = 10;
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -12,6 +13,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $iNoOperacion = isset($_POST['operacion'])? $_POST['operacion']: 0;
 }
 
+//$urlArchivoBase64 = iconv('ISO-8859-1', 'UCS-2BE' ,$urlArchivoBase64);
+
+header('Content-Type: application/pdf');
+header('Content-Disposition: attachment; filename="my_document.pdf"');
+
 
 $serverName = "192.168.100.39, 1433"; //serverName\instanceName, portNumber (por defecto es 1433)
 $connectionInfo = array(
@@ -19,18 +25,27 @@ $connectionInfo = array(
             "UID"=>"Development",
             "PWD"=>"Development1234*"
             );
+$userName = "Development";
+$password = "Development1234*";
 
-$dsn = $serverName.";".http_build_query($connectionInfo);
+$dsn = "DRIVER={SQL Server};SERVER=$serverName;DATABASE=". $connectionInfo["Database"]. ";UID=". $connectionInfo["UID"]. ";PWD=". $connectionInfo["PWD"];;
 
-$conn = odbc_connect($dsn);
-
-$agrupadorDocumento = 10;
-
-
+$conn = odbc_connect($dsn, $userName, $password);
 
 
-//$urlArchivoBase64 = iconv('ISO-8859-1', 'UCS-2BE' ,$urlArchivoBase64);
+
+if (!$conn){
+    die ("Error al conectar: ".odbc_errormsg());
+}
+
+$iIdEmpleado = isset($_POST['empleado'])? $_POST['empleado']: 0;
+$urlArchivoBase64 = isset($_POST['url']) ? $_POST['url'] : '';
+$iNoOperacion = isset($_POST['operacion'])? $_POST['operacion']: 0;
+
 $urlVarbinary = base64_decode($urlArchivoBase64);
+var_dump($urlVarbinary);
+
+echo $urlVarbinary;
 
 
 $query = "INSERT INTO dbo.tempDoctos (vbDocto, iNoOperacion, iIdEmpleado) 
@@ -43,9 +58,11 @@ $params = array(
     $iIdEmpleado
 );
 
+var_dump($params);
+
 $stm = odbc_prepare($conn, $query);
 
-echo $stm;
+echo($stm);
 
 if (!$stm) {
     echo "Error en la consulta:\n";
@@ -54,11 +71,11 @@ if (!$stm) {
 
 $result = odbc_execute($stm, $params);
 
+var_dump($result);
+
 if ($result === false){
     die (print_r(odbc_error(), true));
 }
-
-odbc_free_stmt($stm);
 
 
 odbc_close($conn);
