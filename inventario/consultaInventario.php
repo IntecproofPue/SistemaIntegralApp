@@ -122,26 +122,33 @@ $resultadoNiveles = ObtenerNivel();
             display: table;
             width: 100%;
             border-collapse: collapse;
-            border: 1px solid #ddd; /* borde de la "tabla" */
-            
-            border-radius: 5px; /* bordes redondeados */
-            
-            margin-bottom: 20px; /* espacio inferior */
-            
+            border: 1px solid #ddd;
+            /* borde de la "tabla" */
+
+            border-radius: 5px;
+            /* bordes redondeados */
+
+            margin-bottom: 20px;
+            /* espacio inferior */
+
         }
 
         .table-like-header {
             display: table-row;
-            background-color: #f5f5f5; /* color de fondo del encabezado */            
-            font-weight: bold;  /* texto en negrita */
-           
+            background-color: #f5f5f5;
+            /* color de fondo del encabezado */
+            font-weight: bold;
+            /* texto en negrita */
+
         }
 
         .table-like-header>div {
             display: table-cell;
-            padding: 8px 10px;/* Espacio interno */            
-            border-bottom: 1px solid #ddd; /* Borde inferior de las celdas del encabezado */
-            
+            padding: 8px 10px;
+            /* Espacio interno */
+            border-bottom: 1px solid #ddd;
+            /* Borde inferior de las celdas del encabezado */
+
         }
 
         .table-like-row {
@@ -150,9 +157,11 @@ $resultadoNiveles = ObtenerNivel();
 
         .table-like-row>div {
             display: table-cell;
-            padding: 8px 10px;/* Espacio interno */            
-            border-bottom: 1px solid #ddd;  /* Borde inferior de las celdas */
-           
+            padding: 8px 10px;
+            /* Espacio interno */
+            border-bottom: 1px solid #ddd;
+            /* Borde inferior de las celdas */
+
         }
     </style>
 
@@ -291,9 +300,29 @@ $resultadoNiveles = ObtenerNivel();
                                         <div class="col-md-6 col-form-label text-left">
                                             <label for="#">PRODUCTO ASIGNADO A</label>
                                         </div>
+
                                         <div class="col-md-6 col-form-label text-left">
-                                            <input type="text" class="col-md-6 form-control"
+                                            <input type="text" class="col-md-6 form-control" id="ildPuesto"
+                                                placeholder="ID PERSONA" style="text-transform: uppercase">
+                                        </div>
+
+                                        <div class="col-md-6 col-form-label text-left">
+                                            <input type="text" class="col-md-6 form-control" id="vchPuesto"
                                                 placeholder="PERSONA ASIGNADA" style="text-transform: uppercase">
+                                        </div>
+
+                                        <div class="col-md-6 col-form-label text-left">
+                                            <option value="">TIPO DE LA CONTRATACIÓN</option>
+                                            <select class="col-md-6 form-control" Name="iIdPersonaContratante"
+                                                id="iIdPersonaContratacion">
+                                                <?php foreach ($resultadoContratantes as $contratante): ?>
+                                                    <option value="<?= $contratante['iIdPersona'] ?>">
+                                                        [<?= $contratante['iIdPersona'] ?>]
+                                                        -
+                                                        <?= $contratante['vchPrimerApellido'] . ' ' . $contratante['vchSegundoApellido'] . ' ' . $contratante['vchNombre'] ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
                                         </div>
 
                                     </div>
@@ -331,12 +360,12 @@ $resultadoNiveles = ObtenerNivel();
             <div class="modal-dialog" role="document">
                 <div class="modal-content" style="width: 900px; height: auto; padding: 50px;">
 
-                <div class="modal-header">
-                <h5 class="modal-title"><i data-feather="edit"></i>MOVIMIENTOS</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                    <div class="modal-header">
+                        <h5 class="modal-title"><i data-feather="edit"></i>MOVIMIENTOS</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
 
                     <div class="modal-body">
                         <form class="dashboard-form" id="#">

@@ -286,6 +286,8 @@ function MostrarDatos(bResultado) {
 
 }
 
+
+
 function deshabilitarBotones() {
     document.getElementById('buttonsModificar').querySelectorAll('.boton-intec').forEach(boton => {
         boton.addEventListener('click', function () {
