@@ -163,11 +163,12 @@ function validarDatosInventario(){
                 console.log(datosInventarioRequest.responseText);
 
                 var respuesta = JSON.parse(datosInventarioRequest.responseText);
-                if (respuesta.bResultado === 1){
+                localStorage.setItem('datosInventarioResponse', JSON.stringify(respuesta));
+                if (respuesta.bResultado == 1){
                     console.log(respuesta);
                     alert(respuesta.vchMensaje);
 
-                    //consulta del inventario
+                    window.location.href = 'consultaInventario.php';
 
                 }else{
                     console.error("Mensaje de error: ", respuesta.vchMensaje);

@@ -16,16 +16,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $nombre = basename($_FILES['documento']['name']);
 
-        $carpeta = '\\\\PCSERVIDOR\\Users\\User\\Documents\\FileTable';
+        $carpeta = '\\\\PCSERVIDOR\\DocumentosSIA';
+
+        echo $carpeta;
 
         if (!is_dir($carpeta)) {
-            if (mkdir($carpeta, 0777, true)) {
-                echo "Carpeta creada con éxito.<br>";
-            } else {
-                echo "Error al crear la carpeta. Verifica los permisos y la ruta.<br>";
-                exit;
-            }
-        } else {
             echo "La carpeta ya existe.<br>";
         }
 

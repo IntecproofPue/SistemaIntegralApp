@@ -54,7 +54,6 @@ function ValidarBaja() {
 function ValidarReactivacion() {
     var SedeReactivacionSeleccionada = document.getElementById('idSedeReactivacion');
     var SedeReactivacionPartes = SedeReactivacionSeleccionada.value.split('-');
-    console.log(SedeReactivacionPartes);
     var iIdConstanteSedeReactivacion = SedeReactivacionPartes[0];
     var iClaveSedeReactivacion = SedeReactivacionPartes[1];
 
@@ -187,6 +186,61 @@ function ValidarPromocion() {
     }catch (error){
         console.error("Ocurrió un error en la petición");
         return;
+    }
+}
+
+
+function validarModificacion(){
+    var SedeSeleccionadaModificacion = document.getElementById('iIdSedeModificar');
+    var SedeModificacionPartes = SedeSeleccionadaModificacion.value.split('-');
+    var iIdConstanteSedeModificacion = SedeModificacionPartes[0];
+    var iClaveSedeModificacion = SedeModificacionPartes[1];
+
+
+    document.getElementById('iIdConstanteSedeModificacion').value = iIdConstanteSedeModificacion;
+    document.getElementById('iIdConstanteSedeModificacion').value = iClaveSedeModificacion;
+
+
+    var GeneroSeleccionadoModificacion = document.getElementById('iIdGeneroModificar');
+    var GeneroModificacionPartes = GeneroSeleccionadoModificacion.value.split('-');
+    var iIdConstanteGeneroModificacion = GeneroModificacionPartes[0];
+    var iClaveGeneroModificacion = GeneroModificacionPartes[1];
+
+    document.getElementById('iIdConstanteGeneroModificacion').value =iIdConstanteGeneroModificacion;
+    document.getElementById('iClaveGeneroModificacion').value = iClaveGeneroModificacion;
+
+    var NacionalidadSeleccionadaModificacion = document.getElementById('iIdNacionalidadModificar');
+    var NacionalidadSeleccionadaPartes = NacionalidadSeleccionadaModificacion.value.split('-');
+    var iIdConstanteNacionalidadModificacion = NacionalidadSeleccionadaPartes[0];
+    var iClaveNacionalidadModificacion = NacionalidadSeleccionadaPartes[1];
+
+    document.getElementById('iIdConstanteNacionalidadModificacion').value = iIdConstanteNacionalidadModificacion;
+    document.getElementById('iClaveNacionalidadModificacion').value = iClaveNacionalidadModificacion;
+
+
+
+
+    var datosEmpleado = {
+        NSS: document.getElementById('vchNSSModificar').value,
+        dFechaIngreso: document.getElementById('dtFechaIngresoModificacion').value,
+        iIdConstanteSede: iIdConstanteSedeModificacion,
+        iClaveSede: iClaveSedeModificacion,
+        contratante: document.getElementById('iIdPersonaContratanteModificar').value,
+        nombre: document.getElementById('vchNombreEmpleadoModificar').value,
+        apellidoMaterno: document.getElementById('vchPrimerApellidoModificar').value,
+        apellidoPaterno: document.getElementById('vchSegundoApellidoModificar').value,
+        rfc: document.getElementById('vchRFCModificar').value,
+        curp: document.getElementById('vchCURPModificar').value,
+        dFechaNacimiento: document.getElementById('dtFechaNacimientoModificacion').value,
+        iIdConstanteGenero: iIdConstanteGeneroModificacion,
+        iClaveGenero: iClaveGeneroModificacion,
+        iIdConstanteNacionalidad: iIdConstanteNacionalidadModificacion,
+        iClaveNacionalidad: iClaveNacionalidadModificacion,
+        regimenFiscal: document.getElementById('regimenFiscalModificar').value,
+        usoFiscal: document.getElementById('usoFiscalModificar').value,
+        empleado: window.iIdEmpleadoGlobal,
+        proceso: 2,
+        opcion: 2
     }
 }
 

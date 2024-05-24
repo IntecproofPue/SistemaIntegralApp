@@ -10,8 +10,6 @@ $agrupadorAsignacion = 17;
 $agrupadorTipoPersona = 7;
 $agrupadorGenero = 3;
 
-var_dump($_POST);
-
 
 $iIdProducto = isset($_POST['iIdTipoProducto']) ? $_POST['iIdTipoProducto'] : 0;
 $iClaveProducto = isset($_POST['iClaveProducto']) ? $_POST['iClaveProducto'] : 0;
@@ -74,8 +72,6 @@ $datosInventario = array (
     'vchCampoError' => '',
     'vchMensaje' => ''
 );
-
-var_dump($datosInventario);
 
 $procedureName = " EXEC prcAltaInventario
 						@iIdtipoProducto					= ? , 

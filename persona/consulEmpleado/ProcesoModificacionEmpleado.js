@@ -30,8 +30,6 @@ function MostrarDatosModificacion(bResultado) {
 
     for (var i = 0; i < selectElementContratante.options.length; i++) {
         var optionContratado = selectElementContratante.options[i];
-        console.log(optionContratado.value);
-        console.log(iIdContratanteModificacion);
         if (optionContratado.value == iIdContratanteModificacion.toString()) {
             console.log("entra en este if");
             optionContratado.selected = true;
@@ -104,24 +102,45 @@ function MostrarDatosModificacion(bResultado) {
         }
     }
 
-    //Uso fiscal
-    var vchUsoFiscalModificacion = bResultado.vchUsoFiscal;
-    console.log(vchUsoFiscalModificacion);
+    //Codigo Fiscal
+    var iIdCodigoFiscalEmpleado = document.getElementById('iIdCodigoPostalModificar');
+    iIdCodigoFiscalEmpleado.value = bResultado.iCodigoPostalFiscal;
+
+}
+
+function cargarUsoFiscal() {
+    var regimenSeleccionado = document.getElementById("regimenFiscalModificar").value;
+
+    var usoFiscalSeleccionado = document.getElementById("usoFiscalModificar");
+
+    usoFiscalSeleccionado.innerHTML = ''; // Limpiar el contenido anterior
+
+    var opcionesUsos = ObtenerUsosFiscales(regimenSeleccionado);
+
+    for (var i = 0; i < opcionesUsos.length; i++) {
+        var opcionUsoFiscal = document.createElement("option");
+        opcionUsoFiscal.value = opcionesUsos[i].uso;
+        opcionUsoFiscal.textContent = '[' + opcionesUsos[i].uso + '] - ' + opcionesUsos[i].descripcion; // Corregido aquí
+        usoFiscalSeleccionado.add(opcionUsoFiscal);
+    }
+
+    // Después de agregar todas las opciones, selecciona la opción correcta
+
+    var vchUsoFiscal = localStorage.getItem('datosConsultaIndividual');
+    var bResultadoUso = JSON.parse(vchUsoFiscal);
+
+    var bUsoFiscal = bResultadoUso.vchUsoFiscal;
+
     var selectElementUsoFiscal = document.getElementById('usoFiscalModificar');
 
     for (var i = 0; i < selectElementUsoFiscal.options.length; i++) {
         var optionUsoFiscal = selectElementUsoFiscal.options[i];
 
-        if (optionUsoFiscal === vchUsoFiscalModificacion) {
+        if (optionUsoFiscal.value === bUsoFiscal) {
             optionUsoFiscal.selected = true;
             break;
         }
     }
-
-    //Codigo Fiscal
-    var iIdCodigoFiscalEmpleado = document.getElementById('iIdCodigoPostalModificar');
-    iIdCodigoFiscalEmpleado.value = bResultado.iCodigoPostalFiscal;
-
 }
 
 

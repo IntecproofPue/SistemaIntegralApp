@@ -1,8 +1,6 @@
 function ObtenerDatosEmpleado(){
     var consultaIndivual = localStorage.getItem('datosConsultaIndividual');
-    //console.log(consultaIndivual);
     var consultaMasiva = localStorage.getItem('empleadoSeleccionado');
-    console.log(consultaMasiva);
 
     if (consultaIndivual) {
         var bResultado = JSON.parse(consultaIndivual);
@@ -13,7 +11,6 @@ function ObtenerDatosEmpleado(){
         var bResultadoMasivo = JSON.parse(consultaMasiva);
         var iIdEmpleado = bResultadoMasivo.iIdEmpleado;
 
-        console.log(iIdEmpleado);
 
         var datosEmpleadoMasivo = new XMLHttpRequest();
         datosEmpleadoMasivo.open('POST', 'prcConsultaIndividual.php', true);
@@ -64,34 +61,6 @@ function ModalPromocion () {
     if (datosPromocion) {
         var bResultadoPromocion = JSON.parse(datosPromocion);
         MostrarDatosPromocion(bResultadoPromocion);
-    }
-}
-
-function cargarUsoFiscal() {
-    var regimenSeleccionado = document.getElementById("regimenFiscalModificar").value;
-
-    var usoFiscalSeleccionado = document.getElementById("usoFiscalModificar");
-
-    usoFiscalSeleccionado.innerHTML = '';
-
-    var vchUsoFiscalModificacion = bResultado.vchUsoFiscal;
-
-    for (var i = 0; i < usoFiscalSeleccionado.options.length; i++) {
-        var optionUsoFiscal = usoFiscalSeleccionado.options[i];
-        if (optionUsoFiscal.value === vchUsoFiscalModificacion) {
-            optionUsoFiscal.selected = true;
-
-            break;
-        }
-    }
-
-    var opcionesUsos = ObtenerUsosFiscales(regimenSeleccionado);
-
-    for (var i = 0; i < opcionesUsos.length; i++) {
-        var opcionUsoFiscal = document.createElement("option");
-        opcionUsoFiscal.value = opcionesUsos[i].uso;
-        opcionUsoFiscal.textContent = '[' + opcionesUsos[i].uso + '] - ' + opcionesUsos[i].descripcion;
-        usoFiscalSeleccionado.add(opcionUsoFiscal);
     }
 }
 
@@ -275,8 +244,15 @@ function MostrarDatos(bResultado) {
     vchNacionalidad.value = bResultado.vchNacionalidad || '';
 
     //Datos Fiscales
+
+
+    var iIdRegimenFiscalMostrar = document.getElementById('iIdRegimen');
+    iIdRegimenFiscalMostrar.value = bResultado.iIdRegimen;
+
     var vchRegimen = document.getElementById('vchRegimen');
     vchRegimen.value = bResultado.vchDescripcionRegimen;
+
+    //Uso fiscal
 
     var vchUsoFiscal = document.getElementById('vchUsoFiscal');
     vchUsoFiscal.value = bResultado.vchDescripcionUso;
@@ -286,17 +262,13 @@ function MostrarDatos(bResultado) {
 
 }
 
-
-
 function deshabilitarBotones() {
     document.getElementById('buttonsModificar').querySelectorAll('.boton-intec').forEach(boton => {
         boton.addEventListener('click', function () {
-
             const botones = document.querySelectorAll('.boton-intec');
             botones.forEach(boton => {
                 boton.style.display = 'none';
             });
-
 
             const modales = document.querySelectorAll('.modal.fade');
             modales.forEach(modal => {
@@ -304,22 +276,29 @@ function deshabilitarBotones() {
             });
 
             const mostrarModal = this.getAttribute('data-modal');
-
             const modalElement = document.getElementById(mostrarModal);
             if (modalElement) {
                 modalElement.style.display = 'block';
             }
 
-            const buttonGuardarDiv = document.querySelector('.candidate');
-            const buttonGuardar = document.createElement('button');
-            buttonGuardar.textContent = 'GUARDAR';
-            buttonGuardar.className = 'boton-intec-1'; //Boton con nueva clase
-            buttonGuardar.style.display = 'none';
+            let buttonGuardarDiv = document.querySelector('.candidate');
+            if (!buttonGuardarDiv) {
+                buttonGuardarDiv = document.createElement('div');
+                buttonGuardarDiv.className = 'candidate';
+                document.body.appendChild(buttonGuardarDiv);
 
-            buttonGuardarDiv.appendChild(buttonGuardar);
+            }
 
-            buttonGuardar.style.display = 'block';
-
+            if (!document.querySelector('.boton-intec-1')) {
+                const buttonGuardar = document.createElement('button');
+                buttonGuardar.style.zIndex = 1000;
+                buttonGuardar.textContent = 'GUARDAR';
+                buttonGuardar.className = 'boton-intec-1'; //Boton con nueva clase
+                buttonGuardarDiv.appendChild(buttonGuardar);
+                buttonGuardar.style.display = 'block';
+            }else{
+                document.querySelector('.boton-intec-1').style.display = 'block';
+            }
         });
     });
 }

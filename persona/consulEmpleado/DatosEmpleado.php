@@ -374,6 +374,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                                             <div class="form-group">
                                                 <label class="col-form-label">REGIMEN
                                                     FISCAL </label>
+                                                <input type="hidden" name="iIdRegimen" id="iIdRegimen" value="">
                                                 <input type="text" class="form-control" placeholder=""
                                                        id="vchRegimen" disabled/>
                                             </div>
@@ -542,6 +543,8 @@ $resultadoRegimen = ObtenerIdRegimen();
                         </div>
                         <div class="form-group">
                             <option value="">SEDE</option>
+                            <input type="hidden" name="iIdConstanteSedeModificacion" id="iIdConstanteSedeModificacion" value="">
+                            <input type="hidden" name="iClaveSedeModificacion" id="iClaveSedeModificacion" value="">
                             <select class="form-control" Name="iIdSede" id="iIdSedeModificar">
                                 <?php foreach ($resultadoSede as $sede): ?>
                                     <option value="<?= $sede['iIdConstante'] . '-' . $sede['iClaveCatalogo'] ?>">
@@ -626,6 +629,8 @@ $resultadoRegimen = ObtenerIdRegimen();
                         <div class="form-group">
                             <div class="col-sm-9">
                                 <option value="">GÉNERO</option>
+                                <input type="hidden" name="iIdConstanteGeneroModificacion" id="iIdConstanteGeneroModificacion" value="">
+                                <input type="hidden" name="iClaveGeneroModificacion" id="iClaveGeneroModificacion" value="">
                                 <select class="form-control" name="genero" id="iIdGeneroModificar">
                                     <?php foreach ($resultadoGenero as $genero): ?>
                                         <option value="<?= $genero['iIdConstante'] . '-' . $genero['iClaveCatalogo'] ?>">
@@ -638,6 +643,8 @@ $resultadoRegimen = ObtenerIdRegimen();
                         <div class="form-group">
                             <div class="col-sm-9">
                                 <option value="">NACIONALIDAD</option>
+                                <input type="hidden" name="iIdConstanteNacionalidadModificacion" id="iIdConstanteNacionalidadModificacion" value="">
+                                <input type="hidden" name="iClaveNacionalidadModificacion" id="iClaveNacionalidadModificacion" value="">
                                 <select class="form-control" name="nacionalidad" id="iIdNacionalidadModificar">
                                     <?php foreach ($resultadoNacionalidad as $nacionalidad): ?>
                                         <option value="<?= $nacionalidad['iIdConstante'] . '-' . $nacionalidad['iClaveCatalogo'] ?>">
@@ -670,39 +677,12 @@ $resultadoRegimen = ObtenerIdRegimen();
                                     </option>
                                 </select>
                                 <script>
-                                    function cargarUsoFiscal() {
-                                        var regimenSeleccionado = document.getElementById("regimenFiscalModificar").value;
 
-                                        var usoFiscalSeleccionado = document.getElementById("usoFiscalModificar");
-
-                                        usoFiscalSeleccionado.innerHTML = '';
-
-                                        var vchUsoFiscalModificacion = bResultado.vchUsoFiscal;
-
-                                        for (var i = 0; i < usoFiscalSeleccionado.options.length; i++) {
-                                            var optionUsoFiscal = usoFiscalSeleccionado.options[i];
-                                            if (optionUsoFiscal.value === vchUsoFiscalModificacion) {
-                                                optionUsoFiscal.selected = true;
-
-                                                break;
-                                            }
-                                        }
-
-                                        var opcionesUsos = ObtenerUsosFiscales(regimenSeleccionado);
-
-                                        for (var i = 0; i < opcionesUsos.length; i++) {
-                                            var opcionUsoFiscal = document.createElement("option");
-                                            opcionUsoFiscal.value = opcionesUsos[i].uso;
-                                            opcionUsoFiscal.textContent = '[' + opcionesUsos[i].uso + '] - ' + opcionesUsos[i].descripcion;
-                                            usoFiscalSeleccionado.add(opcionUsoFiscal);
-                                        }
-                                    }
+                                    cargarUsoFiscal();
 
                                     function ObtenerUsosFiscales(regimenSeleccionado) {
 
                                         var datosUsosFiscales = <?php echo json_encode($_SESSION['RegimenUso']); ?>;
-                                        console.log('El script se está ejecutando.');
-                                        console.log("Datos fiscales: ", datosUsosFiscales);
                                         var usosFiscales = [];
 
                                         for (var i = 0; i < datosUsosFiscales.length; i++) {
@@ -713,9 +693,9 @@ $resultadoRegimen = ObtenerIdRegimen();
                                                 });
                                             }
                                         }
-                                        console.log("Usos fiscales: ", usosFiscales);
                                         return usosFiscales;
                                     }
+
                                 </script>
                             </div>
                         </div>
@@ -1010,6 +990,7 @@ $resultadoRegimen = ObtenerIdRegimen();
 <script src="../../js/map.js"></script>
 <script src="MostrarDatosEmpleado.js"></script>
 <script src="FuncionesEmpleado.js"></script>
+<script src = "ProcesoModificacionEmpleado.js" ></script>
 
 <script> document.getElementById('botonAplicarBaja').addEventListener('click', ValidarBaja); </script>
 <script> document.getElementById('buttonAplicarReactivacion').addEventListener('click', ValidarReactivacion); </script>
