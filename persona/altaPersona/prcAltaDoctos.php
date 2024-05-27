@@ -16,7 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $nombre = basename($_FILES['documento']['name']);
 
-        $carpeta = '\\\\PCSERVIDOR\\DocumentosSIA';
+        $carpeta = '\\\\PCSERVIDOR\\DocumentosSIA\\';
+
+        $rutaArchivo = $carpeta.$_FILES['documento']['name']; 
+        echo ("Esta es la ruta del archivo: ".$rutaArchivo); 
 
 
         echo $carpeta;
@@ -47,4 +50,54 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 } else {
     echo "Solicitud inválida.<br>";
 }
+
+$datosBinarios = file_get_contents($rutaArchivo); 
+
+
+
+if ($datosBinarios === false){
+    die ("Ocurrió un error en la decodificación"); 
+}
+
+
+// Establecer la conexión a la base de datos SQL Server
+$serverName = "192.168.100.39, 1433"; // Cambia esta dirección IP y puerto según tu configuración
+$connectionInfo = array(
+    "Database" => "BDSistemaIntegral_PRETEST",
+    "UID" => "Development",
+    "PWD" => "Development1234*"
+);
+
+$conn = odbc_connect("Driver={SQL Server};Server=$serverName;Database={$connectionInfo['Database']}", $connectionInfo['UID'], $connectionInfo['PWD']);
+
+if (!$conn) {
+    die("Error al conectar: " . odbc_errormsg());
+}
+
+// Preparar la consulta SQL de inserción
+$query = "INSERT INTO dbo.tempDoctos (vbDocto) VALUES (?)";
+$stm = odbc_prepare($conn, $query);
+
+if (!$stm) {
+    echo "Error en la consulta:\n";
+    die(print_r(odbc_error(), true));
+}
+
+// Ejecutar la consulta de inserción con los datos binarios del PDF
+$result = odbc_execute($stm, array($datosBinarios));
+
+if ($result === false) {
+    die("Error al ejecutar la consulta: " . print_r(odbc_error(), true));
+}
+
+echo "El archivo PDF se ha insertado correctamente en la base de datos.";
+
+// Cerrar la conexión a la base de datos
+odbc_close($conn);
+
+
+
+
+
+
 ?>
