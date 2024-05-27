@@ -1,67 +1,29 @@
 <?php
-require_once ('../../includes/pandora.php');
-require_once ('../../includes/load.php');
-require_once ('../../includes/functions.php');
 
 session_start();
-function ObtenerTipoContratacion()
-{
-    if (isset($_SESSION['CatConstante'])) {
-        $datosTipoContratacion = $_SESSION['CatConstante'];
-        $contratacionEncontrada = array();
 
-        foreach ($datosTipoContratacion as $valorContratacion) {
-            if ($valorContratacion['iAgrupador'] == 1) {
-                $contratacionEncontrada[] = $valorContratacion;
-            }
-        }
-        return $contratacionEncontrada;
-    } else {
-        echo ("No hay datos del Tipo de Contratación");
-    }
+require_once ('../../includes/pandora.php');
+require_once ('../../includes/load.php');
+require_once ('FuncionesPuesto.php');
+
+
+if ( isset( $_SESSION['user_id'] ) ) {?>
+<?php }else{
+
+    ?>
+    <script type="text/javascript">
+        //Redireccionamiento tras 5 segundos
+        setTimeout( function() { window.location.href = "index.php"; }, 0 );
+    </script>
+    <?php
+
 }
 
+?>
+
+<?php
 $resultadoContratacion = ObtenerTipoContratacion();
-
-
-function ObtenerHorasLaborales()
-{
-    if (isset($_SESSION['CatConstante'])) {
-        $datosHorasLaborales = $_SESSION['CatConstante'];
-        $horasLaboralesEncontradas = array();
-
-        foreach ($datosHorasLaborales as $valorHorasLaborales) {
-            if ($valorHorasLaborales['iAgrupador'] == 2) {
-                $horasLaboralesEncontradas[] = $valorHorasLaborales;
-            }
-        }
-        return $horasLaboralesEncontradas;
-    } else {
-        echo ("No hay datos de las horas laborales");
-    }
-}
-
-$resultadoHorasLaborales = ObtenerHorasLaborales();
-
-
-function ObtenerNivel()
-{
-    if (isset($_SESSION['CatConstante'])) {
-        $datosNivel = $_SESSION['CatConstante'];
-        $nivelesEncontrados = array();
-
-        foreach ($datosNivel as $valorNivel) {
-            if ($valorNivel['iAgrupador'] == 22) {
-                $nivelesEncontrados[] = $valorNivel;
-            }
-        }
-        return $nivelesEncontrados;
-    } else {
-        echo ("No hay datos de las horas laborales");
-    }
-}
-
-$resultadoNiveles = ObtenerNivel();
+?>
 
 
 ?>
@@ -294,33 +256,30 @@ $resultadoNiveles = ObtenerNivel();
 
                             <form class="dashboard-form" id="FormConsulta">
                                 <div class="dashboard-section basic-info-input">
-                                    <h4><i data-feather="user-check"></i>BUSQUEDA</h4>
+                                    <h4><i data-feather="user-check"></i>BÚSQUEDA DE PUESTO</h4>
 
                                     <div class="form-group">
                                         <div class="col-md-6 col-form-label text-left">
-                                            <label for="#">PUESTO ASIGNADO</label>
+                                            <option value="">ID DEL PUESTO</option>
+                                            <input type="number" class="col-md-6 form-control" id="iIdPuesto"
+                                                placeholder="CAPTURE EL ID DEL PUESTO">
                                         </div>
 
                                         <div class="col-md-6 col-form-label text-left">
-                                            <input type="text" class="col-md-6 form-control" id="ildPuesto"
-                                                placeholder="ID PERSONA" style="text-transform: uppercase">
-                                        </div>
-
-                                        <div class="col-md-6 col-form-label text-left">
+                                            <option value="">NOMBRE DEL PUESTO</option>
                                             <input type="text" class="col-md-6 form-control" id="vchPuesto"
-                                                placeholder="PERSONA ASIGNADA" style="text-transform: uppercase">
+                                                placeholder="CAPTURE EL NOMBRE DEL PUESTO" style="text-transform: uppercase">
                                         </div>
 
-                                        <div class="col-md-6 col-form-label text-left">
+                                        <div class="col-md-8 col-form-label text-left">
                                             <option value="">TIPO DE LA CONTRATACIÓN</option>
-                                            <select class="col-md-6 form-control" Name="iIdPersonaContratante"
-                                                id="iIdPersonaContratacion">
-                                                <?php foreach ($resultadoContratantes as $contratante): ?>
-                                                    <option value="<?= $contratante['iIdPersona'] ?>">
-                                                        [<?= $contratante['iIdPersona'] ?>]
-                                                        -
-                                                        <?= $contratante['vchPrimerApellido'] . ' ' . $contratante['vchSegundoApellido'] . ' ' . $contratante['vchNombre'] ?>
-                                                    </option>
+                                            <select class="col-md-6 form-control" Name="iIdTipoContratacion"
+                                                id="iIdTipoContratacion">
+                                                <option value="" selected>SELECCIONE UN TIPO DE CONTRATACIÓN</option>
+                                                    <?php foreach ($resultadoContratacion as $contratacion): ?>
+                                                <option value="<?= $contratacion['iIdConstante']?>">
+                                                    [<?= $contratacion['iClaveCatalogo'] ?>] - <?= $contratacion['vchDescripcion'] ?>
+                                                </option>
                                                 <?php endforeach; ?>
                                             </select>
                                         </div>
@@ -336,11 +295,6 @@ $resultadoNiveles = ObtenerNivel();
                                             <button type="reset" class="boton-intec" id="buttonLimpiar">LIMPIAR</button>
                                         </div>
 
-
-                                        <!--<div class="row-left">
-                                            <a href="#" class="boton-intec" data-toggle="modal"
-                                                data-target="#apply-popup-id-1">MOVIMIENTOS</a>
-                                        </div>-->
                                     </div>
                                 </div>
 
@@ -353,68 +307,6 @@ $resultadoNiveles = ObtenerNivel();
             </div>
         </div>
     </div>
-
-    <!-- inicio de modales -->
-    <div class="apply-popup">
-        <div class="modal fade" id="apply-popup-id-1" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content" style="width: 900px; height: auto; padding: 50px;">
-
-                    <div class="modal-header">
-                        <h5 class="modal-title"><i data-feather="edit"></i>MOVIMIENTOS</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <form class="dashboard-form" id="#">
-                            <div class="col-md-14">
-                                <div class="row">
-
-                                    <div class="table-like">
-                                        <div class="table-like-header">
-                                            <div>MOVIMIENTO</div>
-                                            <div>DESCRIPCION</div>
-                                            <div>OBSERVACIONES</div>
-                                            <div>N°OPERACION</div>
-                                            <div>USUARIO ULTIMA MODIFICACION</div>
-                                            <div>FECHA ULTIMA MODIFICACION</div>
-                                        </div>
-                                        <div class="table-like-row">
-                                            <div>Dato 1</div>
-                                            <div>Dato 2</div>
-                                            <div>Dato 3</div>
-                                            <div>Dato 4</div>
-                                            <div>Dato 5</div>
-                                            <div>Dato 6</div>
-                                        </div>
-                                        <div class="table-like-row">
-                                            <div>Dato 7</div>
-                                            <div>Dato 8</div>
-                                            <div>Dato 9</div>
-                                            <div>Dato 10</div>
-                                            <div>Dato 11</div>
-                                            <div>Dato 12</div>
-                                        </div>
-                                        <!-- Puedes agregar más filas según sea necesario -->
-                                    </div>
-
-
-                                    <script>
-                                        document.getElementById('buttonGuardarContacto').addEventListener('click', validarContactoNuevo);
-                                    </script>
-                                </div>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- fianal de modales -->
-
 
     <!-- Footer -->
     <footer class="footer-bg">
@@ -467,6 +359,8 @@ $resultadoNiveles = ObtenerNivel();
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
     <script src="../../js/map.js"></script>
+    <script src = "ProcedimientosPuesto.js" ></script>
+    <script> document.getElementById('buttonBuscar').addEventListener('click', consultarPuesto); </script>
 
 
 </body>

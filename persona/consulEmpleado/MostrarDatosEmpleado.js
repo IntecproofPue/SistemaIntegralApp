@@ -263,45 +263,52 @@ function MostrarDatos(bResultado) {
 }
 
 function deshabilitarBotones() {
-    document.getElementById('buttonsModificar').querySelectorAll('.boton-intec').forEach(boton => {
-        boton.addEventListener('click', function () {
-            const botones = document.querySelectorAll('.boton-intec');
-            botones.forEach(boton => {
-                boton.style.display = 'none';
+    document.querySelector('.boton-intec').forEach(boton => {
+        if (!boton.hasAttribute('data-listener-added')) {
+            boton.setAttribute('data-listener-added', true);
+
+            boton.addEventListener('click', function () {
+                const botones = document.querySelectorAll('.boton-intec');
+                botones.forEach(boton => {
+                    boton.style.display = 'none';
+                });
+
+                const modales = document.querySelectorAll('.modal.fade');
+                modales.forEach(modal => {
+                    modal.style.display = 'none';
+                });
+
+                const mostrarModal = this.getAttribute('data-modal');
+                const modalElement = document.getElementById(mostrarModal);
+                if (modalElement) {
+                    modalElement.style.display = 'block';
+                }
+
+                // Crear y mostrar el botón "GUARDAR" si no existe y si se cumple la condición específica
+                if (localStorage.getItem('buttonAplicar') === 'true' &&!document.querySelector('.button primary-bg btn-block')) {
+                    let buttonGuardarDiv = document.querySelector('.candidate');
+                    if (!buttonGuardarDiv) {
+                        buttonGuardarDiv = document.createElement('div');
+                        buttonGuardarDiv.className = 'candidate';
+                        document.body.appendChild(buttonGuardarDiv);
+                    }
+
+                    const buttonGuardar = document.createElement('button');
+                    buttonGuardar.style.zIndex = 1000;
+                    buttonGuardar.textContent = 'GUARDAR';
+                    buttonGuardar.className = 'boton-intec-1';
+                    buttonGuardarDiv.appendChild(buttonGuardar);
+                    buttonGuardar.style.display = 'block';
+                }
             });
-
-            const modales = document.querySelectorAll('.modal.fade');
-            modales.forEach(modal => {
-                modal.style.display = 'none';
-            });
-
-            const mostrarModal = this.getAttribute('data-modal');
-            const modalElement = document.getElementById(mostrarModal);
-            if (modalElement) {
-                modalElement.style.display = 'block';
-            }
-
-            let buttonGuardarDiv = document.querySelector('.candidate');
-            if (!buttonGuardarDiv) {
-                buttonGuardarDiv = document.createElement('div');
-                buttonGuardarDiv.className = 'candidate';
-                document.body.appendChild(buttonGuardarDiv);
-
-            }
-
-            if (!document.querySelector('.boton-intec-1')) {
-                const buttonGuardar = document.createElement('button');
-                buttonGuardar.style.zIndex = 1000;
-                buttonGuardar.textContent = 'GUARDAR';
-                buttonGuardar.className = 'boton-intec-1'; //Boton con nueva clase
-                buttonGuardarDiv.appendChild(buttonGuardar);
-                buttonGuardar.style.display = 'block';
-            }else{
-                document.querySelector('.boton-intec-1').style.display = 'block';
-            }
-        });
+        }
     });
 }
+
+function habilitarBtnGuardar() {
+    localStorage.setItem('buttonAplicar', 'true');
+}
+
 
 function habilitarBotones() {
     const habilitarBotones = document.querySelectorAll('.boton-intec');
@@ -309,6 +316,7 @@ function habilitarBotones() {
 
     localStorage.setItem('habilitarBotones', 'true');
 }
+
 
 function variableGlobalEmpleado () {
     var datosEmpleadoModificacion = localStorage.getItem('datosConsultaIndividual');

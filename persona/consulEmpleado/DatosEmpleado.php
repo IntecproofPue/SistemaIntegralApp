@@ -996,6 +996,7 @@ $resultadoRegimen = ObtenerIdRegimen();
 <script> document.getElementById('buttonAplicarReactivacion').addEventListener('click', ValidarReactivacion); </script>
 <script> document.getElementById('buttonAplicarPromocion').addEventListener('click', ValidarPromocion); </script>
 <script> deshabilitarBotones(); </script>
+<script> document.getElementById('botonAplicarCambios').addEventListener('click',  habilitarBtnGuardar); </script>
 
 </body>
 

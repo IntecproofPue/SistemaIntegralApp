@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $carpeta = '\\\\PCSERVIDOR\\DocumentosSIA';
 
+
         echo $carpeta;
 
         if (!is_dir($carpeta)) {
