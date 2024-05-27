@@ -10306,6 +10306,20 @@ input[type="file"] {
   border-radius: 5px;
   cursor: pointer;
 }
+.boton-intec-1 {
+  /* border: none;
+  color: black;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 7px;*/
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: solid;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
 .boton-intec:hover {
   background-color: #0b7dda;
