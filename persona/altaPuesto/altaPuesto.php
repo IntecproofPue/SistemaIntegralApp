@@ -2,8 +2,13 @@
 require_once('../../includes/pandora.php');
 require_once('../../includes/load.php');
 require_once('../../includes/sql.php');
+require_once ('FuncionesPuesto.php');
 
 session_start();
+
+$resultadoContratacion = ObtenerTipoContratacion();
+$resultadoHorasLaborales = ObtenerHorasLaborales();
+$resultadoNiveles = ObtenerNivel();
 
 if (isset($_SESSION['user_id'])) { ?>
 <?php } else {
@@ -21,12 +26,6 @@ if (isset($_SESSION['user_id'])) { ?>
 
 ?>
 
-<?php
-$resultadoContratacion = ObtenerTipoContratacion();
-$resultadoHorasLaborales = ObtenerHorasLaborales();
-$resultadoNiveles = ObtenerNivel();
-
-?>
 <!doctype html>
 <html lang="en">
 

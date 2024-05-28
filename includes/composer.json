@@ -1,0 +1,15 @@
+{
+  "name": "vendor_name/includes",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "cc_te",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+    "mpdf/mpdf": "^8.0"
+  }
+}

@@ -44,6 +44,7 @@ session_start();
     <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="../../images/icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="../../images/icon-114x114.png">
+    <script src = "ProcedimientosPuesto.js" ></script>
 
     <style>
         .selected {
@@ -239,77 +240,8 @@ session_start();
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-
-        var DatosPuesto = localStorage.getItem('datosPuestoInvdividual');
-
-        var bResultadoPuesto = JSON.parse(DatosPuesto);
-        var iIdEmpleadoPuesto = bResultadoPuesto.iIdPuesto;
-
-
-        var datosPuesto = new XMLHttpRequest();
-
-        datosPuesto.open('POST', 'prcConsultaPuesto.php', true);
-
-        var formData = new URLSearchParams();
-        formData.append('iIdPuesto', iIdEmpleadoPuesto);
-
-        datosPuesto.send(formData);
-
-        datosPuesto.onload = function () {
-            if (datosPuesto.status === 200) {
-                var respuesta = JSON.parse(datosPuesto.responseText);
-
-                if (respuesta.bResultado === 1) {
-
-                    localStorage.setItem('datosConsultaPuesto', JSON.stringify(respuesta));
-
-                    var datosPuestoConsulta = localStorage.getItem('datosConsultaPuesto', JSON.stringify(respuesta))
-
-                    if (datosPuestoConsulta) {
-                        var bResultado = JSON.parse(datosPuestoConsulta);
-
-                        var iIdPuesto = document.getElementById('iIdPuesto');
-                        iIdPuesto.value = bResultado.iIdPuesto || 0;
-
-                        var vchPuesto = document.getElementById('vchPuesto');
-                        vchPuesto.value = bResultado.vchPuesto || '';
-
-                        var vchDescripcionPuesto = document.getElementById('vchDescripcionPuesto');
-                        vchDescripcionPuesto.value = bResultado.vchDescripcion || '';
-
-                        var vchTipoContratacion = document.getElementById('vchTipoContratacion');
-                        vchTipoContratacion.value = bResultado.vchTipoContratacion || '';
-
-                        var vchHorasLaborales = document.getElementById('vchHorasLaborales');
-                        vchHorasLaborales.value = bResultado.vchHorasLaborales || '';
-
-
-                        const pesoFinal = new Intl.NumberFormat('es-MX', {
-                            style: 'currency',
-                            currency: 'MXN',
-                            minimumFractionDigits: 2
-                        });
-
-                        var mSalarioNeto = document.getElementById('mSalarioNeto');
-                        mSalarioNeto.value = pesoFinal.format(bResultado.mSalarioNeto) || 0;
-
-                        var mSalarioFiscal = document.getElementById('mSalarioFiscal');
-                        mSalarioFiscal.value = pesoFinal.format(bResultado.mSalarioFiscal) || 0;
-
-                        var mSalarioComplementario = document.getElementById('mSalarioComplementario');
-                        mSalarioComplementario.value = pesoFinal.format(bResultado.mSalarioComplemento) || 0;
-                    }
-
-                } else {
-                    console.error("Mensaje Error: " + respuesta.vchMensaje);
-                    alert(respuesta.vchMensaje)
-                }
-            } else {
-                console.error("Error en la solicitud al servidor");
-            }
-        };
-    });
+    document.addEventListener('DOMContentLoaded',  consultaIndividualPuesto);
+    window.iIdConsultaEmpleado = 1; //Indica que la consulta se está realizando desde la pantalla del empleado
 </script>
 
 
@@ -448,6 +380,8 @@ session_start();
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
 <script src="../../js/map.js"></script>
+<script src = "ProcedimientosPuesto.js" ></script>
+
 </body>
 
 </html>

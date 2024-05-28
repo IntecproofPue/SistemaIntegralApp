@@ -3,22 +3,23 @@
 require_once ('../../includes/load.php');
 session_start();
 
-var_dump($_POST);
 
-$iIdPuesto = isset($_POST['idPuesto']) ? $_POST['idPuesto']: 0;
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $iIdPuesto = isset($_POST['idPuesto']) ? $_POST['idPuesto'] : 0;
+    $nombrePuesto = isset($_POST['nombrePuesto']) ? $_POST['nombrePuesto'] : '';
+    $iIdConstanteContratacion = isset($_POST['iIdConstanteContratacion']) ? $_POST['iIdConstanteContratacion'] : 0;
+    $opcion = isset($_POST['opcion']) ? $_POST['opcion'] : 2;
+}
 
-echo $iIdPuesto;
-
-
-$iIdPuesto = is_numeric($iIdPuesto) ?$iIdPuesto :  0;
 
 $datosConsulta = array(
     'iIdPuesto' => $_POST['idPuesto'],
-    'vchPuesto' => '',
-    'iIdTipoContratacion' => 0,
+    'vchPuesto' => $_POST['nombrePuesto'],
+    'iIdTipoContratacion' => $_POST['iIdConstanteContratacion'],
     'iIdUsuarioUltModificacion' => $_SESSION['user_id'],
-    'iOpcion' => 1
+    'iOpcion' => $_POST['opcion']
 );
+
 
 
 $procedureName = "EXEC prcConsultaPuesto     @iIdPuesto = ?,
@@ -28,7 +29,7 @@ $procedureName = "EXEC prcConsultaPuesto     @iIdPuesto = ?,
                                              @iOpcion = ?
                                                    ";
 $params = array(
-    $datosConsulta['idPuesto'],
+    $datosConsulta['iIdPuesto'],
     $datosConsulta['vchPuesto'],
     $datosConsulta['iIdTipoContratacion'],
     $datosConsulta['iIdUsuarioUltModificacion'],
@@ -49,14 +50,18 @@ if ($result === false) {
     exit;
 
 } else {
-        while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
-            $DatosDomicilioConsulta = $row;
-        }
+        do {
+            $DatosConsultaPuesto = array();
 
-    echo json_encode($DatosDomicilioConsulta);
+            while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+                $DatosConsultaPuesto[] = $row;
+            }
+        }while(sqlsrv_next_result($result));
+
+    echo json_encode($DatosConsultaPuesto);
 }
 
-var_dump($DatosDomicilioConsulta);
+var_dump($DatosConsultaPuesto);
 
 sqlsrv_free_stmt($result);
 

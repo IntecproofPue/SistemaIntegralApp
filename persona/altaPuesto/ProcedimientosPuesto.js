@@ -79,12 +79,85 @@ function ValidarDatosPuesto() {
     };
 }
 
-function consultarPuesto() {
+function consultaIndividualPuesto() {
+
+    var DatosPuesto = localStorage.getItem('datosConsultaIndividual');
+
+    var bResultadoPuesto = JSON.parse(DatosPuesto);
+    var iIdEmpleadoPuesto = bResultadoPuesto.iIdPuesto;
+
+
+    var datosPuesto = new XMLHttpRequest();
+
+    datosPuesto.open('POST', 'prcConsultaPuesto.php', true);
+
+    var formData = new URLSearchParams();
+    formData.append('idPuesto', iIdEmpleadoPuesto);
+
+    datosPuesto.send(formData);
+
+    datosPuesto.onload = function () {
+        if (datosPuesto.status === 200) {
+            var respuesta = JSON.parse(datosPuesto.responseText);
+
+            if (respuesta.bResultado === 1) {
+
+                localStorage.setItem('datosConsultaPuesto', JSON.stringify(respuesta));
+
+                var datosPuestoConsulta = localStorage.getItem('datosConsultaPuesto', JSON.stringify(respuesta))
+
+                if (datosPuestoConsulta) {
+                    var bResultado = JSON.parse(datosPuestoConsulta);
+
+                    var iIdPuesto = document.getElementById('iIdPuesto');
+                    iIdPuesto.value = bResultado.iIdPuesto || 0;
+
+                    var vchPuesto = document.getElementById('vchPuesto');
+                    vchPuesto.value = bResultado.vchPuesto || '';
+
+                    var vchDescripcionPuesto = document.getElementById('vchDescripcionPuesto');
+                    vchDescripcionPuesto.value = bResultado.vchDescripcion || '';
+
+                    var vchTipoContratacion = document.getElementById('vchTipoContratacion');
+                    vchTipoContratacion.value = bResultado.vchTipoContratacion || '';
+
+                    var vchHorasLaborales = document.getElementById('vchHorasLaborales');
+                    vchHorasLaborales.value = bResultado.vchHorasLaborales || '';
+
+
+                    const pesoFinal = new Intl.NumberFormat('es-MX', {
+                        style: 'currency',
+                        currency: 'MXN',
+                        minimumFractionDigits: 2
+                    });
+
+                    var mSalarioNeto = document.getElementById('mSalarioNeto');
+                    mSalarioNeto.value = pesoFinal.format(bResultado.mSalarioNeto) || 0;
+
+                    var mSalarioFiscal = document.getElementById('mSalarioFiscal');
+                    mSalarioFiscal.value = pesoFinal.format(bResultado.mSalarioFiscal) || 0;
+
+                    var mSalarioComplementario = document.getElementById('mSalarioComplementario');
+                    mSalarioComplementario.value = pesoFinal.format(bResultado.mSalarioComplemento) || 0;
+                }
+
+            } else {
+                console.error("Mensaje Error: " + respuesta.vchMensaje);
+                alert(respuesta.vchMensaje)
+            }
+        } else {
+            console.error("Error en la solicitud al servidor");
+        }
+    };
+}
+
+function consultarDatosPuesto() {
 
     var datosConsultaPuesto = {
         idPuesto: document.getElementById('iIdPuesto').value,
         nombrePuesto: document.getElementById('vchPuesto').value,
-        iIdConstanteContratacion: document.getElementById('iIdTipoContratacion').value
+        iIdConstanteContratacion: document.getElementById('iIdTipoContratacion').value,
+        opcion: 1
     };
 
     localStorage.setItem('datosRequestPuesto', JSON.stringify(datosConsultaPuesto));
@@ -93,8 +166,8 @@ function consultarPuesto() {
 
     datosPuestoRequest.open('POST', 'prcConsultaPuesto.php', true);
 
-    
-    datosPuestoRequest.setRequestHeader('Content-Type', 'application/x-www-form-url-encoded');
+
+    datosPuestoRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
     var formData = new URLSearchParams(datosConsultaPuesto).toString();
     datosPuestoRequest.send(formData);
@@ -103,15 +176,16 @@ function consultarPuesto() {
 
     datosPuestoRequest.onload = function () {
         if (datosPuestoRequest.status === 200) {
-
+            console.log(datosPuestoRequest.responseText);
             var puestoIndividual = JSON.parse(datosPuestoRequest.responseText);
-            if (puestoIndividual.bResultado === 1) {
 
-                if (puestoIndividual.length > 1) {
-                    consultaMasiva();
-                } else {
+            if (puestoIndividual.bResultado === 1) {
+                if (puestoIndividual.length === 1) {
                     localStorage.setItem('datosPuestoInvdividual', JSON.stringify(puestoIndividual));
-                    window.location.href = 'consultaPuestoIndividual.php';
+                    window.location.href = 'consultaIndividual.php';
+
+                } else {
+
                 }
             } else {
                 console.error("Mensaje Error: " + puestoIndividual.vchMensaje);
@@ -123,8 +197,6 @@ function consultarPuesto() {
 
 }
 
-function consultaMasivaPuesto() {
 
-}
 
 

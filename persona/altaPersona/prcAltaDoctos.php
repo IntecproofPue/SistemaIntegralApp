@@ -2,8 +2,10 @@
 require_once('../../includes/load.php');
 session_start();
 
-
 var_dump($_FILES);
+
+$noOperacion = 12345;
+$iIdEmpleado = 1188;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_FILES['documento'])) {
@@ -15,50 +17,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "Ruta temporal del archivo: " . $_FILES['documento']['tmp_name'] . "<br>";
 
         $nombre = basename($_FILES['documento']['name']);
-
         $carpeta = '\\\\PCSERVIDOR\\DocumentosSIA\\';
+        $rutaArchivo = $carpeta . $nombre;
 
-        $rutaArchivo = $carpeta.$_FILES['documento']['name']; 
-        echo ("Esta es la ruta del archivo: ".$rutaArchivo); 
-
-
-        echo $carpeta;
+        echo "Esta es la ruta del archivo: $rutaArchivo<br>";
+        echo "Esta es la carpeta: $carpeta<br>";
 
         if (!is_dir($carpeta)) {
-            echo "La carpeta ya existe.<br>";
+            echo "La carpeta no existe.<br>";
+            exit;
         }
 
         if ($_FILES['documento']['error'] == UPLOAD_ERR_OK) {
-            $destino = $carpeta . DIRECTORY_SEPARATOR . $nombre;
-            // Intentar mover el archivo a la carpeta de destino
-            if (move_uploaded_file($_FILES['documento']['tmp_name'], $destino)) {
+            if (move_uploaded_file($_FILES['documento']['tmp_name'], $rutaArchivo)) {
                 echo "Archivo movido a la carpeta con éxito.<br>";
             } else {
                 echo "Hubo un error al mover el archivo.<br>";
-
                 echo "Error: " . error_get_last()['message'] . "<br>";
+                exit;
             }
         } else {
             echo "Hubo un error al subir el archivo.<br>";
+            exit;
         }
 
         echo "Nombre final del archivo: $nombre<br>";
         echo "Carpeta de destino: $carpeta<br>";
     } else {
         echo "No se subió ningún archivo.<br>";
+        exit;
     }
 } else {
     echo "Solicitud inválida.<br>";
+    exit;
 }
 
-$datosBinarios = file_get_contents($rutaArchivo); 
+$datosBinarios = file_get_contents($rutaArchivo);
 
-
-
-if ($datosBinarios === false){
-    die ("Ocurrió un error en la decodificación"); 
+if ($datosBinarios === false) {
+    die("Ocurrió un error en la lectura del archivo");
 }
-
 
 // Establecer la conexión a la base de datos SQL Server
 $serverName = "192.168.100.39, 1433"; // Cambia esta dirección IP y puerto según tu configuración
@@ -74,30 +72,28 @@ if (!$conn) {
     die("Error al conectar: " . odbc_errormsg());
 }
 
-// Preparar la consulta SQL de inserción
-$query = "INSERT INTO dbo.tempDoctos (vbDocto) VALUES (?)";
+$query = "INSERT INTO dbo.tempDoctos (vbDocto, iNoOperacion, iIdEmpleado) VALUES (?, ?, ?)";
+
 $stm = odbc_prepare($conn, $query);
 
 if (!$stm) {
-    echo "Error en la consulta:\n";
-    die(print_r(odbc_error(), true));
+    die("Error en la consulta: " . print_r(odbc_errormsg(), true));
 }
 
 // Ejecutar la consulta de inserción con los datos binarios del PDF
-$result = odbc_execute($stm, array($datosBinarios));
+$result = odbc_execute($stm, array(
+    $datosBinarios,
+    $noOperacion,
+    $iIdEmpleado
+));
 
 if ($result === false) {
-    die("Error al ejecutar la consulta: " . print_r(odbc_error(), true));
+    die("Error al ejecutar la consulta: " . print_r(odbc_errormsg(), true));
 }
 
 echo "El archivo PDF se ha insertado correctamente en la base de datos.";
 
 // Cerrar la conexión a la base de datos
 odbc_close($conn);
-
-
-
-
-
-
 ?>
+

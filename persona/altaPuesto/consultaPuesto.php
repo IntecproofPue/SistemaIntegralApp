@@ -360,7 +360,7 @@ $resultadoContratacion = ObtenerTipoContratacion();
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
     <script src="../../js/map.js"></script>
     <script src = "ProcedimientosPuesto.js" ></script>
-    <script> document.getElementById('buttonBuscar').addEventListener('click', consultarPuesto); </script>
+    <script> document.getElementById('buttonBuscar').addEventListener('click', consultarDatosPuesto); </script>
 
 
 </body>
