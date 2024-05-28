@@ -3,7 +3,7 @@
 require_once ('../../includes/load.php');
 
 
-$id = 1022;//Valor de pruebas, se espera un GET
+$id = 1023;//Valor de pruebas, se espera un GET
 
 $sql = "SELECT vbDocto FROM dbo.tempDoctos WHERE iidTemDoctos = ?";
 

@@ -123,7 +123,7 @@ if (isset($_SESSION['user_id'])) {
                                 <div class="account-card">
                                     <div class="header-top-account-info">
                                         <a href="#" class="account-thumb">
-                                            <img src="../images/account/thumb-1.jpg" class="img-fluid" alt="">
+                                            <img src="images/account/thumb-1.jpg" class="img-fluid" alt="">
                                         </a>
                                         <div class="account-body">
                                             <h5><a href="#"><?php echo $nombrePersona; ?></a></h5>
@@ -134,7 +134,7 @@ if (isset($_SESSION['user_id'])) {
                                         <li><a href="#"><span class="ti-user"></span><?php echo $Perfil; ?></a></li>
                                         <li><a href="#"><span
                                                     class="ti-settings"></span><?php echo $herramientas; ?></a></li>
-                                        <li><a href="../includes/load.php"><span
+                                        <li><a href="includes/load.php"><span
                                                     class="ti-power-off"></span><?php echo $logout; ?></a>
                                         </li>
                                     </ul>

@@ -8,6 +8,14 @@
     $datosContacto = json_decode(isset($_POST['datosContacto'])? $_POST['datosContacto']:'', true);
     $datosEmpleado = json_decode(isset($_POST['datosEmpleado'])? $_POST['datosEmpleado']:'', true);
 
+/*
+    var_dump($datosPersona); 
+    var_dump($datosDomicilio); 
+    var_dump($datosContacto); 
+    var_dump($datosEmpleado); 
+*/
+
+
 
     $datosEmpleadoConsulta= array(
         'iIdPersona' => 0,

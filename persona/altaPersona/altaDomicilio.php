@@ -156,7 +156,7 @@
                 <div class="col">
                     <div class="header-top">
                         <div class="logo-area">
-                            <a href="../../index.html"><img src="../../images/logo-2.png" alt=""></a>
+                            <a href="../../index.php"><img src="../../images/logo-2.png" alt=""></a>
                         </div>
                         <div class="header-top-toggler">
                             <div class="header-top-toggler-button"></div>

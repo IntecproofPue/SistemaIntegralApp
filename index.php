@@ -54,7 +54,7 @@ $_SESSION['CatConstante'] = EjecutarConstante();
 ?>
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
 
     <meta charset="UTF-8">
