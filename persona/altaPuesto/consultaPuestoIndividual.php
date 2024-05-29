@@ -224,12 +224,12 @@ session_start();
                 </div>
                 <div class="skill-and-profile">
                     <div class="skill" style="display: flex; justify-content: center;">
-                        <label style="align-self: flex-end;"><a href="DatosEmpleado.php">EMPLEADO</a></label>
+                        <label style="align-self: flex-end;"><a href="../consulEmpleado/DatosEmpleado.php">EMPLEADO</a></label>
                         <label style="align-self: flex-end;" class="selected"><a
-                                href="../consulEmpleado/consultaPuesto.php ">PUESTO</a></label>
+                                href="../altaPuesto/consultaPuestoindividual.php ">PUESTO</a></label>
                         <label style="align-self: flex-end;"><a href="../consulEmpleado/consultaDomicilio.php">DOMICILIO</a></label>
-                        <label style="align-self: flex-end;"><a href="consultaContacto.php">CONTACTO</a></label>
-                        <label style="align-self: flex-end;"><a href="cunsultaDoctos.php">DOCUMENTOS</a></label>
+                        <label style="align-self: flex-end;"><a href="../consulEmpleado/consultaContacto.php">CONTACTO</a></label>
+                        <label style="align-self: flex-end;"><a href="../consulEmpleado/consultaDoctos.php">DOCUMENTOS</a></label>
                     </div>
                 </div>
 
@@ -337,7 +337,7 @@ session_start();
                         <div class="row">
                             <div class="col-lg-6">
                                 <a href="#">
-                                    <img src="../../images/footer-logo.png" class="img-fluid" alt="">
+                                    <img src="images/footer-logo.png" class="img-fluid" alt="">
                                 </a>
                                 <p class="copyright-text">DERECHOS DE AUTOR <a href="#">INTECPROOF</a> 2024,
                                     RESERVADOS</p>

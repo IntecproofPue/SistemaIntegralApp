@@ -167,7 +167,7 @@ $resultadoDocumento = ObtenerTipoDocumento();
                     <div class="skill" style="display: flex; justify-content: center;">
                         <label style="align-self: flex-end;"><a href="DatosEmpleado.php">EMPLEADO</a></label>
                         <label style="align-self: flex-end;"><a
-                                    href="../consulEmpleado/consultaPuesto.php ">PUESTO</a></label>
+                                    href="../altaPuesto/consultaPuestoindividual.php ">PUESTO</a></label>
                         <label style="align-self: flex-end;"><a href="consultaDomicilio.php">DOMICILIO</a></label>
                         <label style="align-self: flex-end;"><a href="consultaContacto.php">CONTACTO</a></label>
                         <label style="align-self: flex-end;" class="selected"><a
