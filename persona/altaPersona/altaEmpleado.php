@@ -349,7 +349,7 @@ if (isset($_SESSION['user_id'])) { ?>
                     <div class="modal-body">
 
                         <div class="form-group">
-                            <select class="form-control" id="iIdDocumentoAgregar" name="iIdDocumento[]">
+                            <select class="form-control" id="iIdDocumentoAgregar" name="iIdDocumentoAgregar">
                                 <option value="">TIPO DE DOCUMENTO:</option>
                                 <?php foreach ($resultadoDocumento as $documento): ?>
                                     <option
@@ -438,7 +438,7 @@ if (isset($_SESSION['user_id'])) { ?>
 
 <script> document.getElementById('registrarEmpleado').addEventListener('click', enviarFormularios);</script>
 <script> document.getElementById('Cancelar').addEventListener('click', RegresarInicio); </script>
-<script> document.getElementById('buttonGuardarDocumento').addEventListener('click', registrarDocumentos);  </script>
+
 
 </body>
 

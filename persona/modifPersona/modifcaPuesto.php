@@ -398,22 +398,7 @@ $resultadoPuesto = ObtenerPuesto();
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">TIPO DE DOCUMENTO:</label>
-                                        <div class="col-sm-9">
-                                            <select class="form-control" id="iIdDocumento" name="iIdDocumento">
-                                                <option value="">SELECCIONE UN TIPO DE DOCUMENTO</option>
-                                                <?php foreach ($resultadoDocumento as $documento): ?>
-                                                    <option
-                                                        value="<?= $documento['iIdConstante'] . '-' . $documento['iClaveCatalogo'] ?>">
-                                                        [
-                                                        <?= $documento['iClaveCatalogo'] ?>] -
-                                                        <?= $documento['vchDescripcion'] ?>
-                                                    </option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                        </div>
-                                    </div>
+                                 
 
                                     <div class="form-group file-input-wrap">
                                         <label for="up-cv">
@@ -473,6 +458,7 @@ $resultadoPuesto = ObtenerPuesto();
                                         <label class="col-sm-3 col-form-label"></label>
                                         <div class="col-sm-9">
                                             <script>
+                                                /*
                                                 function enviarFormularios() {
                                                     // Obtener los valores de los elementos del formulario para sede
                                                     var SedeSeleccionada = document.getElementById('iIdSede');
@@ -556,6 +542,7 @@ $resultadoPuesto = ObtenerPuesto();
                                                     };
 
                                                 }
+                                                */
 
                                             </script>
                                             <button type="button" class="button"

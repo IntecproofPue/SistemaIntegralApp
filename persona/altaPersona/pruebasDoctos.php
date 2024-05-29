@@ -41,7 +41,7 @@ $resultadoDocumento = ObtenerTipoDocumento();
                                 <div class="modal-body">
 
                                     <div class="form-group">
-                                        <select class="form-control" id="iIdDocumentoAgregar" name="iIdDocumento[]">
+                                        <select class="form-control" id="iIdDocumentoAgregar" name="iIdDocumentoAgregar">
                                             <option value="">SELECCIONE UN DOCUMENTO:</option>
                                             <?php foreach ($resultadoDocumento as $documento): ?>
                                             <option

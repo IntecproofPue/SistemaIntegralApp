@@ -337,7 +337,7 @@ session_start();
                         <div class="row">
                             <div class="col-lg-6">
                                 <a href="#">
-                                    <img src="images/footer-logo.png" class="img-fluid" alt="">
+                                    <img src="../../images/footer-logo.png" class="img-fluid" alt="">
                                 </a>
                                 <p class="copyright-text">DERECHOS DE AUTOR <a href="#">INTECPROOF</a> 2024,
                                     RESERVADOS</p>

@@ -115,35 +115,7 @@ function enviarFormularios() {
                     habilitarFormulario();
 
 
-                    var documentos = [];
-                    var nuevoDocumentoContainer = document.createElement('div');
-                    nuevoDocumentoContainer.className = 'col-md-12';
 
-                    var nuevoTipoDocumento = document.createElement('div');
-                    nuevoTipoDocumento.innerHTML = `
-                        <div class="form-group">
-                            <select class="form-control" id="iIdDocumentoAgregar" name="iIdDocumento[]">
-                                <option value="">TIPO DE DOCUMENTO:</option>
-                                <?php foreach ($resultadoDocumento as $documento): ?>
-                                    <option value="<?= $documento['iIdConstante'] . '-' . $documento['iClaveCatalogo'] ?>">
-                                        [<?= $documento['iClaveCatalogo'] ?>] - <?= $documento['vchDescripcion'] ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <div class="form-group file-input-wrap">
-                            <option value="">CARGAR DOCUMENTO:</option>
-                            <label for="up-cv">
-                                <input id="up-cv" type="file" onchange="cargarDocumento(event)">
-                                <i data-feather="upload-cloud"></i>
-                                <p id="nombreArchivo">NOMBRE DEL ARCHIVO
-                                <p>(pdf,zip,doc,docx)</p></p>
-                            </label>
-                        </div>
-                        `;
-
-
-                });
 
                 var botonFinalizar = document.createElement('button');
                 botonFinalizar.type = 'button';
@@ -182,7 +154,7 @@ function registrarDocumentos(){
         var datosRegistroEmpleado = localStorage.getItem('datosEmpleado');
         var bDatosRegistroEmpleado = JSON.parse(datosRegistroEmpleado);
 
-        var TipoDocumentoSeleccionado = document.getElementById('iIdDocumentoAgregar');
+        var TipoDocumentoSeleccionado = document.getElementById('iIdDocumentoAgregarAlta');
         var TipoDocumentoPartes = TipoDocumentoSeleccionado.value.split('-');
         var iIdConstanteDocumento = TipoDocumentoPartes[0];
         var iClaveDocumento = TipoDocumentoPartes[1];
@@ -190,6 +162,7 @@ function registrarDocumentos(){
 
         document.getElementById('iIdConstanteDocumento').value = iIdConstanteDocumento;
         document.getElementById('iClaveDocumento').value = iClaveDocumento;
+
     }catch (error){
         console.error("Ocurrió un error en la asignación de variables");
     }
@@ -199,12 +172,13 @@ function registrarDocumentos(){
             empleado: bDatosRegistroEmpleado.iIdEmpleado,
             iIdConstanteDocumento: iIdConstanteDocumento,
             iClaveDocumento: iClaveDocumento,
-            url: localStorage.getItem('base64Archivo'),
+           // url: localStorage.getItem('base64Archivo'),
             operacion: bDatosRegistroEmpleado.iNoOperacion
         };
 
         console.log(datosDocumentosEmpleado);
         localStorage.setItem('datosEnviarDocumentos', JSON.stringify(datosDocumentosEmpleado));
+
     }catch(error){
         console.error("Ocurrió un error en el llenado del formulario datosDocumentosEmpleado");
     }
@@ -220,8 +194,10 @@ function registrarDocumentos(){
 
     datosDocumentos.onload = function () {
        if (datosDocumentos.status === 200){
+        console.log("Hubo una respuesta con status 200"); 
            try{
-               console.log(datosDocumentos.responseText);
+               console.log("Estos son los datos de responseText: ",datosDocumentos.responseText);
+               console.log("No ocurrió ningún error"); 
                var respuesta = JSON.parse(datosDocumentos.responseText);
                if (respuesta.bResultado == 1){
                    console.log(respuesta);

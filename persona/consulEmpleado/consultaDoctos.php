@@ -262,7 +262,7 @@ $resultadoDocumento = ObtenerTipoDocumento();
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <select class="form-control" id="iIdDocumentoAgregar" name="iIdDocumento[]">
+                            <select class="form-control" id="iIdDocumentoAgregar" name="iIdDocumentoAgregar">
                                 <option value="">TIPO DE DOCUMENTO:</option>
                                 <?php foreach ($resultadoDocumento as $documento): ?>
                                     <option value="<?= $documento['iIdConstante'] . '-' . $documento['iClaveCatalogo'] ?>">

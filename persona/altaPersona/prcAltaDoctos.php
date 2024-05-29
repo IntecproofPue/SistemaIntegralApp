@@ -1,11 +1,26 @@
 <?php
 require_once('../../includes/load.php');
+
 session_start();
 
 var_dump($_FILES);
 
-$noOperacion = 12345;
-$iIdEmpleado = 1188;
+var_dump($_POST);
+
+
+
+$iIdEmpleado = isset($_POST['empleado']) ? $_POST['empleado'] : 0;
+$iIdTipoDocumento = isset ($_POST['iIdConstanteDocumento']) ? $_POST['iIdConstanteDocumento'] : 0;
+$iAgrupadorTipoDocto = 10;
+$iCveTipoDocto = isset ($_POST['iClaveDocumento']) ? $_POST['iClaveDocumento'] : 0;
+$iIdUsuarioUltModificacion = $_SESSION['user_id'];
+$noOperacion = isset ($_POST['operacion']) ? $_POST['operacion'] : 0;
+$vchObservaciones = '';
+$iIdEmpleadoDoctos = 0;
+$bResultado = 0;
+$vchCampoError = '';
+$vchMensaje = '';
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_FILES['documento'])) {
@@ -58,7 +73,7 @@ if ($datosBinarios === false) {
     die("Ocurrió un error en la lectura del archivo");
 }
 
-// Establecer la conexión a la base de datos SQL Server
+
 $serverName = "192.168.100.39, 1433"; // Cambia esta dirección IP y puerto según tu configuración
 $connectionInfo = array(
     "Database" => "BDSistemaIntegral_PRETEST",
@@ -72,7 +87,22 @@ if (!$conn) {
     die("Error al conectar: " . odbc_errormsg());
 }
 
-$query = "INSERT INTO dbo.tempDoctos (vbDocto, iNoOperacion, iIdEmpleado) VALUES (?, ?, ?)";
+
+$query = "EXEC prcAltaEmpleadoDoctos 		
+										@iIdEmpleado					= ?,
+										@iIdTipoDocto					= ?,
+										@iAgruTipDocto					= ?,
+										@iCveTipoDocto					= ?,
+										@vbArchivo						= ?,
+										@iIdUsuarioUltModificacion		= ?,
+										@iNoOperacion					= ?,
+										@vchObservaciones				= ?,
+										@iIdEmpleadoDoctos				= ?,
+										@bResultado						= ?,
+										@vchCampoError					= ?,
+										@vchMensaje						= ?
+			";
+    //"INSERT INTO dbo.tempDoctos (vbDocto, iNoOperacion, iIdEmpleado) VALUES (?, ?, ?)";
 
 $stm = odbc_prepare($conn, $query);
 
@@ -80,20 +110,50 @@ if (!$stm) {
     die("Error en la consulta: " . print_r(odbc_errormsg(), true));
 }
 
-// Ejecutar la consulta de inserción con los datos binarios del PDF
-$result = odbc_execute($stm, array(
+
+$params = array(
+    $iIdEmpleado,
+    $iIdTipoDocumento,
+    $iAgrupadorTipoDocto,
+    $iCveTipoDocto,
     $datosBinarios,
+    $iIdUsuarioUltModificacion,
     $noOperacion,
-    $iIdEmpleado
-));
+    $vchObservaciones,
+    $iIdEmpleadoDoctos,
+    $bResultado,
+    $vchCampoError,
+    $vchMensaje
+);
+
+
+var_dump($params);
+
+
+$result = odbc_execute($stm, $params);
 
 if ($result === false) {
-    die("Error al ejecutar la consulta: " . print_r(odbc_errormsg(), true));
+    $errorInformacion = odbc_errormsg();
+    $respuesta   = array (
+        'error' => true,
+        'sqlError' => $errorInformacion
+    );
+    echo json_encode($respuesta);
+    exit;
+
+}else {
+
+   while($row = odbc_fetch_array($stm)){
+       foreach ($row as $valor){
+           echo $valor."<br>";
+       }
+   }
+
+    echo "El archivo PDF se ha insertado correctamente en la base de datos.";
+    echo json_encode(array('success' => true));
+
 }
 
-echo "El archivo PDF se ha insertado correctamente en la base de datos.";
-
 // Cerrar la conexión a la base de datos
-odbc_close($conn);
+odbc_close($GLOBALS['conArchivo']);
 ?>
-
