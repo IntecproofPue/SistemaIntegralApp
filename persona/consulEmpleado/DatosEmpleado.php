@@ -249,12 +249,16 @@ $resultadoRegimen = ObtenerIdRegimen();
                         <label style="align-self: flex-end;"><a href="../altaPuesto/consultaPuestoIndividual.php">PUESTO</a></label>
                         <label style="align-self: flex-end;"><a href="consultaDomicilio.php">DOMICILIO</a></label>
                         <label style="align-self: flex-end;"><a href="consultaContacto.php">CONTACTO</a></label>
-                        <label style="align-self: flex-end;"><a
-                                    href="../consulEmpleado/cunsultaDoctos.php">DOCUMENTOS</a></label>
+                        <label style="align-self: flex-end;"><a href="consultaDoctos.php">DOCUMENTOS</a></label>
                     </div>
+                    <div class="row-left" id="buttonsModificar">
+                                                    <a href="#" class="boton-intec-1" id="buttonPromocion">GUARDAR</a>
+                                                </div>
                 </div>
                 <!-- fin de pestañas de navegación-->
+                
             </div>
+            
         </div>
     </div>
 </header>
