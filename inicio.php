@@ -289,7 +289,7 @@ if (isset($_SESSION['user_id'])) {
                                                 aria-haspopup="true" aria-expanded="false">INCIDENCIAS</a>
                                             <ul class="dropdown-menu">
                                                 <li class="menu-item"><a
-                                                        href="persona/altaPersona/altaIncidencia.php">REGISTRO DE
+                                                        href="persona/incidencias/altaIncidencia.php">REGISTRO DE
                                                         INCIDENCIA</a></li>
                                                 <li class="menu-item"><a
                                                         href="persona/consulEmpleado/consultaIncidencia.php">SEGUIMIENTO

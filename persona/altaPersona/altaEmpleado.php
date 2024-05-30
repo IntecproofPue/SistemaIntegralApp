@@ -190,17 +190,6 @@ if (isset($_SESSION['user_id'])) { ?>
             <div class="col-md-6">
                 <div class="breadcrumb-area">
                     <h1>ALTA EMPLEADO</h1>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">INICIO</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">ALTA EMPLEADO&nbsp;&nbsp;</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="breadcrumb-form">
-
                 </div>
             </div>
         </div>
@@ -300,6 +289,24 @@ if (isset($_SESSION['user_id'])) { ?>
                                         </select>
                                     </div>
                                 </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">*JEFE INMEDIATO:</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control" Name="iIdPersonaContratante"
+                                                id="iIdPersonaContratante" required>
+                                            <option value="" selected>SELECCIONA LA PERSONA</option>
+                                            <?php foreach ($resultadoContratantes as $contratante): ?>
+                                                <option value="<?= $contratante['iIdPersona'] ?>">
+                                                    [<?= $contratante['iIdPersona'] ?>]
+                                                    -
+                                                    <?= $contratante['vchPrimerApellido'] . ' ' . $contratante['vchSegundoApellido'] . ' ' . $contratante['vchNombre'] ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div class="form-group row" id="documentosContainer" name="documentosContainer">
                                 </div>
                                 <div class="form-group row">

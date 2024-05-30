@@ -467,6 +467,15 @@ $resultadoRegimen = ObtenerIdRegimen();
                                         </div>
                                     </div>
 
+                                    <div class="col-md-4">
+                                            <div class="form-group ">
+                                                <label class="col-form-label">JEFE INMEDIATO</label>
+                                                <input type="text" class="form-control" placeholder="JEFE INMEDIATO"
+                                                       id="#" disabled/>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="candidate">
                                         <div class="body">
                                             <div class="row">
@@ -709,6 +718,25 @@ $resultadoRegimen = ObtenerIdRegimen();
                                        style="text-transform: uppercase">
                             </div>
                         </div>
+
+                        <div class="form-group">
+                        <div class="col-sm-9">
+                                    <label class="col-sm-9">JEFE INMEDIATO</label>
+                                    
+                                        <select class="form-control" Name="iIdPersonaContratante"
+                                                id="iIdPersonaContratante" required>
+                                            <option value="" selected>SELECCIONA LA PERSONA</option>
+                                            <?php foreach ($resultadoContratantes as $contratante): ?>
+                                                <option value="<?= $contratante['iIdPersona'] ?>">
+                                                    [<?= $contratante['iIdPersona'] ?>]
+                                                    -
+                                                    <?= $contratante['vchPrimerApellido'] . ' ' . $contratante['vchSegundoApellido'] . ' ' . $contratante['vchNombre'] ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+
                         <div class="update-photo" style="position: relative;">
                             <label><img class="image" src="../../user-1.jpg" alt="">
                                 <span class="edit-text">EDITAR IMAGEN</span>

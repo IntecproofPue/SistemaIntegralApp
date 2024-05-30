@@ -4,6 +4,8 @@ require_once ('../../includes/load.php');
 session_start();
 
 
+var_dump($_POST);
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $iIdEmpleadoDocumento= $_POST['iIdEmpleadoDocumento'];
@@ -49,6 +51,7 @@ if ($result === false) {
         }
 
     }while (sqlsrv_next_result($result));
+    var_dump($DatosDocumentosConsulta); 
 
     echo json_encode($DatosDocumentosConsulta);
 }

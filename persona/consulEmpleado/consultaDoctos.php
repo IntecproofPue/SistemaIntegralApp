@@ -355,7 +355,7 @@ $resultadoDocumento = ObtenerTipoDocumento();
         var iIdEmpleadoDoctos = bResultadoDocumentos.iIdEmpleado;
 
         var datosDocumentos = new XMLHttpRequest();
-        datosDocumentos.open('POST', 'prcConsultaDocumentos', true);
+        datosDocumentos.open('POST', 'prcConsultaDocumentos.php', true);
 
         var formData = new URLSearchParams();
         formData.append('iIdEmpleadoDocumento', iIdEmpleadoDoctos);
