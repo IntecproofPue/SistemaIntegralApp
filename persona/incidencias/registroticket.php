@@ -1,11 +1,11 @@
 <?php
 // Archivo: reporte_tickets.php
 
-// Incluir la librería TCPDF
+require_once ('../../includes/pandora.php');
+require_once ('../../includes/load.php');
 require_once('tcpdf/tcpdf.php');
 
-// Conectar a la base de datos (suponiendo que ya tienes una conexión)
-// require_once('includes/conexion.php');
+session_start();
 
 // Obtener los datos de los tickets de incidencias desde la base de datos
 // Supongamos que los datos están en una tabla llamada "tickets"
