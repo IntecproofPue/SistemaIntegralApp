@@ -204,10 +204,9 @@ $resultadoDocumento = ObtenerTipoDocumento();
                                 </div>
 
                                 <!-- INICIO DE TITULOS -->
-                                <div class="employer">
+                                <div class="alice-bg">
                                     <div class="body">
                                         <div class="row">
-                                            <div class="body">
                                                 <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label class="col-form-label">TIPO DE
@@ -234,9 +233,8 @@ $resultadoDocumento = ObtenerTipoDocumento();
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="employer" id="agregarDocumentos"></div>
+                                
 
                             </div>
                         </div>
@@ -262,7 +260,7 @@ $resultadoDocumento = ObtenerTipoDocumento();
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <select class="form-control" id="iIdDocumentoAgregar" name="iIdDocumentoAgregar">
+                            <select class="form-control" id="iIdDocumentoAgregar" name="iIdDocumento[]">
                                 <option value="">TIPO DE DOCUMENTO:</option>
                                 <?php foreach ($resultadoDocumento as $documento): ?>
                                     <option value="<?= $documento['iIdConstante'] . '-' . $documento['iClaveCatalogo'] ?>">

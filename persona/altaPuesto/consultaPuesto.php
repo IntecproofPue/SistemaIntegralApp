@@ -26,7 +26,6 @@ $resultadoContratacion = ObtenerTipoContratacion();
 ?>
 
 
-?>
 
 <!doctype html>
 <html lang="en">
