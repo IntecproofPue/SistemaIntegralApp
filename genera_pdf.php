@@ -1,29 +1,27 @@
 <?php
-require 'vendor/autoload.php';
-
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+require_once('vendor/autoload.php');
 use TCPDF;
 
 // Verificar si el formulario fue enviado
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Obtener los datos del formulario
-    $nombre = $_POST['nombre'];
-    $apellido = $_POST['apellido'];
-    $departamento = $_POST['departamento'];
-    $cargo = $_POST['cargo'];
-    $fecha_inicio = $_POST['fecha_inicio'];
-    $fecha_fin = $_POST['fecha_fin'];
-    $dias_totales = $_POST['dias_totales'];
-    $aprobado_por = $_POST['aprobado_por'];
-    $comentarios = $_POST['comentarios'];
+    $nombreEmpleado = $_POST['nombreEmpleado'];
+    $numEmpleado = $_POST['numEmpleado'];
+    $jefeInmediato = $_POST['jefeInmediato'];
+    $fechaIngreso = $_POST['fechaIngreso'];
+    $periodoVacaciones = $_POST['periodoVacaciones'];
+    $antiguedad = $_POST['antiguedad'];
+    $diasTomados = $_POST['diasTomados'];
+    $diasRestantes = $_POST['diasRestantes'];
+    $firmaEmpleado = $_POST['firmaEmpleado'];
+    $fechaElaboracion = $_POST['fechaElaboracion'];
 
     // Crear una instancia de TCPDF
     $pdf = new TCPDF();
 
     // Configurar el documento PDF
     $pdf->SetCreator(PDF_CREATOR);
-    $pdf->SetAuthor('Tu Nombre');
+    $pdf->SetAuthor('Sistema Integral');
     $pdf->SetTitle('Solicitud de Vacaciones');
     $pdf->SetSubject('Solicitud de Vacaciones');
     $pdf->SetKeywords('TCPDF, PDF, solicitud, vacaciones');
@@ -33,54 +31,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Crear el contenido HTML
     $html = '
-    <h1>Solicitud de Vacaciones</h1>
-    <h2>Información del Empleado</h2>
+    <h1>SOLICITUD DE VACACIONES</h1>
+    <h3>Fecha de Elaboración: ' . htmlspecialchars($fechaElaboracion) . '</h3>
+    <h2>INFORMACIÓN DEL EMPLEADO</h2>
     <table border="1" cellspacing="3" cellpadding="4">
         <tr>
-            <td>Nombre</td>
-            <td>' . htmlspecialchars($nombre) . '</td>
+            <td>Nombre del Empleado</td>
+            <td>' . htmlspecialchars($nombreEmpleado) . '</td>
         </tr>
         <tr>
-            <td>Apellido</td>
-            <td>' . htmlspecialchars($apellido) . '</td>
+            <td>Núm. De Empleado</td>
+            <td>' . htmlspecialchars($numEmpleado) . '</td>
         </tr>
         <tr>
-            <td>Departamento</td>
-            <td>' . htmlspecialchars($departamento) . '</td>
+            <td>Jefe Inmediato</td>
+            <td>' . htmlspecialchars($jefeInmediato) . '</td>
         </tr>
         <tr>
-            <td>Cargo</td>
-            <td>' . htmlspecialchars($cargo) . '</td>
+            <td>Fecha de Ingreso</td>
+            <td>' . htmlspecialchars($fechaIngreso) . '</td>
+        </tr>
+        <tr>
+            <td>Periodo de Vacaciones</td>
+            <td>' . htmlspecialchars($periodoVacaciones) . '</td>
+        </tr>
+        <tr>
+            <td>Antigüedad (años)</td>
+            <td>' . htmlspecialchars($antiguedad) . '</td>
         </tr>
     </table>
-    
     <h2>Detalles de las Vacaciones</h2>
-    <table border="1" cellspacing="3" cellpadding="4">
-        <tr>
-            <td>Fecha de Inicio</td>
-            <td>' . htmlspecialchars($fecha_inicio) . '</td>
-        </tr>
-        <tr>
-            <td>Fecha de Fin</td>
-            <td>' . htmlspecialchars($fecha_fin) . '</td>
-        </tr>
-        <tr>
-            <td>Días Totales</td>
-            <td>' . htmlspecialchars($dias_totales) . '</td>
-        </tr>
-    </table>
-    
-    <h2>Aprobaciones</h2>
-    <table border="1" cellspacing="3" cellpadding="4">
-        <tr>
-            <td>Aprobado por</td>
-            <td>' . htmlspecialchars($aprobado_por) . '</td>
-        </tr>
-        <tr>
-            <td>Comentarios</td>
-            <td>' . htmlspecialchars($comentarios) . '</td>
-        </tr>
-    </table>
+    <p>Total de días tomados: ' . htmlspecialchars($diasTomados) . '</p>
+    <p>Días restantes: ' . htmlspecialchars($diasRestantes) . '</p>
+    <h2>Conformidad</h2>
+    <p>Por la firma del presente formulario el empleado solicita se le descuenten de su saldo de vacaciones los días señalados; su saldo vigente tendrá que ser consultado previamente ya que en vacaciones acumuladas se considerarán las fechas de prescripciones así como vacaciones adelantadas.</p>
+    <p>Firma de conformidad del empleado y Fecha: ' . htmlspecialchars($firmaEmpleado) . '</p>
     ';
 
     // Escribir el contenido HTML en el PDF
