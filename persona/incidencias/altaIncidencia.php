@@ -200,7 +200,15 @@ $resultadoDocumento = ObtenerTipoDocumento();
 
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label class="col-form-label">*EMPLEADO: </label>
+                                                <label class="col-form-label">EXPEDIENTE EMPLEADO: </label>
+                                                <input id="iIdEmpleado" type="text" class="form-control"
+                                                    placeholder="EXPEDIENTE EMPLEADO">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="col-form-label">NOMBRE DEL EMPLEADO: </label>
                                                 <input id="iIdEmpleado" type="text" class="form-control"
                                                     placeholder="NOMBRE DEL EMPLEADO">
                                             </div>
@@ -208,37 +216,32 @@ $resultadoDocumento = ObtenerTipoDocumento();
 
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label class="col-form-label">*TIPO DE INCIDENCIA:</label>
-                                                <select class="form-control" id="tipoIncidencia" name="tipoIncidencia">
-                                                    <option value="" selected>SELECCIONE UN TIPO DE INCIDENCIA</option>
-                                                    <?php foreach ($resultadoContratacion as $contratacion): ?>
-                                                        <option
-                                                            value="<?= $contratacion['iIdConstante'] . '-' . $contratacion['iClaveCatalogo'] ?>">
-                                                            [<?= $contratacion['iClaveCatalogo'] ?>]
-                                                            - <?= $contratacion['vchDescripcion'] ?>
-                                                        </option>
-                                                    <?php endforeach; ?>
+                                                <label class="col-form-label">TIPO DE INCIDENCIA:</label>
+                                                <select class="form-control" id="tipoIncidencia"
+                                                    aria-placeholder="TIPO DE INCIDENCIA" name="tipoIncidencia">
+                                                    <option value="" selected>DIAS ASIGNADOS</option>
+                                                    <option value="" selected>DIAS DEVENGADOS</option>
                                                 </select>
                                             </div>
                                         </div>
 
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label class="col-form-label">*FECHA: </label>
+                                                <label class="col-form-label">FECHA: </label>
                                                 <input id="iIdEmpleado" type="date" class="form-control">
                                             </div>
                                         </div>
 
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label class="col-form-label">*FECHA DE TERMINO: </label>
+                                                <label class="col-form-label">FECHA DE TERMINO: </label>
                                                 <input id="iIdEmpleado" type="date" class="form-control">
                                             </div>
                                         </div>
 
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label class="col-form-label">*PERIODO VACACIONAL: </label>
+                                                <label class="col-form-label">PERIODO VACACIONAL: </label>
                                                 <input id="iIdEmpleado" type="text" class="form-control"
                                                     placeholder="PERIODO VACACIONAL">
                                             </div>
@@ -253,6 +256,16 @@ $resultadoDocumento = ObtenerTipoDocumento();
                                             </div>
                                         </div>
 
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="col-form-label">
+                                                    <input type="checkbox" id="todosEmpleadosCheckbox"
+                                                        name="todosEmpleadosCheckbox"> TODOS LOS EMPLEADOS
+                                                </label>
+                                            </div>
+                                        </div>
+
+
                                     </div>
 
                                     <div class="candidate">
@@ -262,13 +275,13 @@ $resultadoDocumento = ObtenerTipoDocumento();
                                                 <button type="submit" class="boton-intec"
                                                     id="buttonRegistrar">ALTA</button>
                                                 <button type="submit" class="boton-intec"
-                                                    id="buttonVolver">CALCULAR</button>
-                                                    <button type="submit" class="boton-intec"
-                                                    id="buttonVolver">IMPLEMENTAR VOLANTE</button>
+                                                    id="buttonVolver">CANCELAR</button>
+                                                <button type="submit" class="boton-intec" id="buttonVolver">IMPRIMIR
+                                                    VOLANTE</button>
                                             </div>
 
 
-                                            
+
                                         </div>
                                     </div>
                                 </div>

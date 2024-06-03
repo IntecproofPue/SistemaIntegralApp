@@ -280,7 +280,7 @@ if (isset($_SESSION['user_id'])) { ?>
 
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">*TIPO DE CONTACTO:</label>
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-6">  
                                             <select class="form-control" Name="tipoContacto" id="tipoContacto"
                                                 onchange="validarTipoContacto()" required>
                                                 <option value="">SELECCIONE UN TIPO DE CONTACTO</option>
@@ -417,38 +417,45 @@ if (isset($_SESSION['user_id'])) { ?>
                                     }
 
                                     function agregarCampoContacto() {
-                                        var contenedor = document.getElementById('nuevosCamposContainer');
-                                        var nuevoCampo = document.createElement('div');
-                                        nuevoCampo.className = 'form-group row';
-                                        nuevoCampo.innerHTML = `
-                                        <label class="col-sm-3 col-form-label">*TIPO DE CONTACTO:</label>
-                                        <div class="col-sm-9">
-                                            <select class="form-control" Name="tipoContacto" id="tipoContacto"
-                                                onchange="validarTipoContacto()" required>
-                                                <option value="">SELECCIONE UN TIPO DE CONTACTO</option>
-                                                <?php foreach ($resultadoContacto as $contacto): ?>
-                                                        <option value="<?= $contacto['iIdConstante'] ?>">
-                                                            [<?= $contacto['iClaveCatalogo'] ?>] - <?= $contacto['vchDescripcion'] ?>
-                                                        </option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                        </div>                                        
-                                        <label class="col-sm-3 col-form-label">*CONTACTO:</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" id="contacto" name="contacto[]" class="form-control"
-                                                placeholder="CONTACTO" style="text-transform: uppercase">
-                                        </div>
-                                    `;
+                                        var tabla = document.getElementById('tablaContactos');
+                                        var nuevaFila = tabla.insertRow(-1); // Inserta una nueva fila al final de la tabla
 
-                                        // Agrega el nuevo campo
-                                        contenedor.appendChild(nuevoCampo);
+                                        // Crea las celdas para el tipo de contacto y el contacto
+                                        var celdaTipoContacto = nuevaFila.insertCell(0);
+                                        var celdaContacto = nuevaFila.insertCell(1);
+
+                                        // Crea un nuevo elemento select para el tipo de contacto
+                                        var selectTipoContacto = document.createElement('select');
+                                        selectTipoContacto.className = 'form-control';
+                                        selectTipoContacto.name = 'tipoContacto[]';
+                                        selectTipoContacto.setAttribute('onchange', 'validarTipoContacto()');
+                                        var optionDefault = document.createElement('option');
+                                        optionDefault.value = '';
+                                        optionDefault.text = 'SELECCIONE UN TIPO DE CONTACTO';
+                                        selectTipoContacto.appendChild(optionDefault);
+
+                                        // Agrega opciones al select del tipo de contacto
+                                        <?php foreach ($resultadoContacto as $contacto): ?>
+                                            var optionContacto = document.createElement('option');
+                                            optionContacto.value = '<?= $contacto['iIdConstante'] ?>';
+                                            optionContacto.text = '[<?= $contacto['iClaveCatalogo'] ?>] - <?= $contacto['vchDescripcion'] ?>';
+                                            selectTipoContacto.appendChild(optionContacto);
+                                        <?php endforeach; ?>
+
+                                        // Crea un nuevo input para el contacto
+                                        var inputContacto = document.createElement('input');
+                                        inputContacto.type = 'text';
+                                        inputContacto.className = 'form-control';
+                                        inputContacto.name = 'contacto[]';
+                                        inputContacto.placeholder = 'CONTACTO';
+                                        inputContacto.style.textTransform = 'uppercase';
+
+                                        // Agrega el select y el input a las celdas correspondientes
+                                        celdaTipoContacto.appendChild(selectTipoContacto);
+                                        celdaContacto.appendChild(inputContacto);
                                     }
 
-                                    function validarNuevoTipoContacto(selectElement) {
-                                        var nuevoTipoContacto = selectElement.value;
-                                        console.log("Nuevo Tipo de Contacto seleccionado: " + nuevoTipoContacto);
-                                        // Puedes realizar otras acciones de validación si es necesario
-                                    }
+
                                 </script>
 
                             </form>
@@ -512,6 +519,7 @@ if (isset($_SESSION['user_id'])) { ?>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
     <script src="../../js/map.js"></script>
+    <script src="tu_script.js"></script>
 </body>
 
 </html>
