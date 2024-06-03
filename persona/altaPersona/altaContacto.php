@@ -276,11 +276,11 @@ if (isset($_SESSION['user_id'])) { ?>
                                 <input type="hidden" name="iClaveContacto" id="iClaveContacto" value="">
 
                                 <div class="dashboard-section basic-info-input">
-                                    <h4><i data-feather="user-check"></i>Basic Infos</h4>
+                                    <h4><i data-feather="user-check"></i>INFORMACION BASICA</h4>
 
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">*TIPO DE CONTACTO:</label>
-                                        <div class="col-sm-6">  
+                                        <div class="col-sm-6">
                                             <select class="form-control" Name="tipoContacto" id="tipoContacto"
                                                 onchange="validarTipoContacto()" required>
                                                 <option value="">SELECCIONE UN TIPO DE CONTACTO</option>
@@ -453,6 +453,22 @@ if (isset($_SESSION['user_id'])) { ?>
                                         // Agrega el select y el input a las celdas correspondientes
                                         celdaTipoContacto.appendChild(selectTipoContacto);
                                         celdaContacto.appendChild(inputContacto);
+                                    }
+
+                                    document.getElementById('addContactBtn').onclick = function () {
+                                        agregarCampoContacto();
+                                    };
+
+                                    function agregarCampoContacto() {
+                                        // Make sure the table element exists
+                                        var table = document.getElementById('contactTable');
+                                        if (table) {
+                                            var newRow = table.insertRow(); // Insert a new row
+                                            var newCell = newRow.insertCell(0); // Insert a new cell in the new row
+                                            newCell.textContent = 'New Contact'; // Set the text content of the new cell
+                                        } else {
+                                            console.error('Table with ID "contactTable" not found.');
+                                        }
                                     }
 
 
