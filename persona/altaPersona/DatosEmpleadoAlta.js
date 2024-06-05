@@ -113,9 +113,38 @@ function enviarFormularios() {
                         }
                     }
                     habilitarFormulario();
+                    /*
 
 
+                    var documentos = [];
+                    var nuevoDocumentoContainer = document.createElement('div');
+                    nuevoDocumentoContainer.className = 'col-md-12';
 
+                    var nuevoTipoDocumento = document.createElement('div');
+                    nuevoTipoDocumento.innerHTML = `
+                        <div class="form-group">
+                            <select class="form-control" id="iIdDocumentoAgregar" name="iIdDocumentoAgregar">
+                                <option value="">TIPO DE DOCUMENTO:</option>
+                                <?php foreach ($resultadoDocumento as $documento): ?>
+                                    <option value="<?= $documento['iIdConstante'] . '-' . $documento['iClaveCatalogo'] ?>">
+                                        [<?= $documento['iClaveCatalogo'] ?>] - <?= $documento['vchDescripcion'] ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group file-input-wrap">
+                            <option value="">CARGAR DOCUMENTO:</option>
+                            <label for="up-cv">
+                                <input id="up-cv" type="file" onchange="cargarDocumento(event)">
+                                <i data-feather="upload-cloud"></i>
+                                <p id="nombreArchivo">NOMBRE DEL ARCHIVO
+                                <p>(pdf,zip,doc,docx)</p></p>
+                            </label>
+                        </div>
+                        `;*/
+
+
+                });
 
                 var botonFinalizar = document.createElement('button');
                 botonFinalizar.type = 'button';
@@ -147,75 +176,135 @@ function RegresarInicio(){
     window.location.href = ("altaPersona.php");
 }
 
-function registrarDocumentos(){
+function registrarDocumentos() {
     console.log("Si está entrando al botón");
 
-    try{
+    try {
         var datosRegistroEmpleado = localStorage.getItem('datosEmpleado');
         var bDatosRegistroEmpleado = JSON.parse(datosRegistroEmpleado);
 
-        var TipoDocumentoSeleccionado = document.getElementById('iIdDocumentoAgregarAlta');
+        var TipoDocumentoSeleccionado = document.getElementById('iIdDocumentoAgregar');
         var TipoDocumentoPartes = TipoDocumentoSeleccionado.value.split('-');
         var iIdConstanteDocumento = TipoDocumentoPartes[0];
         var iClaveDocumento = TipoDocumentoPartes[1];
 
-
         document.getElementById('iIdConstanteDocumento').value = iIdConstanteDocumento;
         document.getElementById('iClaveDocumento').value = iClaveDocumento;
 
-    }catch (error){
+        console.log(bDatosRegistroEmpleado);
+
+    } catch (error) {
         console.error("Ocurrió un error en la asignación de variables");
     }
 
-    try{
+    try {
         var datosDocumentosEmpleado = {
             empleado: bDatosRegistroEmpleado.iIdEmpleado,
             iIdConstanteDocumento: iIdConstanteDocumento,
             iClaveDocumento: iClaveDocumento,
-           // url: localStorage.getItem('base64Archivo'),
             operacion: bDatosRegistroEmpleado.iNoOperacion
         };
 
         console.log(datosDocumentosEmpleado);
         localStorage.setItem('datosEnviarDocumentos', JSON.stringify(datosDocumentosEmpleado));
 
-    }catch(error){
+    } catch (error) {
         console.error("Ocurrió un error en el llenado del formulario datosDocumentosEmpleado");
     }
 
 
+    // Crear un FormData object
+    var formData = new FormData();
+    formData.append('empleado',datosDocumentosEmpleado.empleado);
+    formData.append('iIdConstanteDocumento',datosDocumentosEmpleado.iIdConstanteDocumento);
+    formData.append('iClaveDocumento',datosDocumentosEmpleado.iClaveDocumento);
+    formData.append('operacion',datosDocumentosEmpleado.operacion);
+
+    var fileInput = document.querySelector('#up-cv');
+    formData.append('documento', fileInput.files[0]);
+
     var datosDocumentos = new XMLHttpRequest();
-
     datosDocumentos.open('POST', 'prcAltaDoctos.php', true);
-    datosDocumentos.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-    var formData = new URLSearchParams(datosDocumentosEmpleado).toString();
     datosDocumentos.send(formData);
 
     datosDocumentos.onload = function () {
-       if (datosDocumentos.status === 200){
-        console.log("Hubo una respuesta con status 200"); 
-           try{
-               console.log("Estos son los datos de responseText: ",datosDocumentos.responseText);
-               console.log("No ocurrió ningún error"); 
-               var respuesta = JSON.parse(datosDocumentos.responseText);
-               if (respuesta.bResultado == 1){
-                   console.log(respuesta);
-                   alert(respuesta.vchMensaje);
+        if (datosDocumentos.status === 200) {
+            console.log("Hubo una respuesta con status 200");
+            try {
+                var respuesta = JSON.parse(datosDocumentos.responseText);
+                if (respuesta.bResultado === 1) {
+                    console.log(respuesta);
+                    alert(respuesta.vchMensaje);
+                    window.location.href = '../consulEmpleado/consultaEmpleado.php';
+                } else {
+                    console.error("Mensaje de error: ", respuesta.vchMensaje);
+                    alert(respuesta.vchMensaje);
+                }
+            } catch (error) {
+                console.error('Error al parsear la información del formato JSON', error);
+                alert('Error, procesando la información del servidor. Por favor reintente');
+            }
+        } else {
+            console.error("Error en la solicitud del servidor", datosDocumentos.status);
+            alert("Falló la respuesta del servidor con el estatus: ", datosDocumentos.status);
+        }
+    };
+}
 
-                   window.location.href = '../consulEmpleado/consultaEmpleado.php';
-               }else {
-                   console.error("Mensaje de error: ", respuesta.vchMensaje);
-                   alert(respuesta.vchMensaje);
-               }
-           }catch (error){
-               console.error('Error al parsear la información del formato JSON', error);
-               alert('Error, procesando la información del servidor. Por favor reintente');
-           }
-       } else {
-           console.error("Error en la solicitud del servidor", datosDocumentos.status);
-           alert("Falló la respuesta del servidor con el estatus: ",datosDocumentos.status);
-       }
+function ValidarDatosDomicilio() {
+    // Obtener los valores de los elementos del formulario
+    var EstadoSeleccionado = document.getElementById('estadoLista');
+    var EstadoPartes = EstadoSeleccionado.value.split('-');
+    var iIdConstanteEstado = EstadoPartes[0];
+    var iClaveEstado = EstadoPartes[1];
+
+    // Asignar los valores a los campos ocultos
+    document.getElementById('iIdConstanteEstado').value = iIdConstanteEstado;
+    document.getElementById('iClaveEstado').value = iClaveEstado;
+
+    // Crear un objeto con los datos del formulario
+    var datosFormulario = {
+        estadoLista: EstadoSeleccionado.value,
+        vchMunicipio: document.getElementById('vchMunicipio').value,
+        vchLocalidad: document.getElementById('vchLocalidad').value,
+        codigoPostal: document.getElementById('codigoPostal').value,
+        vchColonia: document.getElementById('vchColonia').value,
+        vchCalle: document.getElementById('vchCalle').value,
+        vchLetra: document.getElementById('vchLetra').value,
+        vchNoExt: document.getElementById('vchNoExt').value,
+        vchNoInt: document.getElementById('vchNoInt').value,
+        iIdConstanteEstado: iIdConstanteEstado,
+        iClaveEstado: iClaveEstado
     };
 
+    // Crear una instancia de XMLHttpRequest
+    var datosDomicilio = new XMLHttpRequest();
+
+    // Configurar la solicitud
+    datosDomicilio.open('POST', 'validarDatosDomicilio.php', true);
+    datosDomicilio.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    // Convertir el objeto de datos a una cadena de consulta URL
+    var formData = new URLSearchParams(datosFormulario).toString();
+
+    // Enviar la solicitud
+    datosDomicilio.send(formData);
+
+    // Manejar la respuesta
+    datosDomicilio.onload = function() {
+        if (datosDomicilio.status === 200) {
+            var respuesta = JSON.parse(datosDomicilio.responseText);
+            if (respuesta.bResultado === 1) {
+                console.log(respuesta);
+                localStorage.setItem('datosDomicilio',JSON.stringify(datosFormulario));
+                window.location.href = "altaContacto.php";
+            } else {
+                console.error("Mensaje Error: " + respuesta.vchMensaje);
+                alert(respuesta.vchMensaje)
+            }
+        } else {
+            console.error("Error en la solicitud al servidor");
+        }
+    };
 }
+

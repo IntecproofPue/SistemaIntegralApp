@@ -1,6 +1,9 @@
 function ValidarBaja() {
-    var datosBajaEmpleado = {
+
+     var datosBajaEmpleado = {
         fechaBaja: document.getElementById('dtFechaBajaModificacion').value,
+        NoOperacion: 0,
+        iIdPersona : window.iIdPersonaGlobal,
         empleado: window.iIdEmpleadoGlobal,
         proceso: 3, //baja de empleado
         opcion: 2
@@ -69,6 +72,8 @@ function ValidarReactivacion() {
         contratante: document.getElementById('iIdPersonaContratanteReactivacion').value,
         iIdConstanteSede: iIdConstanteSedeReactivacion,
         iClaveSede: iClaveSedeReactivacion,
+        NoOperacion: 0,
+        iIdPersona: window.iIdPersonaGlobal,
         empleado: window.iIdEmpleadoGlobal,
         proceso: 4, //reactivación de empleado
         opcion: 2
@@ -84,7 +89,7 @@ function ValidarReactivacion() {
 
     var datosReactivacionRequest = new  XMLHttpRequest();
 
-    datosReactivacionRequest.open('POST', 'prcReactivacionEmpleado.php', true);
+    datosReactivacionRequest.open('POST', 'prcActualizaEmpleado.php', true);
     datosReactivacionRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
     var formData =  new URLSearchParams(datosReactivacionEmpleado).toString();
@@ -134,6 +139,8 @@ function ValidarPromocion() {
         fechaPromocion: document.getElementById('dtFechaUltPromocionPr').value,
         iIdConstanteSede: iIdConstanteSedePromocion,
         iClaveSede: iClaveSedePromocion,
+        NoOperacion: 0,
+        iIdPersona: window.iIdPersonaGlobal,
         empleado: window.iIdEmpleadoGlobal,
         proceso: 5, //promoción de empleado
         opcion: 2
@@ -152,7 +159,7 @@ function ValidarPromocion() {
 
         var datosPromocionRequest = new XMLHttpRequest();
 
-        datosPromocionRequest.open('POST', 'prcPromocionEmpleado.php', true);
+        datosPromocionRequest.open('POST', 'prcActualizaEmpleado.php', true);
         datosPromocionRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
         var formData = new URLSearchParams(datosPromocionEmpleado).toString();
@@ -220,6 +227,7 @@ function validarModificacion(){
 
 
 
+
     var datosEmpleado = {
         NSS: document.getElementById('vchNSSModificar').value,
         dFechaIngreso: document.getElementById('dtFechaIngresoModificacion').value,
@@ -227,8 +235,8 @@ function validarModificacion(){
         iClaveSede: iClaveSedeModificacion,
         contratante: document.getElementById('iIdPersonaContratanteModificar').value,
         nombre: document.getElementById('vchNombreEmpleadoModificar').value,
-        apellidoMaterno: document.getElementById('vchPrimerApellidoModificar').value,
-        apellidoPaterno: document.getElementById('vchSegundoApellidoModificar').value,
+        apellidoPaterno: document.getElementById('vchPrimerApellidoModificar').value,
+        apellidoMaterno: document.getElementById('vchSegundoApellidoModificar').value,
         rfc: document.getElementById('vchRFCModificar').value,
         curp: document.getElementById('vchCURPModificar').value,
         dFechaNacimiento: document.getElementById('dtFechaNacimientoModificacion').value,
@@ -238,9 +246,58 @@ function validarModificacion(){
         iClaveNacionalidad: iClaveNacionalidadModificacion,
         regimenFiscal: document.getElementById('regimenFiscalModificar').value,
         usoFiscal: document.getElementById('usoFiscalModificar').value,
+        codigoFiscal: document.getElementById('iIdCodigoPostalModificar').value,
+        iIdPersona: window.iIdPersonaGlobal,
         empleado: window.iIdEmpleadoGlobal,
         proceso: 2,
         opcion: 2
     }
+
+    try {
+
+        var datosEmpleadoRequest = new XMLHttpRequest();
+
+        datosEmpleadoRequest.open('POST', 'prcActualizaEmpleado.php', true);
+        datosEmpleadoRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        var formData = new URLSearchParams(datosEmpleado).toString();
+
+        datosEmpleadoRequest.send(formData);
+
+        datosEmpleadoRequest.onload = function () {
+            if (datosEmpleadoRequest.status == 200) {
+                try {
+                    console.log(datosEmpleadoRequest.responseText);
+
+                    var respuesta = JSON.parse(datosEmpleadoRequest.responseText);
+                    if (respuesta.bResultado === 1) {
+                        console.log(respuesta);
+                        alert(respuesta.vchMensaje);
+
+                        localStorage.setItem('iNoOperacion', JSON.stringify(respuesta.iNoOperacion)); //Se almacena el número de operación para futuros cambios
+                        localStorage.setItem(('empleadoSeleccionado'), JSON.stringify(respuesta.iIdEmpleado)); //Se actualizan los datos del localStorage con la nueva modificación de datos
+
+
+                        window.location.href = "DatosEmpleado.php";
+
+                    } else {
+                        console.error("Mensaje de error: " + respuesta.vchMensaje);
+                        alert(respuesta.vchMensaje);
+                    }
+                } catch (error) {
+                    console.error("Error parsing JSON response", error);
+                    alert("Error, procesando la información del servidor, favor de reintentar");
+                }
+            } else {
+                console.error("Error en la solicitud al servidor: " + datosEmpleadoRequest.status);
+                alert("Falló la respuesta del servidor con status: " + datosEmpleadoRequest.status);
+            }
+        };
+    }catch (error){
+        console.error("Ocurrió un error en la petición");
+        return;
+    }
+
+
 }
 

@@ -27,9 +27,10 @@
             }
             return $documentosEncontrados;
         } else {
-            echo ("No hay datos del Estado de Procedencia");
+            echo ("No hay datos del tipo de documento");
         }
     }
+
 
     function ObtenerPuesto(){
         $datosPuesto = array (
@@ -83,7 +84,7 @@
             'iOpcion' => 2
         );
 
-        $procedureName = "EXEC prcConsultaEmpleado      @iIdEmpleado = ?,
+        $procedureName = "EXEC prcConsultaEmpleado          @iIdEmpleado = ?,
                                                             @iIdUsuarioUltModificacion = ?,
                                                             @iOpcion = ? 
                                                             ";
@@ -213,5 +214,43 @@
 
         return array_values($RegimenEncontrado);
     }
+
+    function ObtenerEstadoProcedencia()
+    {
+        $agrupadorEstado = 4;
+        if (isset ($_SESSION['CatConstante'])) {
+            $datosEdoProcedencia = $_SESSION['CatConstante'];
+            $estadoEncontrado = array();
+
+
+            foreach ($datosEdoProcedencia as $valorEstado) {
+                if ($valorEstado['iAgrupador'] == $agrupadorEstado) {
+                    $estadoEncontrado [] = $valorEstado;
+                }
+            }
+            return $estadoEncontrado;
+        } else {
+            echo("No hay datos del Estado de Procedencia");
+        }
+    }
+
+
+function ObtenerTipoContacto()
+{
+    if (isset($_SESSION['CatConstante'])) {
+        $datosContacto = $_SESSION['CatConstante'];
+        $contactoEncontrado = array();
+
+        foreach ($datosContacto as $valorContacto) {
+            if ($valorContacto['iAgrupador'] == 8) {
+                $contactoEncontrado[] = $valorContacto;
+            }
+        }
+        return $contactoEncontrado;
+    } else {
+        echo("No hay datos del Tipo de contacto");
+    }
+}
+
 
 ?>

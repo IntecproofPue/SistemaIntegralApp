@@ -22,15 +22,15 @@ session_start();
     <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
 
     <!-- External Css -->
-    <link rel="stylesheet" href="../assets/css/fontawesome-all.min.css">
-    <link rel="stylesheet" href="../assets/css/themify-icons.css" />
-    <link rel="stylesheet" href="../assets/css/et-line.css" />
-    <link rel="stylesheet" href="../assets/css/bootstrap-select.min.css" />
-    <link rel="stylesheet" href="../assets/css/plyr.css" />
-    <link rel="stylesheet" href="../assets/css/flag.css" />
-    <link rel="stylesheet" href="../assets/css/slick.css" />
-    <link rel="stylesheet" href="../assets/css/owl.carousel.min.css" />
-    <link rel="stylesheet" href="../assets/css/jquery.nstSlider.min.css" />
+    <link rel="stylesheet" href="../../assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../../assets/css/themify-icons.css" />
+    <link rel="stylesheet" href="../../assets/css/et-line.css" />
+    <link rel="stylesheet" href="../../assets/css/bootstrap-select.min.css" />
+    <link rel="stylesheet" href="../../assets/css/plyr.css" />
+    <link rel="stylesheet" href="../../assets/css/flag.css" />
+    <link rel="stylesheet" href="../../assets/css/slick.css" />
+    <link rel="stylesheet" href="../../assets/css/owl.carousel.min.css" />
+    <link rel="stylesheet" href="../../assets/css/jquery.nstSlider.min.css" />
 
     <!-- Custom Css -->
     <link rel="stylesheet" type="text/css" href="../../css/main.css">
@@ -226,7 +226,7 @@ session_start();
                     <div class="skill" style="display: flex; justify-content: center;">
                         <label style="align-self: flex-end;"><a href="../consulEmpleado/DatosEmpleado.php">EMPLEADO</a></label>
                         <label style="align-self: flex-end;" class="selected"><a
-                                href="../altaPuesto/consultaPuestoindividual.php ">PUESTO</a></label>
+                                href="../altaPuesto/consultaPuestoIndividual.php.php ">PUESTO</a></label>
                         <label style="align-self: flex-end;"><a href="../consulEmpleado/consultaDomicilio.php">DOMICILIO</a></label>
                         <label style="align-self: flex-end;"><a href="../consulEmpleado/consultaContacto.php">CONTACTO</a></label>
                         <label style="align-self: flex-end;"><a href="../consulEmpleado/consultaDoctos.php">DOCUMENTOS</a></label>

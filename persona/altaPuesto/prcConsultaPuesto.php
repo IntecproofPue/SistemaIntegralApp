@@ -4,21 +4,42 @@ require_once ('../../includes/load.php');
 session_start();
 
 
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $iIdPuesto = isset($_POST['idPuesto']) ? $_POST['idPuesto'] : 0;
-    $nombrePuesto = isset($_POST['nombrePuesto']) ? $_POST['nombrePuesto'] : '';
-    $iIdConstanteContratacion = isset($_POST['iIdConstanteContratacion']) ? $_POST['iIdConstanteContratacion'] : 0;
-    $opcion = isset($_POST['opcion']) ? $_POST['opcion'] : 2;
+    $opcion = isset($_POST['opcion']) ? $_POST['opcion'] : 1;
 }
 
+$opcionesConsulta = [
+   1 => [
+       'idPuesto',
+       'vchPuesto',
+       'iIdTipoContratacion'
+   ]
+];
 
-$datosConsulta = array(
-    'iIdPuesto' => $_POST['idPuesto'],
-    'vchPuesto' => $_POST['nombrePuesto'],
-    'iIdTipoContratacion' => $_POST['iIdConstanteContratacion'],
-    'iIdUsuarioUltModificacion' => $_SESSION['user_id'],
-    'iOpcion' => $_POST['opcion']
-);
+
+
+$defaultValues = [
+    'idPuesto' => 0,
+    'vchPuesto' => '',
+    'iIdTipoContratacion' => 0
+];
+
+$datosConsulta = $defaultValues;
+
+
+if (array_key_exists($opcion, $opcionesConsulta)){
+    foreach ($opcionesConsulta[$opcion] as $campo){
+        if (isset($_POST[$campo])){
+            $datosConsulta[$campo] = $_POST[$campo];
+        }
+    }
+}else {
+    echo json_encode(['error' => true, 'message' => 'Proceso no reconocido']);
+}
+
+$datosConsulta['iOpcion'] = $opcion;
+$datosConsulta['iIdUsuarioUltModificacion'] = $_SESSION['user_id'];
 
 
 
@@ -28,13 +49,14 @@ $procedureName = "EXEC prcConsultaPuesto     @iIdPuesto = ?,
                                              @iIdUsuarioUltModificacion = ?, 
                                              @iOpcion = ?
                                                    ";
-$params = array(
-    $datosConsulta['iIdPuesto'],
+$params = [
+    $datosConsulta['idPuesto'],
     $datosConsulta['vchPuesto'],
     $datosConsulta['iIdTipoContratacion'],
     $datosConsulta['iIdUsuarioUltModificacion'],
     $datosConsulta['iOpcion']
-);
+];
+
 
 
 $result = sqlsrv_query($GLOBALS['conn'], $procedureName, $params);
@@ -61,7 +83,6 @@ if ($result === false) {
     echo json_encode($DatosConsultaPuesto);
 }
 
-var_dump($DatosConsultaPuesto);
 
 sqlsrv_free_stmt($result);
 

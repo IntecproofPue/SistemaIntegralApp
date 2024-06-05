@@ -3,6 +3,7 @@
 session_start();
 require_once ('../../includes/pandora.php');
 require_once ('../../includes/load.php');
+require_once ('../altaPersona/FuncionesAltaEmpleado.php');
 
 
 if (isset($_SESSION['user_id'])) { ?>
@@ -17,29 +18,7 @@ if (isset($_SESSION['user_id'])) { ?>
 
 }
 
-
-function ObtenerEstadoProcedencia()
-{
-  $agrupadorEstado = 4;
-  if (isset($_SESSION['CatConstante'])) {
-    $datosEdoProcedencia = $_SESSION['CatConstante'];
-    $estadoEncontrado = array();
-
-
-    foreach ($datosEdoProcedencia as $valorEstado) {
-      if ($valorEstado['iAgrupador'] == $agrupadorEstado) {
-        $estadoEncontrado[] = $valorEstado;
-      }
-    }
-    return $estadoEncontrado;
-  } else {
-    echo ("No hay datos del Estado de Procedencia");
-  }
-}
-
 $resultadoEstado = ObtenerEstadoProcedencia();
-
-
 
 ?>
 
@@ -264,7 +243,7 @@ $resultadoEstado = ObtenerEstadoProcedencia();
           <div class="skill-and-profile">
             <div class="skill" style="display: flex; justify-content: center;">
               <label style="align-self: flex-end;"><a href="DatosEmpleado.php">EMPLEADO</a></label>
-              <label style="align-self: flex-end;"><a href="../altaPuesto/consultaPuestoindividual.php ">PUESTO</a></label>
+              <label style="align-self: flex-end;"><a href="../altaPuesto/consultaPuestoIndividual.php">PUESTO</a></label>
               <label style="align-self: flex-end;" class="selected"><a
                   href="consultaDomicilio.php">DOMICILIO</a></label>
               <label style="align-self: flex-end;"><a href="consultaContacto.php">CONTACTO</a></label>
@@ -276,108 +255,6 @@ $resultadoEstado = ObtenerEstadoProcedencia();
       </div>
     </div>
   </header>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-
-      console.log("Está en los datos del domicilio");
-
-      var DatosEmpleado = localStorage.getItem('datosConsultaIndividual');
-
-      var bResultadoEmpleado = JSON.parse(DatosEmpleado);
-      var iIdPersonaDomicilio = bResultadoEmpleado.iIdPersona;
-
-      // console.log(iIdPersonaDomicilio);
-
-      var datosDomicilio = new XMLHttpRequest();
-
-      datosDomicilio.open('POST', 'prcConsultaDomicilio.php', true);
-
-      var formData = new URLSearchParams();
-      formData.append('iIdPersonaDomicilio', iIdPersonaDomicilio);
-
-      //console.log(formData);
-
-      // Enviar la solicitud
-      datosDomicilio.send(formData);
-
-      // Manejar la respuesta
-      datosDomicilio.onload = function () {
-        if (datosDomicilio.status === 200) {
-          console.log('Respuesta exitosa');
-          var respuesta = JSON.parse(datosDomicilio.responseText);
-          console.log(respuesta);
-
-          if (respuesta[0].bResultado === 1) {
-            //alert(respuesta[0].vchMensaje);
-            localStorage.setItem('datosConsultaDomicilio', JSON.stringify(respuesta));
-
-            var datosDomicilioConsulta = localStorage.getItem('datosConsultaDomicilio', JSON.stringify(respuesta))
-            //console.log (datosDomicilioConsulta);
-
-            if (datosDomicilioConsulta) {
-              var bResultado = JSON.parse(datosDomicilioConsulta);
-              console.log('Objeto parseado: ', bResultado);
-
-              for (var i = 0; i < bResultado.length; i++) {
-                var vchEntidad = document.getElementById('vchEntidadC');
-                vchEntidad.value = bResultado[i].vchEntidadFederativa || '';
-
-                var vchMunicipioConsulta = document.getElementById('vchMunicipioC');
-                  vchMunicipioConsulta.value = bResultado[i].vchMunicipio || '';
-
-                var vchLocalidadConsulta = document.getElementById('vchLocalidadC');
-                  vchLocalidadConsulta.value = bResultado[i].vchLocalidad || '';
-
-                var iIdCodigoPostalConsulta = document.getElementById('iIdCodigoPostalC');
-                  iIdCodigoPostalConsulta.value = bResultado[i].iCodigoPostal || '';
-
-                var vchColoniaConsulta = document.getElementById('vchColoniaC');
-                  vchColoniaConsulta.value = bResultado[i].vchColonia || '';
-
-                var vchCalleConsulta = document.getElementById('vchCalleC');
-                  vchCalleConsulta.value = bResultado[i].vchCalle || '';
-
-                var vchLetraConsulta = document.getElementById('vchLetraC');
-                  vchLetraConsulta.value = bResultado[i].vchLetra || '';
-
-                var vchNoExtConsulta = document.getElementById('vchNoExtC');
-                  vchNoExtConsulta.value = bResultado[i].vchNumeroExterior || '';
-
-                var vchNoIntConsulta = document.getElementById('vchNoIntC');
-                  vchNoIntConsulta.value = bResultado[i].vchNumeroInterior || '';
-
-                var iIdUsuarioUltModificacionConsulta = document.getElementById('vchUsuarioUltModificacionC');
-                  iIdUsuarioUltModificacionConsulta.value = bResultado[i].vchUsuarioUltModif || '';
-
-
-                var dFechaUltModifOriginal = bResultado[i].dtFechaUltModificacion.date;
-                var fechaModif = new Date(dFechaUltModifOriginal);
-                var fechaModifFinal = fechaModif.toLocaleString('es-ES', {
-                  day: '2-digit',
-                  month: '2-digit',
-                  year: 'numeric',
-                  hour: '2-digit',
-                  minute: '2-digit',
-                  second: '2-digit',
-                  hour12: false
-                });
-                var dFechaModificacionConsulta = document.getElementById('dtFechaUltModificacionC');
-                  dFechaModificacionConsulta.value = fechaModifFinal || '';
-
-              }
-            }
-
-          } else {
-            console.error("Mensaje Error: " + respuesta.vchMensaje);
-            alert(respuesta.vchMensaje)
-          }
-        } else {
-          console.error("Error en la solicitud al servidor");
-        }
-      };
-    });
-  </script>
 
   <!-- Contenido de la página -->
   <div class="alice-bg section-padding-bottom">
@@ -477,18 +354,6 @@ $resultadoEstado = ObtenerEstadoProcedencia();
                       </div>
                     </div>
                   </div>
-
-                    <script>
-                        document.getElementById('buttonModificar').addEventListener('click', function (){
-                            var datosDomicilio = localStorage.getItem('datosConsultaDomicilio');
-
-                            if (datosDomicilio){
-                                var bResultadoDomicilio = JSON.parse(datosDomicilio);
-                                MostrarDatosDomicilio(bResultadoDomicilio);
-                            }
-                        })
-                    </script>
-
                 </div>
               </div>
             </form>
@@ -512,10 +377,10 @@ $resultadoEstado = ObtenerEstadoProcedencia();
           </div>
           <div class="modal-body">
             <form action="#">
-                <input type="hidden" name = "iIdConstanteSede" id="iIdConstanteSede" value="" >
-                <input type="hidden" name = "iClaveSede" id="iClaveSede" value="" >
-                <input type="hidden" name="iIdPersonaDomicilio" id="iIdPersonaDomicilio" value="" >
-                <input type="hidden" name="iIdDomicilio" id="iIdDomicilio" value="" >
+                <input type="hidden" name = "iIdConstanteSedeModificar" id="iIdConstanteSedeModificar" value="" >
+                <input type="hidden" name = "iClaveSedeModificar" id="iClaveSedeModificar" value="" >
+                <input type="hidden" name="iIdPersonaDomicilioModificar" id="iIdPersonaDomicilioModificar" value="" >
+                <input type="hidden" name="iIdDomicilioModificar" id="iIdDomicilioModificar" value="" >
 
               <div class="form-group">
                   <option value="">ENTIDAD FEDERATIVA</option>
@@ -567,74 +432,7 @@ $resultadoEstado = ObtenerEstadoProcedencia();
               <input type="text" class="form-control" placeholder="LETRA" id="vchLetraModif"
                     style="text-transform: uppercase" >
               </div>
-                <script>
-                    function validarDatosDomicilio(){
-                        var EntidadFederativaSeleccionada = document.getElementById('iIdEntidadFederativaModif');
-                        var EntidadFederativaPartes = EntidadFederativaSeleccionada.value.split('-');
-                        var iIdEntidadFederativa = EntidadFederativaPartes[0];
-                        var iClaveEntidad = EntidadFederativaPartes[1];
-
-                        document.getElementById('iIdConstanteSede').value = iIdEntidadFederativa;
-                        document.getElementById('iClaveSede').value = iClaveEntidad;
-
-                        var datosPersonaDomicilio = localStorage.getItem('datosConsultaIndividual');
-                        var bResultadoPersona = JSON.parse(datosPersonaDomicilio);
-                        var iIdPersonaDomicilio = bResultadoPersona.iIdPersona;
-
-                        var datosDomicilioModificacion = localStorage.getItem('datosConsultaDomicilio');
-                        var bResultadoDomicilioModificacion = JSON.parse(datosDomicilioModificacion);
-                        var iIdDomicilio = bResultadoDomicilioModificacion[0].iIdPersonasDomicilios;
-
-
-                        document.getElementById('iIdPersonaDomicilio').value = iIdPersonaDomicilio;
-                        document.getElementById('iIdDomicilio').value = iIdDomicilio;
-
-
-                        var datosFormulario = {
-                            iIdConstanteEstado: iIdEntidadFederativa,
-                            iClaveEstado: iClaveEntidad,
-                            vchMunicipio: document.getElementById('vchMunicipioModif').value,
-                            vchLocalidad: document.getElementById('vchLocalidadModif').value,
-                            codigoPostal: document.getElementById('iCodigoPostalModif').value,
-                            vchColonia: document.getElementById('vchColoniaModif').value,
-                            vchCalle: document.getElementById('vchCalleModif').value,
-                            vchLetra: document.getElementById('vchLetraModif').value,
-                            vchNoExt: document.getElementById('vchNoExtModif').value,
-                            vchNoInt: document.getElementById('vchNoIntModif').value,
-                            persona: iIdPersonaDomicilio,
-                            domicilio: iIdDomicilio,
-                            opcion: 2
-                        };
-
-                        var datosDomicilioModif = new XMLHttpRequest();
-
-                        datosDomicilioModif.open('POST', '/SisAdmonIntecproof/persona/altaPersona/validarDatosDomicilio.php', true);
-                        datosDomicilioModif.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-                        var formData = new URLSearchParams(datosFormulario).toString();
-
-                        datosDomicilioModif.send(formData);
-
-                        datosDomicilioModif.onload = function (){
-                            if (datosDomicilioModif.status === 200){
-                                var respuesta = JSON.parse(datosDomicilioModif.responseText);
-                                if (respuesta.bResultado === 1){
-                                    alert(respuesta.vchMensaje);
-                                    localStorage.setItem('agregarDomicilio', JSON.stringify(datosFormulario));
-                                }else {
-                                    console.log("Mensaje de error: ", respuesta.vchMensaje);
-                                    alert(respuesta.vchMensaje);
-                                }
-                            }
-                        }
-                    }
-                </script>
-
               <button class="button primary-bg btn-block" id="botonAplicar">APLICAR CAMBIOS</button>
-                <script>
-                    document.getElementById('botonAplicar').addEventListener('click', validarDatosDomicilio);
-                </script>
-
             </form>
           </div>
         </div>
@@ -652,7 +450,7 @@ $resultadoEstado = ObtenerEstadoProcedencia();
               <div class="row">
                 <div class="col-lg-6">
                   <a href="#">
-                    <img src="images/footer-logo.png" class="img-fluid" alt="">
+                    <img src="../../images/footer-logo.png" class="img-fluid" alt="">
                   </a>
                   <p class="copyright-text">DERECHOS DE AUTOR <a href="#">INTECPROOF</a> 2024, RESERVADOS</p>
                 </div>
@@ -694,80 +492,13 @@ $resultadoEstado = ObtenerEstadoProcedencia();
 
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
   <script src="../../js/map.js"></script>
+  <script src = "ProcesoModificacionEmpleado.js" ></script>
 
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      console.log(localStorage.getItem('habilitarBotones'));
-      if (localStorage.getItem('habilitarBotones') === 'true') {
-        const habilitarBotonDomicilio = document.querySelectorAll('.boton-intec');
-        habilitarBotonDomicilio.forEach(boton => {
-          boton.disabled = false;
-          boton.style.display = 'block';
-        });
-      }
-    });
-
-
-    function MostrarDatosDomicilio(bResultadoDomicilio){
-
-        console.log("Esto es bResultadoDomicilio",bResultadoDomicilio)
-
-        //Entidad Federativa
-
-        for (var i= 0; i<bResultadoDomicilio.length; i++){
-
-            var iIdEntidadModificacion = bResultadoDomicilio[i].iIdEntidadFederativa;
-            var selectElementEntidad = document.getElementById('iIdEntidadFederativaModif');
-
-            for (var k = 0; k < selectElementEntidad.options.length; k++) {
-                var optionEntidad = selectElementEntidad.options[k];
-                var optionIdEntidad = parseInt(optionEntidad.value.split('-')[0]);
-
-                if (optionIdEntidad === iIdEntidadModificacion) {
-                    optionEntidad.selected = true;
-                    break;
-                }
-            }
-
-            //Municipio
-
-            var vchMunicipioEditar = document.getElementById('vchMunicipioModif');
-            vchMunicipioEditar.value = bResultadoDomicilio[i].vchMunicipio
-
-
-            //Localidad
-            var vchLocalidadModif = document.getElementById('vchLocalidadModif');
-            vchLocalidadModif.value = bResultadoDomicilio[i].vchLocalidad;
-
-            //Colonia
-            var vchColoniaModif = document.getElementById('vchColoniaModif');
-            vchColoniaModif.value = bResultadoDomicilio[i].vchColonia;
-
-            //Código postal
-            var iCodigoPostalModif = document.getElementById('iCodigoPostalModif');
-            iCodigoPostalModif.value = bResultadoDomicilio[i].iCodigoPostal;
-
-            //Calle
-            var vchCalleModif = document.getElementById('vchCalleModif');
-            vchCalleModif.value = bResultadoDomicilio[i].vchCalle;
-
-            //No. Ext
-            var vchNoExtModif = document.getElementById('vchNoExtModif');
-            vchNoExtModif.value = bResultadoDomicilio[i].vchNumeroExterior;
-
-            //No. Int
-            var vchNoIntModif = document.getElementById('vchNoIntModif');
-            vchNoIntModif.value = bResultadoDomicilio[i].vchNumeroInterior;
-
-            //Letra
-            var vchLetraModif = document.getElementById('vchLetraModif');
-            vchLetraModif.value = bResultadoDomicilio[i].vchLetra;
-
-        }
-
-    }
-  </script>
+  <script> document.addEventListener('DOMContentLoaded', consultarDomicilio); </script>
+  <script>document.getElementById('buttonModificar').addEventListener('click', obtenerDatosDomicilio );</script>
+  <script>  document.addEventListener('DOMContentLoaded', habilitarBotonesDomicilio);</script>
+  <script> document.getElementById('botonAplicar').addEventListener('click', ModificacionDomicilio); </script>
 
 </body>
 

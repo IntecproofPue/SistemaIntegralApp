@@ -3,6 +3,8 @@
     require_once('../../includes/load.php');
     session_start();
 
+    var_dump($_POST);
+
     $iIdConstanteEstado = isset($_POST['iIdConstanteEstado'])? $_POST['iIdConstanteEstado']:'';
     $iClaveEstado = isset($_POST['iClaveEstado'])?$_POST['iClaveEstado']: 0;
     $vchMunicipio = isset($_POST['vchMunicipio'])?$_POST['vchMunicipio']:'';

@@ -282,7 +282,7 @@ if (isset($_SESSION['user_id'])) { ?>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav">
-                <li class="menu-item active"><a title="PERSONA" href="../consulEmpleado/consultaPuesto.php ">PUESTO</a></li>
+                <li class="menu-item active"><a title="PERSONA" href="../altaPuesto/consultaPuestoIndividual.php">PUESTO</a></li>
                 <li class="menu-item active"><a title="DOMICILIO" href="consultaDomicilio.php">DOMICILIO</a>
                 </li>
                 <li class="menu-item active"><a title="CONTACTO" href="consultaContacto.php">CONTACTO</a>

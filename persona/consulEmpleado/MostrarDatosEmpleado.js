@@ -1,6 +1,7 @@
-function ObtenerDatosEmpleado(){
+function ObtenerDatosEmpleado() {
     var consultaIndivual = localStorage.getItem('datosConsultaIndividual');
     var consultaMasiva = localStorage.getItem('empleadoSeleccionado');
+    var iIdEmpleadoGlobal = window.iIdEmpleadoGlobal;
 
     if (consultaIndivual) {
         var bResultado = JSON.parse(consultaIndivual);
@@ -36,6 +37,34 @@ function ObtenerDatosEmpleado(){
                 }
             }
         }
+    } else if (iIdEmpleadoGlobal) {
+        var iIdEmpleadoAct = iIdEmpleadoGlobal;
+
+
+        var datosEmpleadoGlobal = new XMLHttpRequest();
+        datosEmpleadoGlobal.open('POST', 'prcConsultaIndividual.php', true);
+
+        var formDataEmpleado = new URLSearchParams();
+        formDataEmpleado.append('idEmpleado', iIdEmpleadoAct);
+
+        datosEmpleadoGlobal.send(formDataEmpleado);
+
+        datosEmpleadoGlobal.onload = function () {
+            if (datosEmpleadoGlobal.status === 200) {
+                var respuesta = JSON.parse(datosEmpleadoGlobal.responseText);
+
+                if (respuesta.bResultado === 1) {
+                    localStorage.clear();
+
+                    localStorage.setItem('datosConsultaIndividual', JSON.stringify(respuesta));
+
+                    var datosEmpleadoGlobalFinal = localStorage.getItem('datosConsultaIndividual', JSON.stringify(respuesta));
+
+                    var bResultado = JSON.parse(datosEmpleadoGlobalFinal);
+                    MostrarDatos(bResultado);
+                }
+            }
+        }
     }
     return bResultado;
 }
@@ -48,7 +77,7 @@ function ModalModificarDatos() {
     }
 }
 
-function  ModalReactivacion() {
+function ModalReactivacion() {
     var datosReactivacion = localStorage.getItem('datosConsultaIndividual');
     if (datosReactivacion) {
         var bResultadoReactivacion = JSON.parse(datosReactivacion);
@@ -56,7 +85,7 @@ function  ModalReactivacion() {
     }
 }
 
-function ModalPromocion () {
+function ModalPromocion() {
     var datosPromocion = localStorage.getItem('datosConsultaIndividual');
     if (datosPromocion) {
         var bResultadoPromocion = JSON.parse(datosPromocion);
@@ -105,7 +134,7 @@ function MostrarDatosReactivacion(bResultado) {
 
     for (var i = 0; i < selectElementSede.options.length; i++) {
         var optionContratado = selectElementSede.options[i];
-        if (optionContratado.value == iIdContratanteModificacion.toString()) {
+        if (optionContratado.value === iIdContratanteModificacion.toString()) {
             optionContratado.selected = true;
             break;
         }
@@ -201,7 +230,7 @@ function MostrarDatos(bResultado) {
         year: 'numeric'
     });
     var dFechBaja = document.getElementById('dtFechaBaja');
-    dFechBaja.value = fechaBajaFinal === '01/01/1900' ? '' : fechaBajaFinal;
+    dFechBaja.value = fechaBajaFinal === '01/01/1900' ? 'N/A' : fechaBajaFinal;
 
     var vchUsuario = document.getElementById('vchUsuarioUltModificacion');
     vchUsuario.value = bResultado.vchUsuarioUltModificacion || '';
@@ -263,7 +292,7 @@ function MostrarDatos(bResultado) {
 }
 
 function deshabilitarBotones() {
-    document.querySelector('.boton-intec').forEach(boton => {
+    document.querySelectorAll('.boton-intec').forEach(boton => {
         if (!boton.hasAttribute('data-listener-added')) {
             boton.setAttribute('data-listener-added', true);
 
@@ -285,7 +314,7 @@ function deshabilitarBotones() {
                 }
 
                 // Crear y mostrar el botón "GUARDAR" si no existe y si se cumple la condición específica
-                if (localStorage.getItem('buttonAplicar') === 'true' &&!document.querySelector('.button primary-bg btn-block')) {
+                if (localStorage.getItem('buttonAplicar') === 'true' && !document.querySelector('.button primary-bg btn-block')) {
                     let buttonGuardarDiv = document.querySelector('.candidate');
                     if (!buttonGuardarDiv) {
                         buttonGuardarDiv = document.createElement('div');
@@ -318,11 +347,12 @@ function habilitarBotones() {
 }
 
 
-function variableGlobalEmpleado () {
+function variableGlobalEmpleado() {
     var datosEmpleadoModificacion = localStorage.getItem('datosConsultaIndividual');
     var bResultadoEmpleado = JSON.parse(datosEmpleadoModificacion);
 
     window.iIdEmpleadoGlobal = bResultadoEmpleado.iIdEmpleado;
+    window.iIdPersonaGlobal = bResultadoEmpleado.iIdPersona;
 
 }
 

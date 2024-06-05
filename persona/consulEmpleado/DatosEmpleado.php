@@ -59,8 +59,8 @@ $resultadoRegimen = ObtenerIdRegimen();
     <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="../../images/icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="../../images/icon-114x114.png">
-    <script src = "MostrarDatosEmpleado.js" ></script>
-    <script src = "ProcesoModificacionEmpleado.js"> </script>
+    <script src="MostrarDatosEmpleado.js"></script>
+    <script src="ProcesoModificacionEmpleado.js"></script>
 
     <style>
         .selected {
@@ -89,6 +89,7 @@ $resultadoRegimen = ObtenerIdRegimen();
             border-radius: 5px;
             cursor: pointer;
         }
+
         .boton-intec-1 {
             /* border: none;
             color: black;
@@ -245,20 +246,19 @@ $resultadoRegimen = ObtenerIdRegimen();
                 <!-- pestañas de navegación-->
                 <div class="skill-and-profile">
                     <div class="skill" style="display: flex; justify-content: center;">
-                        <label style="align-self: flex-end;" class="selected"><a href="DatosEmpleado.php">EMPLEADO</a></label>
-                        <label style="align-self: flex-end;"><a href="../altaPuesto/consultaPuestoIndividual.php">PUESTO</a></label>
+                        <label style="align-self: flex-end;" class="selected"><a
+                                    href="DatosEmpleado.php">EMPLEADO</a></label>
+                        <label style="align-self: flex-end;"><a
+                                    href="../altaPuesto/consultaPuestoIndividual.php">PUESTO</a></label>
                         <label style="align-self: flex-end;"><a href="consultaDomicilio.php">DOMICILIO</a></label>
                         <label style="align-self: flex-end;"><a href="consultaContacto.php">CONTACTO</a></label>
                         <label style="align-self: flex-end;"><a href="consultaDoctos.php">DOCUMENTOS</a></label>
                     </div>
-                    <div class="row-left" id="buttonsModificar">
-                                                    <a href="#" class="boton-intec-1" id="buttonPromocion">GUARDAR</a>
-                                                </div>
                 </div>
                 <!-- fin de pestañas de navegación-->
-                
+
             </div>
-            
+
         </div>
     </div>
 </header>
@@ -468,37 +468,42 @@ $resultadoRegimen = ObtenerIdRegimen();
                                     </div>
 
                                     <div class="col-md-4">
-                                            <div class="form-group ">
-                                                <label class="col-form-label">JEFE INMEDIATO</label>
-                                                <input type="text" class="form-control" placeholder="JEFE INMEDIATO"
-                                                       id="#" disabled/>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="candidate">
-                                        <div class="body">
-                                            <div class="row">
-                                                <div class="row-left" id="buttonsModificar">
-                                                    <a href="#" class="boton-intec" data-toggle="modal"
-                                                       data-target="#apply-popup-id-1" id="buttonModificarEmpleado">MODIFICAR</a>
-                                                    <a href="#" class="boton-intec" data-toggle="modal"
-                                                       data-target="#apply-popup-id-2">BAJA EMPLEADO</a>
-                                                    <a href="#" class="boton-intec" data-toggle="modal"
-                                                       data-target="#apply-popup-id-3" id="buttonReactivacion">REACTIVACION</a>
-                                                    <a href="#" class="boton-intec" data-toggle="modal"
-                                                       data-target="#apply-popup-id-4"
-                                                       id="buttonPromocion">PROMOCION</a>
-                                                </div>
-                                            </div>
-                                            <script>
-                                                document.getElementById('buttonModificarEmpleado').addEventListener('click', ModalModificarDatos);
-                                                document.getElementById('buttonReactivacion').addEventListener('click', ModalReactivacion );
-                                                document.getElementById('buttonPromocion').addEventListener('click',ModalPromocion );
-                                            </script>
+                                        <div class="form-group ">
+                                            <label class="col-form-label">JEFE INMEDIATO</label>
+                                            <input type="text" class="form-control" placeholder="JEFE INMEDIATO"
+                                                   id="#" disabled/>
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="candidate">
+                                    <div class="body">
+                                        <div class="row">
+                                            <div class="row-left" id="buttonsModificar">
+                                                <a href="#" class="boton-intec" data-toggle="modal"
+                                                   data-target="#apply-popup-id-1" id="buttonModificarEmpleado">MODIFICAR</a>
+                                                <a href="#" class="boton-intec" data-toggle="modal"
+                                                   data-target="#apply-popup-id-2">BAJA EMPLEADO</a>
+                                                <a href="#" class="boton-intec" data-toggle="modal"
+                                                   data-target="#apply-popup-id-3"
+                                                   id="buttonReactivacion">REACTIVACION</a>
+                                                <a href="#" class="boton-intec" data-toggle="modal"
+                                                   data-target="#apply-popup-id-4"
+                                                   id="buttonPromocion">PROMOCION</a>
+                                                <a href="#" class="boton-intec" data-toggle="modal"
+                                                   data-target="#apply-popup-id-4"
+                                                   id="buttonVolver">VOLVER</a>
+                                            </div>
+                                        </div>
+                                        <script>
+                                            document.getElementById('buttonModificarEmpleado').addEventListener('click', ModalModificarDatos);
+                                            document.getElementById('buttonReactivacion').addEventListener('click', ModalReactivacion);
+                                            document.getElementById('buttonPromocion').addEventListener('click', ModalPromocion);
+                                            document.getElementById('buttonVolver').addEventListener('click', volverConsulta);
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                         <?php
                     }
@@ -509,7 +514,7 @@ $resultadoRegimen = ObtenerIdRegimen();
     </div>
 </div>
 
-<script> document.getElementById('buttonModificarEmpleado').addEventListener('click',  habilitarBotones); </script>
+<script> document.getElementById('buttonModificarEmpleado').addEventListener('click', habilitarBotones); </script>
 <script> document.addEventListener('DOMContentLoaded', variableGlobalEmpleado);</script>
 
 <!-- inicio de modales -->
@@ -527,6 +532,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                 </div>
                 <div class="modal-body">
                     <form action="#">
+                        <input type="hidden" name="iIdPersonaModificacion" id="iIdPersonaModificacion" value="">
                         <div class="form-group">
                             <option value="">NSS</option>
                             <input type="tel" class="form-control" name="vchNSS" id="vchNSSModificar" maxlength="10"
@@ -555,7 +561,8 @@ $resultadoRegimen = ObtenerIdRegimen();
                         </div>
                         <div class="form-group">
                             <option value="">SEDE</option>
-                            <input type="hidden" name="iIdConstanteSedeModificacion" id="iIdConstanteSedeModificacion" value="">
+                            <input type="hidden" name="iIdConstanteSedeModificacion" id="iIdConstanteSedeModificacion"
+                                   value="">
                             <input type="hidden" name="iClaveSedeModificacion" id="iClaveSedeModificacion" value="">
                             <select class="form-control" Name="iIdSede" id="iIdSedeModificar">
                                 <?php foreach ($resultadoSede as $sede): ?>
@@ -576,6 +583,22 @@ $resultadoRegimen = ObtenerIdRegimen();
                                     </option>
                                 <?php endforeach; ?>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <option value="">JEFE INMEDIATO</option>
+
+                            <select class="form-control" Name="iIdPersonaContratante"
+                                    id="iIdPersonaContratante">
+                                <option value="" selected>SELECCIONA LA PERSONA</option>
+                                <?php foreach ($resultadoContratantes as $contratante): ?>
+                                    <option value="<?= $contratante['iIdPersona'] ?>">
+                                        [<?= $contratante['iIdPersona'] ?>]
+                                        -
+                                        <?= $contratante['vchPrimerApellido'] . ' ' . $contratante['vchSegundoApellido'] . ' ' . $contratante['vchNombre'] ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+
                         </div>
                         <div class="form-group">
                             <div class="col-sm-9">
@@ -623,7 +646,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                             $fechaActual = date('Y-m-d', strtotime('-18 years'));
 
                             // Restar 18 años a la fecha actual
-                           // $fechaMinima = date('Y-m-d', strtotime('- 18 years', strtotime($fechaActual)));
+                            // $fechaMinima = date('Y-m-d', strtotime('- 18 years', strtotime($fechaActual)));
 
                             // Establecer la fecha mínima como 1900-01-01 (opcional)
                             $fechaLimiteInferior = '1980-01-01';
@@ -641,8 +664,10 @@ $resultadoRegimen = ObtenerIdRegimen();
                         <div class="form-group">
                             <div class="col-sm-9">
                                 <option value="">GÉNERO</option>
-                                <input type="hidden" name="iIdConstanteGeneroModificacion" id="iIdConstanteGeneroModificacion" value="">
-                                <input type="hidden" name="iClaveGeneroModificacion" id="iClaveGeneroModificacion" value="">
+                                <input type="hidden" name="iIdConstanteGeneroModificacion"
+                                       id="iIdConstanteGeneroModificacion" value="">
+                                <input type="hidden" name="iClaveGeneroModificacion" id="iClaveGeneroModificacion"
+                                       value="">
                                 <select class="form-control" name="genero" id="iIdGeneroModificar">
                                     <?php foreach ($resultadoGenero as $genero): ?>
                                         <option value="<?= $genero['iIdConstante'] . '-' . $genero['iClaveCatalogo'] ?>">
@@ -655,8 +680,10 @@ $resultadoRegimen = ObtenerIdRegimen();
                         <div class="form-group">
                             <div class="col-sm-9">
                                 <option value="">NACIONALIDAD</option>
-                                <input type="hidden" name="iIdConstanteNacionalidadModificacion" id="iIdConstanteNacionalidadModificacion" value="">
-                                <input type="hidden" name="iClaveNacionalidadModificacion" id="iClaveNacionalidadModificacion" value="">
+                                <input type="hidden" name="iIdConstanteNacionalidadModificacion"
+                                       id="iIdConstanteNacionalidadModificacion" value="">
+                                <input type="hidden" name="iClaveNacionalidadModificacion"
+                                       id="iClaveNacionalidadModificacion" value="">
                                 <select class="form-control" name="nacionalidad" id="iIdNacionalidadModificar">
                                     <?php foreach ($resultadoNacionalidad as $nacionalidad): ?>
                                         <option value="<?= $nacionalidad['iIdConstante'] . '-' . $nacionalidad['iClaveCatalogo'] ?>">
@@ -672,6 +699,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                                 <option value="">RÉGIMEN FISCAL</option>
                                 <select class="form-control" name="regimenFiscal" id="regimenFiscalModificar"
                                         onchange="cargarUsoFiscal()">
+                                    <option value="">SELECCIONE UN RÉGIMEN</option>
                                     <?php foreach ($resultadoRegimen as $regimen): ?>
                                         <option value="<?= $regimen['iRegimen'] ?>">
                                             [<?= $regimen['iRegimen'] ?>] - <?= $regimen['vchDescripcionRegimen'] ?>
@@ -713,29 +741,13 @@ $resultadoRegimen = ObtenerIdRegimen();
                         </div>
                         <div class="form-group">
                             <div class="col-sm-9">
+                                <option value="">CÓDIGO POSTAL FISCAL</option>
                                 <input type="text" class="form-control" placeholder="C.P. FISCAL"
                                        id="iIdCodigoPostalModificar" name="iCodigoPostalFiscal"
                                        style="text-transform: uppercase">
                             </div>
                         </div>
 
-                        <div class="form-group">
-                        <div class="col-sm-9">
-                                    <label class="col-sm-9">JEFE INMEDIATO</label>
-                                    
-                                        <select class="form-control" Name="iIdPersonaContratante"
-                                                id="iIdPersonaContratante" required>
-                                            <option value="" selected>SELECCIONA LA PERSONA</option>
-                                            <?php foreach ($resultadoContratantes as $contratante): ?>
-                                                <option value="<?= $contratante['iIdPersona'] ?>">
-                                                    [<?= $contratante['iIdPersona'] ?>]
-                                                    -
-                                                    <?= $contratante['vchPrimerApellido'] . ' ' . $contratante['vchSegundoApellido'] . ' ' . $contratante['vchNombre'] ?>
-                                                </option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
-                                </div>
 
                         <div class="update-photo" style="position: relative;">
                             <label><img class="image" src="../../user-1.jpg" alt="">
@@ -744,9 +756,7 @@ $resultadoRegimen = ObtenerIdRegimen();
                                        style="display: none;" onchange="updateImage(this)">
                             </label>
                         </div>
-                        <button class="button primary-bg btn-block" id="botonAplicarCambios" name="buttonsAplicar">APLICAR
-                            CAMBIOS
-                        </button>
+                        <button class="button primary-bg btn-block" id="botonAplicarCambiosModificacion" name="buttonsAplicar"> APLICAR CAMBIOS</button>
                     </form>
                 </div>
             </div>
@@ -881,6 +891,22 @@ $resultadoRegimen = ObtenerIdRegimen();
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <option value="">JEFE INMEDIATO</option>
+
+                            <select class="form-control" Name="iIdPersonaContratante"
+                                    id="iIdPersonaContratante" required>
+                                <option value="" selected>SELECCIONA LA PERSONA</option>
+                                <?php foreach ($resultadoContratantes as $contratante): ?>
+                                    <option value="<?= $contratante['iIdPersona'] ?>">
+                                        [<?= $contratante['iIdPersona'] ?>]
+                                        -
+                                        <?= $contratante['vchPrimerApellido'] . ' ' . $contratante['vchSegundoApellido'] . ' ' . $contratante['vchNombre'] ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+
+                        </div>
                         <button class="button primary-bg btn-block" id="buttonAplicarReactivacion">APLICAR CAMBIOS
                         </button>
                     </form>
@@ -957,6 +983,22 @@ $resultadoRegimen = ObtenerIdRegimen();
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <option value="">JEFE INMEDIATO</option>
+
+                            <select class="form-control" Name="iIdPersonaContratante"
+                                    id="iIdPersonaContratante" required>
+                                <option value="" selected>SELECCIONA LA PERSONA</option>
+                                <?php foreach ($resultadoContratantes as $contratante): ?>
+                                    <option value="<?= $contratante['iIdPersona'] ?>">
+                                        [<?= $contratante['iIdPersona'] ?>]
+                                        -
+                                        <?= $contratante['vchPrimerApellido'] . ' ' . $contratante['vchSegundoApellido'] . ' ' . $contratante['vchNombre'] ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+
+                        </div>
                         <button class="button primary-bg btn-block" id="buttonAplicarPromocion">APLICAR CAMBIOS</button>
                     </form>
                 </div>
@@ -1021,13 +1063,13 @@ $resultadoRegimen = ObtenerIdRegimen();
 <script src="../../js/map.js"></script>
 <script src="MostrarDatosEmpleado.js"></script>
 <script src="FuncionesEmpleado.js"></script>
-<script src = "ProcesoModificacionEmpleado.js" ></script>
+<script src="ProcesoModificacionEmpleado.js"></script>
 
+<script> document.getElementById('botonAplicarCambiosModificacion').addEventListener('click', validarModificacion); </script>
 <script> document.getElementById('botonAplicarBaja').addEventListener('click', ValidarBaja); </script>
 <script> document.getElementById('buttonAplicarReactivacion').addEventListener('click', ValidarReactivacion); </script>
 <script> document.getElementById('buttonAplicarPromocion').addEventListener('click', ValidarPromocion); </script>
 <script> deshabilitarBotones(); </script>
-<script> document.getElementById('botonAplicarCambios').addEventListener('click',  habilitarBtnGuardar); </script>
 
 </body>
 

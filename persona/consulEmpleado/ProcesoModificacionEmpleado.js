@@ -1,4 +1,7 @@
 function MostrarDatosModificacion(bResultado) {
+    var iIdPersonaEmpleado = document.getElementById('iIdPersonaModificacion');
+    iIdPersonaEmpleado.value = bResultado.iIdPersona;
+
     var vchNSSEmpleado = document.getElementById('vchNSSModificar');
     vchNSSEmpleado.value = bResultado.vchNSS;
 
@@ -142,5 +145,13 @@ function cargarUsoFiscal() {
         }
     }
 }
+
+function volverConsulta() {
+    localStorage.clear();
+    window.location.href = 'consultaEmpleado.php';
+
+}
+
+
 
 

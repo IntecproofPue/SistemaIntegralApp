@@ -1,6 +1,7 @@
 <?php
         require_once('../../includes/pandora.php');
         require_once('../../includes/load.php');
+        require_once('FuncionesAltaEmpleado.php');
 
         session_start();
 
@@ -14,26 +15,6 @@
         </script>
         <?php
 
-    }
-
-
-    function ObtenerEstadoProcedencia()
-    {
-        $agrupadorEstado = 4;
-        if (isset ($_SESSION['CatConstante'])) {
-            $datosEdoProcedencia = $_SESSION['CatConstante'];
-            $estadoEncontrado = array();
-
-
-            foreach ($datosEdoProcedencia as $valorEstado) {
-                if ($valorEstado['iAgrupador'] == $agrupadorEstado) {
-                    $estadoEncontrado [] = $valorEstado;
-                }
-            }
-            return $estadoEncontrado;
-        } else {
-            echo("No hay datos del Estado de Procedencia");
-        }
     }
 
     $resultadoEstado = ObtenerEstadoProcedencia();
@@ -86,66 +67,6 @@
     <![endif]-->
 
 
-    <script>
-        function soloLetras(e) {
-            tecla = (document.all) ? e.keyCode : e.which;
-
-
-            if (tecla == 8) {
-                return true;
-            }
-
-
-            patronAceptado = /[A-Z]/;
-            tecla_final = String.fromCharCode(tecla);
-            return patronAceptado.test(tecla_final);
-        }
-
-        function soloNumeros(e) {
-            tecla = (document.all) ? e.keyCode : e.which;
-
-
-            if (tecla == 8) {
-                return true;
-            }
-
-
-            patronAceptado = /[0-9]/;
-            tecla_final = String.fromCharCode(tecla);
-            return patronAceptado.test(tecla_final);
-        }
-
-        function soloRfc(e) {
-
-            tecla = (document.all) ? e.keyCode : e.which;
-
-            if (tecla == 8) {
-                return true;
-            }
-
-            patronAceptado = /[A-Za-z0-9]/;
-            tecla_final = String.fromCharCode(tecla);
-            return patronAceptado.test(tecla_final);
-        }
-
-
-        function soloNombre(e) {
-
-            tecla = (document.all) ? e.keyCode : e.which;
-
-
-            if (tecla == 8) {
-                return true;
-            }
-            patronAceptado = /[a-zA-Z áéíóúñÁÉÍÓÚÑ]+/;
-            tecla_final = String.fromCharCode(tecla);
-            return patronAceptado.test(tecla_final);
-        }
-
-
-    </script>
-    <!--<input class="tf w-input" id="txtCurp" name="txtCurp" maxlength="150" onkeypress="return quitarEspeciales(event)" placeholder="No. de CURP" type="text">-->
-
 </head>
 
 <body>
@@ -156,7 +77,7 @@
                 <div class="col">
                     <div class="header-top">
                         <div class="logo-area">
-                            <a href="../../index.php"><img src="../../images/logo-2.png" alt=""></a>
+                            <a href="../../index.html"><img src="../../images/logo-2.png" alt=""></a>
                         </div>
                         <div class="header-top-toggler">
                             <div class="header-top-toggler-button"></div>
@@ -361,69 +282,7 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label"></label>
                                         <div class="col-sm-9">
-                                            <script>
-                                                function ValidarDatosDomicilio() {
-                                                    // Obtener los valores de los elementos del formulario
-                                                    var EstadoSeleccionado = document.getElementById('estadoLista');
-                                                    var EstadoPartes = EstadoSeleccionado.value.split('-');
-                                                    var iIdConstanteEstado = EstadoPartes[0];
-                                                    var iClaveEstado = EstadoPartes[1];
-
-                                                    // Asignar los valores a los campos ocultos
-                                                    document.getElementById('iIdConstanteEstado').value = iIdConstanteEstado;
-                                                    document.getElementById('iClaveEstado').value = iClaveEstado;
-
-                                                    // Crear un objeto con los datos del formulario
-                                                    var datosFormulario = {
-                                                        estadoLista: EstadoSeleccionado.value,
-                                                        vchMunicipio: document.getElementById('vchMunicipio').value,
-                                                        vchLocalidad: document.getElementById('vchLocalidad').value,
-                                                        codigoPostal: document.getElementById('codigoPostal').value,
-                                                        vchColonia: document.getElementById('vchColonia').value,
-                                                        vchCalle: document.getElementById('vchCalle').value,
-                                                        vchLetra: document.getElementById('vchLetra').value,
-                                                        vchNoExt: document.getElementById('vchNoExt').value,
-                                                        vchNoInt: document.getElementById('vchNoInt').value,
-                                                        iIdConstanteEstado: iIdConstanteEstado,
-                                                        iClaveEstado: iClaveEstado
-                                                    };
-
-                                                    // Crear una instancia de XMLHttpRequest
-                                                    var datosDomicilio = new XMLHttpRequest();
-
-                                                    // Configurar la solicitud
-                                                    datosDomicilio.open('POST', 'validarDatosDomicilio.php', true);
-                                                    datosDomicilio.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-                                                    // Convertir el objeto de datos a una cadena de consulta URL
-                                                    var formData = new URLSearchParams(datosFormulario).toString();
-
-                                                    // Enviar la solicitud
-                                                    datosDomicilio.send(formData);
-
-                                                    // Manejar la respuesta
-                                                    datosDomicilio.onload = function() {
-                                                        if (datosDomicilio.status === 200) {
-                                                            var respuesta = JSON.parse(datosDomicilio.responseText);
-                                                            if (respuesta.bResultado === 1) {
-                                                                console.log(respuesta);
-                                                                localStorage.setItem('datosDomicilio',JSON.stringify(datosFormulario));
-                                                                window.location.href = "altaContacto.php";
-                                                            } else {
-                                                                console.error("Mensaje Error: " + respuesta.vchMensaje);
-                                                                alert(respuesta.vchMensaje)
-                                                            }
-                                                        } else {
-                                                            console.error("Error en la solicitud al servidor");
-                                                        }
-                                                    };
-                                                }
-
-                                            </script>
                                             <button type="button" class="button" id = "botonSiguiente" >SIGUIENTE</button>
-                                            <script>
-                                                document.getElementById('botonSiguiente').addEventListener('click', ValidarDatosDomicilio);
-                                            </script>
                                             <button type="reset" class="button">LIMPIAR</button>
 
                                         </div>
@@ -494,6 +353,8 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
     <script src="../../js/map.js"></script>
+    <script src = "DatosEmpleadoAlta.js"></script>
+    <script> document.getElementById('botonSiguiente').addEventListener('click', ValidarDatosDomicilio);</script>
 
 </body>
 

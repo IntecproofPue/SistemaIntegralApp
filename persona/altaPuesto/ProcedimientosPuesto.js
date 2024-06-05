@@ -100,7 +100,7 @@ function consultaIndividualPuesto() {
         if (datosPuesto.status === 200) {
             var respuesta = JSON.parse(datosPuesto.responseText);
 
-            if (respuesta.bResultado === 1) {
+            if (respuesta[0].bResultado === 1) {
 
                 localStorage.setItem('datosConsultaPuesto', JSON.stringify(respuesta));
 
@@ -109,42 +109,46 @@ function consultaIndividualPuesto() {
                 if (datosPuestoConsulta) {
                     var bResultado = JSON.parse(datosPuestoConsulta);
 
-                    var iIdPuesto = document.getElementById('iIdPuesto');
-                    iIdPuesto.value = bResultado.iIdPuesto || 0;
 
-                    var vchPuesto = document.getElementById('vchPuesto');
-                    vchPuesto.value = bResultado.vchPuesto || '';
+                    for (var i = 0; i < bResultado.length; i++) {
+                        var iIdPuesto = document.getElementById('iIdPuesto');
+                        iIdPuesto.value = bResultado[i].iIdPuesto || 0;
 
-                    var vchDescripcionPuesto = document.getElementById('vchDescripcionPuesto');
-                    vchDescripcionPuesto.value = bResultado.vchDescripcion || '';
+                        var vchPuesto = document.getElementById('vchPuesto');
+                        vchPuesto.value = bResultado[i].vchPuesto || '';
 
-                    var vchTipoContratacion = document.getElementById('vchTipoContratacion');
-                    vchTipoContratacion.value = bResultado.vchTipoContratacion || '';
+                        var vchDescripcionPuesto = document.getElementById('vchDescripcionPuesto');
+                        vchDescripcionPuesto.value = bResultado[i].vchDescripcion || '';
 
-                    var vchHorasLaborales = document.getElementById('vchHorasLaborales');
-                    vchHorasLaborales.value = bResultado.vchHorasLaborales || '';
+                        var vchTipoContratacion = document.getElementById('vchTipoContratacion');
+                        vchTipoContratacion.value = bResultado[i].vchTipoContratacion || '';
+
+                        var vchHorasLaborales = document.getElementById('vchHorasLaborales');
+                        vchHorasLaborales.value = bResultado[i].vchHorasLaborales || '';
 
 
-                    const pesoFinal = new Intl.NumberFormat('es-MX', {
-                        style: 'currency',
-                        currency: 'MXN',
-                        minimumFractionDigits: 2
-                    });
+                        const pesoFinal = new Intl.NumberFormat('es-MX', {
+                            style: 'currency',
+                            currency: 'MXN',
+                            minimumFractionDigits: 2
+                        });
 
-                    var mSalarioNeto = document.getElementById('mSalarioNeto');
-                    mSalarioNeto.value = pesoFinal.format(bResultado.mSalarioNeto) || 0;
+                        var mSalarioNeto = document.getElementById('mSalarioNeto');
+                        mSalarioNeto.value = pesoFinal.format(bResultado[i].mSalarioNeto) || 0;
 
-                    var mSalarioFiscal = document.getElementById('mSalarioFiscal');
-                    mSalarioFiscal.value = pesoFinal.format(bResultado.mSalarioFiscal) || 0;
+                        var mSalarioFiscal = document.getElementById('mSalarioFiscal');
+                        mSalarioFiscal.value = pesoFinal.format(bResultado[i].mSalarioFiscal) || 0;
 
-                    var mSalarioComplementario = document.getElementById('mSalarioComplementario');
-                    mSalarioComplementario.value = pesoFinal.format(bResultado.mSalarioComplemento) || 0;
+                        var mSalarioComplementario = document.getElementById('mSalarioComplementario');
+                        mSalarioComplementario.value = pesoFinal.format(bResultado[i].mSalarioComplemento) || 0;
+                    }
+                } else {
+                    console.error("No existe información en datosPuestoConsulta");
                 }
-
             } else {
-                console.error("Mensaje Error: " + respuesta.vchMensaje);
-                alert(respuesta.vchMensaje)
+                console.error("Mensaje de error: ", respuesta.vchMensaje);
             }
+
         } else {
             console.error("Error en la solicitud al servidor");
         }

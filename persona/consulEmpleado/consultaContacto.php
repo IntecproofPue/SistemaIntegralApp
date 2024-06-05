@@ -2,6 +2,7 @@
 session_start();
 require_once('../../includes/pandora.php');
 require_once('../../includes/load.php');
+require_once('../altaPersona/FuncionesAltaEmpleado.php');
 
 // Inicializa las variables para almacenar mensajes de error
 $errors = [];
@@ -41,52 +42,6 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-
-// Función para validar campos
-function validarCampo($valor, $tipo = 'text', $longitudMax = null)
-{
-    $valor = trim($valor);
-
-    // Validar según el tipo
-    switch ($tipo) {
-        case 'text':
-            $valor = htmlspecialchars($valor); // Escapar caracteres especiales
-            break;
-        case 'email':
-            $valor = filter_var($valor, FILTER_VALIDATE_EMAIL);
-            break;
-        case 'Telefono':
-            // Puedes implementar una validación específica para números de teléfono si es necesario
-            break;
-        default:
-            // Tipo no reconocido
-            return null;
-    }
-
-    // Validar la longitud si es necesario
-    if ($longitudMax !== null && strlen($valor) > $longitudMax) {
-        return null;
-    }
-
-    return $valor;
-}
-
-function ObtenerTipoContacto()
-{
-    if (isset($_SESSION['CatConstante'])) {
-        $datosContacto = $_SESSION['CatConstante'];
-        $contactoEncontrado = array();
-
-        foreach ($datosContacto as $valorContacto) {
-            if ($valorContacto['iAgrupador'] == 8) {
-                $contactoEncontrado[] = $valorContacto;
-            }
-        }
-        return $contactoEncontrado;
-    } else {
-        echo("No hay datos del Tipo de contacto");
-    }
-}
 
 $resultadoContacto = ObtenerTipoContacto();
 
@@ -237,9 +192,11 @@ $resultadoContacto = ObtenerTipoContacto();
         }
     </style>
 
+    <script src="ProcesoModificacionEmpleado.js"></script>
     <!--[if lt IE 9]>
     <script src="assets/js/html5shiv.min.js"></script>
     <script src="assets/js/respond.min.js"></script>
+
     <![endif]-->
 
 
@@ -336,7 +293,8 @@ $resultadoContacto = ObtenerTipoContacto();
                 <div class="skill-and-profile">
                     <div class="skill" style="display: flex; justify-content: center;">
                         <label style="align-self: flex-end;"><a href="DatosEmpleado.php">EMPLEADO</a></label>
-                        <label style="align-self: flex-end;"><a href="../altaPuesto/consultaPuestoindividual.php ">PUESTO</a></label>
+                        <label style="align-self: flex-end;"><a
+                                    href="../altaPuesto/consultaPuestoIndividual.php">PUESTO</a></label>
                         <label style="align-self: flex-end;"><a href="consultaDomicilio.php">DOMICILIO</a></label>
                         <label style="align-self: flex-end;" class="selected"><a
                                     href="consultaContacto.php">CONTACTO</a></label>
@@ -411,8 +369,6 @@ $resultadoContacto = ObtenerTipoContacto();
                                 </div>
 
                                 <div class="filtered-employer-wrapper" id="agregaContacto"></div>
-
-
                             </div>
                     </form>
                 </div>
@@ -420,52 +376,6 @@ $resultadoContacto = ObtenerTipoContacto();
         </div>
     </div>
 </div>
-
-<script>
-    function validarTipoContacto() {
-        var tipoContacto = document.getElementById("tipoContactoAgregar").value;
-        var contactoInput = document.getElementById("vchContactoAgregar");
-
-        // Reinicia el valor del campo de contacto al cambiar el tipo de contacto
-        contactoInput.value = "";
-        contactoInput.disabled = false;
-
-        // Limpia clases de estilo relacionadas con errores
-        contactoInput.classList.remove("invalid");
-
-        // Desvincula el evento input para evitar interferencias
-        contactoInput.removeEventListener("input", validarCampo);
-
-        // Agrega el evento input para validar el nuevo campo
-        if (tipoContacto === "email" || tipoContacto === "Telefono") {
-            contactoInput.addEventListener("input", validarCampo);
-        }
-    }
-
-    function validarCampo(event) {
-        var tipoContacto = document.getElementById("tipoContactoAgregar").value;
-        var contactoInput = event.target;
-
-        if (tipoContacto === "email") {
-            var emailValue = contactoInput.value.trim();
-            if (!validarEmail(emailValue)) {
-                contactoInput.classList.add("invalid");
-            } else {
-                contactoInput.classList.remove("invalid");
-            }
-        } else if (tipoContacto === "Telefono") {
-            var telefonoValue = contactoInput.value.trim();
-            contactoInput.value = telefonoValue.replace(/[^0-9]/g, ''); // Solo permite números
-
-            if (telefonoValue.length > 10 || !(/^\d+$/.test(telefonoValue))) {
-                contactoInput.classList.add("invalid");
-            } else {
-                contactoInput.classList.remove("invalid");
-            }
-        }
-    }
-
-</script>
 
 <div class="apply-popup">
     <div class="modal fade" id="apply-popup-id-1" tabindex="-1" role="dialog" aria-hidden="true">
@@ -479,16 +389,52 @@ $resultadoContacto = ObtenerTipoContacto();
                 </div>
                 <div class="modal-body">
                     <form action="#">
-                        <!-- Contenido existente aquí -->
-                        <div class="row">
-                            <a class="boton-intec" href="#" id="buttonGuardarContacto">AGREGAR</a>
-                            <button class="boton-intec ml-2" id="buttonGuardarTodo">GUARDAR TODO</button>
+                        <div class="modal-body">
+                            <form action="">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="hidden" name="iIdConstanteContactoAgregar"
+                                                   id="iIdConstanteContacto" value=""/>
+                                            <input type="hidden" name="iClaveContactoAgregar" id="iClaveContactoAgregar"
+                                                   value=""/>
+                                            <input type="hidden" name="iIdPersonaContactoAgregar"
+                                                   id="iIdPersonaContactoAgregar" value=""/>
+
+                                            <label class="col-form-label">TIPO CONTACTO</label>
+                                            <select class="form-control" name="tipoContacto" id="tipoContactoAgregar"
+                                                    onchange="validarTipoContacto()" required>
+                                                <option value="">SELECCIONE UN TIPO DE CONTACTO</option>
+                                                <?php foreach ($resultadoContacto as $contacto): ?>
+                                                    <option value="<?= $contacto['iIdConstante'] . '-' . $contacto['iClaveCatalogo'] ?>">
+                                                        [<?= $contacto['iClaveCatalogo'] ?>]
+                                                        - <?= $contacto['vchDescripcion'] ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-form-label">CONTACTO</label>
+                                            <input id="vchContactoAgregar" class="form-control" name="vchContacto"
+                                                   placeholder="CONTACTO"
+                                                   required/>
+                                        </div>
+                                    </div>
+                                </div>
                         </div>
-                    </form>
                 </div>
+                <div class="row">
+                    <button class="boton-intec ml-2" id="buttonGuardarContacto">GUARDAR</button>
+                </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 
@@ -545,81 +491,9 @@ $resultadoContacto = ObtenerTipoContacto();
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
 <script src="../../js/map.js"></script>
+<script src="ProcesoModificacionContacto.js"></script>
 
-<script>
-
-    document.addEventListener('DOMContentLoaded', function () {
-
-        var datosContacto = localStorage.getItem('datosConsultaIndividual');
-        var bResultadoContacto = JSON.parse(datosContacto);
-        var iIdPersonaContacto = bResultadoContacto.iIdPersona;
-
-        var datosContactos = new XMLHttpRequest();
-
-        datosContactos.open('POST', 'prcConsultaContacto.php', true);
-
-        var formData = new URLSearchParams();
-        formData.append('iIdPersonaContacto', iIdPersonaContacto);
-
-        datosContactos.send(formData);
-
-        datosContactos.onload = function () {
-            if (datosContactos.status === 200) {
-                var respuesta = JSON.parse(datosContactos.responseText);
-
-                if (respuesta[0].bResultado === 1) {
-                    localStorage.setItem('datosConsultaContacto', JSON.stringify(respuesta));
-
-                    var datosContactoConsulta = localStorage.getItem('datosConsultaContacto');
-
-                    if (datosContactoConsulta) {
-                        var bResultado = JSON.parse(datosContactoConsulta);
-
-                        let longitudContacto = bResultado.length;
-
-                        insertarContactos(longitudContacto);
-
-                        for (var i = 0; i < bResultado.length; i++) {
-                            var iIdContacto = 'iIdContacto' + i;
-                            var iIdTipoContacto = 'vchTipoContacto' + i;
-                            var vchContacto = 'vchContacto' + i;
-                            var iIdUsuarioUlt = 'ilUsuarioUltModificacion' + i;
-                            var fechaUltModif = 'dtFechaUltModificacion' + i;
-
-                            var iIdContacto = document.getElementById(iIdContacto);
-                            iIdContacto.value = bResultado[i].iIdPersonasContactos || 0;
-
-                            var vchTipoContactoForm = document.getElementById(iIdTipoContacto);
-                            vchTipoContactoForm.value = bResultado[i].vchTipoContacto || '';
-
-                            var vchContactoForm = document.getElementById(vchContacto);
-                            vchContactoForm.value = bResultado[i].vchContacto;
-
-                            var vchUsuarioForm = document.getElementById(iIdUsuarioUlt);
-                            vchUsuarioForm.value = bResultado[i].vchUsuarioUltModif;
-
-
-                            var dFechaUltModifOriginal = bResultado[i].dtFechaUltModificacion.date;
-                            var fechaModif = new Date(dFechaUltModifOriginal);
-                            var fechaModifFinal = fechaModif.toLocaleString('es-ES', {
-                                day: '2-digit',
-                                month: '2-digit',
-                                year: 'numeric',
-                                hour: '2-digit',
-                                minute: '2-digit',
-                                second: '2-digit',
-                                hour12: false
-                            });
-                            var dFechaModificacion = document.getElementById(fechaUltModif);
-                            dFechaModificacion.value = fechaModifFinal
-
-                        }
-                    }
-                }
-            }
-        }
-    });
-
+<script> document.addEventListener('DOMContentLoaded', mostrarDatosContacto);
 
     function insertarContactos(longitudContacto) {
         var contenedor = document.getElementById('agregaContacto');
@@ -630,7 +504,7 @@ $resultadoContacto = ObtenerTipoContacto();
 
         var selectorAgregar = '#buttonAgregar';
 
-        var contactoSeleccionado = [];
+        //var contactoSeleccionado = [];
 
         document.querySelectorAll(selector).forEach((button) => {
             button.addEventListener('click', function (event) {
@@ -647,38 +521,25 @@ $resultadoContacto = ObtenerTipoContacto();
 
                 var registro = document.querySelector(`.candidate:nth-child(${indexInt + 1})`);
 
-                if (!registro){
-                    console.error ("No hay ningún registro");
+                if (!registro) {
+                    console.error("No hay ningún registro");
                     return;
                 }
 
                 var iIdContactoSeleccionado = registro.querySelector('#iIdContacto' + indexInt).value;
 
-                contactoSeleccionado.push({
-                    idContacto: iIdContactoSeleccionado
-                });
+                console.log("Estos es el contacto seleccionado: ", iIdContactoSeleccionado);
 
-
-                console.log("Esto es el id del contacto: ", iIdContactoSeleccionado);
-
-                console.log(contactoSeleccionado);
-
-                localStorage.setItem('modificarContacto', 'true');
+                actualizarContacto(iIdContactoSeleccionado); //Llamar a la función para actualizar el contacto
 
                 registro.style.display = 'none';
+
 
                 var botonAgregar = document.querySelector(selectorAgregar);
                 if (botonAgregar) {
                     botonAgregar.style.display = 'block';
                 }
 
-                try {
-                    console.log("Array de objetos: ", contactoSeleccionado);
-                    localStorage.setItem('contactosSeleccionados', JSON.stringify(contactoSeleccionado));
-                    console.log("Todos los contactos seleccionados almacenados en localStorage:", contactoSeleccionado);
-                } catch (error) {
-                    console.error("Error al guardar en localStorage:", error);
-                }
 
             });
         });
@@ -722,11 +583,10 @@ $resultadoContacto = ObtenerTipoContacto();
 
              <div class="boton-intec${i}">
                 
-      <img id="buttonBaja${i}" src="../../trash-can_38501.png" style="width: 50px; height: auto; display: none;" >
+            <img id="buttonBaja${i}" src="../../trash-can_38501.png" style="width: 50px; height: auto; display: none;" >
  
           </div>
-        
-      </div>
+        </div>
     </div>
   </div>
           `;
@@ -771,112 +631,15 @@ $resultadoContacto = ObtenerTipoContacto();
             });
         };
 
-        // Declaración de 'observer' fuera de la función de callback
         const observer = new MutationObserver((observerCallback));
         observer.observe(document.documentElement, {childList: true, subtree: true});
 
-
     });
 
-    // Función para agregar el contenido a la modal
-    function agregarContenidoModal(event) {
-        event.preventDefault(); // Prevenir el comportamiento predeterminado del botón
-
-        // Crear el nuevo contenido
-        var nuevoContenido = `
-        
-        <div class="modal-body">
-            <form action="#" onsubmit = "guardarDatosContacto()">
-                <div class="row">
-
-                    <div class="col-md-7">
-                        <div class="form-group">
-                            <input type="hidden" name="iIdConstanteContacto" id="iIdConstanteContacto" value="" />
-                            <input type="hidden" name="iClaveContacto" id="iClaveContacto" value="" />
-                            <input type="hidden" name="iIdPersonaContacto" id="iIdPersonaContacto" value="" />
-
-                            <label class="col-form-label">TIPO CONTACTO</label>
-                            <select class="form-control" name="tipoContacto" id="tipoContactoAgregar"
-                                onchange="validarTipoContacto()" required>
-                                <option value="">SELECCIONE UN TIPO DE CONTACTO</option>
-                                <?php foreach ($resultadoContacto as $contacto): ?>
-                                    <option value="<?= $contacto['iIdConstante'] . '-' . $contacto['iClaveCatalogo'] ?>">
-                                        [<?= $contacto['iClaveCatalogo'] ?>] - <?= $contacto['vchDescripcion'] ?>
-                                    </option>
-                                <?php endforeach; ?>
-
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-md-5">
-                        <div class="form-group">
-                            <label class="col-form-label">CONTACTO</label>
-                            <input id="vchContactoAgregar" class="form-control" name="tipoContacto" placeholder="CONTACTO"
-                                required />
-                        </div>
-                    </div>
-                </div>
-                </div>
-                </div>
-        <!-- Fin del nuevo contenido -->
-    `;
-
-        // Obtener referencia al cuerpo de la modal
-        var modalBody = document.querySelector('.modal-body');
-
-        // Insertar el nuevo contenido al final del cuerpo de la modal
-        modalBody.insertAdjacentHTML('beforeend', nuevoContenido);
-    }
-
-    function guardarDatosContacto() {
-        event.preventDefault;
-        var iIdConstanteContacto = document.getElementById('iIdConstanteContacto').value;
-        var iClaveContacto = document.getElementById('iClaveContacto').value;
-        var iIdPersonaContacto = document.getElementById('iIdPersonaContacto').value;
-        var tipoContacto = document.getElementById('tipoContactoAgregar').value;
-        var vchContactoAgregar = document.getElementById('vchContactoAgregar').value;
-
-
-        var datosContactoCapturados = {
-            iIdConstanteContacto: iIdConstanteContacto,
-            iClaveContacto: iClaveContacto,
-            iIdPersonaContacto: iIdPersonaContacto,
-            tipoContacto: tipoContacto,
-            vchContactoAgregar: vchContactoAgregar
-        };
-
-        var datosLocalStorage = JSON.stringify(datosContactoCapturados);
-
-        localStorage.setItem('datosContactoAgregar', datosLocalStorage);
-
-
-    }
-
-
-    // Obtener referencia al botón "AGREGAR"
-    var botonAgregar = document.getElementById('buttonGuardarContacto');
-
-    // Agregar evento click al botón "AGREGAR" y pasar el evento como argumento a la función agregarContenidoModal
-    botonAgregar.addEventListener('click', function (event) {
-        agregarContenidoModal(event);
-    });
-
-    var botonGuardarTodo = document.getElementById('buttonGuardarTodo');
-
-    // Agregar evento click al botón "GUARDAR TODO" y llamar a la función guardarDatosLocalStorage
-    botonGuardarTodo.addEventListener('click', guardarDatosContacto);
-
-    // Obtener referencia al botón de cerrar la modal
-    var botonCerrarModal = document.querySelector('.modal-header .close');
-
-    // Agregar evento click al botón de cerrar la modal para cerrarla manualmente
-    botonCerrarModal.addEventListener('click', function () {
-        var modal = document.getElementById('apply-popup-id-1');
-        $(modal).modal('hide');
-    });
 
 </script>
+
+<script> document.getElementById('buttonGuardarContacto').addEventListener('click', agregarNuevoContacto);  </script>
 
 </body>
 
