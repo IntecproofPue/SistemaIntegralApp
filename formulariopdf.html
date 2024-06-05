@@ -37,9 +37,9 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-9">
+                                <div class="col-md-12">
                                     <div class="post-content-wrapper">
-                                        <div class="col-md-4">
+                                        <div class="col-md-12">
                                             <label class="col-form-label">INFORMACION DEL EMPLEADO</label>
                                         </div>
                                     </div>
@@ -77,13 +77,13 @@
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label class="col-form-label">FECHA FINAL: </label>
-                                                    <input name="fechaFinal" type="text" class="form-control" required>
+                                                    <input name="fechaFinal"  id="fechaFinal" type="date" class="form-control" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label class="col-form-label">ANTIGÜEDAD (AÑOS): </label>
-                                                    <input name="antiguedad" type="text" class="form-control" required>
+                                                    <input name="antiguedad" type="number" class="form-control" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
@@ -116,8 +116,8 @@
                             </div>
                             
                            
-                            <div class="col-md-12 text-center">
-                                <button type="submit" class="btn btn-primary">Generar PDF</button>
+                            <div class="col-md-12 text-center" id="datePicker">
+                                <button type="submit" class="btn btn-primary" onclick="highlightDate()">Generar PDF</button>
                             </div>
                         </form>
                     </div>
@@ -162,5 +162,54 @@
     <script src="js/custom.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC87gjXWLqrHuLKR0CTV5jNLdP4pEHMhmg"></script>
     <script src="js/map.js"></script>
+
+    <script>
+        function highlightDate() {
+            // Eliminar cualquier resaltado previo
+            document.querySelectorAll('td').forEach(td => td.classList.remove('highlight'));
+    
+            // Obtener la fecha seleccionada
+            const datePicker = document.getElementById('fechaFinal');
+
+            const dateValue = datePicker.value; 
+
+            console.log(dateValue); 
+
+
+            if (dateValue){
+                const [year, month, day] = dateValue.split('-'); 
+
+                console.log("Año: ", +year); 
+                console.log("Mes: ", +month);
+                console.log("Día: ", +day);
+
+            }
+
+            const selectedDate = new Date(datePicker.value);
+            
+            if (!isNaN(selectedDate.getTime())) {
+                const selectedDay = selectedDate.getDate();
+                const selectedMonth = selectedDate.getMonth();
+    
+                // Definir los nombres de los meses
+                const monthNames = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"];
+    
+                // Buscar la celda correspondiente en la tabla
+                const table = document.querySelector('table tbody');
+                const rows = table.querySelectorAll('tr');
+    
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    if (cells[0].textContent === monthNames[selectedMonth]) {
+                        cells.forEach(cell => {
+                            if (cell.textContent == selectedDay) {
+                                cell.classList.add('highlight');
+                            }
+                        });
+                    }
+                });
+            }
+        }
+    </script>
 </body>
 </html>
